@@ -1,0 +1,18 @@
+.dropdown-container {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    z-index: 1;
+  }
+
+  .dropdown-row {
+    padding: 4px;
+    cursor: pointer;
+  }
+
+  .dropdown-row:hover {
+    background-color: #ddd;
+  }
