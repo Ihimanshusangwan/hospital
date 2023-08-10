@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
 $sql = "SELECT * FROM change_label WHERE id = 1;";
 $data = $conn->query($sql);
 if ($data->num_rows < 1) {
-    $sql = "insert into change_label (id) values(1);";
+    $sql = "insert into change_label (id,lable_1) values(1,'Grand Total');";
     $conn->query($sql);
 } 
 $sql10="SELECT * FROM `change_label` WHERE 1";
