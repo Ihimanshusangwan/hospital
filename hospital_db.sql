@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2023 at 03:30 PM
+-- Generation Time: Aug 10, 2023 at 03:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1928,7 +1928,8 @@ CREATE TABLE `patient_records` (
   `is_eye` int(11) NOT NULL DEFAULT 0,
   `is_ortho` int(11) NOT NULL DEFAULT 0,
   `is_refered` int(11) NOT NULL DEFAULT 0,
-  `refered_by` text NOT NULL DEFAULT ' '
+  `refered_by` text NOT NULL DEFAULT ' ',
+  `is_visited` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
