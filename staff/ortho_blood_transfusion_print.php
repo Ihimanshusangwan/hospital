@@ -24,6 +24,8 @@ $nur = explode("&", $blood['nur']);
 $blooa = explode("&", $blood['blooa']);
 $bloob = explode("&", $blood['bloob']);
 
+$newValue = json_decode($blood['new'],true);
+
 ?>
 
 <!DOCTYPE html>
@@ -103,35 +105,35 @@ $bloob = explode("&", $blood['bloob']);
         </div>
     </div>
 
-    <div class="row table-responsive">
+    <div class="row ">
         <h6 class=" col-12 mt-4 fl"><strong>Type:</strong></h6>
         <table class=" col-12 table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">WB</th>
-                    <th scope="col"></th>
+                    <td scope="col"><?php echo $newValue['1']; ?></td>
                     <th scope="col">PRP</th>
+                    <td scope="col"><?php echo $newValue['2']; ?></td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row"></th>
-                    <td>PRC</td>
-                    <td></td>
-                    <td>Crypt</td>
+                    <th>PRC</th>
+                    <td scope="row"><?php echo $newValue['3']; ?></td>
+                    <th>Crypt</th>
+                    <td><?php echo $newValue['4']; ?></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
-                    <td>FFP</td>
-                    <td></td>
-                    <td>Plasma</td>
+                    <th>FFP</th>
+                    <td scope="row"><?php echo $newValue['5']; ?></td>
+                    <th>Plasma</th>
+                    <td><?php echo $newValue['6']; ?></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
-                    <td>PLT</td>
-                    <td></td>
-                    <td>Other</td>
+                    <th>PLT</th>
+                    <td scope="row"><?php echo $newValue['7']; ?></td>
+                    <th>Other</th>
+                    <td><?php echo $newValue['8']; ?></td>
                 </tr>
             </tbody>
         </table>

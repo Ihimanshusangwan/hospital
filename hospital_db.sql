@@ -190,7 +190,8 @@ CREATE TABLE `blood` (
   `bloob` varchar(2200) NOT NULL,
   `id` int(11) NOT NULL,
   `cros` varchar(100) NOT NULL,
-  `trans` varchar(100) NOT NULL
+  `trans` varchar(100) NOT NULL,
+  `new` text 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
