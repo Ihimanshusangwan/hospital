@@ -46,7 +46,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 #button {
     display: none !important;
 }
-@page {size: A4 landscape; }
+@page
 .noprint {
 visibility: hidden;
 }
@@ -73,7 +73,7 @@ visibility: hidden;
             
                     
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <tr>
                                         <th>Date</th>

@@ -307,8 +307,7 @@ error_reporting(0);
                             <div class="col-6">
                                <strong>Vitals Stable :</strong><?php  echo $dis[4];  ?>
                             </div>
-                            <div class="col-12">
-                            <table class="table table-bordered mt-4">
+                            <table class="table table-bordered mt-2">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -328,7 +327,7 @@ error_reporting(0);
                 </tr>
             </tbody>
         </table>
-                            </div>
+
                             
                             
     </div>
