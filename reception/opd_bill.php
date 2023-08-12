@@ -8,6 +8,7 @@ $res = $data->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
+
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
@@ -436,7 +437,6 @@ $res10=$data10->fetch_assoc();
                 </div>
             </div>
         </div>
-
     </form>
     <h5 style="text-align: right; margin-right: 2em;">SubTotal : <span id="subtotal">
             <?php echo $subtotal; ?>
@@ -452,7 +452,7 @@ $res10=$data10->fetch_assoc();
             id="discount" onchange="on_discount_change()" value="<?php echo $res['opd_discount']; ?>">
 
     </h5>
-    <h5 style="text-align: right; margin-right: 2em;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
+    <h5 style="text-align: right; margin-right: 2em;"><?php  echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?> : <span id="grandtotal">
             <?php echo $subtotal; ?>
         </span></h5> <br><br><br>
     <h6 style="text-align: right; margin-right: 3em;">Signature</h6>

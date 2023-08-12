@@ -169,7 +169,7 @@ $title = $data->fetch_assoc();
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records  where is_registered= 1  or is_visited= 1 ORDER BY id DESC; ";
+                        $sql = "SELECT * FROM patient_records  where is_registered=1  OR  is_visited = 1  ORDER BY id DESC ";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';

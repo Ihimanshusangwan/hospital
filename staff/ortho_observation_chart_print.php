@@ -58,7 +58,6 @@ $values = json_decode(urldecode($data), true);
             }
 
             @page {
-                size: A4 landscape;
                 margin-top: 0;
             }
 
@@ -74,18 +73,18 @@ $values = json_decode(urldecode($data), true);
     <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
     <a href="ortho_observation_chart.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
     <?php include_once("../header/images.php") ?>
-    <h3 class="text-center text-dark my-3 ">Observation Chart</h3>
+    <h3 class="text-center text-dark ml-3">Observation Chart</h3>
     <?php include_once("../header/header.php") ?>
-
+    
     <?php if (in_array('Notes', $checkboxes)): ?>
-        <div class="card shadow mb-4">
+        <div class="card  mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
                     Notes
                 </h6>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
+            <div>
+                <div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <tr>
                             <th>Time</th>
@@ -136,7 +135,7 @@ $values = json_decode(urldecode($data), true);
     <?php endif; ?>
 
     <?php if (in_array('Drugs', $checkboxes)): ?>
-        <div class="card shadow mb-4">
+        <div class="card mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
                     Drugs
@@ -185,7 +184,7 @@ $values = json_decode(urldecode($data), true);
         <?php endif; ?>
     </div>
 
-    <h6>Thank You !</h6>
+    <h6 class="text-center mt-4">Thank You !</h6>
     </div>
 </body>
 <script> window.print(); </script>
