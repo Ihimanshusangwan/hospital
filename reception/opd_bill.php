@@ -5,7 +5,6 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 // select * from opd where p_id = id;
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
-
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
@@ -320,6 +319,7 @@ $res10=$data10->fetch_assoc();
         </div>
     </div>
 
+
     <div class="row text-center mt-5">
         <div class="col-3">Name of Patient:
             <?php echo $res['name']; ?>
@@ -444,7 +444,6 @@ $res10=$data10->fetch_assoc();
     <h5 style="text-align: right; margin-right: 2em; row">
         <label for="ad" class="form-label">Discount : </label>
         <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
-
         <?php
         $sql = "select opd_discount from p_log where id = '$id';";
         $res = $conn->query($sql)->fetch_assoc();
@@ -453,7 +452,7 @@ $res10=$data10->fetch_assoc();
             id="discount" onchange="on_discount_change()" value="<?php echo $res['opd_discount']; ?>">
 
     </h5>
-    <h5 style="text-align: right; margin-right: 2em;"><?php  echo $res10 ['lable_1']; ?>: <span id="grandtotal">
+    <h5 style="text-align: right; margin-right: 2em;"><?php  echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?> : <span id="grandtotal">
             <?php echo $subtotal; ?>
         </span></h5> <br><br><br>
     <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
