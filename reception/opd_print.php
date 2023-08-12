@@ -179,7 +179,7 @@ $res10=$data10->fetch_assoc();
         }
         ?>
             <h6 style="margin-left: 33rem;">
-                <?php echo $res10['lable_1'];?>
+                <?php echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?>
                 <span id="grandtotal">
                     <?php if($res['opd_discount']!=0){
                         echo $subtotal-$res['opd_discount'];

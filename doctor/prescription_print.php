@@ -24,7 +24,7 @@ $res2 = $data2->fetch_assoc();
 $sql12="SELECT * FROM `config_print` WHERE 1";
 $data12=$conn->query($sql12);
 $res12=$data12->fetch_assoc();
-if ($res12['inp'] === null) {
+if (!isset($res12['inp'])) {
     $inp_arr = array_fill(0, 2, 'option2');
 } else {
     $inp = $res12['inp'];
@@ -580,7 +580,9 @@ if ($res12['inp'] === null) {
         </div>
     </div>
     <?php endif; ?>
-    <h6>Follow Up <?php $currentDateTime = date('Y-m-d H:i');
+    <h6>Follow Up <?php
+    date_default_timezone_set('Asia/Kolkata');
+    $currentDateTime = date('Y-m-d H:i');
 echo $currentDateTime; ?></h6>
     <h6 class="text-center mt-4">Use Generic Medicine</h6>
     </div>

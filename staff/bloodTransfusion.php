@@ -95,6 +95,7 @@ if (isset($_POST['submit'])) {
 
 
 }
+error_reporting(0);
 $sql3 = "SELECT * FROM `blood`  WHERE id = '$id';";
 $data3 = $conn->query($sql3);
 $blood = $data3->fetch_assoc();
