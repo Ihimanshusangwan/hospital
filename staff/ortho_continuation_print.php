@@ -127,7 +127,7 @@ visibility: hidden;
             
 
 
-            <h6>Thank You !</h6>
+            <h6 class="text-center mt-4">Thank You !</h6>
         </div>
 </body>
 <script>

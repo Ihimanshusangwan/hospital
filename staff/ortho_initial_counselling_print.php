@@ -68,7 +68,6 @@ session_start();
     </div>
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 ">Initial Counselling</h3>
-    <>
         <div style="border-bottom: 3px solid black; margin-bottom : 10px;"></div>
         <div class="row">
             <div class="col-4"><strong>Name:</strong>

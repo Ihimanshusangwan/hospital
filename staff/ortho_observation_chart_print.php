@@ -184,7 +184,7 @@ $values = json_decode(urldecode($data), true);
         <?php endif; ?>
     </div>
 
-    <h6>Thank You !</h6>
+    <h6 class="text-center mt-4">Thank You !</h6>
     </div>
 </body>
 <script> window.print(); </script>
