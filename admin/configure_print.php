@@ -24,7 +24,7 @@ $data12=$conn->query($sql12);
 $res12=$data12->fetch_assoc();
 $inp=$res12['inp'];
 $inp_arr=json_decode($inp,true);
-$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
+$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2,'');
 
 
 ?>
