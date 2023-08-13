@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Barcode Scanner</title>
+  <script src="scanner.js"></script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <h1>Barcode Scanner</h1>
+  <a href="receptionPage.php" class="btn btn-success m-2">Dashboard</a>
+
+  <div id="scanner-container"></div>
+  
+  <script>
+    function setupBarcodeScanner() {
+      const video = document.createElement('video');
+      const scannerContainer = document.getElementById('scanner-container');
+      scannerContainer.appendChild(video);
+
+      // Check if the device is mobile or desktop/laptop
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Mobile device configuration
+        navigator.mediaDevices.enumerateDevices()
+          .then(function (devices) {
+            let barcodeScannerDeviceId = null;
+
+            devices.forEach(function (device) {
+              if (device.kind === 'videoinput' && device.label.toLowerCase().includes('barcode')) {
+                barcodeScannerDeviceId = device.deviceId;
+              }
+            });
+
+            if (barcodeScannerDeviceId) {
+              navigator.mediaDevices.getUserMedia({
+                video: {
+                  deviceId: barcodeScannerDeviceId,
+                  facingMode: 'environment',
+                },
+              })
+              .then(function (stream) {
+                video.srcObject = stream;
+                video.setAttribute('playsinline', true);
+                video.play();
+
+                const opts = {
+                  inputStream: {
+                    type: 'LiveStream',
+                    constraints: {
+                      video: {
+                        deviceId: barcodeScannerDeviceId,
+                        facingMode: 'environment',
+                      },
+                    },
+                    target: video,
+                  },
+                  decoder: {
+                    readers: ['code_39_reader'],
+                  },
+                };
+
+                Quagga.init(opts, function (err) {
+                  if (err) {
+                    console.error('Error initializing barcode scanner:', err);
+                    return;
+                  }
+                  console.log('Barcode scanner initialized successfully');
+                  Quagga.start();
+                });
+
+                Quagga.onDetected(function (result) {
+                  const barcode = result.codeResult.code;
+                  console.log('Scanned barcode:', barcode);
+                  redirectToPage(barcode);
+                });
+              })
+              .catch(function (err) {
+                console.error('Error accessing barcode scanner:', err);
+              });
+            } else {
+              // Fall back to mobile camera
+              setupMobileCameraScanner(video);
+            }
+          })
+          .catch(function (err) {
+            console.error('Error enumerating devices:', err);
+            // Fall back to mobile camera
+            setupMobileCameraScanner(video);
+          });
+      } else {
+        // Desktop/laptop configuration
+        navigator.mediaDevices.enumerateDevices()
+          .then(function (devices) {
+            let barcodeScannerDeviceId = null;
+
+            devices.forEach(function (device) {
+              if (device.kind === 'videoinput' && device.label.toLowerCase().includes('barcode')) {
+                barcodeScannerDeviceId = device.deviceId;
+              }
+            });
+
+            if (barcodeScannerDeviceId) {
+              navigator.mediaDevices.getUserMedia({
+                video: {
+                  deviceId: barcodeScannerDeviceId,
+                },
+              })
+              .then(function (stream) {
+                video.srcObject = stream;
+                video.setAttribute('playsinline', true);
+                video.play();
+
+                const opts = {
+                  inputStream: {
+                    type: 'LiveStream',
+                    constraints: {
+                      video: {
+                        deviceId: barcodeScannerDeviceId,
+                      },
+                    },
+                    target: video,
+                  },
+                  decoder: {
+                    readers: ['code_39_reader'],
+                  },
+                };
+
+                Quagga.init(opts, function (err) {
+                  if (err) {
+                    console.error('Error initializing barcode scanner:', err);
+                    return;
+                  }
+                  console.log('Barcode scanner initialized successfully');
+                  Quagga.start();
+                });
+
+                Quagga.onDetected(function (result) {
+                  const barcode = result.codeResult.code;
+                  console.log('Scanned barcode:', barcode);
+                  redirectToPage(barcode);
+                });
+              })
+              .catch(function (err) {
+                console.error('Error accessing barcode scanner:', err);
+                // Fall back to desktop/laptop camera
+                setupDesktopCameraScanner(video);
+              });
+            } else {
+              // Fall back to desktop/laptop camera
+              setupDesktopCameraScanner(video);
+            }
+          })
+          .catch(function (err) {
+            console.error('Error enumerating devices:', err);
+            // Fall back to desktop/laptop camera
+            setupDesktopCameraScanner(video);
+          });
+      }
+    }
+
+    function setupMobileCameraScanner(video) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function (stream) {
+          video.srcObject = stream;
+          video.setAttribute('playsinline', true);
+          video.play();
+
+          const opts = {
+            inputStream: {
+              type: 'LiveStream',
+              constraints: {
+                video: {
+                  facingMode: 'environment',
+                },
+              },
+              target: video,
+            },
+            decoder: {
+              readers: ['code_39_reader'],
+            },
+          };
+
+          Quagga.init(opts, function (err) {
+            if (err) {
+              console.error('Error initializing barcode scanner:', err);
+              return;
+            }
+            console.log('Barcode scanner initialized successfully');
+            Quagga.start();
+          });
+
+          Quagga.onDetected(function (result) {
+            const barcode = result.codeResult.code;
+            console.log('Scanned barcode:', barcode);
+            redirectToPage(barcode);
+          });
+        })
+        .catch(function (err) {
+          console.error('Error accessing camera:', err);
+        });
+    }
+
+    function setupDesktopCameraScanner(video) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+          video.setAttribute('playsinline', true);
+          video.play();
+
+          const opts = {
+            inputStream: {
+              type: 'LiveStream',
+              constraints: {
+                video: true,
+              },
+              target: video,
+            },
+            decoder: {
+              readers: ['code_39_reader'],
+            },
+          };
+
+          Quagga.init(opts, function (err) {
+            if (err) {
+              console.error('Error initializing barcode scanner:', err);
+              return;
+            }
+            console.log('Barcode scanner initialized successfully');
+            Quagga.start();
+          });
+
+          Quagga.onDetected(function (result) {
+            const barcode = result.codeResult.code;
+            console.log('Scanned barcode:', barcode);
+            redirectToPage(barcode);
+          });
+        })
+        .catch(function (err) {
+          console.error('Error accessing camera:', err);
+        });
+    }
+
+    function redirectToPage(barcode) {
+      window.location.href = 'details.php?id=' + encodeURIComponent(barcode);
+    }
+
+    // Initialize the barcode scanner
+    setupBarcodeScanner();
+  </script>
+</body>
+</html>
