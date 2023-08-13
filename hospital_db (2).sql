@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2023 at 03:30 PM
+-- Generation Time: Aug 13, 2023 at 03:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -36,6 +36,14 @@ CREATE TABLE `acq` (
   `ward_sign` text NOT NULL,
   `icu_sign` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `acq`
+--
+
+INSERT INTO `acq` (`acqa`, `acqb`, `acqc`, `acqd`, `id`, `ward_sign`, `icu_sign`) VALUES
+('', '', '', '', 1, '', ''),
+('', '', '', '', 2, '', '');
 
 -- --------------------------------------------------------
 
@@ -95,6 +103,14 @@ CREATE TABLE `ana` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ana`
+--
+
+INSERT INTO `ana` (`ana`, `inv`, `icu`, `pat`, `dis`, `dis1`, `id`) VALUES
+('', '', '', '', '', '', 1),
+('', '', '', '', '', '', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +141,57 @@ CREATE TABLE `anesthesia_consent` (
   `time_4` time DEFAULT NULL,
   `time_5` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `anesthesia_consent`
+--
+
+INSERT INTO `anesthesia_consent` (`id`, `date`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `anumati_consent`
+--
+
+CREATE TABLE `anumati_consent` (
+  `id` int(11) NOT NULL,
+  `a` text DEFAULT NULL,
+  `b` text DEFAULT NULL,
+  `c` text DEFAULT NULL,
+  `d` text DEFAULT NULL,
+  `e` date DEFAULT NULL,
+  `f` text DEFAULT NULL,
+  `g` text DEFAULT NULL,
+  `h` text DEFAULT NULL,
+  `i` date DEFAULT NULL,
+  `j` text DEFAULT NULL,
+  `k` text DEFAULT NULL,
+  `l` date DEFAULT NULL,
+  `m` text DEFAULT NULL,
+  `sahi1` text DEFAULT NULL,
+  `sahi2` text DEFAULT NULL,
+  `sahi3` text DEFAULT NULL,
+  `name1` varchar(255) DEFAULT NULL,
+  `name2` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `add1` text DEFAULT NULL,
+  `add2` text DEFAULT NULL,
+  `add3` text DEFAULT NULL,
+  `vay1` varchar(200) DEFAULT NULL,
+  `vay2` varchar(200) DEFAULT NULL,
+  `time` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `anumati_consent`
+--
+
+INSERT INTO `anumati_consent` (`id`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`, `j`, `k`, `l`, `m`, `sahi1`, `sahi2`, `sahi3`, `name1`, `name2`, `date`, `add1`, `add2`, `add3`, `vay1`, `vay2`, `time`) VALUES
+(1, '1', '2', '4', '    3', '2023-08-09', '    6', ' 9   ', '    7', '2023-08-10', '    8', '    11', '2023-08-24', '25', '12', '13', '14', '15', '16', '2023-08-21', '17', '19', ' 22  ', '18', '20', '23:52:00'),
+(2, 'a', 'b', 'd', ' c', '2023-08-07', ' e', ' h', ' f', '0000-00-00', ' g', ' i', '2023-08-09', 'u', 'j', 'n', 's', 'k', 'op', '2023-08-08', 'l', 'q', ' t', 'm', 'r', '11:20:00');
 
 -- --------------------------------------------------------
 
@@ -177,6 +244,14 @@ CREATE TABLE `ap_for_document` (
   `name` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ap_for_document`
+--
+
+INSERT INTO `ap_for_document` (`id`, `date_h`, `patient`, `uhid`, `ipd`, `mala`, `sathi`, `vinti`, `add_date`, `dis_date`, `d_name`, `p_name`, `relation`, `applicant`, `office_re`, `agree`, `aprove_dr`, `date`, `doc_recive`, `name`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -193,6 +268,14 @@ CREATE TABLE `blood` (
   `trans` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `blood`
+--
+
+INSERT INTO `blood` (`dr`, `nur`, `blooa`, `bloob`, `id`, `cros`, `trans`) VALUES
+('&&&&&&&&', '&&&&', '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&', '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&', 1, '', ''),
+('', '', '', '', 2, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -206,6 +289,14 @@ CREATE TABLE `case_audit_sheet` (
   `yes_no` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `remarks` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `case_audit_sheet`
+--
+
+INSERT INTO `case_audit_sheet` (`id`, `dischage_date`, `audit_date`, `yes_no`, `remarks`) VALUES
+(1, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -246,6 +337,14 @@ CREATE TABLE `cc_glass_rx` (
   `fer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cc_glass_rx`
+--
+
+INSERT INTO `cc_glass_rx` (`id`, `dist_input_1`, `dist_input_2`, `dist_input_3`, `dist_input_4`, `dist_input_5`, `dist_input_6`, `dist_input_7`, `dist_input_8`, `near_input_1`, `near_input_2`, `near_input_3`, `near_input_4`, `near_input_5`, `near_input_6`, `near_input_7`, `near_input_8`, `be_add`, `re`, `le_add`, `glass_type`, `glass_colour`, `glass_use`, `pd`, `fees`, `visit_no`, `complaints`, `past_his`, `advice`, `fer`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -256,6 +355,13 @@ CREATE TABLE `change_label` (
   `id` int(11) NOT NULL,
   `lable_1` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `change_label`
+--
+
+INSERT INTO `change_label` (`id`, `lable_1`) VALUES
+(1, 'good');
 
 -- --------------------------------------------------------
 
@@ -268,6 +374,13 @@ CREATE TABLE `change_rate` (
   `inp` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`inp`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `change_rate`
+--
+
+INSERT INTO `change_rate` (`id`, `inp`) VALUES
+(1, '[\"10\",\"12\",\"23\",\"10\",\"21\",\"3\",\"33\",\"2\",\"2\",\"3\",\"31\",\"32\",\"321\",\"1\"]');
+
 -- --------------------------------------------------------
 
 --
@@ -278,6 +391,13 @@ CREATE TABLE `config_print` (
   `id` int(11) NOT NULL,
   `inp` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`inp`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `config_print`
+--
+
+INSERT INTO `config_print` (`id`, `inp`) VALUES
+(1, NULL);
 
 -- --------------------------------------------------------
 
@@ -341,6 +461,14 @@ CREATE TABLE `cor1` (
   `inc` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cor1`
+--
+
+INSERT INTO `cor1` (`id`, `sur`, `ass`, `nurse`, `hca`, `visit`, `date`, `s_time`, `e_time`, `proc`, `ana`, `com`, `refer`, `eye`, `ot`, `case_no`, `emr`, `mpm`, `o2`, `la`, `yes`, `lig`, `ml`, `con`, `beta`, `description`, `pos`, `inc`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"0\":{\"name\":\"Eye Cleaned\",\"value\":\"off\"},\"1\":{\"name\":\"Dressing with betadine solution done\",\"value\":\"off\"},\"2\":{\"name\":\"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.\",\"value\":\"off\"},\"3\":{\"name\":\"Dressing with betadine done\",\"value\":\"off\"},\"4\":{\"name\":\"Eye Drapping Done\",\"value\":\"off\"},\"5\":{\"name\":\"Pterygium mass excised\",\"value\":\"off\"},\"6\":{\"name\":\"Mild cautery applied\",\"value\":\"off\"},\"7\":{\"name\":\"Corneal surface smoothed with crescent blade\",\"value\":\"off\"},\"8\":{\"name\":\"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl\",\"value\":\"off\"},\"9\":{\"name\":\"Eye draped removed\",\"value\":\"off\"},\"10\":{\"name\":\"5% betadine eye drop applied\",\"value\":\"off\"},\"11\":{\"name\":\"Eye Patched\",\"value\":\"off\"},\"12\":{\"name\":\"Surgery concluded\",\"value\":\"off\"}}', '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"0\":{\"name\":\"Eye Cleaned\",\"value\":\"off\"},\"1\":{\"name\":\"Dressing with betadine solution done\",\"value\":\"off\"},\"2\":{\"name\":\"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.\",\"value\":\"off\"},\"3\":{\"name\":\"Dressing with betadine done\",\"value\":\"off\"},\"4\":{\"name\":\"Eye Drapping Done\",\"value\":\"off\"},\"5\":{\"name\":\"Pterygium mass excised\",\"value\":\"off\"},\"6\":{\"name\":\"Mild cautery applied\",\"value\":\"off\"},\"7\":{\"name\":\"Corneal surface smoothed with crescent blade\",\"value\":\"off\"},\"8\":{\"name\":\"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl\",\"value\":\"off\"},\"9\":{\"name\":\"Eye draped removed\",\"value\":\"off\"},\"10\":{\"name\":\"5% betadine eye drop applied\",\"value\":\"off\"},\"11\":{\"name\":\"Eye Patched\",\"value\":\"off\"},\"12\":{\"name\":\"Surgery concluded\",\"value\":\"off\"}}', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -380,6 +508,37 @@ CREATE TABLE `counsel` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `counsel`
+--
+
+INSERT INTO `counsel` (`treat`, `vital`, `copy`, `attach`, `transfer`, `conset`, `id`) VALUES
+('', NULL, '', '', '', '', 1),
+('', NULL, '', '', '', '', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `counselling_consent`
+--
+
+CREATE TABLE `counselling_consent` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `a` varchar(500) DEFAULT NULL,
+  `b` varchar(500) DEFAULT NULL,
+  `c` varchar(500) DEFAULT NULL,
+  `d` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `counselling_consent`
+--
+
+INSERT INTO `counselling_consent` (`id`, `date`, `a`, `b`, `c`, `d`) VALUES
+(1, '2023-08-16', '12', '1213', '14', '15'),
+(2, '2023-08-13', '1', '12', '13', '14');
+
 -- --------------------------------------------------------
 
 --
@@ -399,6 +558,14 @@ CREATE TABLE `discharge` (
   `date1` date DEFAULT NULL,
   `follow` varchar(2200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `discharge`
+--
+
+INSERT INTO `discharge` (`id`, `date`, `time`, `mlc`, `mi`, `pd`, `history`, `exam`, `treat`, `date1`, `follow`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -429,6 +596,14 @@ CREATE TABLE `discharge_dama_consent` (
   `wit_rel` text DEFAULT NULL,
   `wit_date` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `discharge_dama_consent`
+--
+
+INSERT INTO `discharge_dama_consent` (`id`, `input_1`, `input_2`, `input_3`, `input_4`, `input_5`, `input_6`, `input_7`, `input_8`, `other`, `check_1`, `check_2`, `check_3`, `check_4`, `check_5`, `p_sign`, `p_time`, `wit_name`, `wit_details`, `wit_rel`, `wit_date`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', 'on', '', '', '', '', '', '', '', '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -560,6 +735,14 @@ CREATE TABLE `doctor_initail_assesment` (
   `submit_name` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `doctor_initail_assesment`
+--
+
+INSERT INTO `doctor_initail_assesment` (`id`, `contact_no`, `address`, `reimbursement`, `occupation`, `weight`, `omlic_number`, `incharge_doctor`, `provisional_diagnosis`, `final_diagnosis`, `date`, `time`, `obstetric-history`, `discharge`, `menarche`, `LMP`, `Para`, `Gavdia`, `allergies`, `family-history`, `operation-accidents`, `education-status`, `history`, `duration`, `presenting-complaint`, `build`, `anemia`, `edema`, `rr`, `cyanosis`, `bp`, `lcterus`, `pulse`, `th`, `ot`, `weight1`, `jvp`, `skin`, `rs`, `cvs`, `cns`, `pa`, `provisional-diagnosis1`, `differential-diagnosis1`, `submit_name`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -591,6 +774,14 @@ CREATE TABLE `drug_administration` (
   `dosage` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `signature` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `drug_administration`
+--
+
+INSERT INTO `drug_administration` (`id`, `table_time`, `table_date`, `drug_name`, `frequency`, `table_sign`, `dosage`, `signature`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -650,6 +841,14 @@ CREATE TABLE `eye_pre_op_checklist` (
   `icu_sign` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `eye_pre_op_checklist`
+--
+
+INSERT INTO `eye_pre_op_checklist` (`patient_id`, `eye`, `reporting_time`, `instruction_from_ot`, `si_no`, `proposed_discharge_time`, `payment_mode`, `icu_in_time`, `icu_out_time`, `ot_in_time`, `ot_out_time`, `discharge_time`, `description`, `emr`, `surgeon`, `proc`, `ward_sign`, `icu_sign`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -706,6 +905,14 @@ CREATE TABLE `fdata` (
   `nursesname` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `fdata`
+--
+
+INSERT INTO `fdata` (`id`, `opd`, `date0`, `time0`, `relative`, `emergency`, `modeofarr`, `allergic`, `descallergy`, `complaints`, `timevs`, `tempvs`, `bpvs`, `respvs`, `hrvs`, `spovs`, `bslvs`, `mass`, `triage`, `past`, `labreports`, `phyexam`, `head`, `heart`, `chest`, `abdomen`, `spine`, `neuroexam`, `anyother`, `pain`, `vascale`, `nopain`, `worstpain`, `location`, `duration`, `quality`, `characterlbr`, `aggfactor`, `relivfactor`, `treatment`, `proceduregiven`, `provisional`, `advice`, `discharge`, `timecomp`, `phyname`, `nursesname`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -731,6 +938,14 @@ CREATE TABLE `feedback_english` (
   `r_15` text DEFAULT NULL,
   `r_16` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback_english`
+--
+
+INSERT INTO `feedback_english` (`id`, `r_1`, `r_2`, `r_3`, `r_4`, `r_5`, `r_6`, `r_7`, `r_8`, `r_9`, `r_10`, `r_11`, `r_12`, `r_13`, `r_14`, `r_15`, `r_16`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -758,6 +973,14 @@ CREATE TABLE `feedback_marthi` (
   `r_16` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `feedback_marthi`
+--
+
+INSERT INTO `feedback_marthi` (`id`, `r_1`, `r_2`, `r_3`, `r_4`, `r_5`, `r_6`, `r_7`, `r_8`, `r_9`, `r_10`, `r_11`, `r_12`, `r_13`, `r_14`, `r_15`, `r_16`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -771,6 +994,13 @@ CREATE TABLE `floor_cleaning` (
   `yes_no` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`yes_no`)),
   `remark` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `floor_cleaning`
+--
+
+INSERT INTO `floor_cleaning` (`id`, `location`, `month`, `yes_no`, `remark`) VALUES
+(1, NULL, '2023-08', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -802,6 +1032,14 @@ CREATE TABLE `general_consent` (
   `time_5` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `general_consent`
+--
+
+INSERT INTO `general_consent` (`id`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -824,6 +1062,14 @@ CREATE TABLE `general_info_consent` (
   `date4` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `general_info_consent`
+--
+
+INSERT INTO `general_info_consent` (`id`, `sign1`, `sign2`, `sign3`, `sign4`, `name1`, `name2`, `name3`, `name4`, `date1`, `date2`, `date3`, `date4`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -842,6 +1088,14 @@ CREATE TABLE `handover` (
   `rel` varchar(400) NOT NULL,
   `wit2` varchar(400) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `handover`
+--
+
+INSERT INTO `handover` (`id`, `element1`, `element2`, `element3`, `transfer`, `recipient`, `nurse`, `wit1`, `rel`, `wit2`) VALUES
+(1, NULL, NULL, NULL, '', '', '', '', '', ''),
+(2, NULL, NULL, NULL, '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -874,6 +1128,14 @@ CREATE TABLE `highrisk_consent` (
   `time_5` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `highrisk_consent`
+--
+
+INSERT INTO `highrisk_consent` (`id`, `date`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -898,6 +1160,14 @@ CREATE TABLE `histopath` (
   `time` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `histopath`
+--
+
+INSERT INTO `histopath` (`id`, `specimen`, `clinical`, `exam`, `investi`, `imaging`, `diagno`, `ref`, `opnote`, `refered`, `rcontainer`, `relative`, `relsign`, `date`, `time`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', '');
+
 -- --------------------------------------------------------
 
 --
@@ -921,6 +1191,14 @@ CREATE TABLE `hiv_consent` (
   `varsh2` varchar(400) DEFAULT NULL,
   `time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hiv_consent`
+--
+
+INSERT INTO `hiv_consent` (`id`, `sahi1`, `sahi2`, `sahi3`, `name1`, `name2`, `date`, `add1`, `add2`, `add3`, `vay1`, `vay2`, `varsh1`, `varsh2`, `time`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -985,6 +1263,14 @@ CREATE TABLE `inform_consent` (
   `time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inform_consent`
+--
+
+INSERT INTO `inform_consent` (`id`, `sahi1`, `sahi2`, `sahi3`, `name1`, `name2`, `date`, `add1`, `add2`, `add3`, `vay1`, `vay2`, `uda`, `doctor`, `time`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1000,6 +1286,14 @@ CREATE TABLE `info_sur_consent` (
   `doctor` text DEFAULT NULL,
   `pro` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `info_sur_consent`
+--
+
+INSERT INTO `info_sur_consent` (`id`, `sign`, `name`, `date`, `time`, `doctor`, `pro`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1037,6 +1331,14 @@ CREATE TABLE `info_transfusion_consent` (
   `time_4` time DEFAULT NULL,
   `time_5` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `info_transfusion_consent`
+--
+
+INSERT INTO `info_transfusion_consent` (`id`, `date`, `dr`, `dr_1`, `red`, `platelets`, `plasma`, `cryo`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`) VALUES
+(1, '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '00:00:00'),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1080,6 +1382,52 @@ CREATE TABLE `initial_counselling` (
   `date_1` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `initial_counselling`
+--
+
+INSERT INTO `initial_counselling` (`id`, `r_1`, `r_2`, `r_3`, `r_4`, `r_5`, `r_6`, `r_7`, `r_8`, `r_9`, `r_10`, `r_11`, `r_12`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`, `date_1`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `investigation_view`
+--
+
+CREATE TABLE `investigation_view` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `investigation_view`
+--
+
+INSERT INTO `investigation_view` (`id`, `patient_id`, `description`) VALUES
+(10, 1, 'hello');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `in_view`
+--
+
+CREATE TABLE `in_view` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `desc_in` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `in_view`
+--
+
+INSERT INTO `in_view` (`id`, `patient_id`, `desc_in`) VALUES
+(4, 1, 'newlngitwniotnvoitnvoi eoinv o botwin tkb iot boin ir');
+
 -- --------------------------------------------------------
 
 --
@@ -1121,6 +1469,14 @@ CREATE TABLE `ipd_bill1` (
   `description` varchar(7000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ipd_bill1`
+--
+
+INSERT INTO `ipd_bill1` (`id`, `stay_charge`, `t_days`, `t_stay`, `cd_fee`, `c_days`, `t_fee`, `visit`, `no_visits`, `t_visits`, `nursing`, `total`, `total_nc`, `ot`, `ot_charge`, `total_ot`, `ana`, `ana_cd`, `total_ana`, `su_fee`, `s_visits`, `total_su`, `treat_charges`, `treat_days`, `total_treat`, `c_arm`, `count_carm`, `total_carm`, `ecg_charge`, `total_ecg`, `total_ecg_charge`, `description`) VALUES
+(1, '600', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '{\"0\":{\"name\":\"stay\",\"stay_charge_per_day\":\"600\",\"totalnumberofdays\":\"\",\"total_stay_charge\":\"\"},\"1\":{\"name\":\"Consluted Doctor\",\"consulted_doctor_fees\":\"\",\"total_consulted_days\":\"\",\"total_consulted_fees\":\"\"},\"2\":{\"name\":\"Visit\",\"visit\":\"\",\"no_of_visit\":\"\",\"total_visit_fees\":\"\"},\"3\":{\"name\":\"Nursing\",\"nursing\":\"\",\"total_nursing\":\"\",\"total_nursing_charge\":\"\"},\"4\":{\"name\":\"OT\",\"ot\":\"\",\"ot_charge\":\"\",\"total_ot_charge\":\"\"},\"5\":{\"name\":\"Anasthesia\",\"anasthesia\":\"\",\"anasthesia_charge_days\":\"\",\"total_anasthesia_fees\":\"\"},\"6\":{\"name\":\"Surgeon\",\"surgeon_fees\":\"\",\"surgeon_visits\":\"\",\"total_surgeon_visits\":\"\"},\"7\":{\"name\":\"Treatment\",\"treatment_charge\":\"\",\"no_of_days\":\"\",\"total_treatment_charge\":\"\"},\"8\":{\"name\":\"C-ARM\",\"carm\":\"\",\"carm_count\":\"\",\"total_carm_fees\":\"\"},\"9\":{\"name\":\"ECG\",\"ecg\":\"\",\"total_ecg\":\"\",\"total_ecg_charge\":\"\"},\"10\":{\"name\":\"XRAY\",\"xray\":\"\",\"total_xray\":\"\",\"total_xray_fees\":\"\"},\"11\":{\"name\":\"Moniter Charges\",\"monitor_charge\":\"\",\"no_of_days\":\"\",\"total_monitor_charge\":\"\"},\"12\":{\"name\":\"Visiting Surgeon Fee\",\"visiting_surgeon_fees\":\"\",\"visiting_surgeon_no_of_visits\":\"\",\"total_visit_surgeon_fees\":\"\"},\"13\":{\"name\":\"Implant\",\"implant_charges\":\"\",\"no_of_days\":\"\",\"total_implant_charge\":\"\"},\"14\":{\"name\":\"Pathology Charges\",\"pathology_charge\":\"\",\"no_of_tests\":\"\",\"total_pathology_charge\":\"\"},\"15\":{\"name\":\"Medicines\",\"medicines\":\"\",\"medicine_quanity_times\":\"\",\"total_medical_charge\":\"\"},\"17\":{\"name\":\"Plaster\",\"plaster\":\"\",\"plaster_quantity\":\"\",\"total_plaster_charge\":\"\"},\"18\":{\"name\":\"Other\",\"other_charges\":\"\",\"quantity\":\"\",\"total_charge\":\"\"}}'),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -1161,6 +1517,14 @@ CREATE TABLE `ipd_bill2` (
   `payable` int(11) NOT NULL,
   `payment_id` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ipd_bill2`
+--
+
+INSERT INTO `ipd_bill2` (`id`, `xray`, `t_xray`, `t_xfee`, `m_charge`, `m_days`, `t_mcharge`, `v_sfee`, `v_visits`, `t_sfee`, `i_charge`, `n_imp`, `t_icharge`, `p_charge`, `n_tests`, `t_pcharge`, `med`, `med_quant`, `med_tot`, `plaster`, `plaster_quant`, `plaster_tot`, `other`, `quant`, `total`, `tot_pay`, `adv`, `pay_method`, `pay_due`, `discount`, `payable`, `payment_id`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'NEFT', '', 0, 0, ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -1246,6 +1610,14 @@ CREATE TABLE `minor_pro_consent` (
   `date_1` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `minor_pro_consent`
+--
+
+INSERT INTO `minor_pro_consent` (`id`, `input_1`, `input_2`, `input_3`, `input_4`, `input_5`, `input_6`, `input_7`, `input_8`, `input_9`, `input_10`, `input_11`, `input_12`, `input_13`, `dr_name_1`, `dr_name_2`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`, `date_1`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1269,6 +1641,14 @@ CREATE TABLE `mlc` (
   `time2` varchar(6) NOT NULL,
   `sign` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mlc`
+--
+
+INSERT INTO `mlc` (`id`, `mlc`, `date1`, `vay`, `mo`, `mupu`, `date2`, `time1`, `msg`, `thikar`, `yn`, `nav`, `date3`, `time2`, `sign`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1306,6 +1686,14 @@ CREATE TABLE `nurses_daily_record` (
   `remarks` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`remarks`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `nurses_daily_record`
+--
+
+INSERT INTO `nurses_daily_record` (`allergy`, `special_care`, `id`, `date`, `time`, `nursing_note`, `name`, `signature`, `remarks`) VALUES
+(NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1337,6 +1725,14 @@ CREATE TABLE `nurse_intial_assesment` (
   `submit_date` date DEFAULT NULL,
   `submit_sign` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nurse_intial_assesment`
+--
+
+INSERT INTO `nurse_intial_assesment` (`id`, `mode_of_arrival`, `accompanied`, `patient_name`, `relation`, `contact_person`, `phone_number`, `language`, `interpereter`, `economic_status`, `education_status`, `compliant`, `resperation`, `height`, `allergy_drug`, `allergy_food`, `allergy_blood`, `tab1`, `tab2`, `tab3`, `submit_name`, `submit_date`, `submit_sign`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1372,6 +1768,14 @@ CREATE TABLE `nutritional_ass` (
   `date` date NOT NULL,
   `time` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nutritional_ass`
+--
+
+INSERT INTO `nutritional_ass` (`id`, `allergy`, `namediet`, `diagnosis`, `complaints`, `csymptm`, `treatment`, `height`, `weight`, `bmi`, `wenou`, `weichange`, `dietprior`, `appetite`, `foodaller`, `vegnon`, `hofood`, `proper`, `junk`, `cookm`, `waterin`, `saltin`, `recomm`, `nameofdiet`, `date`, `time`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -1441,6 +1845,14 @@ CREATE TABLE `ocu` (
   `inc` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ocu`
+--
+
+INSERT INTO `ocu` (`id`, `sur`, `ass`, `nurse`, `hca`, `visit`, `date`, `s_time`, `e_time`, `proc`, `ana`, `com`, `refer`, `eye`, `ot`, `case_no`, `emr`, `asd`, `record`, `pos`, `inc`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -1453,6 +1865,14 @@ CREATE TABLE `op` (
   `sur` varchar(2200) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `op`
+--
+
+INSERT INTO `op` (`name`, `op`, `sur`, `id`) VALUES
+('&<br /><b>Warning</b>:  Undefined array key 1 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>261</b><br />&<br /><b>Warning</b>:  Undefined array key 2 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>265</b><br />&&&&', '&<br /><b>Warning</b>:  Undefined array key 1 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>303</b><br />&<br /><b>Warning</b>:  Undefined array key 2 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>308</b><br />&<br />\r\n<b>Warning</b>:  Undefined array key 3 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>318</b><br />\r\n&<br />\r\n<b>Warning</b>:  Undefined array key 4 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>323</b><br />\r\n&<br />\r\n<b>Warning</b>:  Undefined array key 5 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>333</b><br />\r\n&<br />\r\n<b>Warning</b>:  Undefined array key 6 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>338</b><br />\r\n', '&<br /><b>Warning</b>:  Undefined array key 1 in <b>C:xampphtdocsalatest codestaffon-notes.php</b> on line <b>356</b><br />&&', 1),
+('', '', '', 2);
 
 -- --------------------------------------------------------
 
@@ -1467,6 +1887,19 @@ CREATE TABLE `opd_bill` (
   `amount` varchar(50) NOT NULL,
   `qty` varchar(50) NOT NULL,
   `total` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opd_bill_pay`
+--
+
+CREATE TABLE `opd_bill_pay` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `pay_method` varchar(500) NOT NULL,
+  `payment_id` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1526,6 +1959,13 @@ CREATE TABLE `operation_record` (
   `dyn_array` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`dyn_array`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `operation_record`
+--
+
+INSERT INTO `operation_record` (`id`, `inp_array`, `dyn_array`) VALUES
+(1, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1551,6 +1991,14 @@ CREATE TABLE `opto_ascan` (
   `iol_1` text DEFAULT NULL,
   `iol_2` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `opto_ascan`
+--
+
+INSERT INTO `opto_ascan` (`id`, `k1_1`, `k1_2`, `k2_1`, `k2_2`, `avg_1`, `avg_2`, `axl_1`, `axl_2`, `acd_1`, `acd_2`, `aconst_1`, `aconst_2`, `formula_1`, `formula_2`, `iol_1`, `iol_2`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1597,6 +2045,14 @@ CREATE TABLE `opto_examination` (
   `ar_axis_2` text DEFAULT NULL,
   `dig` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `opto_examination`
+--
+
+INSERT INTO `opto_examination` (`id`, `wnl`, `lids_1`, `lids_2`, `conjunctive_1`, `conjunctive_2`, `cornea_1`, `cornea_2`, `ac_1`, `ac_2`, `pupil_1`, `pupil_2`, `lens_1`, `lens_2`, `fundus_1`, `fundus_2`, `sac_1`, `sac_2`, `iop_1`, `iop_2`, `diagnosis_1`, `diagnosis_2`, `vision_1`, `vision_2`, `via_spect_1`, `via_spect_2`, `via_ph_1`, `via_ph_2`, `at_1`, `at_2`, `ar_sph_1`, `ar_sph_2`, `ar_cyl_1`, `ar_cyl_2`, `ar_axis_1`, `ar_axis_2`, `dig`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -1659,6 +2115,14 @@ CREATE TABLE `opto_surgery` (
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `opto_surgery`
+--
+
+INSERT INTO `opto_surgery` (`id`, `surgery_advice`, `surgery_plan_date`, `surgery_status`, `surgery_re`, `surgery_le`, `lens`, `power`, `batch`, `other_1`, `other_2`, `final_diagonsis`, `condition_discharge`, `admission_date`, `admission_time`, `surgery_date`, `surgery_time`, `discharge_date`, `discharge_time`, `notes`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1709,6 +2173,14 @@ CREATE TABLE `ortho_discharge` (
   `sign` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ortho_discharge`
+--
+
+INSERT INTO `ortho_discharge` (`id`, `mlc`, `department`, `religion`, `occupation`, `dateofs`, `timeofs`, `dateofd`, `timeofd`, `ptc`, `typeofd`, `diagnosis`, `icd`, `followup`, `date0`, `sign`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(2, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -1735,6 +2207,14 @@ CREATE TABLE `ortho_initial_counselling` (
   `surgeon` text NOT NULL,
   `proc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ortho_initial_counselling`
+--
+
+INSERT INTO `ortho_initial_counselling` (`patient_id`, `payment_mode`, `patient_name`, `patient_sign`, `patient_date`, `patient_time`, `witness_name`, `witness_sign`, `witness_date`, `witness_time`, `councellor_name`, `councellor_sign`, `councellor_date`, `councellor_time`, `description`, `emr`, `surgeon`, `proc`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1787,6 +2267,14 @@ CREATE TABLE `ortho_pre_op_checklist` (
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ortho_pre_op_checklist`
+--
+
+INSERT INTO `ortho_pre_op_checklist` (`patient_id`, `input1`, `input2`, `description`) VALUES
+(1, NULL, NULL, NULL),
+(2, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1820,6 +2308,14 @@ CREATE TABLE `ortho_p_general` (
   `date_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ortho_p_general`
+--
+
+INSERT INTO `ortho_p_general` (`g_condition`, `skin`, `ana`, `nai`, `cya`, `any`, `oed`, `jaun`, `thro`, `toun`, `lymp`, `pain`, `rs1`, `cvs1`, `cns1`, `pa`, `other`, `p_diag`, `f_diag`, `p_care`, `num_pain_scale`, `id`, `name_sign`, `date_time`) VALUES
+('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, '', '2023-08-09 20:09:26'),
+('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 2, '', '2023-08-13 11:05:01');
+
 -- --------------------------------------------------------
 
 --
@@ -1840,6 +2336,14 @@ CREATE TABLE `ortho_p_init` (
   `id` int(11) NOT NULL,
   `img` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ortho_p_init`
+--
+
+INSERT INTO `ortho_p_init` (`p_his`, `resp`, `cvs`, `rs`, `height`, `r_his`, `m_his`, `habit`, `invest`, `nutrition`, `id`, `img`) VALUES
+('', '', '', '', '', '', '', '', '', '', 1, ''),
+('', '', '', '', '', '', '', '', '', '', 2, '');
 
 -- --------------------------------------------------------
 
@@ -1870,6 +2374,14 @@ CREATE TABLE `ortho_p_insure` (
   `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ortho_p_insure`
+--
+
+INSERT INTO `ortho_p_insure` (`id`, `uhid`, `ipd`, `ward/icu`, `bed/room`, `aadhar`, `time`, `occ`, `em_c`, `mlc/nmlc`, `i_company`, `relationship`, `ad_c`, `s_discharge`, `icd`, `p_diagnosis`, `f_diagnosis`, `c_death`, `insure`, `date`) VALUES
+(1, '1/09/08/2023', '', '', '', '', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', NULL),
+(2, '2/13/08/2023', '', '', '', '', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1891,6 +2403,14 @@ CREATE TABLE `patient_info` (
   `procedure_done` varchar(1000) NOT NULL,
   `ortho_fluid` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient_info`
+--
+
+INSERT INTO `patient_info` (`patient_id`, `weight`, `pulse`, `bp`, `temp`, `history`, `diagnosis`, `fluid`, `examination`, `chief_complaint`, `family_history`, `procedure_done`, `ortho_fluid`) VALUES
+(1, '', '', '', 0, '', 'u', '', 'bk', 'buk', '', '', ''),
+(2, '', '', '', 0, '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1930,6 +2450,14 @@ CREATE TABLE `patient_records` (
   `is_refered` int(11) NOT NULL DEFAULT 0,
   `refered_by` text NOT NULL DEFAULT ' '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient_records`
+--
+
+INSERT INTO `patient_records` (`id`, `is_old_patient`, `name`, `address`, `taluka`, `district`, `age`, `sex`, `dob_date`, `reg_date`, `mobile`, `consultant`, `type_of_visit`, `name_pwp`, `address_pwp`, `taluka_pwp`, `district_pwp`, `age_pwp`, `relation`, `sex_pwp`, `mobile_pwp`, `referred_by`, `patient_complaints`, `is_admited`, `is_registered`, `is_approved`, `is_eye`, `is_ortho`, `is_refered`, `refered_by`) VALUES
+(1, 'no', 'new', '', '', '', 0, 'Male', '0000-00-00', '2023-08-09', '', 'Himanshu', 'Eye', '', '', '', '', 0, '', 'Male', '', '', '', 1, 1, 0, 1, 1, 0, ' '),
+(2, 'no', 'Rose', '', '', '', 0, 'Male', '0000-00-00', '2023-08-13', '', 'Himanshu', 'Eye', '', '', '', '', 0, '', 'Male', '', '', '', 1, 1, 0, 1, 1, 0, ' ');
 
 -- --------------------------------------------------------
 
@@ -2006,6 +2534,14 @@ CREATE TABLE `permission` (
   `t_12` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`id`, `input_1`, `input_2`, `input_3`, `input_4`, `input_5`, `input_6`, `input_7`, `input_8`, `input_9`, `input_10`, `input_11`, `input_12`, `input_13`, `t_1`, `t_2`, `t_3`, `t_4`, `t_5`, `t_6`, `t_7`, `t_8`, `t_9`, `t_10`, `t_11`, `t_12`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2036,6 +2572,14 @@ CREATE TABLE `post_consent` (
   `date` date DEFAULT NULL,
   `sign` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_consent`
+--
+
+INSERT INTO `post_consent` (`id`, `date`, `sign`) VALUES
+(1, NULL, NULL),
+(2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2078,6 +2622,17 @@ CREATE TABLE `prescription` (
   `eat` varchar(500) NOT NULL,
   `type` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `prescription`
+--
+
+INSERT INTO `prescription` (`id`, `patient_id`, `med_name`, `quantity`, `morning`, `afternoon`, `night`, `days`, `eat`, `type`) VALUES
+(2, 1, 'm', '', '0', '0', '0', '', '', 'E/D'),
+(3, 1, 'mn', '', '0', '0', '0', '', 'जेवणा नंतर', 'Tab'),
+(4, 1, 'nm', '', '0', '0', '0', '', 'जेवणा नंतर', 'Syrup'),
+(5, 1, 'b', '', '0', '0', '0', '', 'जेवणा नंतर', 'Cap'),
+(6, 1, 'yi', '', '0', '0', '0', '', '', 'E/D');
 
 -- --------------------------------------------------------
 
@@ -2124,6 +2679,13 @@ CREATE TABLE `pres_back` (
   `iop_od` text DEFAULT NULL,
   `iop_os` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pres_back`
+--
+
+INSERT INTO `pres_back` (`id`, `past_history`, `Add_data`, `pgp_od`, `pgp_os`, `allergic_to`, `vision_refraction`, `distant_od`, `distant_os`, `near_od`, `near_os`, `flash_od`, `flash_os`, `unaided_od`, `unaided_os`, `cyclo_flash_od`, `cyclo_flash_os`, `slit_lamp_examination_od`, `slit_lamp_examination_os`, `ocular_adnexa_od`, `ocular_adnexa_os`, `roplas_od`, `roplas_os`, `lids_od`, `lids_os`, `conjuctiva_od`, `conjuctiva_os`, `anti_chamber_od`, `anti_chamber_os`, `iris_od`, `iris_os`, `pupil_od`, `pupil_os`, `lens_od`, `lens_os`, `iop_od`, `iop_os`) VALUES
+(1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -2220,6 +2782,14 @@ CREATE TABLE `pre_operative_anesth` (
   `date_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `pre_operative_anesth`
+--
+
+INSERT INTO `pre_operative_anesth` (`id`, `date_assessment`, `date_surgery`, `name_surgery`, `name_anesthetist`, `name_surgeon`, `allergic`, `habit`, `history`, `medication`, `pre_anaesthesia`, `vital`, `sys_exam`, `airway`, `mpc`, `mouth`, `im_distance`, `teeth`, `asa`, `date`, `blood_grp`, `hb`, `wbc`, `lnebm`, `platelet`, `bsl`, `cr`, `na`, `lft`, `sgot`, `pt`, `inr`, `fib`, `abg`, `mark`, `xray`, `ecg`, `echo`, `other`, `pre_advice`, `nbm`, `investigations`, `reference`, `medication2`, `blood_request`, `icu`, `anaethesia_plan_ex`, `post_operative_plan`, `post_operative_pain`, `anae_plan`, `premedication`, `typelasa`, `special_req`, `possibility_vent`, `post_icu`, `identify`, `nbm3`, `fresh_comp`, `consent`, `pac_chart`, `comorbid`, `investigation_review`, `blood_arranged`, `change_plan`, `describ`, `pre_op_advice`, `name_sign`, `date_time`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2266,6 +2836,14 @@ CREATE TABLE `p_general` (
   `date_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `p_general`
+--
+
+INSERT INTO `p_general` (`g_condition`, `skin`, `ana`, `nai`, `cya`, `any`, `oed`, `jaun`, `thro`, `toun`, `lymp`, `pain`, `rs1`, `cvs1`, `cns1`, `pa`, `other`, `p_diag`, `f_diag`, `p_care`, `id`, `num_pain_scale`, `name_sign`, `date_time`) VALUES
+('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 0, '', '2023-08-09 20:09:26'),
+('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 2, 0, '', '2023-08-13 11:05:01');
+
 -- --------------------------------------------------------
 
 --
@@ -2286,6 +2864,14 @@ CREATE TABLE `p_init` (
   `id` int(11) NOT NULL,
   `img` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `p_init`
+--
+
+INSERT INTO `p_init` (`p_his`, `resp`, `cvs`, `rs`, `height`, `r_his`, `m_his`, `habit`, `invest`, `nutrition`, `id`, `img`) VALUES
+('', '', '', '', '', '', '', '', '', '', 1, ''),
+('', '', '', '', '', '', '', '', '', '', 2, '');
 
 -- --------------------------------------------------------
 
@@ -2316,6 +2902,14 @@ CREATE TABLE `p_insure` (
   `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `p_insure`
+--
+
+INSERT INTO `p_insure` (`id`, `uhid`, `ipd`, `ward/icu`, `bed/room`, `aadhar`, `time`, `occ`, `em_c`, `mlc/nmlc`, `i_company`, `relationship`, `ad_c`, `s_discharge`, `icd`, `p_diagnosis`, `f_diagnosis`, `c_death`, `insure`, `date`) VALUES
+(1, '1/09/08/2023', '', '', '', '', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', NULL),
+(2, '2/13/08/2023', '', '', '', '', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2330,6 +2924,14 @@ CREATE TABLE `p_log` (
   `password` varchar(100) DEFAULT NULL,
   `opd_discount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `p_log`
+--
+
+INSERT INTO `p_log` (`id`, `is_opd`, `is_ipd`, `username`, `password`, `opd_discount`) VALUES
+(1, 1, 1, '', '', 0),
+(2, 1, NULL, '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -2362,6 +2964,14 @@ CREATE TABLE `rate_charges` (
   `input_21` text DEFAULT NULL,
   `input_22` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rate_charges`
+--
+
+INSERT INTO `rate_charges` (`id`, `input_1`, `input_2`, `input_3`, `input_4`, `input_5`, `input_6`, `input_7`, `input_8`, `input_9`, `input_10`, `input_11`, `input_12`, `input_13`, `input_14`, `input_15`, `input_16`, `input_17`, `input_18`, `input_19`, `input_20`, `input_21`, `input_22`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2451,6 +3061,14 @@ CREATE TABLE `ref_consent` (
   `wit_date` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ref_consent`
+--
+
+INSERT INTO `ref_consent` (`id`, `patient_1`, `patient_2`, `invest_1`, `invest_2`, `d_1`, `d_2`, `date`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`, `p_sign`, `p_time`, `wit_name`, `wit_details`, `wit_rel`, `wit_date`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2503,6 +3121,14 @@ CREATE TABLE `room_consent` (
   `time_4` time DEFAULT NULL,
   `time_5` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room_consent`
+--
+
+INSERT INTO `room_consent` (`id`, `date`, `inp_1`, `inp_2`, `inp_3`, `name_1`, `name_2`, `name_3`, `name_4`, `name_5`, `sign_1`, `sign_2`, `sign_3`, `sign_4`, `sign_5`, `date_1`, `date_2`, `date_3`, `date_4`, `date_5`, `time_1`, `time_2`, `time_3`, `time_4`, `time_5`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2573,6 +3199,25 @@ CREATE TABLE `surgical_site_injection_register` (
   `remarks` text DEFAULT NULL,
   `sign` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `symptoms_view`
+--
+
+CREATE TABLE `symptoms_view` (
+  `id` int(11) NOT NULL,
+  `desc_sym` text NOT NULL,
+  `patient_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `symptoms_view`
+--
+
+INSERT INTO `symptoms_view` (`id`, `desc_sym`, `patient_id`) VALUES
+(1, 'ho', 1);
 
 -- --------------------------------------------------------
 
@@ -2753,6 +3398,14 @@ CREATE TABLE `vr_surgery` (
   `inc` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `vr_surgery`
+--
+
+INSERT INTO `vr_surgery` (`id`, `sur`, `ass`, `nurse`, `hca`, `visit`, `date`, `s_time`, `e_time`, `proc`, `ana`, `com`, `refer`, `eye`, `ot`, `case_no`, `emr`, `asd`, `conj`, `mus`, `imp`, `per`, `anchor`, `bank`, `vit_l`, `vit_i`, `par`, `close`, `dur`, `med_l`, `med_s`, `peri`, `mus1`, `anchor1`, `bb`, `sb`, `scl`, `can`, `lens`, `vit`, `base`, `fge`, `lpfc`, `c3f8`, `sili`, `mp`, `el`, `loc_m`, `sys_m`, `dur1`, `remark`, `pos`, `inc`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', ''),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -2791,6 +3444,12 @@ ALTER TABLE `ambulance_register`
 -- Indexes for table `ana`
 --
 ALTER TABLE `ana`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `anumati_consent`
+--
+ALTER TABLE `anumati_consent`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2851,6 +3510,12 @@ ALTER TABLE `cor2`
 -- Indexes for table `counsel`
 --
 ALTER TABLE `counsel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `counselling_consent`
+--
+ALTER TABLE `counselling_consent`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2962,6 +3627,18 @@ ALTER TABLE `info_sur_consent`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `investigation_view`
+--
+ALTER TABLE `investigation_view`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `in_view`
+--
+ALTER TABLE `in_view`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ipd_bill1`
 --
 ALTER TABLE `ipd_bill1`
@@ -3037,6 +3714,12 @@ ALTER TABLE `op`
 -- Indexes for table `opd_bill`
 --
 ALTER TABLE `opd_bill`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `opd_bill_pay`
+--
+ALTER TABLE `opd_bill_pay`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3262,6 +3945,12 @@ ALTER TABLE `surgical_site_injection_register`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `symptoms_view`
+--
+ALTER TABLE `symptoms_view`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `template`
 --
 ALTER TABLE `template`
@@ -3320,6 +4009,12 @@ ALTER TABLE `ambulance_register`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `anumati_consent`
+--
+ALTER TABLE `anumati_consent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `appointment_register`
 --
 ALTER TABLE `appointment_register`
@@ -3329,25 +4024,31 @@ ALTER TABLE `appointment_register`
 -- AUTO_INCREMENT for table `change_label`
 --
 ALTER TABLE `change_label`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `change_rate`
 --
 ALTER TABLE `change_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `config_print`
 --
 ALTER TABLE `config_print`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cont`
 --
 ALTER TABLE `cont`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `counselling_consent`
+--
+ALTER TABLE `counselling_consent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `discharge_file_register`
@@ -3389,19 +4090,19 @@ ALTER TABLE `dr_images`
 -- AUTO_INCREMENT for table `floor_cleaning`
 --
 ALTER TABLE `floor_cleaning`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `general_info_consent`
 --
 ALTER TABLE `general_info_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hiv_consent`
 --
 ALTER TABLE `hiv_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `incident_register`
@@ -3419,13 +4120,25 @@ ALTER TABLE `indoor_case_register`
 -- AUTO_INCREMENT for table `inform_consent`
 --
 ALTER TABLE `inform_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `info_sur_consent`
 --
 ALTER TABLE `info_sur_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `investigation_view`
+--
+ALTER TABLE `investigation_view`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `in_view`
+--
+ALTER TABLE `in_view`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `laser`
@@ -3443,7 +4156,7 @@ ALTER TABLE `medical_error_record`
 -- AUTO_INCREMENT for table `minor_pro_consent`
 --
 ALTER TABLE `minor_pro_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `needle_injury_record`
@@ -3467,19 +4180,25 @@ ALTER TABLE `observe2`
 -- AUTO_INCREMENT for table `ocu`
 --
 ALTER TABLE `ocu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `opd_bill`
 --
 ALTER TABLE `opd_bill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `opd_bill_pay`
+--
+ALTER TABLE `opd_bill_pay`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `opd_charges`
 --
 ALTER TABLE `opd_charges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `opd_register`
@@ -3491,7 +4210,7 @@ ALTER TABLE `opd_register`
 -- AUTO_INCREMENT for table `operation_record`
 --
 ALTER TABLE `operation_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `opto_images`
@@ -3527,13 +4246,13 @@ ALTER TABLE `ortho_observe2`
 -- AUTO_INCREMENT for table `patient_records`
 --
 ALTER TABLE `patient_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `patient_register_ot`
 --
 ALTER TABLE `patient_register_ot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `postpone_surgery_record`
@@ -3545,19 +4264,19 @@ ALTER TABLE `postpone_surgery_record`
 -- AUTO_INCREMENT for table `post_consent`
 --
 ALTER TABLE `post_consent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `post_operative_surgical`
 --
 ALTER TABLE `post_operative_surgical`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pre_anas_checkup_record`
@@ -3569,13 +4288,13 @@ ALTER TABLE `pre_anas_checkup_record`
 -- AUTO_INCREMENT for table `pre_operative_anesth`
 --
 ALTER TABLE `pre_operative_anesth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pt_image`
 --
 ALTER TABLE `pt_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `receptionists`
@@ -3614,16 +4333,22 @@ ALTER TABLE `surgical_site_injection_register`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `symptoms_view`
+--
+ALTER TABLE `symptoms_view`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `template`
 --
 ALTER TABLE `template`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `test_advice`
 --
 ALTER TABLE `test_advice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `type`
@@ -3647,7 +4372,7 @@ ALTER TABLE `ventilator_pneumonia`
 -- AUTO_INCREMENT for table `vr_surgery`
 --
 ALTER TABLE `vr_surgery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `wrong_side_record`
