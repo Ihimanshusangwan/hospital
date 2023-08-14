@@ -182,6 +182,27 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
                 <?php echo $res['procedure_done']; ?>
             <?php endif; ?>
         </div>
+
+        <div class="col-12">
+            <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
+                <strong>Investigations:</strong>
+                <?php echo $res['investigation']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
+                <strong>Symptoms:</strong>
+                <?php echo $res['symptoms']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
+                <strong>Instruction:</strong>
+                <?php echo $res['instructions']; ?>
+            <?php endif; ?>
+        </div>
+
+
         <?php if (in_array('med_checkbox', $checkboxes)): ?>
             <div class="container-fluid" style="margin-top: 10px;">
                 <!-- DataTales Example -->
@@ -262,118 +283,7 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
             </div>
         <?php endif; ?>
 
-        <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
-            <div class="container-fluid" style="margin-top: 20px;">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                       <label class="font-weight-bold text-primary" for="" class="text-danger">Investigation :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                </tr>
-                                <tbody id="tbody_5">
-                                    <?php
-                                    $sql_inves = "SELECT * FROM investigation_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $res_inves = $conn->query($sql_inves);
-                                    $i = 1;
-                                    while ($res_inv = $res_inves->fetch_assoc()) {
-                                        echo '<tr>';
-                                        echo '<td>' . $i . '</td>';
-                                        echo '<td>' . $res_inv['description'] . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                            
-                        </div>
-                    </form>
-                </div>
-            </div>
-             </div>
-                </div>
-            </div>
-        <?php endif; ?>
-        <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
-            <div class="container-fluid" style="margin-top: 20px;">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                               <label class="font-weight-bold text-primary"  for="" class="text-danger">Symptoms :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                </tr>
-                                <tbody id="tbody_4">
-                                    <?php
-                                    $sql = "SELECT * FROM symptoms_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $data = $conn->query($sql);
-                                    $i = 1;
-                                    while ($res = $data->fetch_assoc()) {
-                                        echo '<tr>';
-                                        echo '<td>' . $i . '</td>';
-                                        echo '<td>' . $res['desc_sym'] . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                </div>
-            </div></div>
-                </div>
-            </div>
-        <?php endif; ?>
-        <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
-            <div class="container-fluid" style="margin-top: 20px;">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                              
-                <label class="font-weight-bold text-primary" for="" class="text-danger">Instructions :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                </tr>
-                                <tbody id="tbody_3">
-                                    <?php
-                                    $sql = "SELECT * FROM in_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $data = $conn->query($sql);
-                                    $i = 1;
-                                    while ($res = $data->fetch_assoc()) {
-                                        echo '<tr>'; 
-                                        echo '<td>'. $i .'</td>';
-                                        echo '<td>' . $res['desc_in'] . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-            </div>
-
-        </div>
-    </div> </div>
-            </div>
-        <?php endif; ?>
+       
 
         <?php if (in_array('pres_back_checkbox', $checkboxes)): ?>
             <?php

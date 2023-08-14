@@ -140,7 +140,20 @@ if (isset($_POST['template_btn'])) {
             color: transparent;
             /* Hide the text on the pseudo-element on hover */
         }
-    </style>
+    .modal-header .close {
+        padding-right: 9px;
+        padding-left:9px;
+        font-size: 1.9rem;
+        background-color: white;
+        border:none;
+        color:black ;
+        opacity: 0.7;
+        transition: opacity 0.2s ease-in-out;
+    }
+    .modal-header .close:hover {
+        opacity: 1;
+    }
+</style>
 
     <script>
 
@@ -176,58 +189,7 @@ if (isset($_POST['template_btn'])) {
             target.parentElement.style.display = "none";
 
         }
-        items_0=0;
-        function addItem_1() {
-        items_0++;
-        var html = "<tr>";
-        html += "<td>" + items_0 + "</td>";
-        html += "<td><input type='text' name='desc_in_" + items_0 + "'></td>";
-        html +=  "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>";
-        html += "</tr>";
-
-        var row = document.getElementById("tbody_3").insertRow();
-        row.innerHTML = html;
-    }
-
-    function deleteRow(button) {
-        button.parentElement.parentElement.children[2].children[0].value = "";
-        button.parentElement.parentElement.style.display = "none";
-    }
-    items_1=0;
-    function addItem_2() {
-        items_1++;
-        var html = "<tr>";
-        html += "<td>" + items_1 + "</td>";
-        html += "<td><input type='text' name='desc_sym_" + items_1 + "'></td>";
-        html +=  "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>";
-        html += "</tr>";
-
-        var row = document.getElementById("tbody_4").insertRow();
-        row.innerHTML = html;
-    }
-
-    function deleteRow(button) {
-        button.parentElement.parentElement.children[2].children[0].value = "";
-        button.parentElement.parentElement.style.display = "none";
-    } 
-    
-    items_2=0;
-    function addItem_3() {
-        items_2++;
-        var html = "<tr>";
-        html += "<td>" + items_2 + "</td>";
-        html += "<td><input type='text' name='description_" + items_2 + "'></td>";
-        html +=  "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>";
-        html += "</tr>";
-
-        var row = document.getElementById("tbody_5").insertRow();
-        row.innerHTML = html;
-    }
-
-    function deleteRow(button) {
-        button.parentElement.parentElement.children[2].children[0].value = "";
-        button.parentElement.parentElement.style.display = "none";
-    }
+       
     </script>
     <title>Shri Sidhivinayak Netralaya</title>
 </head>
@@ -639,7 +601,7 @@ if (isset($_POST['template_btn'])) {
             </div>
 
 
-            <div class="col-md-4 shadow-lg rounded-3 m-4">
+            <div class="col-md-4 shadow-lg rounded-3 mt-4 mx-3">
                 <?php
                 if (isset($_REQUEST['save_test'])) {
                     $i = 1;
@@ -751,78 +713,39 @@ if (isset($_POST['template_btn'])) {
                 </div>
             </div>
             
-            <div class="col-md-4 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 m-4">
                 <?php
                 if (isset($_REQUEST['save_inves'])) {
-                    $i = 1;
-                    while (isset($_POST["description_$i"])) {
-                        if ($_POST["description_$i"] != "") {
-                            $description = filter_var($_POST["description_$i"], FILTER_SANITIZE_STRING);
-                            $sql_in = "INSERT INTO investigation_view (patient_id,description) VALUES ($id,'$description');";
-                            if ($conn->query($sql_in) === TRUE) {
+                   
+                        echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
+
+                     $investigation = removeExtraSpaces($_REQUEST['investigation']);
+                             $sql = "UPDATE patient_info SET investigation = '$investigation' WHERE patient_id = $id;";
+                    if ($conn->query($sql) === TRUE) {
                                 $i++;
                             } else {
                                 echo "<div class='alert alert-danger'>Error Updating Investigation</div>";
                             }
-                        } else {
-                            $i++;
-                        }
-                    }
-                    echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
-                }
-                if (isset($_REQUEST['delete_inves'])) {
-                    $sql_indel = "DELETE FROM investigation_view WHERE id = {$_POST['inves_id']} ;";
-                    if ($conn->query($sql_indel) === TRUE) {
-                        echo "<div class='alert alert-success'>Investigation Deleted Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Deleting Investigation</div>";
-                    }
-                }
-                $sql_inves = "SELECT * FROM investigation_view WHERE patient_id = $id;";
-                $res_inv = $conn->query($sql_inves)->fetch_assoc();
-                ?>
+                        } 
+               
+                $sql = "SELECT investigation FROM patient_info WHERE patient_id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+              ?>
                 <label class="font-weight-bold" for="" class="text-danger">Investigation :</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                    <th>Delete</th>
-                                </tr>
-                                <tbody id="tbody_5">
-                                    <?php
-                                    $sql_inves = "SELECT * FROM investigation_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $res_inves = $conn->query($sql_inves);
-                                    $i = 1;
-                                    while ($res_inv = $res_inves->fetch_assoc()) {
-                                        echo '<tr>';
-                                        echo '<td>' . $i . '</td>';
-                                        echo '<td>' . $res_inv['description'] . '</td>';
-                                        echo "<td><form method='POST' action=''>
-                                    <input type='hidden' value={$res_inv['id']} name='inves_id' >
-                                    <button type='submit' name = 'delete_inves' class='btn btn-primary'>Delete</button> </form>" . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                    <textarea class="form-control mt-3" id="selected-investigation" name="investigation" ><?php echo $res['investigation'];?></textarea>
+
+                          
                         <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-secondary btn-lg my-2"
-                                    onclick="addItem_3();">Add</button>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-secondary btn-lg my-2" name="save_inves"
+                            <div class="col-3 mt-2">
+                                <input type="submit" class="btn btn-primary " name="save_inves"
                                     value="Save">
                             </div>
-                            <div class="col">
-                                <button type="button" id="" class="btn btn-secondary btn-lg my-2">Lab</button>
+                            <div class="col-6 mt-2">
+                                <button type="button" id="invest" class="btn btn-primary ">Investigation</button>
                             </div>
-                            <div class="col">
+                            <div class="col-1 mt-2">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="investigation_checkbox"
                                         id="investigation_checkbox">
@@ -830,82 +753,80 @@ if (isset($_POST['template_btn'])) {
                             </div>
                             
                         </div>
+                        
+<div class="modal" id="investigationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Investigations</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><strong>
+                    &times;
+                    </strong></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">**Admin Configurable Data**</p>
+                <table class="mx-3">
+        <tr>
+            <th>Checkbox</th>
+            <th>Investigations</th>
+        </tr>
+        
+        <?php
+        $i = 1;
+        $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view");
+
+        while ($res = mysqli_fetch_assoc($sql1)) {
+            echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-investigation" type="checkbox" name="inve_checkbox_'.$i.'"
+                    id="inves_checkbox_'.$i.'">
+                </td>
+                <td>'.$res['description'].'</td>
+            </tr>';
+            $i++;
+        }
+        ?>
+    </table>
+            </div>
+        </div>
+    </div>
+</div>
                     </form>
                 </div>
             </div>
             
-            <div class="col-md-4 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 m-4">
                 <?php
                 if (isset($_REQUEST['save_symptoms'])) {
-                    $i = 1;
-                    while (isset($_POST["desc_sym_$i"])) {
-                        if ($_POST["desc_sym_$i"] != "") {
-                            $desc = filter_var($_POST["desc_sym_$i"], FILTER_SANITIZE_STRING);
-                            $sql = "INSERT INTO symptoms_view (patient_id,desc_sym) VALUES ($id,'$desc');";
+                    echo "<div class='alert alert-success'>Symptoms Updated Successfully</div>";
+                    $symptoms = filter_var($_REQUEST["symptoms"], FILTER_SANITIZE_STRING);
+                            $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
                             if ($conn->query($sql) === TRUE) {
                                 $i++;
                             } else {
                                 echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
                             }
-                        } else {
-                            $i++;
-                        }
-                    }
-                    echo "<div class='alert alert-success'>Symptoms Updated Successfully</div>";
-                }
-                if (isset($_REQUEST['delete_test'])) {
-                    $sql = "DELETE FROM symptoms_view WHERE id = {$_POST['test_id']} ;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Symptoms Deleted Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Deleting Symptoms</div>";
-                    }
-                }
-                $sql = "SELECT * FROM symptoms_view WHERE patient_id = $id;";
+                        } 
+               
+                $sql = "SELECT symptoms FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
                 ?>
                 <label class="font-weight-bold" for="" class="text-danger">Symptoms :</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                    <th>Delete</th>
-                                </tr>
-                                <tbody id="tbody_4">
-                                    <?php
-                                    $sql = "SELECT * FROM symptoms_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $data = $conn->query($sql);
-                                    $i = 1;
-                                    while ($res = $data->fetch_assoc()) {
-                                        echo '<tr>';
-                                        echo '<td>' . $i . '</td>';
-                                        echo '<td>' . $res['desc_sym'] . '</td>';
-                                        echo "<td><form method='POST' action=''>
-                                    <input type='hidden' value={$res['id']} name='test_id' >
-                                    <button type='submit' name = 'delete_test' class='btn btn-primary'>Delete</button> </form>" . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-secondary btn-lg my-2"
-                                    onclick="addItem_2();">Add</button>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-secondary btn-lg my-2" name="save_symptoms"
+                    <textarea class="form-control mt-3" id="selected-symptoms" name="symptoms" ><?php echo $res['symptoms'];?></textarea>
+
+                       <div class="row">
+                            <div class="col-3 mt-2">
+                                <input type="submit" class="btn btn-primary " name="save_symptoms"
                                     value="Save">
                             </div>
-                            <div class="col">
-                                <button type="button" id="" class="btn btn-secondary btn-lg my-2">Lab</button>
+                            <div class="col-6 mt-2">
+                                <button type="button" id="symptom" class="btn btn-primary ">Symptoms</button>
                             </div>
-                            <div class="col">
+                            <div class="col-1 mt-2">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="symptoms_checkbox"
                                         id="symptoms_checkbox">
@@ -913,91 +834,133 @@ if (isset($_POST['template_btn'])) {
                             </div>
                             
                         </div>
+                        
+<div class="modal" id="symptomsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Symptoms</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><strong>
+                    &times;
+                    </strong></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">**Admin Configurable Data**</p>
+                <table class="mx-3">
+        <tr>
+            <th>Checkbox</th>
+            <th>Symptoms</th>
+        </tr>
+        
+        <?php
+        $i = 1;
+        $sql1 = mysqli_query($conn, "SELECT * FROM symptoms_view");
+
+        while ($res = mysqli_fetch_assoc($sql1)) {
+            echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-symptoms" type="checkbox" name="sym_checkbox_'.$i.'"
+                    id="symp_checkbox_'.$i.'">
+                </td>
+                <td>'.$res['desc_sym'].'</td>
+            </tr>';
+            $i++;
+        }
+        ?>
+    </table>
+            </div>
+        </div>
+    </div>
+</div>
                     </form>
                 </div>
             </div>
             
-            <div class="col-md-4 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 m-4">
                 <?php
                 if (isset($_REQUEST['save_instruction'])) {
-                    $i = 1;
-                    while (isset($_POST["desc_in_$i"])) {
-                        if ($_POST["desc_in_$i"] != "") {
-                            $desc = filter_var($_POST["desc_in_$i"], FILTER_SANITIZE_STRING);
-                            $sql = "INSERT INTO in_view (patient_id,desc_in) VALUES ($id,'$desc');";
+                    echo "<div class='alert alert-success'>Instructions Updated Successfully</div>";
+                     $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
+                            $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
                             if ($conn->query($sql) === TRUE) {
                                 $i++;
                             } else {
                                 echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
                             }
-                        } else {
-                            $i++;
-                        }
-                    }
-                    echo "<div class='alert alert-success'>Instructions Updated Successfully</div>";
-                }
-                if (isset($_REQUEST['delete_test1'])) {
-                    $sql = "DELETE FROM in_view WHERE id = {$_POST['test_id']} ;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Instructions Deleted Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Deleting Instructions</div>";
-                    }
-                }
-                $sql = "SELECT * FROM in_view WHERE patient_id = $id;";
+                        } 
+                $sql = "SELECT instructions FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
                 ?>
                 <label class="font-weight-bold" for="" class="text-danger">Instructions :</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-md-2">Sno</th>
-                                    <th>Description</th>
-                                    <th>Delete</th>
-                                </tr>
-                                <tbody id="tbody_3">
-                                    <?php
-                                    $sql = "SELECT * FROM in_view WHERE patient_id = $id ORDER BY id DESC;";
-                                    $data = $conn->query($sql);
-                                    $i = 1;
-                                    while ($res = $data->fetch_assoc()) {
-                                        echo '<tr>'; 
-                                        echo '<td>'. $i .'</td>';
-                                        echo '<td>' . $res['desc_in'] . '</td>';
-                                        echo "<td><form method='POST' action=''>
-                                    <input type='hidden' value={$res['id']} name='test_id' >
-                                    <button type='submit' name = 'delete_test1' class='btn btn-primary'>Delete</button> </form>" . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                    <textarea class="form-control mt-3" id="selected-instructions" name="instructions" ><?php echo $res['instructions'];?></textarea>
+
                         <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-secondary btn-lg my-2"
-                                    onclick="addItem_1();">Add</button>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-secondary btn-lg my-2" name="save_instruction"
+                          
+                            <div class="col-3 mt-2">
+                                <input type="submit" class="btn btn-primary" name="save_instruction"
                                     value="Save">
                             </div>
-                            <div class="col">
-                                <button type="button" id="" class="btn btn-secondary btn-lg my-2">Lab</button>
+                            <div class="col-6 mt-2">
+                                <button type="button" id="instru" class="btn btn-primary ">Instructions</button>
                             </div>
-                            <div class="col">
+                            <div class="col-1 mt-2">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="instructions_checkbox"
                                         id="instructions_checkbox">
                                 </div>
                             </div>
                         </div>
+                                            
+<div class="modal" id="instructionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Instructions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><strong>
+                    &times;
+                    </strong></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">**Admin Configurable Data**</p>
+                <table class="mx-3">
+        <tr>
+            <th>Checkbox</th>
+            <th>Instructions</th>
+        </tr>
+        
+        <?php
+        $i = 1;
+        $sql1 = mysqli_query($conn, "SELECT * FROM in_view");
+
+        while ($res = mysqli_fetch_assoc($sql1)) {
+            echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-instruction" type="checkbox" name="in_checkbox_'.$i.'"
+                    id="inst_checkbox_'.$i.'">
+                </td>
+                <td>'.$res['instruction'].'</td>
+            </tr>';
+            $i++;
+        }
+        ?>
+    </table>
+            </div>
+        </div>
+    </div>
+</div>
+           
+                     
                     </form>
                 </div>
             </div>
+           
+
 
 
         </div>
@@ -1558,6 +1521,98 @@ if (isset($_POST['template_btn'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script>
+$(document).ready(function () {
+    $(".checkbox-instruction").change(function () {
+        var selectedInstructions = [];
+        $(".checkbox-instruction:checked").each(function () {
+            var instruction = $(this).closest("tr").find("td:last").text();
+            selectedInstructions.push(instruction);
+        });
+        $("#selected-instructions").val(selectedInstructions.join("\n"));
+    });
+});
+
+$(document).ready(function () {
+    $(".checkbox-investigation").change(function () {
+        var selectedInvestigation = [];
+        $(".checkbox-investigation:checked").each(function () {
+            var investigation = $(this).closest("tr").find("td:last").text();
+            selectedInvestigation.push(investigation);
+        });
+        $("#selected-investigation").val(selectedInvestigation.join("\n"));
+    });
+});
+$(document).ready(function () {
+    $(".checkbox-symptoms").change(function () {
+        var selectedSymptoms = [];
+        $(".checkbox-symptoms:checked").each(function () {
+            var symptoms = $(this).closest("tr").find("td:last").text();
+            selectedSymptoms.push(symptoms);
+        });
+        $("#selected-symptoms").val(selectedSymptoms.join("\n"));
+    });
+});
+</script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("instructionModal");
+        const instuctionButton = document.getElementById("instru");
+        const closeButton = modal.querySelector(".close");
+
+        instuctionButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("investigationModal");
+        const investigationButton = document.getElementById("invest");
+        const closeButton = modal.querySelector(".close");
+
+        investigationButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("symptomsModal");
+        const symptomsButton = document.getElementById("symptom");
+        const closeButton = modal.querySelector(".close");
+
+        symptomsButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+</script>
 
     <script>
         $(document).ready(function () {
@@ -1580,6 +1635,7 @@ if (isset($_POST['template_btn'])) {
         });
 
 
+
         const labButton = document.getElementById("labButton");
         const labPopup = document.getElementById("labPopup");
 
@@ -1595,6 +1651,7 @@ if (isset($_POST['template_btn'])) {
         closeButton.addEventListener("click", function () {
             labPopup.style.display = "none";
 
+            
             // Get all the selected checkboxes
             const checkboxes = document.querySelectorAll(".lab-checkbox:checked");
 

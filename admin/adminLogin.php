@@ -60,6 +60,7 @@ if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
                     <a href="addType.php" class="text-white mb-2">Add type</a>
 
                 </a>
+               
                 <a class="navbar-brand">
                     <a href="editTitle.php" class="text-white mb-2">Edit Titles</a>
 
@@ -68,6 +69,16 @@ if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
       
          Set Base Patient Id 
     </button>
+    <a class="navbar-brand">
+                <a href="add_investigation.php" class="text-white mx-3 mb-2">Add Investigation</a>
+
+                </a> <a class="navbar-brand">
+                    <a href="add_symptoms.php" class="text-white mb-2">Add Symptoms</a>
+
+                </a> <a class="navbar-brand">
+                    <a href="add_instructions.php" class="text-white  mb-2">Add Instructions</a>
+
+                </a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                         Logout
