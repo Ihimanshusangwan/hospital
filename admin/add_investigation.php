@@ -50,7 +50,7 @@ $sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
         <table  class="mx-3 mb-3">
             <tr>
                 <th>Sno</th>
-                <th>Instructions</th>
+                <th>Investigations</th>
             </tr>
             
 <?php

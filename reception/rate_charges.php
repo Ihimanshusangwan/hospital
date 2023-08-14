@@ -19,12 +19,6 @@ $title = $data->fetch_assoc();
 
 $sql11="SELECT * FROM `change_rate` WHERE 1";
 $data11=$conn->query($sql11);
-<<<<<<< HEAD
-$res11=$data11->fetch_assoc();
-$inp=$res11['inp'];
-$inp_arr=json_decode($inp,true);
-$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,15, '');
-=======
 if ($data11->num_rows < 1) {
     $sql11 = "insert into change_rate(id) values(1);";
     $conn->query($sql11);
@@ -34,7 +28,6 @@ $res11=$data11->fetch_assoc();
 $inp=$res11['inp'];
 $inp_arr=json_decode($inp,true);
 $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,15, 0);
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
 if(isset($_POST['save'])){
   $input_1 = $_POST['input_1']; 

@@ -24,11 +24,8 @@ $nur = explode("&", $blood['nur']);
 $blooa = explode("&", $blood['blooa']);
 $bloob = explode("&", $blood['bloob']);
 
-<<<<<<< HEAD
-=======
 $newValue = json_decode($blood['new'],true);
 
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 ?>
 
 <!DOCTYPE html>
@@ -108,48 +105,19 @@ $newValue = json_decode($blood['new'],true);
         </div>
     </div>
 
-<<<<<<< HEAD
-    <div class="row table-responsive">
-=======
     <div class="row ">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         <h6 class=" col-12 mt-4 fl"><strong>Type:</strong></h6>
         <table class=" col-12 table table-bordered">
             <thead>
                 <tr>
-<<<<<<< HEAD
-                    <th scope="col"></th>
-                    <th scope="col">WB</th>
-                    <th scope="col"></th>
-                    <th scope="col">PRP</th>
-=======
                     <th scope="col">WB</th>
                     <td scope="col"><?php echo $newValue['1']; ?></td>
                     <th scope="col">PRP</th>
                     <td scope="col"><?php echo $newValue['2']; ?></td>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                 </tr>
             </thead>
             <tbody>
                 <tr>
-<<<<<<< HEAD
-                    <th scope="row"></th>
-                    <td>PRC</td>
-                    <td></td>
-                    <td>Crypt</td>
-                </tr>
-                <tr>
-                    <th scope="row"></th>
-                    <td>FFP</td>
-                    <td></td>
-                    <td>Plasma</td>
-                </tr>
-                <tr>
-                    <th scope="row"></th>
-                    <td>PLT</td>
-                    <td></td>
-                    <td>Other</td>
-=======
                     <th>PRC</th>
                     <td scope="row"><?php echo $newValue['3']; ?></td>
                     <th>Crypt</th>
@@ -166,7 +134,6 @@ $newValue = json_decode($blood['new'],true);
                     <td scope="row"><?php echo $newValue['7']; ?></td>
                     <th>Other</th>
                     <td><?php echo $newValue['8']; ?></td>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                 </tr>
             </tbody>
         </table>

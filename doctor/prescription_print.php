@@ -24,11 +24,6 @@ $res2 = $data2->fetch_assoc();
 $sql12="SELECT * FROM `config_print` WHERE 1";
 $data12=$conn->query($sql12);
 $res12=$data12->fetch_assoc();
-<<<<<<< HEAD
-$inp=$res12['inp'];
-$inp_arr=json_decode($inp,true);
-$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
-=======
 if (!isset($res12['inp'])) {
     $inp_arr = array_fill(0, 2, 'option2');
 } else {
@@ -36,7 +31,6 @@ if (!isset($res12['inp'])) {
     $inp_arr = json_decode($inp, true);
     $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 2, '');
 }
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,38 +43,6 @@ if (!isset($res12['inp'])) {
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <title>Document</title>
     <style>
-<<<<<<< HEAD
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-        }
-       th, td,tr{
-            border:1px solid black;
-        }
-
-        .title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        @media print {
-            .noprint {
-                visibility: hidden;
-            }
-
-            body {
-                margin: 0;
-            }
-
-            .page-break {
-                page-break-before: always;
-            }
-        }
-=======
     .header {
         display: flex;
         align-items: center;
@@ -118,7 +80,6 @@ if (!isset($res12['inp'])) {
             page-break-before: always;
         }
     }
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </style>
 </head>
 
@@ -137,57 +98,6 @@ if (!isset($res12['inp'])) {
             echo '<div style="margin-top: 150px;"></div>';
         }
         ?>
-<<<<<<< HEAD
-        <h3 class="text-center text-dark my-3 ">Prescription</h3>
-        <div>
-            <div style="border-bottom: 2px solid black; margin-bottom : 5px;"></div>
-            <div class="row">
-                <div class="col-3"><strong>UHID No:</strong>
-                    <?php echo $res2['uhid']; ?>
-                </div>
-                <div class="col-6"><strong>Name:</strong>
-                    <?php echo strtoupper($res['name']); ?>
-                </div>
-                <div class="col-3"><strong>Age:</strong>
-                    <?php echo strtoupper($res['age']); ?>
-                </div>
-                <div class="col-3"><strong>Sex:</strong>
-                    <?php echo $res['sex']; ?>
-                </div><br>
-                <div class="col-6"><strong>Consultant:</strong>
-                    <?php echo $res['consultant']; ?>
-                </div>
-                <div class="col mx-3" style="display: flex; justify-content: flex-end;">
-                    <script src="../barcode.js"></script>
-                    <canvas id="barcode"></canvas>
-                    <script>
-                        const canvas = document.getElementById('barcode');
-                        const opts = {
-                            bcid: 'code39',  // Barcode type set to Code 39
-                            text: '<?php echo $id; ?>',  // Numeric value with variable length
-                            scale: 2,  // Scale factor for the barcode size
-                            height: 10,  // Height of the barcode in mm
-                            includetext: false,  // Include the barcode text
-                        };
-
-                        bwipjs.toCanvas(canvas, opts, function (err) {
-                            if (err) {
-                                console.error('Error generating barcode:', err);
-                            } else {
-                                console.log('Barcode generated successfully');
-                            }
-                        });
-
-
-
-                    </script>
-                </div><br>
-
-            </div>
-            <div style="border-bottom: 2px solid black; margin-bottom : 10px;  margin-top: 10px;"></div>
-        </div>
-        <?php
-=======
         <h3 class="text-center">Prescription</h3>
         <div class="row">
             <div class="col-4"><strong>Name:</strong>
@@ -230,12 +140,10 @@ if (!isset($res12['inp'])) {
         <div style="margin-bottom : 5px;  margin-top: 10px;"></div>
     </div>
     <?php
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         $sql = "SELECT * FROM patient_info WHERE patient_id = '$id';";
         $res = $conn->query($sql)->fetch_assoc();
 
         ?>
-<<<<<<< HEAD
         <?php
         $data = $_GET['data'];
         $checkboxes = isset($_GET['checkboxes']) ? explode(',', $_GET['checkboxes']) : [];
@@ -318,72 +226,6 @@ if (!isset($res12['inp'])) {
                                 </tr>
                                 <tbody id="tbody">
                                     <?php
-=======
-    <?php
-        $data = $_GET['data'];
-        $checkboxes = isset($_GET['checkboxes']) ? explode(',', $_GET['checkboxes']) : [];
-
-        $values = json_decode(urldecode($data), true);
-
-        ?>
-    <div class="col-12">
-        <?php if (in_array('history_checkbox', $checkboxes)): ?>
-        <strong>History:</strong>
-        <?php echo $res['history']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('diagnosis_checkbox', $checkboxes)): ?>
-        <strong>Diagnosis:</strong>
-        <?php echo $res['diagnosis']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('exam_checkbox', $checkboxes)): ?>
-        <strong>Examination:</strong>
-        <?php echo $res['examination']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
-        <strong>Chief Complaint:</strong>
-        <?php echo $res['chief_complaint']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
-        <strong>Family History:</strong>
-        <?php echo $res['family_history']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
-        <strong>Operative Procedure Done:</strong>
-        <?php echo $res['procedure_done']; ?>
-        <?php endif; ?>
-    </div>
-    <?php if (in_array('med_checkbox', $checkboxes)): ?>
-    <div class="container-fluid" style="margin-top: 10px;">
-        <!-- DataTales Example -->
-        <h5 class="text-center text-primary">Prescriptions</h5>
-        <div>
-            <table id="dataTable" class="table mt-2 pad" width="100%">
-                <thead>
-                    <tr>
-                        <th>Types</th>
-                        <th>Medicine</th>
-                        <th>सकाळ</th>
-                        <th>दुपार</th>
-                        <th>रात्र</th>
-                        <th>कधी घ्यायच्या </th>
-                        <th>किती दिवस </th>
-                        <th>Qty</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
-                    <?php
-
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                                     $sql = "SELECT * FROM prescription WHERE patient_id = '$id' ORDER BY id DESC;";
                                     $data = $conn->query($sql);
                                     $i = 1;
@@ -402,31 +244,6 @@ if (!isset($res12['inp'])) {
                                     }
                                     ?>
 
-<<<<<<< HEAD
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-        <?php if (in_array('advice_checkbox', $checkboxes)): ?>
-            <div class="container-fluid" style="margin-top: 20px;">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Advices</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-1">Types</th>
-                                    <th class="col-3">Description</th>
-                                </tr>
-                                <tbody id="tbody">
-                                    <?php
-=======
                 </tbody>
             </table>
         </div>
@@ -450,7 +267,6 @@ if (!isset($res12['inp'])) {
                         </tr>
                         <tbody id="tbody">
                             <?php
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                                     $sql = "SELECT * FROM test_advice WHERE patient_id = '$id' ORDER BY id DESC;";
                                     $data = $conn->query($sql);
                                     $i = 1;
@@ -463,331 +279,6 @@ if (!isset($res12['inp'])) {
                                     }
                                     ?>
 
-<<<<<<< HEAD
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
-       
-
-        <?php if (in_array('pres_back_checkbox', $checkboxes)): ?>
-            <?php
-            $sql = "SELECT * FROM patient_info WHERE patient_id = '$id';";
-            $res = $conn->query($sql)->fetch_assoc();
-            ?>
-            <div class="container mt-2">
-                <table class="table-bordered border-dark ">
-                    <tbody>
-                        <tr>
-                            <td colspan="5" rowspan="2">
-                                <strong>Chief Complaints:</strong>
-                                <?php echo $res['chief_complaint'] ?>
-
-                            </td>
-                            <td colspan="3" rowspan="1">
-                                <strong>Personal H/o:</strong>
-                                <?php echo $res['history'] ?>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" rowspan="1">
-                                <strong>Family H/o:</strong>
-                                <?php echo $res['family_history'] ?>
-
-                            </td>
-                        </tr>
-                        <?php
-                        $sql = "select * from pres_back where id = $id;";
-                        $res = $conn->query($sql)->fetch_assoc();
-                        ?>
-                        <tr>
-                            <td colspan="5" rowspan="1">
-                                <strong> Past H/o:</strong>
-                                <?php echo $res1['history']?$res['history']:''; ?>
-
-                            </td>
-
-                            <td colspan="1" rowspan="2" class="text-center">
-                                P.G.P
-                            </td>
-                            <td colspan="1" rowspan="1">
-                                OD:
-                                <?php echo $res['pgp_od'] ?? ''; ?>
-
-                            </td>
-                            <td colspan="1" rowspan="2" class="text-center">
-                                <strong>Add: </strong>
-                                <?php echo $res['Add_data'] ?? ''; ?>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center vertical-center">
-                                Diabetic
-                            </td>
-                            <td class="text-center vertical-center">
-                                Hypertensive
-                            </td>
-                            <td class="text-center vertical-center">
-                                I.H.D
-                            </td>
-                            <td class="text-center vertical-center">
-                                Asthmatic
-                            </td>
-                            <td class="text-center vertical-center">
-                                Other
-                            </td>
-                            <td colspan="1" rowspan="1">
-                                OS:
-                                <?php echo $res['pgp_os'] ?? ''; ?>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="8" rowspan="1">
-                                <strong>Allergic to:</strong>
-                                <?php echo $res['allergic_to'] ?? ''; ?>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" rowspan="1">
-                                <strong>Vision & Refraction:</strong>
-                                <?php echo $res['vision_refraction'] ?? ''; ?>
-
-                            </td>
-                            <td colspan="3" class="text-center" style="width: 25rem">
-                                OD
-                            </td>
-                            <td colspan="3" class="text-center" style="width: 25rem">
-                                OS
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Unaided/ Adaid Vision
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['unaided_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['unaided_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Flash
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['flash_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['flash_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Cycolo Flash
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['cyclo_flash_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['cyclo_flash_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" rowspan="2" class="text-center">
-                                Acceptance
-                            </td>
-                            <td colspan="1">
-                                Distant
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['distant_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['distant_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1">
-                                Near
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['near_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['near_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Extra Ocular Muscles
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="star.jpg" alt="" style="width: 3rem; height: 3rem" />
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="star.jpg" alt="" style="width: 3rem; height: 3rem" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Slit-Lamp Examination
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['slit_lamp_examination_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['slit_lamp_examination_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Ocular Adnexa
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['ocular_adnexa_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['ocular_adnexa_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                ROPLAS
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['roplas_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['roplas_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Lids
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['lids_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['lids_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Conjuctiva
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['conjuctiva_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['conjuctiva_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Cornea
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="cornea.jpg" alt="" style="width: 4rem; height: 4rem; transform: scaleX(-1)" />
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="cornea.jpg" alt="" style="width: 4rem; height: 4rem">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Anti. Chamber
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['anti_chamber_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['anti_chamber_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Iris
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['iris_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['iris_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Pupil
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['pupil_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['pupil_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Lens
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['lens_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['lens_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                IOP
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['iop_od'] ?? ''; ?>
-                            </td>
-                            <td colspan="3">
-                                <?php echo $res['iop_os'] ?? ''; ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                Gonioscopy
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="goni.jpg" alt="" style="width: 3.5rem; height: 3.5rem; transform: scaleX(-1)" />
-                            </td>
-                            <td colspan="3" class="text-center">
-                                <img src="goni.jpg" alt="" style="width: 4rem; height: 4rem" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-3">
-                        Fundus Examination: 
-                    </div>
-                    <div class="col-4 mt-2">
-                        <img src="fundus.jpg" alt="" style="width: 13rem; height: 11rem" />
-                    </div>
-                    <div class="col-4 offset-1 mt-2">
-                        <img src="fundus.jpg" alt="" style="width: 13rem; height: 11rem; transform: scaleX(-1)" />
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
-    </div>
-    <script>window.print();</script>
-=======
                         </tbody>
                     </table>
                 </div>
@@ -1116,7 +607,6 @@ echo $currentDateTime; ?></h6>
     <script>
     window.print();
     </script>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </body>
 
 </html>

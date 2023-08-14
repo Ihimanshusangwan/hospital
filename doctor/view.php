@@ -140,7 +140,6 @@ if (isset($_POST['template_btn'])) {
             color: transparent;
             /* Hide the text on the pseudo-element on hover */
         }
-<<<<<<< HEAD
     .modal-header .close {
         padding-right: 9px;
         padding-left:9px;
@@ -155,9 +154,6 @@ if (isset($_POST['template_btn'])) {
         opacity: 1;
     }
 </style>
-=======
-    </style>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
     <script>
 
@@ -182,10 +178,7 @@ if (isset($_POST['template_btn'])) {
                 used.push(valueToRemove);
             }
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         function deleteRow(button) {
             var target = button.parentElement.parentElement.children[0];
             var type = target.innerHTML;
@@ -196,21 +189,13 @@ if (isset($_POST['template_btn'])) {
             target.parentElement.style.display = "none";
 
         }
-<<<<<<< HEAD
        
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </script>
     <title>Shri Sidhivinayak Netralaya</title>
 </head>
 
 <body style="background-color: #90D0E5;">
-<<<<<<< HEAD
-    <div class="container ">
-    
-=======
     <div class="container">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         <h1 class="text-center text-danger mt-3">
             <h1>
                 <marquee style="color: purple;" BEHAVIOUR="slide" scrollnount="70" scrolledeley="100">
@@ -218,38 +203,28 @@ if (isset($_POST['template_btn'])) {
                 </marquee>
             </h1>
         </h1>
-<<<<<<< HEAD
         <div class="row">
             <div class="col-6">
             <a href="doctorPage.php" class="btn btn-primary m-2">Dashboard</a>
-=======
-        <a href="doctorPage.php" class="btn btn-primary m-2">Dashboard</a>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         <a href="image_gallery.php" class="btn btn-primary m-2">Image Gallery</a>
 
         <button class="btn btn-primary m-2 receipt" type="button">Print</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
             Use Templates
         </button>
-<<<<<<< HEAD
-            </div>
-            <div class="col-6">
-                <div class="row">
 
-            <form method="POST" action="" class="col">
+            </div>
+        <div class="col-6">
+        <form method="POST" action="" class="col">
                                 <?php
                                 $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
                                 $res = $conn->query($sql)->fetch_assoc();
-                                echo '<div class="col-6">';
                                 if ($res['is_admited'] == 0) {
                                     echo '<input type="submit" class="btn btn-secondary  my-2" name="admit_patient" value="Admit Patient">';
 
                                 } else {
-                                    echo '<input type="button" class="btn btn-success my-2"  value="Patient Admited" disabled>';
+                                    echo '<input type="button" class="btn btn-success  my-2"  value="Patient Admited" disabled>';
                                 }
-                                echo '</div>';
-                                echo '<div class="col-6">';
-                               
                                 echo '<div class="row " >
                                 <select id="selectBoxContainer" style="display: none; class="form-control ">
                                 ';
@@ -266,20 +241,13 @@ if (isset($_POST['template_btn'])) {
 
                                 echo '
                                 </select><button id="final-referButton" class="btn btn-primary " style="display: none;" p-id="' . $id . '" >Refer </button></div>
-                            <button id="referButton" class="btn btn-warning " >Refer Patient</button>';
-                            
-                            echo '</div>';
+                            <button id="referButton" class="btn btn-warning  " >Refer Patient</button>';
                                 ?>
                             </form>
-                            </div>
-            </div>
-        </div>
-       
         
-       
-=======
-        
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
+            
+                          
+        </div>  </div>
         <!-- Modal -->
 
 
@@ -670,11 +638,7 @@ if (isset($_POST['template_btn'])) {
             </div>
 
 
-<<<<<<< HEAD
             <div class="col-md-4 shadow-lg rounded-3 mt-4 mx-3">
-=======
-            <div class="col-md-4 shadow-lg rounded-3 m-4">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                 <?php
                 if (isset($_REQUEST['save_test'])) {
                     $i = 1;
@@ -736,7 +700,6 @@ if (isset($_POST['template_btn'])) {
                         </div>
                         <div class="row">
                             <div class="col">
-<<<<<<< HEAD
                                 <button type="button" class="btn btn-secondary my-2"
                                     onclick="addItem();">Add</button>
                             </div>
@@ -745,18 +708,7 @@ if (isset($_POST['template_btn'])) {
                                     value="Save">
                             </div>
                             <div class="col">
-                                <button type="button" id="labButton" class="btn btn-secondary  my-2">Lab</button>
-=======
-                                <button type="button" class="btn btn-secondary btn-lg my-2"
-                                    onclick="addItem();">Add</button>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-secondary btn-lg my-2" name="save_test"
-                                    value="Save">
-                            </div>
-                            <div class="col">
-                                <button type="button" id="labButton" class="btn btn-secondary btn-lg my-2">Lab</button>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
+                                <button type="button" id="labButton" class="btn btn-secondary my-2">Lab</button>
                             </div>
                             <div class="col">
                                 <div class="form-check form-switch">
@@ -764,7 +716,6 @@ if (isset($_POST['template_btn'])) {
                                         id="advice_checkbox">
                                 </div>
                             </div>
-<<<<<<< HEAD
                            
                         </div>
                     </form>
@@ -1021,45 +972,6 @@ if (isset($_POST['template_btn'])) {
 
 
 
-=======
-                            <form method="POST" action="" class="col">
-                                <?php
-                                $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
-                                $res = $conn->query($sql)->fetch_assoc();
-                                if ($res['is_admited'] == 0) {
-                                    echo '<input type="submit" class="btn btn-secondary btn-lg my-2" name="admit_patient" value="Admit Patient">';
-
-                                } else {
-                                    echo '<input type="button" class="btn btn-success btn-lg my-2"  value="Patient Admited" disabled>';
-                                }
-                                echo '<div class="row " >
-                                <select id="selectBoxContainer" style="display: none; class="form-control ">
-                                ';
-
-                                $sql = "SELECT name FROM doctors WHERE type_of_visit != '{$_SESSION['doctor_type']}'";
-                                $res = $conn->query($sql);
-                                while ($values = $res->fetch_assoc()) {
-                                    echo '
-                                  <option value="' . $values['name'] . '">
-                                    ' . $values['name'] . '
-                                  </option>
-                                  ';
-                                }
-
-                                echo '
-                                </select><button id="final-referButton" class="btn btn-primary " style="display: none;" p-id="' . $id . '" >Refer </button></div>
-                            <button id="referButton" class="btn btn-warning btn-lg " >Refer Patient</button>';
-                                ?>
-                            </form>
-                        </div>
-
-
-
-                    </form>
-
-                </div>
-            </div>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         </div>
     </div>
     <!-- medicine save -->
@@ -1618,7 +1530,6 @@ if (isset($_POST['template_btn'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<<<<<<< HEAD
     <script>
 $(document).ready(function () {
     $(".checkbox-instruction").change(function () {
@@ -1627,7 +1538,7 @@ $(document).ready(function () {
             var instruction = $(this).closest("tr").find("td:last").text();
             selectedInstructions.push(instruction);
         });
-        $("#selected-instructions").val(selectedInstructions.join(","));
+        $("#selected-instructions").val(selectedInstructions.join(" , "));
     });
 });
 
@@ -1638,7 +1549,7 @@ $(document).ready(function () {
             var investigation = $(this).closest("tr").find("td:last").text();
             selectedInvestigation.push(investigation);
         });
-        $("#selected-investigation").val(selectedInvestigation.join(","));
+        $("#selected-investigation").val(selectedInvestigation.join(" , "));
     });
 });
 $(document).ready(function () {
@@ -1648,7 +1559,7 @@ $(document).ready(function () {
             var symptoms = $(this).closest("tr").find("td:last").text();
             selectedSymptoms.push(symptoms);
         });
-        $("#selected-symptoms").val(selectedSymptoms.join(","));
+        $("#selected-symptoms").val(selectedSymptoms.join(" , "));
     });
 });
 </script>
@@ -1711,8 +1622,6 @@ $(document).ready(function () {
         });
     });
 </script>
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
     <script>
         $(document).ready(function () {
@@ -1735,10 +1644,7 @@ $(document).ready(function () {
         });
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         const labButton = document.getElementById("labButton");
         const labPopup = document.getElementById("labPopup");
 
@@ -1754,10 +1660,7 @@ $(document).ready(function () {
         closeButton.addEventListener("click", function () {
             labPopup.style.display = "none";
 
-<<<<<<< HEAD
             
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
             // Get all the selected checkboxes
             const checkboxes = document.querySelectorAll(".lab-checkbox:checked");
 

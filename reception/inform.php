@@ -136,11 +136,7 @@ table, th, td {
     <td><span class="style6">पत्ता :  </span></td>
     <td><span class="style6"> <?php echo $row6['add1'];?> </span></td>
     <td> <?php echo $row6['add2'];?></td>
-<<<<<<< HEAD
-    <td>  </td>
-=======
     <td> <?php echo $row6['add3'];?></td>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   </tr>
   <tr>
     <td class="style6">वय :    वर्ष : </td>

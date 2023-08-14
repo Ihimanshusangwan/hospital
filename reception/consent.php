@@ -83,13 +83,8 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     <a href="general_info_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-2">General Inform Consent</button></a>
     <a href="inform_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-2">विशेष संमती पात्र</button></a>
     <a href="postConsent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-2">ऑपरेशन नंतर पेशंटने घ्यावयाची काळजी
-<<<<<<< HEAD
  </button></a>
  <a href="anumati.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-2">अनुमतीपत्र</button></a>
-=======
- 
- </button></a>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     <a href="inform_sur_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-2">Informed Consent form for surgery</button></a>
 
 <script>

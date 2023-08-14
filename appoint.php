@@ -290,14 +290,11 @@ $title = $data->fetch_assoc();
               $sql42 = "INSERT INTO operation_record(id) VALUES($inserted_patient_id);";
               $conn->query($sql42);
 
-<<<<<<< HEAD
               $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql44);
 
               $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql45);
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
 
               $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';

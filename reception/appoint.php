@@ -14,18 +14,12 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<<<<<<< HEAD
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-=======
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   <title>Document</title>
   <style>
     label {
@@ -42,11 +36,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
       </marquee>
     </h1>
     <a href="receptionPage.php" class="btn btn-success m-2">Dashboard</a>
-<<<<<<< HEAD
-    <h3 class="mx-3 my-2 inline-heading">Patient Details</h3>
-=======
     <h3 class="mx-3 my-2 inline-heading">Pending Appointments</h3>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     <?php
           if (isset($_REQUEST['submit'])) {
             $id = $_POST['id'];
@@ -125,32 +115,6 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                     </tbody>
                 </table>
   </div>
-<<<<<<< HEAD
-  <script>
-    var currentDate = new Date().toISOString().slice(0, 10);  
-    document.getElementById("reg_date").value = currentDate;
-    const addressCheckbox = document.getElementById("address-copy");
-    const patientAddress = document.getElementById("address");
-    const patientTaluka = document.getElementById("taluka");
-    const patientDistrict = document.getElementById("district");
-    const pwpTaluka = document.getElementById("taluka_pwp");
-    const pwpDistrict = document.getElementById("district_pwp");
-    const pwpAddress = document.getElementById("address_pwp");
-
-    addressCheckbox.addEventListener("change", function () {
-      if (this.checked) {
-        pwpAddress.value = patientAddress.value;
-        pwpTaluka.value = patientTaluka.value;
-        pwpDistrict.value = patientDistrict.value;
-      } else {
-        pwpAddress.value = "";
-        pwpTaluka.value = "";
-        pwpDistrict.value = "";
-      }
-    });
-  </script>
-  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-=======
   <section>
     <?php 
     if (isset($_REQUEST['visit']) && $_POST['visit'] == "is_visited") {
@@ -272,7 +236,6 @@ data;
 
         });
     </script>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </body>
 
 </html>

@@ -169,11 +169,7 @@ $title = $data->fetch_assoc();
                     </thead>
                     <tbody>
                         <?php
-<<<<<<< HEAD
-                        $sql = "SELECT * FROM patient_records  where is_registered= 1  or is_approved= 1 ORDER BY id DESC; ";
-=======
                         $sql = "SELECT * FROM patient_records  where is_registered=1  OR  is_visited = 1  ORDER BY id DESC ";
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';

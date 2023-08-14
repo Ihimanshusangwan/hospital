@@ -58,10 +58,6 @@ $values = json_decode(urldecode($data), true);
             }
 
             @page {
-<<<<<<< HEAD
-                size: A4 landscape;
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                 margin-top: 0;
             }
 
@@ -77,31 +73,18 @@ $values = json_decode(urldecode($data), true);
     <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
     <a href="ortho_observation_chart.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
     <?php include_once("../header/images.php") ?>
-<<<<<<< HEAD
-    <h3 class="text-center text-dark my-3 ">Observation Chart</h3>
-    <?php include_once("../header/header.php") ?>
-
-    <?php if (in_array('Notes', $checkboxes)): ?>
-        <div class="card shadow mb-4">
-=======
     <h3 class="text-center text-dark ml-3">Observation Chart</h3>
     <?php include_once("../header/header.php") ?>
     
     <?php if (in_array('Notes', $checkboxes)): ?>
         <div class="card  mb-4">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
                     Notes
                 </h6>
             </div>
-<<<<<<< HEAD
-            <div class="card-body">
-                <div class="table-responsive">
-=======
             <div>
                 <div>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <tr>
                             <th>Time</th>
@@ -152,11 +135,7 @@ $values = json_decode(urldecode($data), true);
     <?php endif; ?>
 
     <?php if (in_array('Drugs', $checkboxes)): ?>
-<<<<<<< HEAD
-        <div class="card shadow mb-4">
-=======
         <div class="card mb-4">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
                     Drugs
@@ -205,11 +184,7 @@ $values = json_decode(urldecode($data), true);
         <?php endif; ?>
     </div>
 
-<<<<<<< HEAD
-    <h6>Thank You !</h6>
-=======
     <h6 class="text-center mt-4">Thank You !</h6>
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </div>
 </body>
 <script> window.print(); </script>

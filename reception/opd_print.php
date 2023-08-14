@@ -25,13 +25,10 @@ $res2 = $data2->fetch_assoc();
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
-<<<<<<< HEAD
 error_reporting(0);
 $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
 $query_2=mysqli_query($conn,$sql_2);
 $res_2=mysqli_fetch_assoc($query_2);
-=======
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +41,6 @@ $res_2=mysqli_fetch_assoc($query_2);
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <title>Document</title>
     <style>
-<<<<<<< HEAD
         .header {
             display: flex;
             align-items: center;
@@ -164,60 +160,10 @@ window.print();
             <a href="a5_opd.php?id=<?php echo $id; ?>" class="btn btn-danger m-1 noprint" id="printa5">A5 Print</a>
             <a href="opd_bill.php?id=<?php echo $id; ?>" class="btn btn-info m-1 noprint" id="dashboard">Dashboard</a>
            
-=======
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-    }
-
-    .title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    body {
-        font-size: 17px;
-    }
-
-    .mt4 {
-        margin-top: 90px;
-    }
-
-    @media print {
-        .noprint {
-            visibility: hidden;
-            display: none;
-        }
-    }
-
-    @page {
-        size: A4;
-    }
-    </style>
-    <script>
-    window.print();
-    </script>
-</head>
-
-<body>
-    <div class="container">
-        <div class="button noprint">
-
-            <button type="button" class="btn btn-danger m-1 noprint" onclick="window.print()" id="print">A4
-                Print</button>
-            <a href="a5_opd.php?id=<?php echo $id; ?>" class="btn btn-danger m-1 noprint" id="printa5">A5 Print</a>
-            <a href="opd_bill.php?id=<?php echo $id; ?>" class="btn btn-info m-1 noprint" id="dashboard">Dashboard</a>
-
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
         </div>
         <?php include_once("../header/images.php") ?>
         <h3 class="text-center text-dark my-2 ">OPD Bill</h3>
         <div>
-<<<<<<< HEAD
     <div style="border-bottom: 3px solid black; margin-bottom : 10px;"></div>
     <div class="row">
         <div class="col-6"><strong>UHID No: </strong><?php echo $res2['uhid'];?>
@@ -286,56 +232,6 @@ window.print();
                             </tr>
                             <tbody id="tbody">
                                 <?php
-=======
-            <div style="margin-bottom : 10px;"></div>
-            <div class="row">
-                <div class="col-4"><strong>Name:</strong>
-                    <?php echo strtoupper($res['name']); ?>
-                </div>
-                <div class="col-4"><strong>Age:</strong>
-                    <?php echo strtoupper($res['age']); ?>
-                </div>
-                <div class="col-4"><strong>Sex:</strong>
-                    <?php echo $res['sex']; ?>
-                </div>
-                <div class="col-4"><strong>UHID No: </strong><?php echo $res2['uhid'];?>
-                </div>
-                <div class="col-4"><strong>Consultant:</strong>
-                    <?php echo $res['consultant']; ?>
-                </div>
-                <div class="col-4">
-                    <strong>Bill No:
-                        <?php echo date("Y"). "/" .$id ?>
-                    </strong>
-
-                </div>
-            </div>
-            <div style=" margin-bottom : 10px;  margin-top: 10px;"></div>
-
-
-            <form method="POST" action="opd_bill.php?id=<?php echo $id; ?>">
-                <div class="container-fluid" style="margin-top: 20px;">
-                    <!-- DataTales Example -->
-                    <div class="card mb-3">
-                        <div class="card-header py-2">
-                            <h6 class="font-weight-bold text-center">OPD BILL</h6>
-                        </div>
-                        <div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-
-                                    <tr>
-                                        <th>Sr.No</th>
-                                        <th>Description</th>
-                                        <th>Amount(Rs.)</th>
-                                        <th>Qty</th>
-                                        <th>Total</th>
-
-                                    </tr>
-                                    <tbody id="tbody">
-                                        <?php
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                                 $subtotal = 0;
                                 $sql = "SELECT * FROM opd_bill  WHERE patient_id = $id;";
                                 $data = $conn->query($sql);
@@ -356,7 +252,6 @@ window.print();
                                 }
                                 ?>
 
-<<<<<<< HEAD
                             </tbody>
                         </table>
                     </div>
@@ -381,36 +276,6 @@ window.print();
         </span></h5>
     <h5 style="text-align: right; margin-right: 2em; ">
        Discount : 
-        <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
-        <?php
-        $sql = "select opd_discount from p_log where id = '$id';";
-        $res = $conn->query($sql)->fetch_assoc();
-        ?>
-        <input type="number" style="border: 0px; " name="discount"
-            class="col-1 ad " placeholder="Discount" id="discount" onchange="on_discount_change()"
-            value="<?php echo $res['opd_discount']; ?>" readonly>
-
-    </h5>
-    <h5 style="text-align: right; margin-right: 2em;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
-            <?php echo $subtotal; ?>
-        </span></h5> <br><br><br>
-    <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
-    <h6>Thank You !</h6>
-    </div>
-</body>
-<script>
-    on_discount_change();
-    window.print();
-=======
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-
 
             <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
             <?php
@@ -470,7 +335,6 @@ window.print();
 <script>
 on_discount_change();
 window.print();
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </script>
 
 </html>
