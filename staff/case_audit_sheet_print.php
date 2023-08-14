@@ -98,8 +98,13 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                     <thead>
                         <tr>
                             <th scope="col"> I. Post Admission - 24 to 48 Hours</th>
+<<<<<<< HEAD
                             <th scope="col">Yes/No/ NA</th>
                             <th scope="col">Remarks</th>
+=======
+                            <th scope="col" width="20%">Yes/No/ NA</th>
+                            <th scope="col" width="20%">Remarks</th>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                         </tr>
                     </thead>
                     <tbody>
@@ -119,6 +124,10 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                                 echo'<td class="form-label size1">'; echo $arr[$i] ;'</td>';
                                 
                             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                                else if($j==1){
                                 echo "<td class='size3'>". $arr_norm[$i]."</td>";
 
@@ -135,10 +144,16 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+<<<<<<< HEAD
 
                             <th scope="col"> II. Continuing Care Phase</th>
                             <th scope="col">Yes/No/ NA</th>
                             <th scope="col">Remarks</th>
+=======
+                            <th scope="col" > II. Continuing Care Phase</th>
+                            <th scope="col" width="20%">Yes/No/ NA</th>
+                            <th scope="col" width="20%">Remarks</th>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                         </tr>
                     </thead>
                     <tbody>
@@ -181,8 +196,13 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                         <tr>
 
                             <th scope="col">III. &nbsp; Surgery and Anaesthesia Related</th>
+<<<<<<< HEAD
                             <th scope="col">Yes/No/ NA</th>
                             <th scope="col">Remarks</th>
+=======
+                            <th scope="col" width="20%">Yes/No/ NA</th>
+                            <th scope="col" width="20%">Remarks</th>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                         </tr>
                     </thead>
                     <tbody>
@@ -200,7 +220,10 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                      ','30	The referral was found to be honored the same day
                      ');
                         for($i=0;$i<10;$i++){
+<<<<<<< HEAD
                        
+=======
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                             echo'<tr>';
                             for($j=0;$j<3;$j++){
                                 if($j==0){
@@ -226,8 +249,13 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                     <thead>
                         <tr>
                             <th scope="col">IV. &nbsp;Post Discharge</th>
+<<<<<<< HEAD
                             <th scope="col">Yes/No/ NA</th>
                             <th scope="col">Remarks</th>
+=======
+                            <th scope="col" width="20%">Yes/No/ NA</th>
+                            <th scope="col" width="20%">Remarks</th>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                         </tr>
                     </thead>
                     <tbody>

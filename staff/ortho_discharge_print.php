@@ -31,6 +31,7 @@ error_reporting(0);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style>
+<<<<<<< HEAD
         body {
             margin: 0;
         }
@@ -63,6 +64,42 @@ error_reporting(0);
                 visibility: hidden;
             }
         }
+=======
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+.mat-12{
+    margin-top:300px;
+}
+    @media print {
+
+        #button {
+            display: none !important;
+        }
+
+        @page {
+            size: A4;
+        }
+
+        .noprint {
+            visibility: hidden;
+        }
+    }
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </style>
 </head>
 
@@ -70,12 +107,18 @@ error_reporting(0);
 
     <div id="button">
         <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
+<<<<<<< HEAD
         <a href="ortho_discharge.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+=======
+        <a href="ortho_discharge.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
+            id="dashboard">Dashboard</a>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </div>
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 ">Discharge Card </h3>
     <?php include_once("../header/header.php") ?>
     <hr />
+<<<<<<< HEAD
    <div class="row">
     <div class="col-4">
         <strong>MLC No.: </strong> <?php echo $row4['mlc']; ?>
@@ -133,6 +176,69 @@ error_reporting(0);
 </body>
 <script>
     window.print();
+=======
+    <div class="row">
+        <div class="col-4">
+            <strong>MLC No.: </strong> <?php echo $row4['mlc']; ?>
+        </div>
+        <div class="col-4">
+            <strong>Department : </strong> <?php echo $row4['department']; ?>
+        </div>
+        <div class="col-4">
+            <strong>Religion : </strong> <?php echo $row4['occupation']; ?>
+        </div>
+        <div class="col-6">
+            <strong>Occupation : </strong> <?php echo $row4['religion']; ?>
+        </div>
+        <div class="col-6">
+            <strong>Date of Admission : : </strong> <?php echo $res2['date']; ?>
+        </div>
+        <div class="col-6"> <strong>Time of Admission :</strong><?php echo$res2['time'];?>
+        </div>
+        <div class="col-6">
+            <strong>Date of Surgery/Procedure : </strong> <?php echo $row4['dateofs']; ?>
+        </div>
+        <div class="col-6">
+            <strong>Time of Surgery/Procedure : </strong> <?php echo $row4['timeofs'];?>
+        </div>
+        <div class="col-6">
+            <strong>Date of Discharge : </strong> <?php echo $row4['dateofd']; ?>
+        </div>
+        <div class="col-6">
+            <strong>Time of Discharge : </strong> <?php echo $row4['timeofd'];?>
+        </div>
+        <div class="col-6">
+            <strong>Primary Treating Consultant : </strong> <?php echo $row4['ptc']; ?>
+        </div>
+        <div class="col-6">
+            <strong>Type of Discharge :</strong> <?php echo $row4['typeofd'];?>
+        </div>
+        <div class="col-6">
+            <strong>Diagnosis: </strong> <?php echo $row4['diagnosis'];?>
+        </div>
+        <div class="col-6">
+            <strong>ICD Code : </strong> <?php echo $row4['icd'];?>
+        </div>
+        <div class="col-6">
+            <strong>Follow Up : </strong> <?php echo $row4['followup'];?>
+        </div>
+        <div class="col-6">
+            <strong>Date : </strong> <?php echo $row4['date0'];?>
+        </div>
+        <div class="col-6">
+            <strong>Signature , Name & Stamp: </strong> <?php echo $row4['sign'];?>
+        </div>
+        <div class="mat-12"></div>
+        <div class="col-12 mt-3  border border-black">
+            <h5 class="form-label  text-center m-3"> PLEASE BRING THIS CARD DURING FOLLOW UP</h5>
+        </div>
+    </div>
+    </div>
+    <h6 class="text-center">Thank You !</h6>
+</body>
+<script>
+window.print();
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </script>
 
 </html>

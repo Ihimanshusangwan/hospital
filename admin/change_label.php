@@ -11,11 +11,22 @@ if(isset($_POST['submit'])){
 $sql = "SELECT * FROM change_label WHERE id = 1;";
 $data = $conn->query($sql);
 if ($data->num_rows < 1) {
+<<<<<<< HEAD
     $sql = "insert into change_label (id) values(1);";
+=======
+    $sql = "insert into change_label (id,lable_1) values(1,'Grand Total');";
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     $conn->query($sql);
 } 
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
+<<<<<<< HEAD
+=======
+if ($data10->num_rows < 1) {
+    $sql10 = "insert into change_label (id) values(1);";
+    $conn->query($sql);
+} 
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
 $res10=$data10->fetch_assoc();
 

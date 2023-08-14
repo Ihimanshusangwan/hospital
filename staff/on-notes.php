@@ -243,10 +243,16 @@ $sur = explode("&", $op1['sur']);
         </label>
       </div>
     </div>
+<<<<<<< HEAD
             <form action="" method="post">
 
                 <div class="row">
                     
+=======
+    <?php error_reporting(0);?>
+            <form method="post">
+                <div class="row">
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                     <hr>
                     <div class="container">
                         <div class="row">

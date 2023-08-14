@@ -19,11 +19,25 @@ $title = $data->fetch_assoc();
 $sql6="SELECT * FROM `rate_charges` WHERE `id` = '$id' ";
 $data6=$conn->query($sql6);
 $res6=$data6->fetch_assoc();
+<<<<<<< HEAD
 
 $res11=$data11->fetch_assoc();
 $inp=$res11['inp'];
 $inp_arr=json_decode($inp,true);
 $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,15, '');
+=======
+$sql11="SELECT * FROM `change_rate` WHERE 1";
+$data11=$conn->query($sql11);
+if ($data11->num_rows < 1) {
+    $sql11 = "insert into change_rate(id) values(1);";
+    $conn->query($sql11);
+} 
+$res11=$data11->fetch_assoc();
+
+$inp=$res11['inp'];
+$inp_arr=json_decode($inp,true);
+$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,15, 0);
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
 ?>
 
@@ -95,7 +109,11 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,15, '');
 
     <div id="button">
         <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
+<<<<<<< HEAD
         <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+=======
+        <a href="rate_charges.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </div>
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 "> हॉस्पिटल मधील रूमच्या शुल्का बद्धल संमतीपत्र </h3>

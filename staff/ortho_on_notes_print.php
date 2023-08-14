@@ -24,10 +24,15 @@ $op = explode("&", $op1['op']);
 $sur = explode("&", $op1['sur']);
 error_reporting(0);
 ?>
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html lang="en">
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,6 +40,7 @@ error_reporting(0);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style>
+<<<<<<< HEAD
         body{
             margin:0;
         }
@@ -66,6 +72,40 @@ error_reporting(0);
                 visibility: hidden;
             }
         }
+=======
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    @media print {
+
+        #button {
+            display: none !important;
+        }
+
+        @page {
+            size: A4;
+        }
+
+        .noprint {
+            visibility: hidden;
+        }
+    }
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </style>
 </head>
 
@@ -73,12 +113,17 @@ error_reporting(0);
 
     <div id="button">
         <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
+<<<<<<< HEAD
         <a href="on-notes.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
             id="dashboard">Dashboard</a>
+=======
+        <a href="on-notes.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </div>
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 ">Operative Notes by Surgeon</h3>
     <?php include_once("../header/header.php") ?>
+<<<<<<< HEAD
     <hr />
     <div class="row">
                             <div class="col-12">
@@ -154,6 +199,82 @@ error_reporting(0);
 </body>
 <script>
     window.print();
+=======
+    <div class="row mt-1">
+        <div class="col-6">
+            <strong> Name of Surgeon: </strong><?php  echo $name[0]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Name of Anaesthesist : </strong><?php echo $name[1];?>
+        </div>
+        <div class="col-6">
+            <strong> Type of Anaesthesist: </strong><?php  echo $name[2]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Operation Started Date :</strong><?php  echo $name[3]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Operation Started Time :</strong><?php  echo $name[4]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Operation Ended Date :</strong><?php  echo $name[5]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Operation Ended Time :</strong><?php  echo $name[6]; ?>
+        </div>
+        <div class="col-6">
+            <strong> Name of OT Assistant :</strong><?php  echo $op[0]; ?>
+        </div>
+        <div class="col-6">
+            <strong>Scrb Nurse :</strong><?php  echo $op[1]; ?>
+        </div>
+        <div class="col-6">
+            <strong>Circulating Nurse / HCA:</strong><?php  echo $op[2]; ?>
+        </div>
+        <div class="col-12 mt-1 ">
+            <strong>Pre-operative Diagnosis : </strong><?php  echo $op[3]; ?>
+        </div>
+        <div class="col-12 mt-1">
+            <strong>Post-operative Diagnosis : </strong><?php  echo $op[4]; ?>
+        </div>
+        <div class="col-12 mt-1">
+            <strong>Operative Notes :</strong><?php  echo $op[5]; ?>
+        </div>
+        <div class="col-12 mt-1">
+            <strong>Post Operative Plan of care:</strong><?php  echo $op[6]; ?>
+        </div>
+        <div class="col-12 mt-2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Signature</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Surgeon</th>
+                        <td> <?php echo $sur[0]; ?></td>
+                        <td><?php echo $sur[1]; ?></td>
+                        <td><?php echo $sur[2]; ?></td>
+                        <td><?php echo $sur[3]; ?></td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+    <h6 class="text-center">Thank You !</h6>
+</body>
+<script>
+window.print();
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </script>
 
 </html>

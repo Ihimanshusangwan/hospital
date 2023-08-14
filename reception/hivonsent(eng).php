@@ -122,7 +122,11 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
     <td><span class="style6">Address :  </span></td>
     <td><span class="style6"> <?php echo $row6['add1'];?>  </span></td>
     <td><?php echo $row6['add2'];?></td>
+<<<<<<< HEAD
     <td> </td>
+=======
+    <td><?php echo $row6['add3'];?></td>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   </tr>
   <tr>
     <td class="style6">Age :    Year : </td>

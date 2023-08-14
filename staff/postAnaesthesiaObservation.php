@@ -18,6 +18,7 @@ $title = $data->fetch_assoc();
 $x=0;
 error_reporting(0);
 if (isset($_POST['submit'])) {
+<<<<<<< HEAD
    
     $ana = $_POST['ana0']. '&' . $_POST['ana1']. '&' . $_POST['ana2']
   . '&' . $_POST['ana3']. '&' . $_POST['ana4']
@@ -35,6 +36,19 @@ if (isset($_POST['submit'])) {
   $_POST['icu2']. '&' . $_POST['icu3']. 
   '&' . $_POST['icu4'] ;
   
+=======
+    $ana = $_POST['ana0']. '&' . $_POST['ana1']. '&' . $_POST['ana2']
+  . '&' . $_POST['ana3']. '&' . $_POST['ana4']
+  . '&' . $_POST['ana5'] .'&'.$_POST['ana6'] ;
+  $inv = $_POST['inv0']. '&' . $_POST['inv1']. '&' . 
+  $_POST['inv2']. '&' . $_POST['inv3']. 
+  '&' . $_POST['inv4']. '&' . $_POST['inv5'] 
+  .'&'.$_POST['inv6'] .'&'.$_POST['inv7']
+  .'&'.$_POST['inv8'] .'&'.$_POST['inv9'] ;
+  $icu = $_POST['icu0']. '&' . $_POST['icu1']. '&' . 
+  $_POST['icu2']. '&' . $_POST['icu3']. 
+  '&' . $_POST['icu4'] ;
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   $pat = $_POST['pat0']. '&' . $_POST['pat1']
   . '&' . $_POST['pat2']. '&' .
   $_POST['pat3']. '&' . $_POST['pat4']. '&' . 
@@ -44,8 +58,12 @@ if (isset($_POST['submit'])) {
   . '&' . $_POST['pat12']. '&' .
   $_POST['pat13']. '&' . $_POST['pat14']. '&' . 
   $_POST['pat15'];
+<<<<<<< HEAD
    
    
+=======
+
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   $dis = $_POST['dis0']. '&' . $_POST['dis1']
   . '&' . $_POST['dis2']. '&' . $_POST['dis3']
   . '&' . $_POST['dis4']. '&' . $_POST['dis5'] 
@@ -313,11 +331,19 @@ $dis = explode("&", $ana1['dis']);
                 </thead>
                 <tbody>
                     <tr>
+<<<<<<< HEAD
                         <td> <input  type="text" class="form-control" id="age" placeholder="" name="inv5"    value="<?php  echo $inv[5]; ?>"></td>
                         <td> <input  type="text" class="form-control" id="age" placeholder="" name="inv6"    value="<?php  echo $inv[6]; ?>"></td>
                         <td> <input  type="text" class="form-control" id="age" placeholder="" name="inv7"    value="<?php  echo $inv[7]; ?>"></td>
                         <td> <input  type="text" class="form-control" id="age" placeholder="" name="inv8"    value="<?php  echo $inv[8]; ?>"></td>
                         <td> <input  type="text" class="form-control" id="age" placeholder="" name="inv9"    value="<?php  echo $inv[9]; ?>"></td>
+=======
+                        <td> <input  type="text" class="form-control" id="age"  name="inv5"    value="<?php  echo $inv[5]; ?>"></td>
+                        <td> <input  type="text" class="form-control" id="age"  name="inv6"    value="<?php  echo $inv[6]; ?>"></td>
+                        <td> <input  type="text" class="form-control" id="age"  name="inv7"    value="<?php  echo $inv[7]; ?>"></td>
+                        <td> <input  type="text" class="form-control" id="age"  name="inv8"    value="<?php  echo $inv[8]; ?>"></td>
+                        <td> <input  type="text" class="form-control" id="age"  name="inv9"    value="<?php  echo $inv[9]; ?>"></td>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                     </tr>
                 </tbody>
             </table>

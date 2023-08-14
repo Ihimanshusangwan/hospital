@@ -36,6 +36,7 @@ $no_norm = isset($row4['element3'])? json_decode($row4['element3'], true):['',''
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style>
+<<<<<<< HEAD
         body {
             margin: 0;
         }
@@ -68,6 +69,40 @@ $no_norm = isset($row4['element3'])? json_decode($row4['element3'], true):['',''
                 visibility: hidden;
             }
         }
+=======
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    @media print {
+
+        #button {
+            display: none !important;
+        }
+
+        @page {
+            size: A4;
+        }
+
+        .noprint {
+            visibility: hidden;
+        }
+    }
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </style>
 </head>
 
@@ -80,6 +115,7 @@ $no_norm = isset($row4['element3'])? json_decode($row4['element3'], true):['',''
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 ">HANDOVER LETTERS OF PATIENT'S VALUABLE ITEMS</h3>
     <h3 class="text-center text-dark my-3 ">रुग्णांच्या मौल्यवान वस्तूंचे हस्तांतरण पत्र</h3>
+<<<<<<< HEAD
    
     <?php include_once("../header/header.php") ?>
     <strong>Mobile No. (मोबाईल नं.) : </strong><?php echo $res['mobile']; ?>
@@ -94,11 +130,28 @@ $no_norm = isset($row4['element3'])? json_decode($row4['element3'], true):['',''
                                 
                                 <?php
                                 for( $i = 0 ; $i<6 ; $i++){
+=======
+
+    <?php include_once("../header/header.php") ?>
+    Mobile No. (मोबाईल नं.) :<?php echo $res['mobile']; ?>
+    <div class="text-center mt-3">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <th scope="col">Sr.No.(क्र.)</th>
+                <th scope="col">Name of Valuable Items (आभूषणांचे नाव)</th>
+                <th scope="col">Number(संख्या)</th>
+            </thead>
+
+            <?php
+                                for( $i = 0 ; $i<6 ; $i++){
+                                    if($sno_norm[$i]!=''){
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                                     echo '<tbody>';
                                     echo '<td>'.$sno_norm[$i].'</td>';
                                     echo '<td>'.$item_norm[$i].'</td>';
                                     echo '<td>'.$no_norm[$i].'</td>';
                                     echo '</tbody>';
+<<<<<<< HEAD
                                 }
                             ?>
                             </table>
@@ -127,6 +180,43 @@ $no_norm = isset($row4['element3'])? json_decode($row4['element3'], true):['',''
 </body>
 <script>
     window.print();
+=======
+                                    }
+                                }
+                            ?>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label>Transfer To (हस्तांतरण) :&nbsp; </label><strong><?php echo $row4['transfer'];?></strong>
+        </div>
+        <div class="col-6">
+            <label>Recipient (प्राप्तकर्ता) :&nbsp; </label><strong><?php echo $row4['recipient'];?></strong>
+        </div>
+        <div class="col-6">
+            <label>Name & Sign of Nurse :&nbsp; </label><strong><?php echo $row4['nurse'];?></strong>
+        </div>
+        
+        <div class="col-6">
+            <label>Name & Sign of Witness :&nbsp; </label><strong><?php echo $row4['wit1'];?></strong>
+        </div>
+        <div class="col-6"><label>(परिचारिकेचे नाव व हस्ताक्षर)</label></div>
+        <div class="col-6"><label>(साक्षीदाराचे नाव व हस्ताक्षर)</label></div>
+
+        <div class="col-6">
+            <label>Name & Sign of Relatives :&nbsp; </label><strong><?php echo $row4['rel'];?></strong>
+        </div>
+        <div class="col-6">
+            <label>Name & Sign of Witness :&nbsp; </label><strong><?php echo $row4['wit2'];?></strong>
+        </div>
+        <div class="col-6"><label>(नातेवाईकाचे नाव व हस्ताक्षर)</label></div>
+        <div class="col-6"><label>(साक्षीदाराचे नाव व हस्ताक्षर)</label></div>
+    </div>
+    <h6 class="text-center mt-3">Thank You !</h6>
+</body>
+<script>
+window.print();
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </script>
 
 </html>

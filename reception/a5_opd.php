@@ -9,7 +9,11 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
+<<<<<<< HEAD
 error_reporting(0);
+=======
+
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
@@ -21,6 +25,7 @@ $res1 = $data1->fetch_assoc();
 $sql2 = "SELECT * FROM p_insure WHERE id = '$id';";
 $data2 = $conn->query($sql2);
 $res2 = $data2->fetch_assoc();
+<<<<<<< HEAD
 
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
@@ -29,6 +34,8 @@ $res10=$data10->fetch_assoc();
 $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
 $query_2=mysqli_query($conn,$sql_2);
 $res_2=mysqli_fetch_assoc($query_2);
+=======
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -283,6 +290,7 @@ $res_2=mysqli_fetch_assoc($query_2);
         </div>
 
     </form>
+<<<<<<< HEAD
     <label for="" class="form-label">Payment Mode : <strong>
     <?php echo $res_2['pay_method'];?>
     </strong></label><br>
@@ -292,6 +300,8 @@ $res_2=mysqli_fetch_assoc($query_2);
         echo '<label for="" class="form-label">Payment Id : <strong>'.$res_2['payment_id'].'
         </strong></label>';
     }?>
+=======
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     <h5 style="text-align: right; margin-right: 2em; font-size:14px;">SubTotal : <span id="subtotal">
             <?php echo $subtotal; ?>
         </span></h5>
@@ -304,7 +314,11 @@ $res_2=mysqli_fetch_assoc($query_2);
         <?php echo $res['opd_discount']; ?>
 
     </h5>
+<<<<<<< HEAD
     <h5 style="text-align: right; margin-right: 2em; font-size:14px;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
+=======
+    <h5 style="text-align: right; margin-right: 2em; font-size:14px;">Grand Total : <span id="grandtotal">
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
             <?php echo $subtotal; ?>
         </span></h5> <br><br>
     <h6 style="text-align: right; margin-right: 3em;">Signature</h6>

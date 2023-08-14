@@ -8,6 +8,10 @@ $res = $data->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
@@ -436,6 +440,7 @@ $res10=$data10->fetch_assoc();
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 
     </form>
 
@@ -502,6 +507,9 @@ $res10=$data10->fetch_assoc();
                     <button type="submit" class="btn btn-danger m-3 " name="submit" id="submit">Submit Payment Details</button>
                     </div>
                                 </form>
+=======
+    </form>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     <h5 style="text-align: right; margin-right: 2em;">SubTotal : <span id="subtotal">
             <?php echo $subtotal; ?>
         </span></h5>
@@ -516,10 +524,18 @@ $res10=$data10->fetch_assoc();
             id="discount" onchange="on_discount_change()" value="<?php echo $res['opd_discount']; ?>">
 
     </h5>
+<<<<<<< HEAD
     <h5 style="text-align: right; margin-right: 2em;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
             <?php echo $subtotal; ?>
         </span></h5> <br><br><br>
     <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
+=======
+    <h5 style="text-align: right; margin-right: 2em;"><?php  echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?> : <span id="grandtotal">
+            <?php echo $subtotal; ?>
+        </span></h5> <br><br><br>
+    <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
+    <h6>Thank You !</h6>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     </div>
 
 </body>
@@ -542,6 +558,7 @@ $res10=$data10->fetch_assoc();
   
       })
 </script>
+<<<<<<< HEAD
 
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -560,6 +577,9 @@ $res10=$data10->fetch_assoc();
     };
 
 
+=======
+<script>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
     var initial_subtotal = document.getElementById("subtotal").innerHTML;
     on_discount_change();
 
@@ -696,6 +716,10 @@ $res10=$data10->fetch_assoc();
                 console.error("Error:", error);
             });
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 </script>
 
 </html>

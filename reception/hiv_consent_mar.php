@@ -270,13 +270,21 @@ table, th, td {
     <td><span class="style6">नाव : </span></td>
     <td><span class="style6"> <input  type="text" class="form-control" id="" placeholder="नाव" name="name1" value="<?php echo $row6['name1'];?>"></span></td>
     <td> <input  type="text" class="form-control" id="" placeholder="नाव" name="name2" value="<?php echo $row6['name2'];?>"></td>
+<<<<<<< HEAD
     <td><span class="style6">तारीख : </span><input  type="date" class="form-control" id="" placeholder="तारीख" name="date" value="<?php echo $row6['date'];?>"> </td>
+=======
+    <td><span class="style6">तारीख : <input  type="date" class="form-control" id="" placeholder="तारीख" name="date" value="<?php echo $row6['date'];?>"> </span></td>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   </tr>
   <tr>
     <td><span class="style6">पत्ता :  </span></td>
     <td><span class="style6">  <input  type="text" class="form-control" id="" placeholder="पत्ता" name="add1" value="<?php echo $row6['add1'];?>">  </span></td>
     <td> <input  type="text" class="form-control" id="" placeholder="पत्ता" name="add2" value="<?php echo $row6['add2'];?>"></td>
+<<<<<<< HEAD
     <td> <input  type="text" class="form-control" id="" placeholder="पत्ता" name="add3" value=" "></td>
+=======
+    <td> <input  type="text" class="form-control" id="" placeholder="पत्ता" name="add3" value="<?php echo $row6['add3'];?>"></td>
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
   </tr>
   <tr>
     <td class="style6">वय :    वर्ष : </td>

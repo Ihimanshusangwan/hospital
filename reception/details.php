@@ -32,8 +32,16 @@ require("../admin/connect.php");
         <?php
         $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
+<<<<<<< HEAD
         if ($res['is_admited'] == 0) {
           echo '<input type="submit" class="btn btn-secondary btn m-2" name="admit_patient" value="Admit Patient">';
+=======
+        if (isset($res['is_admited'])) {
+          if( $res['is_admited'] == 0){
+              echo '<input type="submit" class="btn btn-secondary btn m-2" name="admit_patient" value="Admit Patient">';
+          }
+        
+>>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
 
         } else {
           echo '<input type="button" class="btn btn-success btn m-2"  value="Patient Admited" disabled>';
