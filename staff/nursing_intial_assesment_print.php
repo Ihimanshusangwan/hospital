@@ -15,7 +15,6 @@ $res2 = $data2->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
-
 ?>
 
 <!DOCTYPE html>
@@ -28,38 +27,52 @@ $title = $data->fetch_assoc();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style>
-        body {
-            margin: 0;
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .btr {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .bl {
+        border-left: 1px solid black;
+
+    }
+
+    .bb {
+        border-bottom: 1px solid black;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    @media print {
+
+        #button {
+            display: none !important;
         }
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
+        @page {
+            size: A4;
         }
 
-        .title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        .noprint {
+            visibility: hidden;
         }
-
-        @media print {
-
-            #button {
-                display: none !important;
-            }
-
-            @page {
-                size: A4;
-            }
-
-            .noprint {
-                visibility: hidden;
-            }
-        }
+    }
     </style>
 </head>
 
@@ -80,43 +93,43 @@ $title = $data->fetch_assoc();
         $res2 = $dat->fetch_assoc();
     } ?>
     <div class="row">
-        <div class="col-4">
+        <div class="col-6">
             <strong>Mode Of Arrival: </strong>
             <?php  if ($res2['mode_of_arrival'] == 1) {
                 echo "Walking";
             } else if ($res2['mode_of_arrival'] == 2) {
                 echo "Wheel";
             } else if ($res2['mode_of_arrival'] == 3) {
-                echo " Stretcher";
+                echo "Stretcher";
             } else {
                 echo "";
             } ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Patient accompanied on admission : </strong>
             <?php echo ($res2['accompanied'] == "1") ? "Yes" : "No"; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Relation: </strong>
             <?php echo $res2['relation'] ?? ''; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Contact Person :</strong>
             <?php echo $res2['contact_person'] ?? ''; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Phone Number:</strong>
             <?php echo $res2['phone_number'] ?? ''; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Primary Language Spoken: </strong>
             <?php echo $res2['language'] ?? ''; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Interpreter Need :</strong>
             <?php echo ($res2['interpereter'] == 1) ? "YES" : "NO"; ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Education Status: </strong>
             <?php
             if ($res2['education_status'] == 1) {
@@ -132,7 +145,7 @@ $title = $data->fetch_assoc();
             }
             ?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Socio Economic Status: </strong>
             <?php
             if ($res2['economic_status'] == 1) {
@@ -150,30 +163,34 @@ $title = $data->fetch_assoc();
             <strong>Chief Complaints: </strong>
             <?php echo $res2['compliant'] ?? ''; ?>
         </div>
-        <div class="col-4">
+    </div>
+    <div class="row mt-3 mx-4">
+        <div class="col-4 ml-2 bl btr">
             <strong>Weight: </strong>
-            <?php echo $res1['weight'] ?>
+            <?php echo $res2['weight'] ?>
         </div>
-        <div class="col-4">
+        <div class="col-4 btr">
             <strong>Pulse: </strong>
-            <?php echo $res1['pulse'] ?>
+            <?php echo $res2['pulse'] ?>
         </div>
-        <div class="col-4">
+        <div class="col-4 btr">
             <strong>BP: </strong>
-            <?php echo $res1['bp'] ?>
+            <?php echo $res2['bp'] ?>
         </div>
-        <div class="col-4">
+        <div class="col-4 ml-1 bl bb btr">
             <strong>Temperature: </strong>
-            <?php echo $res1['temp'] ?>
+            <?php echo $res2['temp'] ?>
         </div>
-        <div class="col-4">
+        <div class="col-4 bb btr">
             <strong>Respiration: </strong>
             <?php echo $res2['resperation'] ?>
         </div>
-        <div class="col-4">
+        <div class="col-4 bb btr">
             <strong>Height: </strong>
             <?php echo $res2['height'] ?>
         </div>
+    </div>
+    <div class="row">
         <div class="text-center col-12 m-2"><strong>Known or Suspected Allergies To</strong></div>
 
         <div class="col-12">
@@ -228,7 +245,7 @@ $title = $data->fetch_assoc();
     <h6 class="mt-3">Thank You !</h6>
 </body>
 <script>
-    window.print();
+window.print();
 </script>
 
 </html>

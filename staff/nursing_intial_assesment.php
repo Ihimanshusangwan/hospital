@@ -28,6 +28,10 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     $economic_status = $_POST['economic_status'];
     $education_status = $_POST['education_status'];
     $compliant = $_POST['compliant'];
+    $weight=$_POST['weight'];
+    $pulse=$_POST['pulse'];
+    $bp=$_POST['bp'];
+    $temp=$_POST['temp'];
     $respiration = $_POST['respiration'];
     $height = $_POST['height'];
     $allergy_drug = $_POST['allergy_drug'];
@@ -51,6 +55,10 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                   `economic_status` = '$economic_status',
                   `education_status` = '$education_status',
                   `compliant` = '$compliant',
+                  `weight`='$weight',
+                  `pulse`='$pulse',
+                  `bp`='$pulse',
+                  `temp`='$pulse',
                   `resperation`= '$respiration',
                   `height` = '$height',
                   `allergy_drug` = '$allergy_drug',
@@ -72,6 +80,7 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
   $query = "SELECT * FROM `nurse_intial_assesment` WHERE `id` = '$id'";
   $dat = $conn->query($query);
   $numRows = $dat->num_rows;
+  
   if ($numRows == 1) {
       $res2 = $dat->fetch_assoc();
   } else {
@@ -267,8 +276,8 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                 </div>
             </div>
             <div class="row ">
-                
-                <div class="col-md-2" >
+
+                <div class="col-md-2">
                     <label class="form-label text-primary">Mode Of Arrival:
                     </label>
                     <select class="form-select" name="mode_of_arrival">
@@ -299,12 +308,13 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                 </div>
                 <div class="col-md-3">
                     <label class="form-label text-primary" for="time_ad">Contact Person :</label>
-                    <input type="text" class="form-control" name="contact_person"
-                        placeholder="Contact Person" value="<?php echo $res2['contact_person'] ?? ''; ?>">
+                    <input type="text" class="form-control" name="contact_person" placeholder="Contact Person"
+                        value="<?php echo $res2['contact_person'] ?? ''; ?>">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label text-primary">Phone Number:</label>
-                    <input name="phone_number" type="number" class="form-control" placeholder="Enter Phone Number" value="<?php echo $res2['phone_number'] ?? ''; ?>">
+                    <input name="phone_number" type="number" class="form-control" placeholder="Enter Phone Number"
+                        value="<?php echo $res2['phone_number'] ?? ''; ?>">
                 </div>
                 <div class="container">
                     <div class="row">
@@ -351,7 +361,7 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                         </div>
                         <div class="col-md-3">
                             <label class="form-label text-primary">Chief Complaints:</label>
-                            <textarea name="compliant" type="text" class="form-control" 
+                            <textarea name="compliant" type="text" class="form-control"
                                 style="width: 400px; height:100px"><?php echo $res2['compliant'] ?? ''; ?></textarea>
 
                         </div>
@@ -359,19 +369,19 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                     <div class="row" style="margin-top:15px;">
                         <div class="col-sm-2">
                             <label class="form-label text-primary">Weight</label>
-                            <?php echo $res1['weight'] ?>
+                            <input type="text" name="weight" class="form-control" value=" <?php echo $res2['weight']?? ''; ?>">
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label text-primary">Pulse</label>
-                            <?php echo $res1['pulse']?>
+                            <input type="text" name="pulse" class="form-control" value=" <?php echo $res2['pulse']?? '';?>">
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label text-primary">BP</label>
-                            <?php echo $res1['bp']?>
+                            <input type="text" name="bp" class="form-control" value=" <?php echo $res2['bp']?? '';?>">
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label text-primary">Temperature : </label>
-                            <?php echo $res1['temp']." "?>
+                            <input type="text" name="temp" class="form-control" value="<?php echo $res2['temp']?? '';?>">
                         </div>
                         <div class="col-sm-2">
                             <label class="form-label text-primary">Respiration</label>
@@ -419,9 +429,12 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                 </tr>
                 <tr>
                     <td>Mobility / Walking</td>
-                    <th><input type="text" class="form-control" name="tab1" value="<?php echo $res2['tab1'] ?? ''; ?>"></th>
-                    <th><input type="text" class="form-control" name="tab2" value="<?php echo $res2['tab2'] ?? ''; ?>"></th>
-                    <th><input type="text" class="form-control" name="tab3" value="<?php echo $res2['tab3'] ?? ''; ?>"></th>
+                    <th><input type="text" class="form-control" name="tab1" value="<?php echo $res2['tab1'] ?? ''; ?>">
+                    </th>
+                    <th><input type="text" class="form-control" name="tab2" value="<?php echo $res2['tab2'] ?? ''; ?>">
+                    </th>
+                    <th><input type="text" class="form-control" name="tab3" value="<?php echo $res2['tab3'] ?? ''; ?>">
+                    </th>
                 </tr>
             </table>
 
@@ -430,19 +443,19 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
                 <div class="row">
                     <div class="col-sm-2">
                         <label class="form-label text-primary">Name</label>
-                        <input name="submit_name" type="text" class="form-control"
-                            value="<?php echo $res2['$submit_name'] ?? ''; ?>">
+                        <input type="text" class="form-control" name="submit_name"
+                            value="<?php echo isset($res2['submit_name'] )?$res2['submit_name'] : '';?>">
                     </div>
                     <div class="col-sm-2">
                         <label class="form-label text-primary">Signature</label>
-                        <input name="submit_sign" type="text" class="form-control"
-                            value="<?php echo $res2['$submit_sign'] ?? ''; ?>">
+                        <input type="text" class="form-control" name="submit_sign"
+                            value="<?php echo $res2['submit_sign'] ?? ''; ?>">
 
                     </div>
                     <div class="col-sm-2">
-                        <label class="form-label text-primary">Date</label>
-                        <input name="submit_date" type="date" class="form-control"
-                            value="<?php echo $res2['$submit_date'] ?? ''; ?>">
+                        <label class="form-label text-primary">Date :</label>
+                        <input type="date" class="form-control" name="submit_date"
+                            value="<?php echo $res2['submit_date'] ?? ''; ?>">
                     </div>
                 </div>
             </div>

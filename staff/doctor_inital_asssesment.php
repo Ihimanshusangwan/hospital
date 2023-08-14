@@ -1,4 +1,4 @@
-<?php
+s<?php
 $id = $_GET['id'];
 require("../admin/connect.php");
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
