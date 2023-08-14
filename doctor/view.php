@@ -195,7 +195,8 @@ if (isset($_POST['template_btn'])) {
 </head>
 
 <body style="background-color: #90D0E5;">
-    <div class="container">
+    <div class="container ">
+    
         <h1 class="text-center text-danger mt-3">
             <h1>
                 <marquee style="color: purple;" BEHAVIOUR="slide" scrollnount="70" scrolledeley="100">
@@ -203,14 +204,60 @@ if (isset($_POST['template_btn'])) {
                 </marquee>
             </h1>
         </h1>
-        <a href="doctorPage.php" class="btn btn-primary m-2">Dashboard</a>
+        <div class="row">
+            <div class="col-6">
+            <a href="doctorPage.php" class="btn btn-primary m-2">Dashboard</a>
         <a href="image_gallery.php" class="btn btn-primary m-2">Image Gallery</a>
 
         <button class="btn btn-primary m-2 receipt" type="button">Print</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
             Use Templates
         </button>
+            </div>
+            <div class="col-6">
+                <div class="row">
+
+            <form method="POST" action="" class="col">
+                                <?php
+                                $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
+                                $res = $conn->query($sql)->fetch_assoc();
+                                echo '<div class="col-6">';
+                                if ($res['is_admited'] == 0) {
+                                    echo '<input type="submit" class="btn btn-secondary  my-2" name="admit_patient" value="Admit Patient">';
+
+                                } else {
+                                    echo '<input type="button" class="btn btn-success my-2"  value="Patient Admited" disabled>';
+                                }
+                                echo '</div>';
+                                echo '<div class="col-6">';
+                               
+                                echo '<div class="row " >
+                                <select id="selectBoxContainer" style="display: none; class="form-control ">
+                                ';
+
+                                $sql = "SELECT name FROM doctors WHERE type_of_visit != '{$_SESSION['doctor_type']}'";
+                                $res = $conn->query($sql);
+                                while ($values = $res->fetch_assoc()) {
+                                    echo '
+                                  <option value="' . $values['name'] . '">
+                                    ' . $values['name'] . '
+                                  </option>
+                                  ';
+                                }
+
+                                echo '
+                                </select><button id="final-referButton" class="btn btn-primary " style="display: none;" p-id="' . $id . '" >Refer </button></div>
+                            <button id="referButton" class="btn btn-warning " >Refer Patient</button>';
+                            
+                            echo '</div>';
+                                ?>
+                            </form>
+                            </div>
+            </div>
+        </div>
+       
         
+       
         <!-- Modal -->
 
 
@@ -663,15 +710,15 @@ if (isset($_POST['template_btn'])) {
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="button" class="btn btn-secondary btn-lg my-2"
+                                <button type="button" class="btn btn-secondary my-2"
                                     onclick="addItem();">Add</button>
                             </div>
                             <div class="col">
-                                <input type="submit" class="btn btn-secondary btn-lg my-2" name="save_test"
+                                <input type="submit" class="btn btn-secondary  my-2" name="save_test"
                                     value="Save">
                             </div>
                             <div class="col">
-                                <button type="button" id="labButton" class="btn btn-secondary btn-lg my-2">Lab</button>
+                                <button type="button" id="labButton" class="btn btn-secondary  my-2">Lab</button>
                             </div>
                             <div class="col">
                                 <div class="form-check form-switch">
@@ -679,35 +726,7 @@ if (isset($_POST['template_btn'])) {
                                         id="advice_checkbox">
                                 </div>
                             </div>
-                            <form method="POST" action="" class="col">
-                                <?php
-                                $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
-                                $res = $conn->query($sql)->fetch_assoc();
-                                if ($res['is_admited'] == 0) {
-                                    echo '<input type="submit" class="btn btn-secondary btn-lg my-2" name="admit_patient" value="Admit Patient">';
-
-                                } else {
-                                    echo '<input type="button" class="btn btn-success btn-lg my-2"  value="Patient Admited" disabled>';
-                                }
-                                echo '<div class="row " >
-                                <select id="selectBoxContainer" style="display: none; class="form-control ">
-                                ';
-
-                                $sql = "SELECT name FROM doctors WHERE type_of_visit != '{$_SESSION['doctor_type']}'";
-                                $res = $conn->query($sql);
-                                while ($values = $res->fetch_assoc()) {
-                                    echo '
-                                  <option value="' . $values['name'] . '">
-                                    ' . $values['name'] . '
-                                  </option>
-                                  ';
-                                }
-
-                                echo '
-                                </select><button id="final-referButton" class="btn btn-primary " style="display: none;" p-id="' . $id . '" >Refer </button></div>
-                            <button id="referButton" class="btn btn-warning btn-lg " >Refer Patient</button>';
-                                ?>
-                            </form>
+                           
                         </div>
                     </form>
                 </div>
@@ -1529,7 +1548,7 @@ $(document).ready(function () {
             var instruction = $(this).closest("tr").find("td:last").text();
             selectedInstructions.push(instruction);
         });
-        $("#selected-instructions").val(selectedInstructions.join("\n"));
+        $("#selected-instructions").val(selectedInstructions.join(","));
     });
 });
 
@@ -1540,7 +1559,7 @@ $(document).ready(function () {
             var investigation = $(this).closest("tr").find("td:last").text();
             selectedInvestigation.push(investigation);
         });
-        $("#selected-investigation").val(selectedInvestigation.join("\n"));
+        $("#selected-investigation").val(selectedInvestigation.join(","));
     });
 });
 $(document).ready(function () {
@@ -1550,7 +1569,7 @@ $(document).ready(function () {
             var symptoms = $(this).closest("tr").find("td:last").text();
             selectedSymptoms.push(symptoms);
         });
-        $("#selected-symptoms").val(selectedSymptoms.join("\n"));
+        $("#selected-symptoms").val(selectedSymptoms.join(","));
     });
 });
 </script>
