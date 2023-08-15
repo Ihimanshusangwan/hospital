@@ -186,10 +186,10 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             echo '<td>' . $res['consultant'] . '</td>';
                             if( $res['is_visited'] == 0){
                               echo<<<data
-                              <td><form action="" method="POST">
+                              <td> <form action="" method="POST">
                               <input type="hidden" name="p_id" value="{$res['id']}">
                               <button type="submit" name="visit" value="is_visited" class="btn btn-success">Mark as Visited</button>
-                            </form></td>
+                            </form> </td>
 
 data;
                             }else{
