@@ -110,12 +110,13 @@ $title = $data->fetch_assoc();
           $is_old_patient = $_POST['flexRadioDefault'];
           $referred_by = $_POST['rb'];
           $patient_complaints = $_POST['pc'];
+          $tov = $_POST['tov'];
 
           // If no errors, insert data into database
           if (empty($nameErr) && empty($addressErr) && empty($talukaErr) && empty($districtErr) && empty($ageErr) && empty($sexErr) && empty($dob_dateErr) && empty($reg_dateErr) && empty($mobileErr) && empty($mailErr) && empty($passErr) && empty($tovErr) && empty($consultantErr) && empty($bpErr) && empty($pulseErr) && empty($weightErr) && empty($tempErr)) {
 
-            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,referred_by,patient_complaints,is_registered,is_eye,is_ortho)
-            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$referred_by','$patient_complaints',0,1,1)";
+            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,referred_by,patient_complaints,is_registered,is_eye,is_ortho,type_of_visit)
+            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$referred_by','$patient_complaints',0,1,1,'$tov')";
 
             if ($conn->query($sql) === TRUE) {
               $inserted_patient_id = $conn->insert_id;
@@ -408,11 +409,13 @@ $title = $data->fetch_assoc();
             </div>
             <div class="form-group m-2 col-6">
               <label for="consultant">Consultant:</label>
-              <select class="form-control" name="consultant" id="consultant" required>
-                <?php
-                $sql = "SELECT name FROM doctors;";
+              <select class="form-control" name="consultant" id="consultant" required onchange="changeType()">
+              <?php
+                $sql = "SELECT name,type_of_visit FROM doctors;";
                 $res = $conn->query($sql);
+                $typeData = array();
                 while ($values = $res->fetch_assoc()) {
+                  $typeData["{$values['name']}"] = $values['type_of_visit'];
                   echo '
                   <option value="' . $values['name'] . '">
                     ' . $values['name'] . '
@@ -422,15 +425,15 @@ $title = $data->fetch_assoc();
                 ?>
               </select>
             </div>
-            <div class="form-group m-2 col-6">
-
-
+            <div class="form-group m-2 col-6  ">
+              <label for="tov">Type of Visit:</label>
+             <input type="text" class="form-control" name="tov" id="tov" readonly>
+            </div>
               <?php
 
               $conn->close();
               ?>
 
-            </div>
             <div class="container mt-4">
 
             </div>
@@ -456,6 +459,13 @@ $title = $data->fetch_assoc();
     </div>
   </div>
   <script>
+    var changeType = () => {
+      tovInput.value = typeData[consultantInput.value];
+    }
+    var typeData = <?php echo json_encode($typeData); ?>;
+    var consultantInput = document.getElementById('consultant');
+    var tovInput = document.getElementById('tov');
+    changeType();
     function calculateAge() {
       var dob = document.getElementById('dob_date').value;
       var today = new Date();

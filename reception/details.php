@@ -35,12 +35,12 @@ require("../admin/connect.php");
         if (isset($res['is_admited'])) {
           if( $res['is_admited'] == 0){
               echo '<input type="submit" class="btn btn-secondary btn m-2" name="admit_patient" value="Admit Patient">';
-          }
-        
+          
 
         } else {
           echo '<input type="button" class="btn btn-success btn m-2"  value="Patient Admited" disabled>';
         }
+      }
 
         ?>
       </form>

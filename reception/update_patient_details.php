@@ -205,11 +205,14 @@ $title = $data->fetch_assoc();
                         </div>
                         <div class="form-group m-2 col-6  ">
                             <label for="consultant">Consultant:</label>
-                            <select class="form-control" name="consultant" required id="consultant">
+                            <select class="form-control" name="consultant" required id="consultant" onchange="changeType()">
                                 <?php
-                                $sql = "SELECT name FROM doctors;";
+                                $sql = "SELECT name,type_of_visit FROM doctors;";
                                 $result = $conn->query($sql);
+                                $typeData = array();
                                 while ($values = $result->fetch_assoc()) {
+                                    
+                  $typeData["{$values['name']}"] =  $values['type_of_visit']; 
                                     $selected = ($res['consultant']==$values['name'])? "selected":"";
 
                                     echo '
@@ -222,23 +225,9 @@ $title = $data->fetch_assoc();
                             </select>
                         </div>
                         <div class="form-group m-2 col-6  ">
-                            <label for="tov">Type of Visit:</label>
-                            <select class="form-control" name="tov" required id='tov'>
-                                <?php
-                                $sql = "SELECT * FROM type;";
-                                $result = $conn->query($sql);
-                                while ($values = $result->fetch_assoc()) {
-                                    $selected = ($res['type_of_visit']==$values['type'])? "selected":"";
-                                    echo '
-                  <option value="' . $values['type'] . '" '.$selected.'>
-                    ' . $values['type'] . '
-                  </option>
-                  ';
-                                }
-                                $conn->close();
-                                ?>
-                            </select>
-                        </div>
+              <label for="tov">Type of Visit:</label>
+             <input type="text" class="form-control" name="tov" id="tov" readonly>
+            </div>
                         <div class="container mt-4  ">
                             <div class="row">
                                 <h5>Physical Examination:</h5>
@@ -336,6 +325,13 @@ $title = $data->fetch_assoc();
         </div>
     </div>
     <script>
+          var changeType = ()=>{
+      tovInput.value = typeData[consultantInput.value];
+    }
+    var typeData = <?php echo json_encode($typeData);?>;
+    var consultantInput = document.getElementById('consultant');
+    var tovInput = document.getElementById('tov');
+    changeType();
         function calculateAge() {
             var dob = document.getElementById('dob_date').value;
             var today = new Date();
