@@ -119,7 +119,6 @@ $check = "SELECT * FROM `case_audit_sheet` WHERE `id`='$id'";
                                 echo'<td class="form-label size1">'; echo $arr[$i] ;'</td>';
                                 
                             }
-
                                else if($j==1){
                                 echo "<td class='size3'>". $arr_norm[$i]."</td>";
 

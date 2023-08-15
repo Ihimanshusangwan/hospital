@@ -144,70 +144,88 @@ if (!isset($res12['inp'])) {
         $res = $conn->query($sql)->fetch_assoc();
 
         ?>
-    <?php
+        <?php
         $data = $_GET['data'];
         $checkboxes = isset($_GET['checkboxes']) ? explode(',', $_GET['checkboxes']) : [];
-
         $values = json_decode(urldecode($data), true);
 
         ?>
-    <div class="col-12">
-        <?php if (in_array('history_checkbox', $checkboxes)): ?>
-        <strong>History:</strong>
-        <?php echo $res['history']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('diagnosis_checkbox', $checkboxes)): ?>
-        <strong>Diagnosis:</strong>
-        <?php echo $res['diagnosis']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('exam_checkbox', $checkboxes)): ?>
-        <strong>Examination:</strong>
-        <?php echo $res['examination']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
-        <strong>Chief Complaint:</strong>
-        <?php echo $res['chief_complaint']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
-        <strong>Family History:</strong>
-        <?php echo $res['family_history']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
-        <strong>Operative Procedure Done:</strong>
-        <?php echo $res['procedure_done']; ?>
-        <?php endif; ?>
-    </div>
-    <?php if (in_array('med_checkbox', $checkboxes)): ?>
-    <div class="container-fluid" style="margin-top: 10px;">
-        <!-- DataTales Example -->
-        <h5 class="text-center text-primary">Prescriptions</h5>
-        <div>
-            <table id="dataTable" class="table mt-2 pad" width="100%">
-                <thead>
-                    <tr>
-                        <th>Types</th>
-                        <th>Medicine</th>
-                        <th>सकाळ</th>
-                        <th>दुपार</th>
-                        <th>रात्र</th>
-                        <th>कधी घ्यायच्या </th>
-                        <th>किती दिवस </th>
-                        <th>Qty</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
-                    <?php
+        <div class="col-12">
+            <?php if (in_array('history_checkbox', $checkboxes)): ?>
+                <strong>History:</strong>
+                <?php echo $res['history']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('diagnosis_checkbox', $checkboxes)): ?>
+                <strong>Diagnosis:</strong>
+                <?php echo $res['diagnosis']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('exam_checkbox', $checkboxes)): ?>
+                <strong>Examination:</strong>
+                <?php echo $res['examination']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
+                <strong>Chief Complaint:</strong>
+                <?php echo $res['chief_complaint']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
+                <strong>Family History:</strong>
+                <?php echo $res['family_history']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
+                <strong>Operative Procedure Done:</strong>
+                <?php echo $res['procedure_done']; ?>
+            <?php endif; ?>
+        </div>
 
+        <div class="col-12">
+            <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
+                <strong>Investigations:</strong>
+                <?php echo $res['investigation']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
+                <strong>Symptoms:</strong>
+                <?php echo $res['symptoms']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
+                <strong>Instruction:</strong>
+                <?php echo $res['instructions']; ?>
+            <?php endif; ?>
+        </div>
+
+
+        <?php if (in_array('med_checkbox', $checkboxes)): ?>
+            <div class="container-fluid" style="margin-top: 10px;">
+                <!-- DataTales Example -->
+                <h6 class="text-primary">Prescriptions</h6>
+                        <div>
+                            <table class="table border-dark" id="dataTable" width="100%" cellspacing="0">
+                                <tr>
+                                    <th class="col-1">Types</th>
+                                    <th class="col-3">Medicine</th>
+                                    <th class="col-1">सकाळ</th>
+                                    <th class="col-1">दुपार</th>
+                                    <th class="col-1">रात्र</th>
+                                    <th class="col-1">कधी घ्यायच्या </th>
+                                    <th class="col-1">किती दिवस </th>
+                                    <th class="col-1">Qty</th>
+
+                                </tr>
+                                <tbody id="tbody">
+                                    <?php
                                     $sql = "SELECT * FROM prescription WHERE patient_id = '$id' ORDER BY id DESC;";
                                     $data = $conn->query($sql);
                                     $i = 1;

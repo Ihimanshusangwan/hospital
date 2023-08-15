@@ -89,6 +89,7 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     <a href="initial_counselling.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Initial Counselling Form</button></a>
     <a href="rate_charges.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Rate Charges Samatipatra</button></a>
     <a href="room_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Room Consent</button></a>
+    <a href="counselling.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Counselling Consent</button></a>
     
 
 

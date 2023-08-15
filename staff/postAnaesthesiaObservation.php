@@ -38,7 +38,6 @@ if (isset($_POST['submit'])) {
   . '&' . $_POST['pat12']. '&' .
   $_POST['pat13']. '&' . $_POST['pat14']. '&' . 
   $_POST['pat15'];
-
   $dis = $_POST['dis0']. '&' . $_POST['dis1']
   . '&' . $_POST['dis2']. '&' . $_POST['dis3']
   . '&' . $_POST['dis4']. '&' . $_POST['dis5'] 

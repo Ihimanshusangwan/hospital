@@ -260,6 +260,12 @@ $title = $data->fetch_assoc();
               $sql43 = "INSERT INTO feedback_marthi(id) VALUES($inserted_patient_id);";
               $conn->query($sql43);
 
+              $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql44);
+
+              $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql45);
+
               $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
 
