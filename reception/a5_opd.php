@@ -9,7 +9,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
-
+error_reporting(0);
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
@@ -21,6 +21,14 @@ $res1 = $data1->fetch_assoc();
 $sql2 = "SELECT * FROM p_insure WHERE id = '$id';";
 $data2 = $conn->query($sql2);
 $res2 = $data2->fetch_assoc();
+
+$sql10="SELECT * FROM `change_label` WHERE 1";
+$data10=$conn->query($sql10);
+$res10=$data10->fetch_assoc();
+
+$sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
+$query_2=mysqli_query($conn,$sql_2);
+$res_2=mysqli_fetch_assoc($query_2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -275,6 +283,15 @@ $res2 = $data2->fetch_assoc();
         </div>
 
     </form>
+    <label for="" class="form-label">Payment Mode : <strong>
+    <?php echo $res_2['pay_method'];?>
+    </strong></label><br>
+    <?php 
+    $pay_method=$res_2['pay_method'];
+    if($pay_method!="CASH"){
+        echo '<label for="" class="form-label">Payment Id : <strong>'.$res_2['payment_id'].'
+        </strong></label>';
+    }?>
     <h5 style="text-align: right; margin-right: 2em; font-size:14px;">SubTotal : <span id="subtotal">
             <?php echo $subtotal; ?>
         </span></h5>
@@ -287,7 +304,7 @@ $res2 = $data2->fetch_assoc();
         <?php echo $res['opd_discount']; ?>
 
     </h5>
-    <h5 style="text-align: right; margin-right: 2em; font-size:14px;">Grand Total : <span id="grandtotal">
+    <h5 style="text-align: right; margin-right: 2em; font-size:14px;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
             <?php echo $subtotal; ?>
         </span></h5> <br><br>
     <h6 style="text-align: right; margin-right: 3em;">Signature</h6>

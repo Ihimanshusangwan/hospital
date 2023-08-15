@@ -8,7 +8,6 @@ $res = $data->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
-
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
@@ -437,7 +436,72 @@ $res10=$data10->fetch_assoc();
                 </div>
             </div>
         </div>
+
     </form>
+
+    
+<form action='' method="POST">
+    <div class="col-3 mx-3 text-center bg-green">
+        <?php
+        if(isset($_POST['submit'])){
+            echo "<label style=' background-color: lightgreen; border-radius :3px;' class='p-2'>PAYMENT DETAILS UPDATED SUCCESSFULLY</label>";
+        }
+        ?>
+    </div>
+        <div class="col-3 mx-3">
+            <?php
+            if(isset($_POST['submit'])){
+               $pay_method=$_POST['pay_method'];
+               $payment_id=$_POST['Pi'];
+               $update="INSERT INTO opd_bill_pay (patient_id , pay_method, payment_id) VALUES ('$id','$pay_method', '$payment_id')";
+               $sql_1=mysqli_query($conn,$update);
+
+            }
+            $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
+            $query_2=mysqli_query($conn,$sql_2);
+            $res_2=mysqli_fetch_assoc($query_2);
+            error_reporting(0);
+
+            ?>
+                        <label for="" class="form-label">Payment Mode</label>
+                        <select class="form-control" name="pay_method" onchange="Payment_method_control(this)" id="pay_method">
+                     
+                     
+                            <option value="CASH" <?php if ($res_2['pay_method'] == 'CASH') {
+                                      echo 'selected';
+                                    } ?>>CASH</option>
+
+                            <option value="CHECK" <?php if ($res_2['pay_method'] == 'CHECK') {
+                                      echo 'selected';
+                                    } ?>>CHECK</option>
+
+                            <option value="NEFT" <?php if ($res_2['pay_method'] == 'NEFT') {
+                                      echo 'selected';
+                                    } ?>>NEFT</option>
+                           
+                            <option value="CARD" <?php if ($res_2['pay_method'] == 'CARD') {
+                                      echo 'selected';
+                                    } ?>>CARD</option>
+
+                            <option value="GOOGLE PAY" <?php if ($res_2['pay_method'] == 'GOOGLE PAY') {
+                                      echo 'selected';
+                                    } ?>>GOOGLE PAY</option>
+
+                            <option value="PHONEPE" <?php if ($res_2['pay_method'] == 'PHONEPE') {
+                                      echo 'selected';
+                                    } ?>>PHONEPE</option>
+                        </select>
+        </div>
+        
+    <div class="col-3 mx-3" style="display:none;" id="Payment_id">
+                        <label for="Pi" class="form-label">Payment Id</label>
+                        <input type="text"   value="<?php echo $res_2['payment_id']; ?>" name="Pi" class="form-control ad"  placeholder="Payment Id" id="Pi"    >
+                    </div>
+
+    <div class="col-3 text-center">
+                    <button type="submit" class="btn btn-danger m-3 " name="submit" id="submit">Submit Payment Details</button>
+                    </div>
+                                </form>
     <h5 style="text-align: right; margin-right: 2em;">SubTotal : <span id="subtotal">
             <?php echo $subtotal; ?>
         </span></h5>
@@ -479,7 +543,21 @@ $res10=$data10->fetch_assoc();
   
       })
 </script>
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+ Payment_method_control(document.getElementById("pay_method"));
+    function Payment_method_control(e) {
+        console.log("Function called");
+        let val = e.value;
+        console.log("Selected value: " + val);
+        
+        if (val !== "CASH") {
+            $('#Payment_id').show("slow");
+        } else {
+            $('#Payment_id').hide('slow');
+        }
+    };
     var initial_subtotal = document.getElementById("subtotal").innerHTML;
     on_discount_change();
 
@@ -616,7 +694,6 @@ $res10=$data10->fetch_assoc();
                 console.error("Error:", error);
             });
     }
-
 </script>
 
 </html>

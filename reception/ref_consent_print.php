@@ -16,7 +16,6 @@ $res2 = $data2->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
-
 $sql6="SELECT * FROM `ref_consent` WHERE `id` = '$id' ";
 $data6=$conn->query($sql6);
 $res6=$data6->fetch_assoc();
@@ -88,7 +87,8 @@ $res6=$data6->fetch_assoc();
     </style>
 </head>
 
-<body class="mt-2">
+<body class="m-2">
+
     <div id="button">
         <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
         <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>

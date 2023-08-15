@@ -205,7 +205,6 @@ error_reporting(0);
                         <td><?php  try{echo $conset[0];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $conset[1];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $conset[2];} catch(Excetion $e){}?></td>
-
                     </tr>
                     <tr>
                         <th scope="row">Time</th>

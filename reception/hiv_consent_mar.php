@@ -270,7 +270,7 @@ table, th, td {
     <td><span class="style6">नाव : </span></td>
     <td><span class="style6"> <input  type="text" class="form-control" id="" placeholder="नाव" name="name1" value="<?php echo $row6['name1'];?>"></span></td>
     <td> <input  type="text" class="form-control" id="" placeholder="नाव" name="name2" value="<?php echo $row6['name2'];?>"></td>
-    <td><span class="style6">तारीख : <input  type="date" class="form-control" id="" placeholder="तारीख" name="date" value="<?php echo $row6['date'];?>"> </span></td>
+    <td><span class="style6">तारीख : </span><input  type="date" class="form-control" id="" placeholder="तारीख" name="date" value="<?php echo $row6['date'];?>"> </td>
   </tr>
   <tr>
     <td><span class="style6">पत्ता :  </span></td>
