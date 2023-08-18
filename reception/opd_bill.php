@@ -453,11 +453,11 @@ $res10=$data10->fetch_assoc();
             if(isset($_POST['submit'])){
                $pay_method=$_POST['pay_method'];
                $payment_id=$_POST['Pi'];
-               $update="INSERT INTO opd_bill_pay (patient_id , pay_method, payment_id) VALUES ('$id','$pay_method', '$payment_id')";
+               $update="UPDATE opd_bill_pay SET  pay_method='$pay_method', payment_id='$payment_id' WHERE patient_id='$id'";
                $sql_1=mysqli_query($conn,$update);
 
             }
-            $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
+            $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ";
             $query_2=mysqli_query($conn,$sql_2);
             $res_2=mysqli_fetch_assoc($query_2);
             error_reporting(0);

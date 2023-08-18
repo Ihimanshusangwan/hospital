@@ -265,6 +265,8 @@ $title = $data->fetch_assoc();
 
               $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql45);
+              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $conn->query($sql46);
 
               $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
