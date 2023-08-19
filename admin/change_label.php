@@ -16,10 +16,7 @@ if ($data->num_rows < 1) {
 } 
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
-if ($data10->num_rows < 1) {
-    $sql10 = "insert into change_label (id) values(1);";
-    $conn->query($sql);
-} 
+
 
 $res10=$data10->fetch_assoc();
 

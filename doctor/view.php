@@ -61,6 +61,9 @@ if (isset($_POST['template_btn'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <link rel="stylesheet" href="../dropdown_styles.css">
+    <link rel="stylesheet" href="chat.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         /* Full-screen popup */
         .lab-popup {
@@ -108,38 +111,9 @@ if (isset($_POST['template_btn'])) {
 
         /* Add this CSS to your stylesheet or style block */
         /* Add this CSS to your stylesheet or style block */
-        .template {
-            position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
+        
 
-        .template:before {
-            content: attr(data-content);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: green;
-            color: white;
-            /* Set the text color for the pseudo-element */
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .template:hover {
-            background-color: green;
-            color: white;
-            /* Set the text color for the button on hover */
-        }
-
-        .template:hover:before {
-            opacity: 1;
-            color: transparent;
-            /* Hide the text on the pseudo-element on hover */
-        }
+       
     .modal-header .close {
         padding-right: 9px;
         padding-left:9px;
@@ -195,6 +169,8 @@ if (isset($_POST['template_btn'])) {
 </head>
 
 <body style="background-color: #90D0E5;">
+
+<?php require("chat.php"); ?>
     <div class="container">
         <h1 class="text-center text-danger mt-3">
             <h1>
@@ -214,8 +190,8 @@ if (isset($_POST['template_btn'])) {
         </button>
 
             </div>
-        <div class="col-6">
-        <form method="POST" action="" class="col">
+        <div class="col-3">
+        <form method="POST" action="" >
                                 <?php
                                 $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
                                 $res = $conn->query($sql)->fetch_assoc();
@@ -225,7 +201,7 @@ if (isset($_POST['template_btn'])) {
                                 } else {
                                     echo '<input type="button" class="btn btn-success  my-2"  value="Patient Admited" disabled>';
                                 }
-                                echo '<div class="row " >
+                                echo '<div class="row" >
                                 <select id="selectBoxContainer" style="display: none; class="form-control ">
                                 ';
 
@@ -274,7 +250,7 @@ if (isset($_POST['template_btn'])) {
                                 <div class="col">
                                     <form action="" method="post">
                                         <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                        <button class="btn btn-primary m-2 template" type="submit" name="template_btn">
+                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
                                             <?php echo $template_name; ?>
                                         </button>
 
@@ -1453,7 +1429,7 @@ if (isset($_POST['template_btn'])) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="successModalLabel"> Success</h5>
                 </div>
-                <div class="modal-body">
+                <div id="modal-body" class="mx-2">
                     <p></p>
                 </div>
                 <div class="modal-footer">
@@ -1501,11 +1477,10 @@ if (isset($_POST['template_btn'])) {
                 })
                     .then(response => response.text()).then((data) => {
                         if (data == 'success') {
-                            console.log("hii");
                             $('#successModal').modal('show'); // Show the success modal
                             var pName = document.getElementById("p_name").innerHTML;
                             var successMessage = `<strong>${pName}</strong> Successfully Refered to <strong> ${doctor}</strong>`;
-                            document.querySelector(".modal-body > p").innerHTML = successMessage;
+                            document.querySelector("#modal-body > p").innerHTML = successMessage;
                             document.addEventListener("click", () => {
                                 window.location.href = "doctorPage.php";
                             })
@@ -1529,6 +1504,7 @@ if (isset($_POST['template_btn'])) {
     <script src="fetch_medicine.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="chat.js"></script>
 
     <script>
 $(document).ready(function () {
