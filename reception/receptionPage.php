@@ -21,6 +21,8 @@ $title = $data->fetch_assoc();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -61,10 +63,114 @@ $title = $data->fetch_assoc();
             border-radius: 4px;
             border: 1px solid #ced4da;
         }
+
+        .fullscreen-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .alert-content {
+            background-color: #fff;
+            width: 70%;
+            /* Fixed width */
+            height: 70%;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
+    <div class="fullscreen-alert" id="fullscreenAlert">
+        <div class="alert-content">
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <h2 class="text-center text-dark mb-4">Messages</h2>
+
+                </div>
+                <div class="col-1">
+
+                    <button class="btn btn-outline-danger btn-sm" id="closeAlert"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+
+            <?php $msg_sql = "
+    SELECT messages.*, doctors.name 
+    FROM messages
+    INNER JOIN doctors ON messages.dr_id = doctors.id
+    WHERE messages.r_id = {$_SESSION['receptionist_id']}
+    ORDER BY messages.id DESC;
+";
+            $msg_res = $conn->query($msg_sql);
+            $newMsg = 0;
+            if ($msg_res->num_rows < 1) {
+                echo "No Message Available";
+            } else {
+                while ($row = $msg_res->fetch_assoc()) {
+                    echo <<<msg
+                <div class="card">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9 text-left text-primary">
+                            <h5 style="text-align: left;">{$row['name']}</h5>
+                        </div>
+                        <div class="col-3">
+                            {$row['time']}
+                        </div>
+                        <div class="col-10 text-left">
+                            <h6 class="card-title " style="text-align: left;">{$row['msg_body']}</h6>
+                        </div>
+                        <div class="col-2">
+msg;
+                    if ($row['is_read'] == 0) {
+                        $newMsg =1;
+                        echo <<<msg
+    <button class="btn btn-outline-success btn-sm" msg-id="{$row['id']}" onclick="markAsRead(this)"><i class="fas fa-check-double"></i></button>
+msg;
+
+                    }
+                    echo <<<msg
+                            <button class="btn btn-outline-danger btn-sm" msg-id="{$row['id']}" onclick="deleteMsg(this)"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+msg;
+                }
+            }
+
+            ?>
+            <script> const newMsg = <?php echo $newMsg;?> ;</script>
+            
+
+        </div>
+    </div>
+
     <header>
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
@@ -74,6 +180,7 @@ $title = $data->fetch_assoc();
             </a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
+
                 <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
@@ -91,7 +198,9 @@ $title = $data->fetch_assoc();
         <div>
         </div>
     </header>
-        <div><hr style="height:15px;border-width:0;color:rgb(148, 28, 28);background-color:rgb(148, 30, 30)"></div>
+    <div>
+        <hr style="height:15px;border-width:0;color:rgb(148, 28, 28);background-color:rgb(148, 30, 30)">
+    </div>
     <section>
         <div class="container-fluid">
             <h1 class="bg-light text-black p-2">PATIENT LIST</h1>
@@ -190,43 +299,42 @@ $title = $data->fetch_assoc();
                             echo '<td>' . $res['consultant'] . '</td>';
                             if ($res['is_admited'] == 1) {
                                 echo '<td>Admitted by ' . $res['consultant'] . '</td>';
-                                
+
                                 echo '<td>' . $type . '</td>';
-                                if($res['is_refered']==1){
+                                if ($res['is_refered'] == 1) {
 
                                     echo '<td>Refered by ' . $res['refered_by'] . '</td>';
-                                }else{
-                                    
-                                echo '<td>Not Refered</td>';
-                                }
-                                echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="'.$res['id'].'" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
-                                echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="'.$res['id'].'" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
-                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="'.$res['id'].'" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
+                                } else {
 
-                                if($res['is_eye']=='1' && $res['is_ortho']==0){
+                                    echo '<td>Not Refered</td>';
+                                }
+                                echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
+                                echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
+                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
+
+                                if ($res['is_eye'] == '1' && $res['is_ortho'] == 0) {
                                     echo <<<btn
                               
                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
                                     <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
         btn;
-                                }
-                                else if($res['is_ortho']=='1'  && $res['is_eye']==0){
+                                } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 0) {
                                     echo <<<btn
                               
                                     <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
                                     <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" >Ortho Consent Forms</button></td>
         btn;
-                                }else if( $res['is_ortho']=='1'  && $res['is_eye']==1){
+                                } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 1) {
                                     echo <<<btn
                               
                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent"  >Ortho Consent Forms</button>
                                     </td>
         btn;
-    
-                                }else{
+
+                                } else {
                                     echo <<<btn
                                     <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
                                     <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
@@ -237,18 +345,18 @@ $title = $data->fetch_assoc();
 
                             } else {
                                 echo '<td>Not yet Admitted</td>';
-                               
+
                                 echo '<td>' . $type . '</td>';
-                                if($res['is_refered']==1){
+                                if ($res['is_refered'] == 1) {
 
                                     echo '<td>Refered by ' . $res['refered_by'] . '</td>';
-                                }else{
-                                    
-                                echo '<td>Not Refered</td>';
+                                } else {
+
+                                    echo '<td>Not Refered</td>';
                                 }
-                                echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="'.$res['id'].'" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
+                                echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
-                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="'.$res['id'].'" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
+                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
                                 echo '<td><button class="btn btn-primary " disabled >Eye Consent Forms</button></td>';
                                 echo '<td><button class="btn btn-primary " disabled >Ortho Consent Forms</button></td>';
                             }
@@ -260,86 +368,154 @@ $title = $data->fetch_assoc();
             </div>
         </div>
     </section>
-     <!-- HTML code for the Bootstrap modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to Activate this form ? This Action can't be undone !!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="confirmButton">Confirm</button>
-      </div>
+    <!-- HTML code for the Bootstrap modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Activate this form ? This Action can't be undone !!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Confirm</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
     <script>
-document.querySelectorAll('.activate-form').forEach(function(button) {
-    button.addEventListener('click', function() {
-        var pId = this.getAttribute('p_id');
-        var pCol = this.getAttribute('p_col');
-        var url = '../staff/activate_forms.php';
-        var data = { "pId": pId, "pCol": pCol };
+        const showAlertButton = document.getElementById('showAlert');
+        const fullscreenAlert = document.getElementById('fullscreenAlert');
+        const closeAlertButton = document.getElementById('closeAlert');
+        if(newMsg == 1){            
+            fullscreenAlert.style.display = 'flex';
+        }
 
-        // Show the Bootstrap modal
-        $('#confirmationModal').modal('show');
+        showAlertButton.addEventListener('click', () => {
+            fullscreenAlert.style.display = 'flex';
+        });
 
-        // Add event listener to the Confirm button
-        document.getElementById('confirmButton').addEventListener('click', function() {
-            fetch(url, {
+        closeAlertButton.addEventListener('click', () => {
+            fullscreenAlert.style.display = 'none';
+        });
+
+        function markAsRead(btn) {
+            const msgId = btn.getAttribute("msg-id");
+
+            const data = new URLSearchParams();
+            data.append('msgId', msgId);
+
+            fetch('markAsRead.php', {
                 method: 'POST',
-                body: JSON.stringify(data)
+                body: data
             })
-            .then(function(response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Error: ' + response.status);
-                }
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result);
+                    if (result.trim() === "success") {
+
+                        btn.style.display = "none";
+                    } else {
+                        alert("An error occurred");
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function deleteMsg(btn) {
+            const msgId = btn.getAttribute("msg-id");
+
+            const data = new URLSearchParams();
+            data.append('msgId', msgId);
+
+            fetch('deleteMsg.php', {
+                method: 'POST',
+                body: data
             })
-            .then(function(data) {
-                if (data.success) {
-                    // On successful response, hide the current button
-                    button.style.display = 'none';
-                    
-                    // Show the previous sibling button
-                    var previousButton = button.previousElementSibling;
-                    previousButton.style.display = 'inline-block';
-                    previousButton.disabled = false;
-                } else {
-                    console.log('Error: Operation failed.');
-                }
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-            })
-            .finally(function() {
-                // Hide the Bootstrap modal
-                $('#confirmationModal').modal('hide');
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result);
+                    if (result.trim() === "success") {
+
+                        btn.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+                    } else {
+                        alert("An error occurred");
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        }
+        document.querySelectorAll('.activate-form').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var pId = this.getAttribute('p_id');
+                var pCol = this.getAttribute('p_col');
+                var url = '../staff/activate_forms.php';
+                var data = { "pId": pId, "pCol": pCol };
+
+                // Show the Bootstrap modal
+                $('#confirmationModal').modal('show');
+
+                // Add event listener to the Confirm button
+                document.getElementById('confirmButton').addEventListener('click', function () {
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    })
+                        .then(function (response) {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Error: ' + response.status);
+                            }
+                        })
+                        .then(function (data) {
+                            if (data.success) {
+                                // On successful response, hide the current button
+                                button.style.display = 'none';
+
+                                // Show the previous sibling button
+                                var previousButton = button.previousElementSibling;
+                                previousButton.style.display = 'inline-block';
+                                previousButton.disabled = false;
+                            } else {
+                                console.log('Error: Operation failed.');
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+                        })
+                        .finally(function () {
+                            // Hide the Bootstrap modal
+                            $('#confirmationModal').modal('hide');
+                        });
+                });
             });
         });
-    });
-});
 
         const setCookie = (name, value, days) => {
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + days);
-    document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
-  };
-  document.querySelectorAll(".multi-reference").forEach((element) => {
-    element.addEventListener("click", (event) => {
-      var id = element.getAttribute("id");
-      var p_id = element.getAttribute("p-id");
-      var cookieName = element.getAttribute("cookieName");
-      setCookie(cookieName, id , 7);
-      var destination =element.getAttribute("destination");
-      window.location.href = destination +".php?id="+p_id;
-    });
-  });
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + days);
+            document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+        };
+        document.querySelectorAll(".multi-reference").forEach((element) => {
+            element.addEventListener("click", (event) => {
+                var id = element.getAttribute("id");
+                var p_id = element.getAttribute("p-id");
+                var cookieName = element.getAttribute("cookieName");
+                setCookie(cookieName, id, 7);
+                var destination = element.getAttribute("destination");
+                window.location.href = destination + ".php?id=" + p_id;
+            });
+        });
     </script>
     <script>
         $(document).ready(function () {
@@ -364,25 +540,54 @@ document.querySelectorAll('.activate-form').forEach(function(button) {
                         table.columns(7).search(selectedValue).draw(); // Search only on the 7th column (Admit Status)
                     });
                     $('#consultant-filter').on('change', function () {
-                            var selectedValue = $(this).val();
+                        var selectedValue = $(this).val();
 
-                            table.columns(6).search(selectedValue).draw();
-                        });
+                        table.columns(6).search(selectedValue).draw();
+                    });
                     $('#typeFilter').on('change', function () {
-                            var selectedValue = $(this).val();
+                        var selectedValue = $(this).val();
 
-                            table.columns(8).search(selectedValue).draw();
-                        });
+                        table.columns(8).search(selectedValue).draw();
+                    });
                     $('#referFilter').on('change', function () {
-                            var selectedValue = $(this).val();
+                        var selectedValue = $(this).val();
 
-                            table.columns(9).search(selectedValue).draw();
-                        });
+                        table.columns(9).search(selectedValue).draw();
+                    });
                 },
                 order: [[0, 'desc']]
             });
 
         });
+        <?php
+        $sql10 = "SELECT auto_reload FROM `change_label` WHERE id =1";
+        $data10 = $conn->query($sql10);
+        $res10 = $data10->fetch_assoc();
+        $idleTimer = (isset($res10['auto_reload'])) ? $res10['auto_reload'] . "000" : 20000;
+        ?>
+        let idleTimerCount = <?php echo $idleTimer; ?>;
+        let idleTimer;
+
+        function reloadPage() {
+            location.reload();
+        }
+
+        function startIdleTimer() {
+            idleTimer = setTimeout(reloadPage, idleTimerCount);
+        }
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            startIdleTimer();
+        }
+        function resetTimerOnClick() {
+            resetIdleTimer();
+        }
+
+        document.addEventListener('mousemove', resetTimerOnClick);
+
+        document.addEventListener('DOMContentLoaded', startIdleTimer);
+
     </script>
 </body>
 

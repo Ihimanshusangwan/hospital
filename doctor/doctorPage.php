@@ -24,9 +24,12 @@ $title = $data->fetch_assoc();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="chat.css">
     <title>Doctor</title>
     <style>
         .dl-horizontal dt {
@@ -51,6 +54,7 @@ $title = $data->fetch_assoc();
 </head>
 
 <body>
+    <?php require("chat.php"); ?>
     <header>
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
@@ -163,6 +167,7 @@ $title = $data->fetch_assoc();
             </div>
         </div>
     </section>
+    <script src="chat.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -190,6 +195,35 @@ $title = $data->fetch_assoc();
                 order: [[0, 'desc']]
             });
         });
+        <?php
+        $sql10 = "SELECT auto_reload FROM `change_label` WHERE id =1";
+        $data10 = $conn->query($sql10);
+        $res10 = $data10->fetch_assoc();
+        $idleTimer = (isset($res10['auto_reload'])) ? $res10['auto_reload'] . "000" : 20000;
+        ?>
+        let idleTimerCount = <?php echo $idleTimer; ?>;
+        let idleTimer;
+
+        function reloadPage() {
+            location.reload();
+        }
+
+        function startIdleTimer() {
+            idleTimer = setTimeout(reloadPage, idleTimerCount);
+        }
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            startIdleTimer();
+        }
+        function resetTimerOnClick() {
+            resetIdleTimer();
+        }
+
+        document.addEventListener('mousemove', resetTimerOnClick);
+
+        document.addEventListener('DOMContentLoaded', startIdleTimer);
+
     </script>
 
 

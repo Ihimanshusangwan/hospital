@@ -264,6 +264,11 @@ if (isset($_POST['submit'])) {
 
         $sql42 = "INSERT INTO operation_record(id) VALUES($inserted_patient_id);";
         $conn->query($sql42);
+        $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
+        $conn->query($sql44);
+
+        $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
+        $conn->query($sql45);
 
         $day = date('d');
         $month = date('m');
