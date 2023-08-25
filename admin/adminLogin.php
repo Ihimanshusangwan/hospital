@@ -84,6 +84,10 @@ if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
 
                 </a>
                 <a class="navbar-brand">
+                    <a href="opd_sign.php" class="btn btn-primary mx-1">Opd Sign </a>
+
+                </a>
+                <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                         Logout
                     </button>

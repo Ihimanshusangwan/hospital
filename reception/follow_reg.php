@@ -4,6 +4,7 @@ require("../admin/connect.php");
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
+
 ?>
 
 <html lang="en">
@@ -42,13 +43,6 @@ $title = $data->fetch_assoc();
         // Check if form is submitted
         if (isset($_POST['submit'])) {
 
-          $nameErr = "";
-          // Check if name is entered
-          if (empty($_POST['name'])) {
-            $nameErr = "Name is required";
-          } else {
-            $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-          }
           $address = isset($_POST['address']) ? filter_var($_POST['address'], FILTER_SANITIZE_STRING) : '';
           $taluka = isset($_POST['taluka']) ? filter_var($_POST['taluka'], FILTER_SANITIZE_STRING) : '';
           $district = isset($_POST['district']) ? filter_var($_POST['district'], FILTER_SANITIZE_STRING) : '';
@@ -63,7 +57,6 @@ $title = $data->fetch_assoc();
           $bp = isset($_POST['bp']) ? $_POST['bp'] : '';
           $temp = isset($_POST['temp']) ? $_POST['temp'] : '';
           $age = isset($_POST['age']) ? $_POST['age'] : '';
-          $is_old_patient = isset($_POST['flexRadioDefault']) ? $_POST['flexRadioDefault'] : '';
           $name_pwp = isset($_POST['name_pwp']) ? $_POST['name_pwp'] : '';
           $address_pwp = isset($_POST['address_pwp']) ? $_POST['address_pwp'] : '';
           $taluka_pwp = isset($_POST['taluka_pwp']) ? $_POST['taluka_pwp'] : '';
@@ -90,9 +83,8 @@ $title = $data->fetch_assoc();
           if (empty($nameErr)) {
 
             $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,is_eye,is_ortho)
-            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho)";
+            VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho)";
 
-            if ($conn->query($sql) === TRUE) {
               $inserted_patient_id = $conn->insert_id;
               $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp) VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
               $conn->query($sql);
@@ -269,8 +261,6 @@ $title = $data->fetch_assoc();
               $conn->query($sql46);
 
               $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
-
-
               //auto generate uhid
               $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
               $conn->query($sql);
@@ -282,16 +272,12 @@ $title = $data->fetch_assoc();
               $update_last = "UPDATE `cor1` SET  description = '$description' WHERE id = '$inserted_patient_id';";
               $conn->query($update_last);
               echo "<span style='color:green;'>Patient added successfully</span>";
-              // redirect to the same page to prevent form resubmission
-              // header("Location: " . $_SERVER["PHP_SELF"]);
-              // exit();       
-            } else {
+            }
+             else {
               echo "Error: ";
             }
-          } else {
-            echo "<span style='color:red;'> Name is Required</span>";
           }
-        }
+        
 
 
         ?>

@@ -101,14 +101,12 @@ $res10=$data10->fetch_assoc();
                         var selected = index === 0 ? "selected" : "";
                         html += "<option value='" + charge.description + "' data-amount='" + charge.amount + "' data-qty='" + charge.qty + "' " + selected + ">" + charge.description + "</option>";
                     });
-
                     html += "</select></td>";
                     html += "<td><input class='amount' type='number' name='amount_" + items + "' onchange='on_amount_change()' readonly></td>";
                     html += "<td><input class='qty' type='number' name='qty_" + items + "' onchange='on_qty_change()'></td>";
                     html += "<td><input class='total' type='number' name='total_" + items + "' readonly></td>";
                     html += "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>"
                     html += "</tr>";
-
                     var row = document.getElementById("tbody").insertRow();
                     row.innerHTML = html;
                     var firstOption = row.querySelector("select[name^='description_'] option");
@@ -339,10 +337,7 @@ $res10=$data10->fetch_assoc();
         $i = 1;
         while (isset($_POST["description_$i"])) {
             echo $_POST["description_$i"];
-
             if ($_POST["description_$i"] != "none"  &&  $_POST["qty_$i"] != 0 ) {
-
-
                 $description = $_POST["description_$i"];
                 $amount = $_POST["amount_$i"];
                 $qty = $_POST["qty_$i"];
@@ -453,11 +448,11 @@ $res10=$data10->fetch_assoc();
             if(isset($_POST['submit'])){
                $pay_method=$_POST['pay_method'];
                $payment_id=$_POST['Pi'];
-               $update="INSERT INTO opd_bill_pay (patient_id , pay_method, payment_id) VALUES ('$id','$pay_method', '$payment_id')";
+               $update="UPDATE opd_bill_pay SET  pay_method='$pay_method', payment_id='$payment_id' WHERE patient_id='$id'";
                $sql_1=mysqli_query($conn,$update);
 
             }
-            $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
+            $sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ";
             $query_2=mysqli_query($conn,$sql_2);
             $res_2=mysqli_fetch_assoc($query_2);
             error_reporting(0);

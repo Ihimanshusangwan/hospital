@@ -104,7 +104,7 @@ $title = $data->fetch_assoc();
 
 <body>
     <div class="fullscreen-alert" id="fullscreenAlert">
-        <div class="alert-content">
+        <div class="alert-content ">
             <div class="row">
                 <div class="col-10 offset-1">
                     <h2 class="text-center text-dark mb-4">Messages</h2>
@@ -181,9 +181,10 @@ msg;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
-                    <span class="btn btn-warning mb-2" id="showAlert">Messages </span>
+                <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
+                     <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View FollowUp</a>
                     <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">New
                         Registration</a>
                     <a class="navbar-brand">
@@ -387,17 +388,11 @@ msg;
         </div>
     </div>
     <script>
-        const showAlertButton = document.getElementById('showAlert');
         const fullscreenAlert = document.getElementById('fullscreenAlert');
         const closeAlertButton = document.getElementById('closeAlert');
         if(newMsg == 1){            
             fullscreenAlert.style.display = 'flex';
         }
-
-        showAlertButton.addEventListener('click', () => {
-            fullscreenAlert.style.display = 'flex';
-        });
-
         closeAlertButton.addEventListener('click', () => {
             fullscreenAlert.style.display = 'none';
         });
@@ -540,6 +535,7 @@ msg;
                         table.columns(7).search(selectedValue).draw(); // Search only on the 7th column (Admit Status)
                     });
                     $('#consultant-filter').on('change', function () {
+                        
                         var selectedValue = $(this).val();
 
                         table.columns(6).search(selectedValue).draw();
