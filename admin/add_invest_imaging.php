@@ -7,11 +7,11 @@ $title = $data->fetch_assoc();
 if(isset($_POST['description'])){
     $description=$_POST['description'];
 
-    $sql = "INSERT INTO  investigation_view (description) VALUES ('$description')";
+    $sql = "INSERT INTO  add_invest_imaging(description) VALUES ('$description')";
      $query=mysqli_query($conn, $sql);
      
 }
-$sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
+$sql1=mysqli_query($conn,"SELECT * FROM add_invest_imaging");
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ $sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Investigations Lab</title>
+    <title>Add Investigations Imaging</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     
@@ -33,24 +33,24 @@ $sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
    <div class="card shadow-lg m-3 text-center" style="width:50rem;">
    <form action="" method="POST">
    <div class="row">
-    <div class="col-3">
-   <label for="" class="form-label " style="margin-top:20px;" ><strong>Add Investigations Lab:</strong> </label>
+    <div class="col-4">
+   <label for="" class="form-label " style="margin-top:20px;" ><strong>Add Investigations Imaging:</strong> </label>
    </div>
-    <div class="col-8">
+    <div class="col-7">
     <input type="text" class="form-control "style="margin:20px;" name="description" id="">
     </div>
   </div>
-  <input type="submit" class="btn btn-primary"  style="margin:20px;margin-right:47px;"value="Add Investigations">
+  <input type="submit" class="btn btn-primary"  style="margin:20px;margin-right:47px;"value="Add Investigations Imaging">
 </form>
    </div>
    </div>
    <div class="conatiner" style="display:flex;justify-content:center;">
    <div class="card shadow-lg m-3 " style="width:50rem;">
-        <p class="m-3 text-center"><strong>Added Investigations</strong></p>
+        <p class="m-3 text-center"><strong>Added Investigation Imaging</strong></p>
         <table  class="mx-3 mb-3">
             <tr>
                 <th>Sno</th>
-                <th>Investigations</th>
+                <th>Investigation Imaging</th>
             </tr>
             
 <?php

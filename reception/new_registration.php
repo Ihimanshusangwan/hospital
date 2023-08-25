@@ -270,6 +270,23 @@ if (isset($_POST['submit'])) {
         $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
         $conn->query($sql45);
 
+        $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql47);
+        $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql48);
+        $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql49);
+        $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql50);
+        $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql51);
+        $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql52);
+        $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql53);
+        $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+        $conn->query($sql54);
+        
         $day = date('d');
         $month = date('m');
         $year = date('Y');
