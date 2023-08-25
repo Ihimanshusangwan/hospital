@@ -384,6 +384,12 @@ if (isset($_POST['template_btn'])) {
                 </span></div>
         </div>
 
+        <div class="text-dark mt-4" style="margin-left:7rem;">Address:
+
+            <span style="font-weight: bold;">
+                <?php echo $result['address'] . " " . $result['taluka'] . " " . $result['district']; ?>
+            </span>
+        </div>
         <div class="text-dark mt-4" style="margin-left:7rem;font-weight:bold;">Complaint: <span
                 style="font-weight: bold;">
                 <?php echo $result['patient_complaints']; ?></span>
