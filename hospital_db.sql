@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2023 at 02:25 PM
+-- Generation Time: Aug 23, 2023 at 03:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -291,7 +291,9 @@ CREATE TABLE `cc_glass_rx` (
 CREATE TABLE `change_label` (
   `id` int(11) NOT NULL,
   `lable_1` text DEFAULT NULL,
-  `auto_reload` int(11) NOT NULL
+  `auto_reload` int(11) NOT NULL,
+  `pre_barcode` longblob NOT NULL,
+  `pre_bottom` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -822,6 +824,16 @@ CREATE TABLE `floor_cleaning` (
   `month` varchar(50) NOT NULL,
   `yes_no` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`yes_no`)),
   `remark` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `follow_up`
+--
+
+CREATE TABLE `follow_up` (
+  `follow_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1546,6 +1558,18 @@ CREATE TABLE `op` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `opd_admin`
+--
+
+CREATE TABLE `opd_admin` (
+  `id` int(11) NOT NULL,
+  `opd_sign` text DEFAULT NULL,
+  `bottom` varchar(700) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `opd_bill`
 --
 
@@ -2029,6 +2053,10 @@ CREATE TABLE `patient_records` (
   `is_admited` int(11) NOT NULL DEFAULT 0,
   `is_registered` int(11) NOT NULL DEFAULT 1,
   `is_approved` int(11) NOT NULL DEFAULT 0,
+  `is_followup` int(255) NOT NULL DEFAULT 0,
+  `follow_visit` tinyint(1) NOT NULL DEFAULT 0,
+  `follow_approve` tinyint(1) NOT NULL DEFAULT 0,
+  `follow_date` date DEFAULT NULL,
   `is_eye` int(11) NOT NULL DEFAULT 0,
   `is_ortho` int(11) NOT NULL DEFAULT 0,
   `is_refered` int(11) NOT NULL DEFAULT 0,
@@ -3182,6 +3210,12 @@ ALTER TABLE `op`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `opd_admin`
+--
+ALTER TABLE `opd_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `opd_bill`
 --
 ALTER TABLE `opd_bill`
@@ -3657,6 +3691,12 @@ ALTER TABLE `observe2`
 -- AUTO_INCREMENT for table `ocu`
 --
 ALTER TABLE `ocu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `opd_admin`
+--
+ALTER TABLE `opd_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
