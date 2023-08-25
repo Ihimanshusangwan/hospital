@@ -627,7 +627,8 @@ $res10 = $data10->fetch_assoc();
     </div>
 </div>
 
-<h6 class="text-center mt-4"><?php echo $res10['pre_bottom']; ?></h6>
+<h6 class="text-center mt-4"><?php echo isset($res10['pre_bottom']); ?></h6>
+
     <script>
     window.print();
     </script>

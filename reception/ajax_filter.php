@@ -3,7 +3,8 @@ require("../admin/connect.php");
 $from = $_POST['from'];
 $to = $_POST['to'];
 $option_val=$_POST['option_val'];
-$sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
+if($option_val!='all'){
+    $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
         FROM opd_bill
         JOIN patient_records ON opd_bill.patient_id = patient_records.id
         JOIN  p_insure ON  opd_bill.patient_id=p_insure.id 
@@ -11,6 +12,18 @@ $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
         WHERE opd_bill.description = '$option_val'
         AND patient_records.reg_date BETWEEN  '$from' AND '$to' 
         ORDER BY opd_bill.id ASC";
+
+}
+else{
+    $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
+    FROM opd_bill
+    JOIN patient_records ON opd_bill.patient_id = patient_records.id
+    JOIN  p_insure ON  opd_bill.patient_id=p_insure.id 
+    JOIN opd_bill_pay ON opd_bill.patient_id= opd_bill_pay.patient_id
+    WHERE  patient_records.reg_date BETWEEN  '$from' AND '$to' 
+    ORDER BY opd_bill.id ASC";
+
+}
         
     $result = $conn->query($sql);
     echo '<div class="text-center"><h4 class="text-primary" align="center"> '.$option_val.' '. "  ".' '.$from.' - '.$to.' </h4></div>';

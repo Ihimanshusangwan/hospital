@@ -101,14 +101,12 @@ $res10=$data10->fetch_assoc();
                         var selected = index === 0 ? "selected" : "";
                         html += "<option value='" + charge.description + "' data-amount='" + charge.amount + "' data-qty='" + charge.qty + "' " + selected + ">" + charge.description + "</option>";
                     });
-
                     html += "</select></td>";
                     html += "<td><input class='amount' type='number' name='amount_" + items + "' onchange='on_amount_change()' readonly></td>";
                     html += "<td><input class='qty' type='number' name='qty_" + items + "' onchange='on_qty_change()'></td>";
                     html += "<td><input class='total' type='number' name='total_" + items + "' readonly></td>";
                     html += "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>"
                     html += "</tr>";
-
                     var row = document.getElementById("tbody").insertRow();
                     row.innerHTML = html;
                     var firstOption = row.querySelector("select[name^='description_'] option");
@@ -339,10 +337,7 @@ $res10=$data10->fetch_assoc();
         $i = 1;
         while (isset($_POST["description_$i"])) {
             echo $_POST["description_$i"];
-
             if ($_POST["description_$i"] != "none"  &&  $_POST["qty_$i"] != 0 ) {
-
-
                 $description = $_POST["description_$i"];
                 $amount = $_POST["amount_$i"];
                 $qty = $_POST["qty_$i"];

@@ -186,8 +186,6 @@ $res2 = $data2->fetch_assoc();
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-
                             <tr>
                                 <th>Sr.No</th>
                                 <th>Description</th>

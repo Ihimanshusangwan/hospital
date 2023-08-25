@@ -82,9 +82,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             <th>CONSULTANT</th>
                             <th>REG DATE</th>
                             <th>APPROVE </th>
-                            
-                            <!-- <th>TOTAL</th> -->
-                            
+
 
                         </tr>
                     </thead>
@@ -96,8 +94,6 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
                             echo '<td>' . $res['id'] . '</td>';
-
-                            
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';
@@ -106,8 +102,6 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             echo '<td> <input type="hidden" name="id" value="' . $res['id'] . '">
                             <input type="date"  name="date" value="' . $res['reg_date'] . '"> </td>';
                             echo '<td> <button  type="submit" name="submit" class="btn btn-primary">Approve</button></td>';
-                           
-                            
                             echo '</tr>';
                         }
                       }

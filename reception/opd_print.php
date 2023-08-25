@@ -349,5 +349,8 @@ else{
 on_discount_change();
 window.print();
 </script>
+<script>
+    
+</script>
 
 </html>
