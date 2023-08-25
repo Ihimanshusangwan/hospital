@@ -21,13 +21,16 @@ $title = $data->fetch_assoc();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-
+   <linl rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
     <title>Reception</title>
     <style>
         .dl-horizontal dt {
@@ -99,50 +102,48 @@ $title = $data->fetch_assoc();
             gap: 10px;
             margin-top: 20px;
         }
-        .row.in { background-color: #8CBD62 !important; }
-        .row.out { background-color: #FFCCCC !important; }
-        .row.waiting { background-color: #FFC16A !important; }
-    
-        
+
+         .table tbody tr.table-light{
+            background-color:green !important;
+        }
     </style>
     
  <script>
-    
-    function changeColor(button, type) {
-    var row = button.closest('.row');
+ function changeColor(button, type) {
+    var row = button.closest('tr');
     var rowId = button.dataset.rowId || 'N/A';
 
-    row.classList.remove('in', 'out', 'waiting');
-
-    if (type === 'in') {
-        row.classList.add('in');
-        localStorage.setItem('selectedColor_' + rowId, 'in');
+    row.classList.remove('table-success', 'table-danger', 'table-warning');
+    
+    if (type === 'waiting') {
+        row.classList.add('table-warning');
+        localStorage.setItem('selectedColor_' + rowId, 'table-warning');
     } else if (type === 'out') {
-        row.classList.add('out');
-        localStorage.setItem('selectedColor_' + rowId, 'out');
-    } else if (type === 'waiting') {
-        row.classList.add('waiting');
-        localStorage.setItem('selectedColor_' + rowId, 'waiting');
+        row.classList.add('table-danger');
+        localStorage.setItem('selectedColor_' + rowId, 'table-danger');
+    } else if (type === 'in') {
+        row.classList.add('table-success');
+        localStorage.setItem('selectedColor_' + rowId, 'table-success');
+    } else{
+        row.classList.add('table-info');
+        localStorage.setItem('selectedColor_' + rowId, 'table-info');
+  
     }
 }
-
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.change-color-button');
     for (var i = 0; i < buttons.length; i++) {
         var button = buttons[i];
-        
-        button.addEventListener('click', function() {
-            var type = this.dataset.colorType;
-            changeColor(this, type);
-        });
-        
         var rowId = button.dataset.rowId || 'N/A';
-        console.log(rowId);
         var selectedColor = localStorage.getItem('selectedColor_' + rowId);
+
+        var row = button.closest('tr');
+        row.classList.remove('table-warning', 'table-success', 'table-danger');
         
         if (selectedColor) {
-            var row = button.closest('.row');
             row.classList.add(selectedColor);
+        } else {
+            row.classList.add('table-warning');
         }
     }
 });
@@ -151,6 +152,7 @@ function changeColorAndReload(button, type) {
     changeColor(button, type);
     location.reload();
 }
+
 
 
 </script>
@@ -345,7 +347,7 @@ msg;
                             } else {
                                 $type = 'Appointment';
                             }
-                            echo '<tr data-row-id="' . $res['id'] . '">';
+                            echo '<tr class="table-warning" data-row-id="' . $res['id'] . '">';
                             echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['id'] . '</td>';
 
                             echo '<td>' . $res['reg_date'] . '</td>';
@@ -366,7 +368,7 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                                echo '<div class="row pt-3 pb-3 bg-warning">';
+                                echo '<div class="row pt-3 pb-3 ">';
                                 echo '<div class="col-1 ">';
                                 echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
                                 echo '</div>';
@@ -427,7 +429,7 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                                echo '<div class="row pt-3 pb-3 bg-warning">';
+                                echo '<div class="row pt-3 pb-3">';
                                 echo '<div class="col-1 ">';
                                 echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
                                 echo '</div>';
