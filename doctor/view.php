@@ -14,10 +14,13 @@ $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
 if(isset($_POST['add_follow'])){
-    $date=$_POST['follow_date'];
-    $sql="UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' where `id`='$id';";
+    $selectedDuration = intval($_POST['follow_duration']); // Get the selected duration in days
+    
+    $currentDate = date('Y-m-d'); // Get the current date
+    $newDate = date('Y-m-d', strtotime($currentDate . ' + ' . $selectedDuration . ' days')); 
+    
+    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$newDate' WHERE `id`='$id';";
     $res = $conn->query($sql);
-
 }
 
 if (isset($_POST['template_btn'])) {
@@ -258,13 +261,26 @@ if (isset($_POST['template_btn'])) {
                                    if ($res['is_followup'] == 0) {
                                        echo '<div>
                                        <button  class="btn btn-success" name="add_follow">Add follow up</button>
-                                       <input type="date" class="mx-3" name="follow_date" min= '. date('Y-m-d', strtotime('+1 day')).'>
+                                       <select name="follow_duration" class="mx-3">
+                                       <option value="1">1 day</option>
+                                       <option value="2">2 days</option>
+                                       <option value="3">3 days</option>
+                                       <option value="5">5 days</option>
+                                       <option value="7">1 week</option>
+                                       <option value="10">10 days</option>
+                                       <option value="15">15 days</option>
+                                       <option value="20">20 days</option>
+                                       <option value="30">1 month</option>
+                                       <option value="45">1.5 months</option>
+                                       <option value="60">2 months</option>
+                                       <option value="90">3 months</option>
+                                   </select>
                                        </div>';
    
                                    } else {
                                     echo '<div>
                                     <button  class="btn btn-success" disabled>
-                                  followup Date</button><input type="date" class="mx-3"  value="'.$res['follow_date'].'" readonly>
+                                  followup Date</button><input type="text" class="mx-3"  value="'.$res['follow_date'].'" readonly>
                                     </div>';
                                       
                                    }

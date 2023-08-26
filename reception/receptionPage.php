@@ -342,7 +342,10 @@ msg;
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';
-                            if ($res['is_registered'] == 1) {
+                            if($res['follow_reg']==1){
+                                $type = 'Follow Up';
+                            }
+                            else if ($res['is_registered'] == 1) {
                                 $type = 'Registration';
                             } else {
                                 $type = 'Appointment';
