@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2023 at 06:34 PM
+-- Generation Time: Aug 26, 2023 at 09:47 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -2348,7 +2348,8 @@ CREATE TABLE `patient_records` (
   `is_followup` int(255) NOT NULL,
   `follow_visit` tinyint(1) NOT NULL,
   `follow_approve` tinyint(1) NOT NULL,
-  `follow_date` date DEFAULT NULL
+  `follow_date` date DEFAULT NULL,
+  `follow_reg` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
