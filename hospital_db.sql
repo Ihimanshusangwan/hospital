@@ -723,9 +723,9 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `name`, `address`, `taluka`, `district`, `age`, `sex`, `dob`, `reg_date`, `mobile`, `email`, `password`, `type_of_visit`, `signature`) VALUES
-(1, 'Himanshu', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'ortho@gmail.com', '123', 'Ortho', ''),
-(2, 'Tanya', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'eye@gmail.com', '123', 'Eye', ''),
-(3, 'General', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'general@gmail.com', '123', 'General', '');
+(1, 'Dr. Himanshu Sangwan', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'ortho@gmail.com', '123', 'Ortho', ''),
+(2, 'Dr. Tanya Mishra', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'eye@gmail.com', '123', 'Eye', ''),
+(3, 'Dr. General general', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'general@gmail.com', '123', 'General', '');
 
 -- --------------------------------------------------------
 
