@@ -190,8 +190,14 @@ if (!isset($res12['inp'])) {
 
         <div class="col-12">
             <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
-                <strong>Investigations:</strong>
+                <strong>Investigations Lab:</strong>
                 <?php echo $res['investigation']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
+                <strong>Investigations Imaging:</strong>
+                <?php echo $res['investigation_imaging']; ?>
             <?php endif; ?>
         </div>
         <div class="col-12">
@@ -628,6 +634,7 @@ $res10 = $data10->fetch_assoc();
 </div>
 
 <h6 class="text-center mt-4"><?php echo isset($res10['pre_bottom']); ?></h6>
+
     <script>
     window.print();
     </script>

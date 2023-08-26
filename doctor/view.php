@@ -786,8 +786,7 @@ data;
                     </form>
                 </div>
             </div>
-
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
                 <?php
                 if (isset($_REQUEST['save_inves'])) {
                    
@@ -805,7 +804,7 @@ data;
                 $sql = "SELECT investigation FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
               ?>
-                <label class="font-weight-bold" for="" class="text-danger">Investigation :</label>
+                <label class="font-weight-bold" for="" class="text-danger">Investigation Lab :</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
                         <textarea class="form-control mt-3" id="selected-investigation"
@@ -817,7 +816,7 @@ data;
                                 <input type="submit" class="btn btn-primary " name="save_inves" value="Save">
                             </div>
                             <div class="col-6 mt-2">
-                                <button type="button" id="invest" class="btn btn-primary ">Investigation</button>
+                                <button type="button" id="invest" class="btn btn-primary "> Lab</button>
                             </div>
                             <div class="col-1 mt-2">
                                 <div class="form-check form-switch">
@@ -827,27 +826,29 @@ data;
                             </div>
 
                         </div>
+                        
+<div class="modal" id="investigationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Investigations Lab</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><strong>
+                    &times;
+                    </strong></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">**Admin Configurable Data**</p>
+                <table class="mx-3">
+        <tr>
+            <th>Checkbox</th>
+            <th>Investigation Lab</th>
+        </tr>
+        
+        <?php
 
-                        <div class="modal" id="investigationModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Investigations</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-center">**Admin Configurable Data**</p>
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Investigations</th>
-                                            </tr>
-
-                                            <?php
+                  
         $i = 1;
         $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view");
 
@@ -871,7 +872,93 @@ data;
                 </div>
             </div>
 
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
+                <?php
+                if (isset($_REQUEST['save_inves_imaging'])) {
+                   
+                        echo "<div class='alert alert-success'>Investigations Imaging Updated Successfully</div>";
+
+                     $investigation = removeExtraSpaces($_REQUEST['investigation_imaging']);
+                             $sql = "UPDATE patient_info SET investigation_imaging = '$investigation' WHERE patient_id = $id;";
+                    if ($conn->query($sql) === TRUE) {
+                                $i++;
+                            } else {
+                                echo "<div class='alert alert-danger'>Error Updating Investigation Imaging</div>";
+                            }
+                        } 
+               
+                $sql = "SELECT investigation_imaging FROM patient_info WHERE patient_id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+              ?>
+                <label class="font-weight-bold" for="" class="text-danger">Investigation Imaging:</label>
+                <div class="card-body p-2">
+                    <form action="" method="POST">
+                    <textarea class="form-control mt-3" id="selected-investigation_imaging" name="investigation_imaging" ><?php echo $res['investigation_imaging'];?></textarea>
+
+                          
+                        <div class="row">
+                            <div class="col-3 mt-2">
+                                <input type="submit" class="btn btn-primary " name="save_inves_imaging"
+                                    value="Save">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <button type="button" id="invest_imaging" class="btn btn-primary "> Imaging</button>
+                            </div>
+                            <div class="col-1 mt-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="investigation_imaging_checkbox"
+                                        id="investigation_imaging_checkbox">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+<div class="modal" id="investigationImagingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Investigation Imaging</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><strong>
+                    &times;
+                    </strong></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">**Admin Configurable Data**</p>
+                <table class="mx-3">
+        <tr>
+            <th>Checkbox</th>
+            <th>Investigations Imaging</th>
+        </tr>
+        
+        <?php
+        $i = 1;
+        $sql1 = mysqli_query($conn, "SELECT * FROM add_invest_imaging");
+
+        while ($res = mysqli_fetch_assoc($sql1)) {
+            echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-investigation_imaging" type="checkbox" name="inve_imaging_checkbox_'.$i.'"
+                    id="inves_imaging_checkbox_'.$i.'">
+                </td>
+                <td>'.$res['description'].'</td>
+            </tr>';
+            $i++;
+        }
+        ?>
+    </table>
+            </div>
+        </div>
+    </div>
+</div>
+                    </form>
+                </div>
+            </div>
+            
+
+            
+            <div class="col-md-3 shadow-lg rounded-3 mt-4 mx-0 mb-4">
                 <?php
                 if (isset($_REQUEST['save_symptoms'])) {
                     echo "<div class='alert alert-success'>Symptoms Updated Successfully</div>";
@@ -951,8 +1038,7 @@ data;
                     </form>
                 </div>
             </div>
-
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
+            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 ">
                 <?php
                 if (isset($_REQUEST['save_instruction'])) {
                     echo "<div class='alert alert-success'>Instructions Updated Successfully</div>";
@@ -1157,7 +1243,8 @@ data;
     <div class="card shadow my-4 container">
         <div class="card-header py-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="pres_back_checkbox" id="pres_back_checkbox">
+                <input class="form-check-input" type="checkbox" name="pres_back_checkbox" id="pres_back_checkbox"
+                    >
             </div>
         </div>
         <div class="card-body">
@@ -1634,7 +1721,19 @@ data;
             $("#selected-symptoms").val(selectedSymptoms.join(" , "));
         });
     });
-    </script>
+
+
+$(document).ready(function () {
+    $(".checkbox-investigation_imaging").change(function () {
+        var selectedInvestigationImaging = [];
+        $(".checkbox-investigation_imaging:checked").each(function () {
+            var investigationImaging = $(this).closest("tr").find("td:last").text();
+            selectedInvestigationImaging.push(investigationImaging);
+        });
+        $("#selected-investigation_imaging").val(selectedInvestigationImaging.join(" , "));
+    });
+});
+</script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         const modal = document.getElementById("instructionModal");
@@ -1674,7 +1773,26 @@ data;
             }
         });
     });
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("investigationImagingModal");
+        const investigationImagingButton = document.getElementById("invest_imaging");
+        const closeButton = modal.querySelector(".close");
+
+        investigationImagingButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById("symptomsModal");
         const symptomsButton = document.getElementById("symptom");
         const closeButton = modal.querySelector(".close");

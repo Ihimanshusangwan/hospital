@@ -50,9 +50,11 @@ require("../admin/connect.php");
                                         while ($row = $data16->fetch_assoc()) {
                                             echo "<option value='{$row['description']}'>" . $row['description'] . "</option>";
                                         }
+
                                        
                                     }
                                     echo "<option value='all'>All</option>";
+
                                     ?>
                                 </select>
                             </div>

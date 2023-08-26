@@ -99,7 +99,61 @@ $title = $data->fetch_assoc();
             gap: 10px;
             margin-top: 20px;
         }
+
+         .table tbody tr.table-light{
+            background-color:green !important;
+        }
     </style>
+    
+ <script>
+ function changeColor(button, type) {
+    var row = button.closest('tr');
+    var rowId = button.dataset.rowId || 'N/A';
+
+    row.classList.remove('table-success', 'table-danger', 'table-warning');
+    
+    if (type === 'waiting') {
+        row.classList.add('table-warning');
+        localStorage.setItem('selectedColor_' + rowId, 'table-warning');
+    } else if (type === 'out') {
+        row.classList.add('table-danger');
+        localStorage.setItem('selectedColor_' + rowId, 'table-danger');
+    } else if (type === 'in') {
+        row.classList.add('table-success');
+        localStorage.setItem('selectedColor_' + rowId, 'table-success');
+    } else{
+        row.classList.add('table-info');
+        localStorage.setItem('selectedColor_' + rowId, 'table-info');
+  
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.change-color-button');
+    for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var rowId = button.dataset.rowId || 'N/A';
+        var selectedColor = localStorage.getItem('selectedColor_' + rowId);
+
+        var row = button.closest('tr');
+        row.classList.remove('table-warning', 'table-success', 'table-danger');
+        
+        if (selectedColor) {
+            row.classList.add(selectedColor);
+        } else {
+            row.classList.add('table-warning');
+        }
+    }
+});
+
+function changeColorAndReload(button, type) {
+    changeColor(button, type);
+    location.reload();
+}
+
+
+
+</script>
+
 </head>
 
 <body>
@@ -182,6 +236,7 @@ msg;
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
                 <span class="btn btn-warning mb-2" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
+
                 <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
@@ -220,6 +275,7 @@ msg;
                             <th>ADMIT STATUS</th>
                             <th>TYPE</th>
                             <th>REFER STATUS</th>
+                            <th>PATIENT STATUS</th>
                             <th>OPD Bill</th>
                             <th>IPD Bill</th>
                             <th>Details & Other Forms</th>
@@ -277,6 +333,7 @@ msg;
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -290,8 +347,8 @@ msg;
                             } else {
                                 $type = 'Appointment';
                             }
-                            echo '<tr>';
-                            echo '<td>' . $res['id'] . '</td>';
+                            echo '<tr class="table-warning" data-row-id="' . $res['id'] . '">';
+                            echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['id'] . '</td>';
 
                             echo '<td>' . $res['reg_date'] . '</td>';
                             echo '<td>' . $res['name'] . '</td>';
@@ -310,6 +367,21 @@ msg;
 
                                     echo '<td>Not Refered</td>';
                                 }
+                                echo ' <td>';
+                                echo '<div class="row pt-3 pb-3 ">';
+                                echo '<div class="col-1 ">';
+                                echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
+                                echo '</div>';
+                                echo '<div class="col-1 mx-4">'; 
+                                echo '<button class="btn btn-outline-danger text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'out\')"> Out</button>'; 
+                                echo '</div>';
+                                echo '<div class="col-12 mx-2 mt-1">';
+                                echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</td>';
+                                
+
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
                                 echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
@@ -356,6 +428,20 @@ msg;
 
                                     echo '<td>Not Refered</td>';
                                 }
+                                echo ' <td>';
+                                echo '<div class="row pt-3 pb-3">';
+                                echo '<div class="col-1 ">';
+                                echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
+                                echo '</div>';
+                                echo '<div class="col-1 mx-4">'; 
+                                echo '<button class="btn btn-outline-danger text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'out\')"> Out</button>'; 
+                                echo '</div>';
+                                echo '<div class="col-12 mx-2 mt-1">';
+                                echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</td>';
+                                
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
                                 echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';

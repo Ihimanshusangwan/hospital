@@ -99,6 +99,16 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     <a href="case_sheet_audit.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Case Audit Sheet </button></a>
     <a href="nursing_intial_assesment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Nursing Intial Assesment </button></a>
     <a href="doctor_inital_asssesment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Doctor Initial Assesment</button></a>
+    <a href="dama_discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">DAMA Discharge</button></a>
+    <a href="injection_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">IM /IV SC Injection Consent </button></a>
+    <a href="immediate_reval.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Immediate pre-operative re-evaluation form </button></a>
+    <a href="indoor_case.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Indoor Case Paper </button></a>
+    <a href="discharge_summary.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Discharge Summary </button></a>
+    <a href="incidence_register.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Incidence Register </button></a>
+    <a href="nursing_assessment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Nursing Assessment </button></a>
+    <a href="nutritional_assessment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Nutritional Assessment </button></a>
+    <a href="invest_sheet.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Investigation Sheet </button></a>
+    <a href="acc_maternity.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Accident And Maternity Homes</button></a>
 
 <script>
   function getCookieValue(cookieName) {

@@ -70,9 +70,12 @@ if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
          Set Base Patient Id 
     </button>
     <a class="navbar-brand">
-                <a href="add_investigation.php" class="btn btn-primary mx-1">Add Investigation</a>
+                <a href="add_investigation.php" class="btn btn-primary mx-1">Add Investigation Lab</a>
 
-                </a> <a class="navbar-brand">
+                </a>  <a class="navbar-brand">
+                <a href="add_invest_imaging.php" class="btn btn-primary mx-1">Add Investigation Imaging</a>
+
+                </a><a class="navbar-brand">
                     <a href="add_symptoms.php" class="btn btn-primary mx-1">Add Symptoms</a>
 
                 </a> <a class="navbar-brand">
