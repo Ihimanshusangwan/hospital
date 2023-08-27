@@ -14,6 +14,14 @@ $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
 if(isset($_POST['add_follow'])){
+
+ if(isset($_POST['follow_up']) && $_POST['follow_up'] !== ''){
+    $date=$_POST['follow_up'];
+    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' WHERE `id`='$id';";
+    $res = $conn->query($sql);
+
+ }
+ else{
     $selectedDuration = intval($_POST['follow_duration']); // Get the selected duration in days
     
     $currentDate = date('Y-m-d'); // Get the current date
@@ -21,6 +29,7 @@ if(isset($_POST['add_follow'])){
     
     $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$newDate' WHERE `id`='$id';";
     $res = $conn->query($sql);
+ }
 }
 
 if (isset($_POST['template_btn'])) {
@@ -261,6 +270,7 @@ if (isset($_POST['template_btn'])) {
                                    if ($res['is_followup'] == 0) {
                                        echo '<div>
                                        <button  class="btn btn-success" name="add_follow">Add follow up</button>
+                                       <input type="date" name="follow_up">
                                        <select name="follow_duration" class="mx-3">
                                        <option value="1">1 day</option>
                                        <option value="2">2 days</option>
