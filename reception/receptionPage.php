@@ -9,6 +9,16 @@ if (!isset($_SESSION['receptionist_id'])) {
     header("location:login.php");
 }
 require("../admin/connect.php");
+
+if(isset($_POST['skip'])){
+    $inp_id=$_POST['inp_id'];
+  $sql="UPDATE `patient_records` SET `skip`='1' where `id`='$inp_id'";
+  $data=$conn->query($sql);
+  if(!$data){
+    echo '<div class="alert alert-danger " role="alert"> Something went wrong!
+  </div>';
+  }
+}
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
@@ -241,6 +251,7 @@ msg;
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
                      <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View FollowUp</a>
+                     <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View skip</a>
                     <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">New
                         Registration</a>
                     <a class="navbar-brand">
@@ -276,6 +287,7 @@ msg;
                             <th>TYPE</th>
                             <th>REFER STATUS</th>
                             <th>PATIENT STATUS</th>
+                            <th>DELETE</th>
                             <th>OPD Bill</th>
                             <th>IPD Bill</th>
                             <th>Details & Other Forms</th>
@@ -334,11 +346,13 @@ msg;
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records  where is_registered=1  OR  is_visited = 1  ORDER BY id DESC ";
+                        $sql = "SELECT * FROM patient_records  where(is_registered = 1 OR is_visited = 1) AND skip = 0  ORDER BY id DESC ";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';
@@ -381,9 +395,14 @@ msg;
                                 echo '<div class="col-12 mx-2 mt-1">';
                                 echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
                                 echo '</div>';
+                                echo '<form method="POST">
+                                <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
+                                <div class="col-4 mx-2 mt-1">';
+                                echo '<button class="btn btn-outline-warning  text-black change-color-button" name="skip"> Skip</button>';
+                                echo '</div></form>';
                                 echo '</div>';
                                 echo '</td>';
-                                
+                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
@@ -432,18 +451,25 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                                echo '<div class="row pt-3 pb-3">';
-                                echo '<div class="col-1 ">';
+                                echo '<div class="row  ">';
+                                echo '<div class="col-1">';
                                 echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
                                 echo '</div>';
                                 echo '<div class="col-1 mx-4">'; 
                                 echo '<button class="btn btn-outline-danger text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'out\')"> Out</button>'; 
                                 echo '</div>';
-                                echo '<div class="col-12 mx-2 mt-1">';
+                                echo '<div class="col-12 mt-1">';
                                 echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
                                 echo '</div>';
+                                echo '<form method="POST">
+                                <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
+                                <div class="col-4  mt-1">';
+                                echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
+                                echo '</div></form>';
+                               
                                 echo '</div>';
                                 echo '</td>';
+                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
                                 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
@@ -477,6 +503,26 @@ msg;
             </div>
         </div>
     </div>
+    <!-- script to delete patient -->
+    <script>
+        $(document).ready(function() {
+            $(".delete_record").on("click", function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "delete_patient.php",
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        location.reload(); // Refresh the page
+                    }
+                });
+            });
+        });
+        </script>
     <script>
         const fullscreenAlert = document.getElementById('fullscreenAlert');
         const closeAlertButton = document.getElementById('closeAlert');

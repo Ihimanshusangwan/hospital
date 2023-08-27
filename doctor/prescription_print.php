@@ -99,43 +99,48 @@ if (!isset($res12['inp'])) {
         }
         ?>
         <div class="container text-center mt-4">
-        <div class="row">
-            <div class="col-4"><strong>Name:</strong>
-                <?php echo strtoupper($res['name']); ?>
-            </div>
-            <div class="col-4"><strong>UHID No:</strong>
-                <?php echo $res2['uhid']; ?>
-            </div>
-            <div class="col-4"><strong>Age:</strong>
-                <?php echo strtoupper($res['age']); ?>
-            </div>
-            <div class="col-4"><strong>Date:</strong>
-        <?php echo $res['reg_date'];?></div>
-            <div class="col-4  mt-2"><strong>Sex:</strong>
-                <?php echo $res['sex']; ?>
-            </div><br>
-           
-            <div class="col-4 mt-2" style="width:20px;">
-                <script src="../barcode.js"></script>
-                <canvas id="barcode"></canvas>
-                <script>
-                const canvas = document.getElementById('barcode');
-                const opts = {
-                    bcid: 'code39',
-                    text: '<?php echo $id; ?>',
-                    scale: 2,
-                    height: 5,
-                    includetext: false,
-                };
-                bwipjs.toCanvas(canvas, opts, function(err) {
-                    if (err) {
-                        console.error('Error generating barcode:', err);
-                    } else {
-                        console.log('Barcode generated successfully');
-                    }
-                });
-                </script>
-            </div>
+            <div class="row">
+                <div class="col-4"><strong>Name:</strong>
+                    <?php echo strtoupper($res['name']); ?>
+                </div>
+                <div class="col-4"><strong>UHID No:</strong>
+                    <?php echo $res2['uhid']; ?>
+                </div>
+                <div class="col-4"><strong>Age:</strong>
+                    <?php echo strtoupper($res['age']); ?>
+                </div>
+                <div class="col-4"><strong>Date:</strong>
+                    <?php 
+                  $timestamp = strtotime($res['reg_date']);
+                  $formattedDate = date("d M Y", $timestamp);
+                  echo $formattedDate ;
+                  ?>
+                  </div>
+                <div class="col-4  mt-2"><strong>Sex:</strong>
+                    <?php echo $res['sex']; ?>
+                </div><br>
+
+                <div class="col-4 mt-2" style="width:20px;">
+                    <script src="../barcode.js"></script>
+                    <canvas id="barcode"></canvas>
+                    <script>
+                    const canvas = document.getElementById('barcode');
+                    const opts = {
+                        bcid: 'code39',
+                        text: '<?php echo $id; ?>',
+                        scale: 2,
+                        height: 5,
+                        includetext: false,
+                    };
+                    bwipjs.toCanvas(canvas, opts, function(err) {
+                        if (err) {
+                            console.error('Error generating barcode:', err);
+                        } else {
+                            console.log('Barcode generated successfully');
+                        }
+                    });
+                    </script>
+                </div>
             </div>
         </div>
         <div style="margin-bottom : 5px;  margin-top: 10px;"></div>
@@ -145,93 +150,93 @@ if (!isset($res12['inp'])) {
         $res = $conn->query($sql)->fetch_assoc();
 
         ?>
-        <?php
+    <?php
         $data = $_GET['data'];
         $checkboxes = isset($_GET['checkboxes']) ? explode(',', $_GET['checkboxes']) : [];
         $values = json_decode(urldecode($data), true);
 
         ?>
-        <div class="col-12">
-            <?php if (in_array('history_checkbox', $checkboxes)): ?>
-                <strong>History:</strong>
-                <?php echo $res['history']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('diagnosis_checkbox', $checkboxes)): ?>
-                <strong>Diagnosis:</strong>
-                <?php echo $res['diagnosis']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('exam_checkbox', $checkboxes)): ?>
-                <strong>Examination:</strong>
-                <?php echo $res['examination']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
-                <strong>Chief Complaint:</strong>
-                <?php echo $res['chief_complaint']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
-                <strong>Family History:</strong>
-                <?php echo $res['family_history']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
-                <strong>Operative Procedure Done:</strong>
-                <?php echo $res['procedure_done']; ?>
-            <?php endif; ?>
-        </div>
+    <div class="col-12">
+        <?php if (in_array('history_checkbox', $checkboxes)): ?>
+        <strong>History:</strong>
+        <?php echo $res['history']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('diagnosis_checkbox', $checkboxes)): ?>
+        <strong>Diagnosis:</strong>
+        <?php echo $res['diagnosis']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('exam_checkbox', $checkboxes)): ?>
+        <strong>Examination:</strong>
+        <?php echo $res['examination']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
+        <strong>Chief Complaint:</strong>
+        <?php echo $res['chief_complaint']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
+        <strong>Family History:</strong>
+        <?php echo $res['family_history']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
+        <strong>Operative Procedure Done:</strong>
+        <?php echo $res['procedure_done']; ?>
+        <?php endif; ?>
+    </div>
 
-        <div class="col-12">
-            <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
-                <strong>Investigations Lab:</strong>
-                <?php echo $res['investigation']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
-                <strong>Investigations Imaging:</strong>
-                <?php echo $res['investigation_imaging']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
-                <strong>Symptoms:</strong>
-                <?php echo $res['symptoms']; ?>
-            <?php endif; ?>
-        </div>
-        <div class="col-12">
-            <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
-                <strong>Instruction:</strong>
-                <?php echo $res['instructions']; ?>
-            <?php endif; ?>
-        </div>
+    <div class="col-12">
+        <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
+        <strong>Investigations Lab:</strong>
+        <?php echo $res['investigation']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
+        <strong>Investigations Imaging:</strong>
+        <?php echo $res['investigation_imaging']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
+        <strong>Symptoms:</strong>
+        <?php echo $res['symptoms']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
+        <strong>Instruction:</strong>
+        <?php echo $res['instructions']; ?>
+        <?php endif; ?>
+    </div>
 
 
-        <?php if (in_array('med_checkbox', $checkboxes)): ?>
-            <div class="container-fluid" style="margin-top: 10px;">
-                <!-- DataTales Example -->
-                        <div>
-                            <table class="table border-dark" id="dataTable" width="100%" cellspacing="0">
-                                <tr>
-                                    <th class="col-1">Rx</th>
-                                    <th class="col-3">Medicine</th>
-                                    <th class="col-1">सकाळ</th>
-                                    <th class="col-1">दुपार</th>
-                                    <th class="col-1">रात्र</th>
-                                    <th class="col-1">कधी घ्यायच्या </th>
-                                    <th class="col-1">किती दिवस </th>
-                                    <!-- <th class="col-1">Qty</th> -->
+    <?php if (in_array('med_checkbox', $checkboxes)): ?>
+    <div class="container-fluid" style="margin-top: 10px;">
+        <!-- DataTales Example -->
+        <div>
+            <table class="table border-dark" id="dataTable" width="100%" cellspacing="0">
+                <tr>
+                    <th class="col-1">Rx</th>
+                    <th class="col-3">Medicine</th>
+                    <th class="col-1">सकाळ</th>
+                    <th class="col-1">दुपार</th>
+                    <th class="col-1">रात्र</th>
+                    <th class="col-1">कधी घ्यायच्या </th>
+                    <th class="col-1">किती दिवस </th>
+                    <!-- <th class="col-1">Qty</th> -->
 
-                                </tr>
-                                <tbody id="tbody">
-                                    <?php
+                </tr>
+                <tbody id="tbody">
+                    <?php
                                     $sql = "SELECT * FROM prescription WHERE patient_id = '$id' ORDER BY id DESC;";
                                     $data = $conn->query($sql);
                                     $i = 1;
@@ -605,35 +610,43 @@ if (!isset($res12['inp'])) {
     </div>
     <?php endif; ?>
     <h6>Follow Up <?php
-    date_default_timezone_set('Asia/Kolkata');
-    $currentDateTime = date('Y-m-d H:i');
-echo $currentDateTime; ?></h6>
-<?php 
+    $sql = "SELECT * FROM patient_records WHERE id = '$id';";
+    $data = $conn->query($sql);
+    $res = $data->fetch_assoc();
+    if(isset($res['follow_date'])){
+ $timestamp = strtotime($res['follow_date']);
+$formattedDate = date("d M Y", $timestamp);
+echo $formattedDate ;
+    }
+ ?></h6>
+
+    <?php 
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
 ?>
- <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
-               <strong> <?php echo $res['consultant']; ?></strong>
-            </div>
+    <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
+        <strong> <?php echo $res['consultant']; ?></strong>
+    </div>
 
-            <?php
+    <?php
 $sql10 = "SELECT * FROM `change_label` WHERE 1";
 $data10 = $conn->query($sql10);
 $res10 = $data10->fetch_assoc();
 ?>
-<div class="row">
-    <div class="col-2">
-    <img style="height: 8rem; width: 8rem;" src="data:image/jpg;base64,<?php echo base64_encode($res10['pre_barcode']); ?>">
+    <div class="row">
+        <div class="col-2">
+            <img style="height: 8rem; width: 8rem;"
+                src="data:image/jpg;base64,<?php echo base64_encode($res10['pre_barcode']); ?>">
 
-    </div>
-    <div class="col-5">
-        
-<h6 style="font-size:12px; margin-top:0.5rem;"><strong>Scan QR Code <br> for Appointment</strong></h6>
-    </div>
-</div>
+        </div>
+        <div class="col-5">
 
-<h6 class="text-center mt-4"><?php echo isset($res10['pre_bottom']); ?></h6>
+            <h6 style="font-size:12px; margin-top:0.5rem;"><strong>Scan QR Code <br> for Appointment</strong></h6>
+        </div>
+    </div>
+
+    <h6 class="text-center mt-4"><?php echo isset($res10['pre_bottom']); ?></h6>
 
     <script>
     window.print();
