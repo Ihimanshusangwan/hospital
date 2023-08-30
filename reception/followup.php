@@ -240,7 +240,9 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 
         $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
         $conn->query($sql46);
-
+        $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+        $conn->query($sql29);
+        a
         $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
 

@@ -283,6 +283,9 @@ $title = $data->fetch_assoc();
               $conn->query($sql53);
               $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
               $conn->query($sql54);
+              $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql29);
+              
 
               function generateRandomID($fullName) {
                 $nameParts = explode(" ", $fullName);
