@@ -1145,10 +1145,6 @@ data;
                     </form>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     <!-- medicine save -->
