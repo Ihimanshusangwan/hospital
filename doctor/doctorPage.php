@@ -118,7 +118,7 @@ $title = $data->fetch_assoc();
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records WHERE type_of_visit = '{$_SESSION['doctor_type']}' AND (is_registered = 1 OR is_visited = 1);";
+                        $sql = "SELECT * FROM patient_records WHERE consultant = '{$_SESSION['doctor_name']}' AND (is_registered = 1 OR is_visited = 1);";
                         $data = $conn->query($sql);
 
                         while ($res = $data->fetch_assoc()) {

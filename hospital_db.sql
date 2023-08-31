@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2023 at 03:39 PM
+-- Generation Time: Aug 31, 2023 at 04:28 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `acc_maternity`
+--
+
+CREATE TABLE `acc_maternity` (
+  `id` int(11) NOT NULL,
+  `pt_id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  `temp` varchar(300) DEFAULT NULL,
+  `pulse` varchar(300) DEFAULT NULL,
+  `bp` varchar(300) DEFAULT NULL,
+  `spo` varchar(300) DEFAULT NULL,
+  `time2` time DEFAULT NULL,
+  `fluid` text DEFAULT NULL,
+  `oral` text DEFAULT NULL,
+  `intake` text DEFAULT NULL,
+  `urine_output` varchar(700) DEFAULT NULL,
+  `others` varchar(700) DEFAULT NULL,
+  `total_output` varchar(700) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `acq`
 --
 
@@ -35,6 +59,17 @@ CREATE TABLE `acq` (
   `id` int(11) NOT NULL,
   `ward_sign` text NOT NULL,
   `icu_sign` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_invest_imaging`
+--
+
+CREATE TABLE `add_invest_imaging` (
+  `id` int(11) NOT NULL,
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -53,6 +88,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`username`, `password`) VALUES
+('admin@webifly.com', '123'),
+('admin@webifly.com', '123'),
+('admin@webifly.com', '123'),
+('admin@webifly.com', '123'),
 ('admin@webifly.com', '123'),
 ('admin@webifly.com', '123'),
 ('admin@webifly.com', '123'),
@@ -129,6 +168,25 @@ CREATE TABLE `anesthesia_consent` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `anes_reco`
+--
+
+CREATE TABLE `anes_reco` (
+  `id` int(11) NOT NULL,
+  `pt_id` int(11) NOT NULL,
+  `a` varchar(500) NOT NULL,
+  `b` varchar(500) NOT NULL,
+  `c` varchar(500) NOT NULL,
+  `d` varchar(500) NOT NULL,
+  `e` varchar(500) NOT NULL,
+  `f` varchar(500) NOT NULL,
+  `g` varchar(500) NOT NULL,
+  `h` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `anumati_consent`
 --
 
@@ -159,6 +217,60 @@ CREATE TABLE `anumati_consent` (
   `vay1` varchar(200) DEFAULT NULL,
   `vay2` varchar(200) DEFAULT NULL,
   `time` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `an_record`
+--
+
+CREATE TABLE `an_record` (
+  `id` int(11) NOT NULL,
+  `asa` varchar(500) NOT NULL,
+  `complaint` text NOT NULL,
+  `history` text NOT NULL,
+  `other_his` text NOT NULL,
+  `nbm` text NOT NULL,
+  `inve` text NOT NULL,
+  `exam` text NOT NULL,
+  `hb` text NOT NULL,
+  `pulse` varchar(500) NOT NULL,
+  `urine` varchar(500) NOT NULL,
+  `bp` varchar(300) NOT NULL,
+  `bsl` varchar(300) NOT NULL,
+  `cvs` varchar(500) NOT NULL,
+  `bul` varchar(500) NOT NULL,
+  `rs` varchar(500) NOT NULL,
+  `s` varchar(500) NOT NULL,
+  `other` varchar(500) NOT NULL,
+  `xray` varchar(500) NOT NULL,
+  `consent` varchar(500) NOT NULL,
+  `ecg` varchar(500) NOT NULL,
+  `fitness` varchar(500) NOT NULL,
+  `o` varchar(500) NOT NULL,
+  `premed` text NOT NULL,
+  `type` varchar(500) NOT NULL,
+  `induction` text NOT NULL,
+  `spinal` text NOT NULL,
+  `muscle` text NOT NULL,
+  `atlevel` varchar(500) NOT NULL,
+  `w` varchar(500) NOT NULL,
+  `intu` varchar(500) NOT NULL,
+  `needle` varchar(500) NOT NULL,
+  `withco` varchar(500) NOT NULL,
+  `agent` varchar(500) NOT NULL,
+  `catheter` varchar(500) NOT NULL,
+  `withcat` varchar(500) NOT NULL,
+  `typeres` text NOT NULL,
+  `drug` text NOT NULL,
+  `an` text NOT NULL,
+  `ex` text NOT NULL,
+  `resp` varchar(500) NOT NULL,
+  `postop` text NOT NULL,
+  `nb` text NOT NULL,
+  `ivf` text NOT NULL,
+  `sign` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -226,7 +338,8 @@ CREATE TABLE `blood` (
   `id` int(11) NOT NULL,
   `cros` varchar(100) NOT NULL,
   `trans` varchar(100) NOT NULL,
-  `new` text DEFAULT NULL
+  `new` text DEFAULT NULL,
+  `a` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -437,6 +550,42 @@ CREATE TABLE `counselling_consent` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dama_dis`
+--
+
+CREATE TABLE `dama_dis` (
+  `id` int(11) NOT NULL,
+  `discharge` varchar(30) DEFAULT NULL,
+  `dama` varchar(30) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `dis` varchar(20) DEFAULT NULL,
+  `medradio` varchar(20) DEFAULT NULL,
+  `genradio` varchar(20) DEFAULT NULL,
+  `dietradio` varchar(20) DEFAULT NULL,
+  `phyradio` varchar(20) DEFAULT NULL,
+  `transradio` varchar(20) DEFAULT NULL,
+  `reqradio` varchar(20) DEFAULT NULL,
+  `ifradio` varchar(20) DEFAULT NULL,
+  `discu` varchar(20) DEFAULT NULL,
+  `lan` varchar(400) DEFAULT NULL,
+  `aradio` varchar(20) DEFAULT NULL,
+  `bradio` varchar(20) DEFAULT NULL,
+  `cradio` varchar(20) DEFAULT NULL,
+  `dradio` varchar(20) DEFAULT NULL,
+  `eradio` varchar(20) DEFAULT NULL,
+  `yradio` varchar(20) DEFAULT NULL,
+  `sign` varchar(100) DEFAULT NULL,
+  `sis` varchar(100) DEFAULT NULL,
+  `doc1` varchar(100) DEFAULT NULL,
+  `sis2` varchar(100) DEFAULT NULL,
+  `doc2` varchar(100) DEFAULT NULL,
+  `medside` varchar(20) DEFAULT NULL,
+  `rel` varchar(400) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `discharge`
 --
 
@@ -531,6 +680,65 @@ CREATE TABLE `discharge_routine_register` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `discharge_sum`
+--
+
+CREATE TABLE `discharge_sum` (
+  `id` int(11) NOT NULL,
+  `pt_id` int(11) DEFAULT NULL,
+  `a` varchar(800) DEFAULT NULL,
+  `b` varchar(800) DEFAULT NULL,
+  `c` varchar(800) DEFAULT NULL,
+  `d` varchar(800) DEFAULT NULL,
+  `e` varchar(800) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dis_sum`
+--
+
+CREATE TABLE `dis_sum` (
+  `id` int(11) NOT NULL,
+  `date_dis` date DEFAULT NULL,
+  `time_dis` time DEFAULT NULL,
+  `type` text DEFAULT NULL,
+  `cc` varchar(200) DEFAULT NULL,
+  `pulse` varchar(200) DEFAULT NULL,
+  `bp` varchar(200) DEFAULT NULL,
+  `spo` varchar(200) DEFAULT NULL,
+  `height` varchar(200) DEFAULT NULL,
+  `weight` varchar(200) DEFAULT NULL,
+  `rs` varchar(400) DEFAULT NULL,
+  `cvs` varchar(400) DEFAULT NULL,
+  `cns` varchar(500) DEFAULT NULL,
+  `abdomen` varchar(500) DEFAULT NULL,
+  `treatment` text DEFAULT NULL,
+  `date_s` date DEFAULT NULL,
+  `surgery` text DEFAULT NULL,
+  `surgeon` varchar(300) DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `an` text DEFAULT NULL,
+  `anesthesia` text DEFAULT NULL,
+  `del_notes` text DEFAULT NULL,
+  `del_dt` varchar(400) DEFAULT NULL,
+  `co` text DEFAULT NULL,
+  `diagnosis` text DEFAULT NULL,
+  `final` text DEFAULT NULL,
+  `special` text DEFAULT NULL,
+  `advice` text DEFAULT NULL,
+  `follow` date DEFAULT NULL,
+  `emer` text DEFAULT NULL,
+  `sign` text DEFAULT NULL,
+  `incharge` varchar(300) DEFAULT NULL,
+  `sis` varchar(300) DEFAULT NULL,
+  `rmo` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doctors`
 --
 
@@ -612,6 +820,35 @@ CREATE TABLE `doctor_initail_assesment` (
   `provisional-diagnosis1` text DEFAULT NULL,
   `differential-diagnosis1` text DEFAULT NULL,
   `submit_name` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor_inpatient`
+--
+
+CREATE TABLE `doctor_inpatient` (
+  `id` int(11) NOT NULL,
+  `copain` varchar(1000) DEFAULT NULL,
+  `nolpv` varchar(1000) DEFAULT NULL,
+  `lmp` varchar(1000) DEFAULT NULL,
+  `ga` varchar(1000) DEFAULT NULL,
+  `edd` varchar(1000) DEFAULT NULL,
+  `dysmenorrhea` varchar(1000) DEFAULT NULL,
+  `bp` varchar(200) DEFAULT NULL,
+  `spo2` varchar(200) DEFAULT NULL,
+  `height` varchar(200) DEFAULT NULL,
+  `weight` varchar(200) DEFAULT NULL,
+  `resp` varchar(200) DEFAULT NULL,
+  `cardio` varchar(700) DEFAULT NULL,
+  `cns` varchar(700) DEFAULT NULL,
+  `abdomen` varchar(700) DEFAULT NULL,
+  `radiology` varchar(600) DEFAULT NULL,
+  `pathology` varchar(600) DEFAULT NULL,
+  `diagnosis` text DEFAULT NULL,
+  `plan` varchar(1000) DEFAULT NULL,
+  `pulse` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -829,16 +1066,6 @@ CREATE TABLE `floor_cleaning` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `follow_up`
---
-
-CREATE TABLE `follow_up` (
-  `follow_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `general_consent`
 --
 
@@ -989,6 +1216,70 @@ CREATE TABLE `hiv_consent` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `im_reval`
+--
+
+CREATE TABLE `im_reval` (
+  `id` int(11) NOT NULL,
+  `t` varchar(500) DEFAULT NULL,
+  `bp` varchar(500) DEFAULT NULL,
+  `p` varchar(500) DEFAULT NULL,
+  `r` varchar(500) DEFAULT NULL,
+  `osat` varchar(500) DEFAULT NULL,
+  `fbs` varchar(500) DEFAULT NULL,
+  `a` varchar(500) DEFAULT NULL,
+  `wbc` varchar(500) DEFAULT NULL,
+  `hct` varchar(500) DEFAULT NULL,
+  `pits` varchar(500) DEFAULT NULL,
+  `na` varchar(500) DEFAULT NULL,
+  `cl` varchar(500) DEFAULT NULL,
+  `glucose` varchar(500) DEFAULT NULL,
+  `bun` varchar(500) DEFAULT NULL,
+  `k` varchar(500) DEFAULT NULL,
+  `co` varchar(500) DEFAULT NULL,
+  `cr` varchar(500) DEFAULT NULL,
+  `inr` varchar(500) DEFAULT NULL,
+  `pt` varchar(500) DEFAULT NULL,
+  `ptt` varchar(500) DEFAULT NULL,
+  `upt` varchar(100) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `lft` varchar(500) DEFAULT NULL,
+  `ca` varchar(500) DEFAULT NULL,
+  `cxr` varchar(500) DEFAULT NULL,
+  `date2` date DEFAULT NULL,
+  `ecg` varchar(500) DEFAULT NULL,
+  `date3` date DEFAULT NULL,
+  `echo` varchar(500) DEFAULT NULL,
+  `date4` date DEFAULT NULL,
+  `stress` text DEFAULT NULL,
+  `date5` date DEFAULT NULL,
+  `sign` varchar(100) DEFAULT NULL,
+  `nbm` varchar(100) DEFAULT NULL,
+  `ad` varchar(100) DEFAULT NULL,
+  `consent` varchar(100) DEFAULT NULL,
+  `risk` varchar(100) DEFAULT NULL,
+  `hp` varchar(100) DEFAULT NULL,
+  `I` varchar(400) DEFAULT NULL,
+  `II` varchar(400) DEFAULT NULL,
+  `III` varchar(400) DEFAULT NULL,
+  `IV` varchar(400) DEFAULT NULL,
+  `caps` varchar(100) DEFAULT NULL,
+  `overbite` varchar(100) DEFAULT NULL,
+  `loose` varchar(100) DEFAULT NULL,
+  `rom` varchar(100) DEFAULT NULL,
+  `lungs` varchar(300) DEFAULT NULL,
+  `heart` varchar(300) DEFAULT NULL,
+  `asa` varchar(200) DEFAULT NULL,
+  `ga` varchar(10) DEFAULT NULL,
+  `regional` varchar(30) DEFAULT NULL,
+  `spinal` varchar(30) DEFAULT NULL,
+  `sed` varchar(30) DEFAULT NULL,
+  `plan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `incident_register`
 --
 
@@ -999,6 +1290,22 @@ CREATE TABLE `incident_register` (
   `name` text DEFAULT NULL,
   `sign` text DEFAULT NULL,
   `action` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `indoor_case`
+--
+
+CREATE TABLE `indoor_case` (
+  `id` int(11) NOT NULL,
+  `doa` varchar(700) DEFAULT NULL,
+  `doo` varchar(700) DEFAULT NULL,
+  `dod` varchar(700) DEFAULT NULL,
+  `refby` text DEFAULT NULL,
+  `diagnosis` varchar(2000) DEFAULT NULL,
+  `treatment` varchar(2000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1147,12 +1454,65 @@ CREATE TABLE `initial_counselling` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `injection_consent`
+--
+
+CREATE TABLE `injection_consent` (
+  `id` int(11) NOT NULL,
+  `guardian_name` varchar(400) DEFAULT NULL,
+  `translator` varchar(400) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `investigation_view`
 --
 
 CREATE TABLE `investigation_view` (
   `id` int(11) NOT NULL,
   `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invest_sheet`
+--
+
+CREATE TABLE `invest_sheet` (
+  `id` int(11) NOT NULL,
+  `date` text DEFAULT NULL,
+  `a` text DEFAULT NULL,
+  `b` text DEFAULT NULL,
+  `c` text DEFAULT NULL,
+  `d` text DEFAULT NULL,
+  `e` text DEFAULT NULL,
+  `f` text DEFAULT NULL,
+  `g` text DEFAULT NULL,
+  `h` text DEFAULT NULL,
+  `i` text DEFAULT NULL,
+  `j` text DEFAULT NULL,
+  `k` text DEFAULT NULL,
+  `l` text DEFAULT NULL,
+  `m` text DEFAULT NULL,
+  `urine` text DEFAULT NULL,
+  `pus` text DEFAULT NULL,
+  `vaginal` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `in_reg`
+--
+
+CREATE TABLE `in_reg` (
+  `id` int(11) NOT NULL,
+  `ward` varchar(300) DEFAULT NULL,
+  `nurse` varchar(300) DEFAULT NULL,
+  `billing` varchar(400) DEFAULT NULL,
+  `yn` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1442,6 +1802,17 @@ CREATE TABLE `nurse_intial_assesment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nursing_assessment`
+--
+
+CREATE TABLE `nursing_assessment` (
+  `id` int(11) NOT NULL,
+  `a` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nutritional_ass`
 --
 
@@ -1472,6 +1843,37 @@ CREATE TABLE `nutritional_ass` (
   `nameofdiet` varchar(100) NOT NULL,
   `date` date NOT NULL,
   `time` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nutri_assessment`
+--
+
+CREATE TABLE `nutri_assessment` (
+  `id` int(11) NOT NULL,
+  `weight` varchar(200) DEFAULT NULL,
+  `height` varchar(200) DEFAULT NULL,
+  `bmi` varchar(200) DEFAULT NULL,
+  `a` varchar(200) DEFAULT NULL,
+  `b` varchar(200) DEFAULT NULL,
+  `c` varchar(200) DEFAULT NULL,
+  `d` varchar(200) DEFAULT NULL,
+  `e` varchar(200) DEFAULT NULL,
+  `f` varchar(200) DEFAULT NULL,
+  `point1` varchar(400) DEFAULT NULL,
+  `point2` varchar(400) DEFAULT NULL,
+  `point3` varchar(400) DEFAULT NULL,
+  `tt` text DEFAULT NULL,
+  `hepatitis` text DEFAULT NULL,
+  `adult` text DEFAULT NULL,
+  `hepatitis_ad` text DEFAULT NULL,
+  `sis` text DEFAULT NULL,
+  `sign` text DEFAULT NULL,
+  `dpt` varchar(200) DEFAULT NULL,
+  `polio` varchar(200) DEFAULT NULL,
+  `mmr` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2017,7 +2419,8 @@ CREATE TABLE `patient_info` (
   `ortho_fluid` text NOT NULL,
   `investigation` text DEFAULT NULL,
   `symptoms` text DEFAULT NULL,
-  `instructions` text DEFAULT NULL
+  `instructions` text DEFAULT NULL,
+  `investigation_imaging` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2053,15 +2456,15 @@ CREATE TABLE `patient_records` (
   `is_admited` int(11) NOT NULL DEFAULT 0,
   `is_registered` int(11) NOT NULL DEFAULT 1,
   `is_approved` int(11) NOT NULL DEFAULT 0,
-  `is_followup` int(255) NOT NULL DEFAULT 0,
-  `follow_visit` tinyint(1) NOT NULL DEFAULT 0,
-  `follow_approve` tinyint(1) NOT NULL DEFAULT 0,
-  `follow_date` date DEFAULT NULL,
   `is_eye` int(11) NOT NULL DEFAULT 0,
   `is_ortho` int(11) NOT NULL DEFAULT 0,
   `is_refered` int(11) NOT NULL DEFAULT 0,
   `refered_by` text NOT NULL DEFAULT ' ',
-  `is_visited` int(11) NOT NULL DEFAULT 0
+  `is_visited` int(11) NOT NULL DEFAULT 0,
+  `is_followup` int(255) NOT NULL,
+  `follow_visit` tinyint(1) NOT NULL,
+  `follow_approve` tinyint(1) NOT NULL,
+  `follow_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2191,6 +2594,25 @@ CREATE TABLE `post_operative_surgical` (
   `surgical` text DEFAULT NULL,
   `icu` text DEFAULT NULL,
   `death` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_opnotes`
+--
+
+CREATE TABLE `post_opnotes` (
+  `pt_id` int(11) DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  `pulse` varchar(200) DEFAULT NULL,
+  `bp` varchar(200) DEFAULT NULL,
+  `fluid` varchar(500) DEFAULT NULL,
+  `relaxant` varchar(500) DEFAULT NULL,
+  `drug` varchar(500) DEFAULT NULL,
+  `urine` varchar(500) DEFAULT NULL,
+  `urine_output` varchar(500) DEFAULT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2356,6 +2778,21 @@ CREATE TABLE `pre_operative_anesth` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pre_room_urinary`
+--
+
+CREATE TABLE `pre_room_urinary` (
+  `id` int(11) NOT NULL,
+  `a` longtext DEFAULT NULL,
+  `b` longtext DEFAULT NULL,
+  `detail_urinary` longtext DEFAULT NULL,
+  `c` longtext DEFAULT NULL,
+  `detail_room` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pt_image`
 --
 
@@ -2364,6 +2801,18 @@ CREATE TABLE `pt_image` (
   `pt_id` int(11) NOT NULL,
   `image` varchar(1000) NOT NULL,
   `img_desc` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pt_rel_feedback`
+--
+
+CREATE TABLE `pt_rel_feedback` (
+  `id` int(11) NOT NULL,
+  `a` text DEFAULT NULL,
+  `b` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2642,6 +3091,21 @@ CREATE TABLE `room_consent` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `samtipatra1`
+--
+
+CREATE TABLE `samtipatra1` (
+  `id` int(11) NOT NULL,
+  `a` longtext DEFAULT NULL,
+  `b` longtext DEFAULT NULL,
+  `c` longtext DEFAULT NULL,
+  `d` longtext DEFAULT NULL,
+  `e` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `scan`
 --
 
@@ -2687,6 +3151,17 @@ CREATE TABLE `staff` (
 
 INSERT INTO `staff` (`id`, `name`, `address`, `taluka`, `district`, `age`, `sex`, `dob`, `reg_date`, `mobile`, `email`, `password`) VALUES
 (1, 'staff', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'staff@gmail.com', '123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surgery_safety`
+--
+
+CREATE TABLE `surgery_safety` (
+  `id` int(11) NOT NULL,
+  `a` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2922,9 +3397,21 @@ CREATE TABLE `wrong_side_record` (
 --
 
 --
+-- Indexes for table `acc_maternity`
+--
+ALTER TABLE `acc_maternity`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `acq`
 --
 ALTER TABLE `acq`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `add_invest_imaging`
+--
+ALTER TABLE `add_invest_imaging`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2940,9 +3427,21 @@ ALTER TABLE `ana`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `anes_reco`
+--
+ALTER TABLE `anes_reco`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `anumati_consent`
 --
 ALTER TABLE `anumati_consent`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `an_record`
+--
+ALTER TABLE `an_record`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3012,6 +3511,12 @@ ALTER TABLE `counselling_consent`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dama_dis`
+--
+ALTER TABLE `dama_dis`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `discharge`
 --
 ALTER TABLE `discharge`
@@ -3030,6 +3535,18 @@ ALTER TABLE `discharge_routine_register`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `discharge_sum`
+--
+ALTER TABLE `discharge_sum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dis_sum`
+--
+ALTER TABLE `dis_sum`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
@@ -3039,6 +3556,12 @@ ALTER TABLE `doctors`
 -- Indexes for table `doctor_initail_assesment`
 --
 ALTER TABLE `doctor_initail_assesment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `doctor_inpatient`
+--
+ALTER TABLE `doctor_inpatient`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3096,9 +3619,21 @@ ALTER TABLE `hiv_consent`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `im_reval`
+--
+ALTER TABLE `im_reval`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `incident_register`
 --
 ALTER TABLE `incident_register`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `indoor_case`
+--
+ALTER TABLE `indoor_case`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3120,9 +3655,27 @@ ALTER TABLE `info_sur_consent`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `injection_consent`
+--
+ALTER TABLE `injection_consent`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `investigation_view`
 --
 ALTER TABLE `investigation_view`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invest_sheet`
+--
+ALTER TABLE `invest_sheet`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `in_reg`
+--
+ALTER TABLE `in_reg`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3183,6 +3736,18 @@ ALTER TABLE `nurses_daily_record`
 -- Indexes for table `nurse_intial_assesment`
 --
 ALTER TABLE `nurse_intial_assesment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nursing_assessment`
+--
+ALTER TABLE `nursing_assessment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nutri_assessment`
+--
+ALTER TABLE `nutri_assessment`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3360,6 +3925,12 @@ ALTER TABLE `post_operative_surgical`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `post_opnotes`
+--
+ALTER TABLE `post_opnotes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `prescription`
 --
 ALTER TABLE `prescription`
@@ -3384,9 +3955,21 @@ ALTER TABLE `pre_operative_anesth`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pre_room_urinary`
+--
+ALTER TABLE `pre_room_urinary`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pt_image`
 --
 ALTER TABLE `pt_image`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pt_rel_feedback`
+--
+ALTER TABLE `pt_rel_feedback`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3432,6 +4015,12 @@ ALTER TABLE `repeat_surgery_record`
   ADD PRIMARY KEY (`srno`);
 
 --
+-- Indexes for table `samtipatra1`
+--
+ALTER TABLE `samtipatra1`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `scan`
 --
 ALTER TABLE `scan`
@@ -3441,6 +4030,12 @@ ALTER TABLE `scan`
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `surgery_safety`
+--
+ALTER TABLE `surgery_safety`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3508,15 +4103,39 @@ ALTER TABLE `wrong_side_record`
 --
 
 --
+-- AUTO_INCREMENT for table `acc_maternity`
+--
+ALTER TABLE `acc_maternity`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `add_invest_imaging`
+--
+ALTER TABLE `add_invest_imaging`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `ambulance_register`
 --
 ALTER TABLE `ambulance_register`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `anes_reco`
+--
+ALTER TABLE `anes_reco`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `anumati_consent`
 --
 ALTER TABLE `anumati_consent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `an_record`
+--
+ALTER TABLE `an_record`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -3556,6 +4175,12 @@ ALTER TABLE `counselling_consent`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `dama_dis`
+--
+ALTER TABLE `dama_dis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `discharge_file_register`
 --
 ALTER TABLE `discharge_file_register`
@@ -3568,10 +4193,28 @@ ALTER TABLE `discharge_routine_register`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `discharge_sum`
+--
+ALTER TABLE `discharge_sum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dis_sum`
+--
+ALTER TABLE `dis_sum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `doctor_inpatient`
+--
+ALTER TABLE `doctor_inpatient`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `doctor_round_register`
@@ -3610,9 +4253,21 @@ ALTER TABLE `hiv_consent`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `im_reval`
+--
+ALTER TABLE `im_reval`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `incident_register`
 --
 ALTER TABLE `incident_register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `indoor_case`
+--
+ALTER TABLE `indoor_case`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -3634,9 +4289,27 @@ ALTER TABLE `info_sur_consent`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `injection_consent`
+--
+ALTER TABLE `injection_consent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `investigation_view`
 --
 ALTER TABLE `investigation_view`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invest_sheet`
+--
+ALTER TABLE `invest_sheet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `in_reg`
+--
+ALTER TABLE `in_reg`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -3674,6 +4347,18 @@ ALTER TABLE `minor_pro_consent`
 --
 ALTER TABLE `needle_injury_record`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `nursing_assessment`
+--
+ALTER TABLE `nursing_assessment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `nutri_assessment`
+--
+ALTER TABLE `nutri_assessment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `observe1`
@@ -3790,6 +4475,12 @@ ALTER TABLE `post_operative_surgical`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `post_opnotes`
+--
+ALTER TABLE `post_opnotes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
@@ -3808,9 +4499,21 @@ ALTER TABLE `pre_operative_anesth`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `pre_room_urinary`
+--
+ALTER TABLE `pre_room_urinary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `pt_image`
 --
 ALTER TABLE `pt_image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pt_rel_feedback`
+--
+ALTER TABLE `pt_rel_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -3832,6 +4535,12 @@ ALTER TABLE `repeat_surgery_record`
   MODIFY `srno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `samtipatra1`
+--
+ALTER TABLE `samtipatra1`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `scan`
 --
 ALTER TABLE `scan`
@@ -3842,6 +4551,12 @@ ALTER TABLE `scan`
 --
 ALTER TABLE `staff`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `surgery_safety`
+--
+ALTER TABLE `surgery_safety`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `surgical_site_injection_register`

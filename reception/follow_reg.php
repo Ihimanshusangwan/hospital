@@ -259,13 +259,32 @@ $title = $data->fetch_assoc();
               $conn->query($sql45);
               $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
               $conn->query($sql46);
+              function generateRandomID($fullName) {
+                $nameParts = explode(" ", $fullName);
+                
+                $firstName = $nameParts[1];
+                $lastName = $nameParts[2];
+                
+                $firstInitial = strtoupper(substr($firstName, 0, 1));
+                $lastInitial = strtoupper(substr($lastName, 0, 1));
+                
+                $randomNumbers = '';
+                for ($i = 0; $i < 6; $i++) {
+                    $randomNumbers .= rand(0, 9);
+                }
+                
+                $randomID = $firstInitial . $lastInitial . $randomNumbers;
+                return $randomID;
+            }
+              $uhid =generateRandomID($consultant);
 
-              $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
-              //auto generate uhid
-              $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
-              $conn->query($sql);
-              $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
-              $conn->query($sql);
+              
+            $sql = "select * from p_insure where uhid = '$uhid' ";
+            while($conn->query($sql)->num_rows>1){
+              
+              $uhid =generateRandomID($consultant);
+            }
+            
 
               $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
 

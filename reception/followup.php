@@ -54,9 +54,10 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
         $is_eye = 0;
         $is_ortho = 0;
       }
+      $follow_reg=1;
     
-    $sql = "INSERT INTO patient_records (name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints)
-    VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant','$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints')";
+    $sql = "INSERT INTO patient_records (name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,follow_reg)
+    VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant','$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints','$follow_reg')";
 
     if ($conn->query($sql) === TRUE) {
       $inserted_patient_id = $conn->insert_id;
@@ -272,6 +273,9 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
         $conn->query($sql62);
 
 
+        $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+        $conn->query($sql29);
+        a
         $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
 
@@ -296,6 +300,12 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 if (isset($_POST['reject'])) {
     $id=$_POST['id'];
  $update="UPDATE `patient_records` SET is_followup= 0  WHERE `id` = '$id'";
+   $conn->query($update);
+}
+if (isset($_POST['hold'])) {
+    $id=$_POST['id'];
+    $date=$_POST['date'];
+ $update="UPDATE `patient_records` SET follow_date='$date'  WHERE `id` = '$id'";
    $conn->query($update);
 }
 ?>
@@ -377,7 +387,7 @@ $data = $conn->query($sql);
                             echo '<td>' . $res['consultant'] . '</td>';
                             echo ' <form method="POST"><td> <input type="hidden" name="id" value="' . $res['id'] . '">
                             <input type="hidden" name="name" value="' . $res['name'] . '">
-                            <input type="date"  name="date" value="' . $res['follow_date'] . '" readonly> </td>';
+                            <input type="date"  name="date" value="' . $res['follow_date'] . '" > </td>';
                             echo '<td> <button type="submit" name="approve" class="btn btn-primary"' ; 
                             echo $res['follow_approve']==1?'disabled':'';
                             echo'>Approve</button></td>';

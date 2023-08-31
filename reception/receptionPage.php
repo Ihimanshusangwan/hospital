@@ -9,6 +9,16 @@ if (!isset($_SESSION['receptionist_id'])) {
     header("location:login.php");
 }
 require("../admin/connect.php");
+
+if(isset($_POST['skip'])){
+    $inp_id=$_POST['inp_id'];
+  $sql="UPDATE `patient_records` SET `skip`='1' where `id`='$inp_id'";
+  $data=$conn->query($sql);
+  if(!$data){
+    echo '<div class="alert alert-danger " role="alert"> Something went wrong!
+  </div>';
+  }
+}
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
@@ -100,55 +110,23 @@ $title = $data->fetch_assoc();
             margin-top: 20px;
         }
 
-         .table tbody tr.table-light{
-            background-color:green !important;
+        .table tbody tr.table-light {
+            background-color: green !important;
+        }
+
+        .name-hover:hover {
+            cursor: pointer;
         }
     </style>
-    
- <script>
- function changeColor(button, type) {
-    var row = button.closest('tr');
-    var rowId = button.dataset.rowId || 'N/A';
 
-    row.classList.remove('table-success', 'table-danger', 'table-warning');
-    
-    if (type === 'waiting') {
-        row.classList.add('table-warning');
-        localStorage.setItem('selectedColor_' + rowId, 'table-warning');
-    } else if (type === 'out') {
-        row.classList.add('table-danger');
-        localStorage.setItem('selectedColor_' + rowId, 'table-danger');
-    } else if (type === 'in') {
-        row.classList.add('table-success');
-        localStorage.setItem('selectedColor_' + rowId, 'table-success');
-    } 
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var buttons = document.querySelectorAll('.change-color-button');
-    for (var i = 0; i < buttons.length; i++) {
-        var button = buttons[i];
-        var rowId = button.dataset.rowId || 'N/A';
-        var selectedColor = localStorage.getItem('selectedColor_' + rowId);
-
-        var row = button.closest('tr');
-        row.classList.remove('table-warning', 'table-success', 'table-danger');
-        
-        if (selectedColor) {
-            row.classList.add(selectedColor);
-        } else {
-            row.classList.add('table-warning');
-        }
-    }
-});
-
-function changeColorAndReload(button, type) {
-    changeColor(button, type);
-    location.reload();
-}
+    <script>
 
 
 
-</script>
+
+
+
+    </script>
 
 </head>
 
@@ -197,7 +175,7 @@ function changeColorAndReload(button, type) {
                         <div class="col-2">
 msg;
                     if ($row['is_read'] == 0) {
-                        $newMsg =1;
+                        $newMsg = 1;
                         echo <<<msg
     <button class="btn btn-outline-success btn-sm" msg-id="{$row['id']}" onclick="markAsRead(this)"><i class="fas fa-check-double"></i></button>
 msg;
@@ -215,8 +193,8 @@ msg;
             }
 
             ?>
-            <script> const newMsg = <?php echo $newMsg;?> ;</script>
-            
+            <script> const newMsg = <?php echo $newMsg; ?>;</script>
+
 
         </div>
     </div>
@@ -231,12 +209,13 @@ msg;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
-                <span class="btn btn-warning mb-2" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
+                    <span class="btn btn-warning mb-2" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
 
-                <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
+                    <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
                      <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View FollowUp</a>
+                     <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View skip</a>
                     <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">New
                         Registration</a>
                     <a class="navbar-brand">
@@ -271,7 +250,8 @@ msg;
                             <th>ADMIT STATUS</th>
                             <th>TYPE</th>
                             <th>REFER STATUS</th>
-                            <th>PATIENT STATUS</th>
+                            <th>SKIP</th>
+                            <th>DELETE</th>
                             <th>OPD Bill</th>
                             <th>IPD Bill</th>
                             <th>Details & Other Forms</th>
@@ -330,24 +310,28 @@ msg;
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records  where is_registered=1  OR  is_visited = 1  ORDER BY id DESC ";
+                        $sql = "SELECT * FROM patient_records  where(is_registered = 1 OR is_visited = 1) AND skip = 0  ORDER BY id DESC ";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';
-                            if ($res['is_registered'] == 1) {
+                            if ($res['follow_reg'] == 1) {
+                                $type = 'Follow Up';
+                            } else if ($res['is_registered'] == 1) {
                                 $type = 'Registration';
                             } else {
                                 $type = 'Appointment';
                             }
-                            echo '<tr class="table-warning" data-row-id="' . $res['id'] . '">';
+                            echo '<tr  data-row-id="' . $res['id'] . '" >';
                             echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['id'] . '</td>';
 
                             echo '<td>' . $res['reg_date'] . '</td>';
-                            echo '<td>' . $res['name'] . '</td>';
+                            echo '<td onclick="colorChange(this)" class="name-hover">' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';
                             echo '<td>' . $res['mobile'] . '</td>';
@@ -364,19 +348,15 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                                echo '<div class="row pt-3 pb-3 ">';
-                                echo '<div class="col-1 ">';
-                                echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
-                                echo '</div>';
-                                echo '<div class="col-1 mx-4">'; 
-                                echo '<button class="btn btn-outline-danger text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'out\')"> Out</button>'; 
-                                echo '</div>';
-                                echo '<div class="col-12 mx-2 mt-1">';
-                                echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</td>';
+                              
+                                echo '<form method="POST">
+                                <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
+                                <div class="col-4 mx-2 mt-1">';
+                                echo '<button class="btn btn-outline-warning  text-black change-color-button" name="skip"> Skip</button>';
+                                echo '</div></form>';
                                 
+                                echo '</td>';
+                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
@@ -425,18 +405,17 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                                echo '<div class="row pt-3 pb-3">';
-                                echo '<div class="col-1 ">';
-                                echo '<button class="btn btn-outline-success text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'in\')"> In</button>';
-                                echo '</div>';
-                                echo '<div class="col-1 mx-4">'; 
-                                echo '<button class="btn btn-outline-danger text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'out\')"> Out</button>'; 
-                                echo '</div>';
-                                echo '<div class="col-12 mx-2 mt-1">';
-                                echo '<button class="btn btn-outline-warning  text-black change-color-button" data-row-id="' . $res['id'] . '" onclick="changeColorAndReload(this, \'waiting\')"> Waiting</button>';
-                                echo '</div>';
+                                echo '<div class="row  ">';
+                               
+                                echo '<form method="POST">
+                                <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
+                                <div class="col-4  mt-1">';
+                                echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
+                                echo '</div></form>';
+                               
                                 echo '</div>';
                                 echo '</td>';
+                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
                                 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
@@ -470,17 +449,80 @@ msg;
             </div>
         </div>
     </div>
+    <!-- script to delete patient -->
     <script>
+        $(document).ready(function() {
+            $(".delete_record").on("click", function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "delete_patient.php",
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        location.reload(); // Refresh the page
+                    }
+                });
+            });
+        });
+        </script>
+    <script>
+        const cookieName = "currentPatient";
+        function getCookieValue(cookieName) {
+            const cookies = document.cookie.split("; ");
+            for (const cookie of cookies) {
+                const [name, value] = cookie.split("=");
+                if (name === cookieName) {
+                    return value;
+                }
+            }
+            return null;
+        }
+
+
+
+        function colorChange(tr) {
+            var rows = document.querySelectorAll("tr");
+            const pIdForColor = tr.parentElement.getAttribute("data-row-id");
+
+
+            const expirationDate = new Date();
+            expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+
+            const expires = "expires=" + expirationDate.toUTCString();
+            document.cookie = cookieName + "=" + pIdForColor + ";" + expires + ";path=/";
+            rows.forEach(function (row) {
+                row.classList.remove("table-success");
+                row.classList.remove("table-danger");
+                row.classList.remove("table-warning");
+            });
+
+            var current = tr.parentElement;
+            var previous = current.nextElementSibling;
+            var next = current.previousElementSibling;
+
+            current.classList.add("table-success");
+            if (next) {
+                next.classList.add("table-warning");
+            }
+            if (previous) {
+                previous.classList.add("table-danger");
+            }
+
+        }
         const fullscreenAlert = document.getElementById('fullscreenAlert');
         const closeAlertButton = document.getElementById('closeAlert');
-        if(newMsg == 1){            
+        if (newMsg == 1) {
             fullscreenAlert.style.display = 'flex';
         }
         closeAlertButton.addEventListener('click', () => {
             fullscreenAlert.style.display = 'none';
         });
-        function showMsgOnBtn(){
-            
+        function showMsgOnBtn() {
+
             fullscreenAlert.style.display = 'flex';
         }
 
@@ -622,7 +664,7 @@ msg;
                         table.columns(7).search(selectedValue).draw(); // Search only on the 7th column (Admit Status)
                     });
                     $('#consultant-filter').on('change', function () {
-                        
+
                         var selectedValue = $(this).val();
 
                         table.columns(6).search(selectedValue).draw();
@@ -669,7 +711,37 @@ msg;
 
         document.addEventListener('mousemove', resetTimerOnClick);
 
-        document.addEventListener('DOMContentLoaded', startIdleTimer);
+        document.addEventListener('DOMContentLoaded', () => {
+            startIdleTimer();
+            const pIdForColor = getCookieValue("currentPatient");
+
+            if (pIdForColor !== null) {
+                const element = document.querySelector(`[data-row-id="${pIdForColor}"]`);
+                var rows = document.querySelectorAll("tr");
+                
+                rows.forEach(function (row) {
+                    row.classList.remove("table-success");
+                    row.classList.remove("table-danger");
+                    row.classList.remove("table-warning");
+                });
+
+                var current = element;
+                var previous = current.nextElementSibling;
+                var next = current.previousElementSibling;
+
+                current.classList.add("table-success");
+                if (next) {
+                    next.classList.add("table-warning");
+                }
+                if (previous) {
+                    previous.classList.add("table-danger");
+                }
+
+            } else {
+                console.log("'currentPatient' cookie not found.");
+            }
+
+        });
 
     </script>
 </body>

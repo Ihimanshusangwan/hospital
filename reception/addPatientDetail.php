@@ -299,9 +299,37 @@ $title = $data->fetch_assoc();
               $conn->query($sql62);
 
               
-              $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
+              $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql29);
+              
 
+              function generateRandomID($fullName) {
+                $nameParts = explode(" ", $fullName);
+                
+                $firstName = $nameParts[1];
+                $lastName = $nameParts[2];
+                
+                $firstInitial = strtoupper(substr($firstName, 0, 1));
+                $lastInitial = strtoupper(substr($lastName, 0, 1));
+                
+                $randomNumbers = '';
+                for ($i = 0; $i < 6; $i++) {
+                    $randomNumbers .= rand(0, 9);
+                }
+                
+                $randomID = $firstInitial . $lastInitial . $randomNumbers;
+                return $randomID;
+            }
+              $uhid =generateRandomID($consultant);
+
+              
+            $sql = "select * from p_insure where uhid = '$uhid' ";
+            while($conn->query($sql)->num_rows>1){
+              
+              $uhid =generateRandomID($consultant);
+            }
+            
               //auto generate uhid
               $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
               $conn->query($sql);

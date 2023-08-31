@@ -43,11 +43,38 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
             $date = $_POST['date'];
             $update="UPDATE `patient_records` SET reg_date = '$date', is_approved= 1  WHERE `id` = '$id'";
             $conn->query($update);
-            $day = date('d');
-                $month = date('m');
-                $year = date('Y');
+            
+            $con = "select consultant from patient_records where id = $id;";
+            $con_res = $conn->query($con)->fetch_assoc();
+            $consultant = $con_res['consultant'];
+           
                 
-                $uhid = $id.'/'.$day.'/'.$month.'/'.$year;
+                function generateRandomID($fullName) {
+                  $nameParts = explode(" ", $fullName);
+                  
+                  $firstName = $nameParts[1];
+                  $lastName = $nameParts[2];
+                  
+                  $firstInitial = strtoupper(substr($firstName, 0, 1));
+                  $lastInitial = strtoupper(substr($lastName, 0, 1));
+                  
+                  $randomNumbers = '';
+                  for ($i = 0; $i < 6; $i++) {
+                      $randomNumbers .= rand(0, 9);
+                  }
+                  
+                  $randomID = $firstInitial . $lastInitial . $randomNumbers;
+                  return $randomID;
+              }
+                $uhid =generateRandomID($consultant);
+  
+                
+              $sql = "select * from p_insure where uhid = '$uhid' ";
+              while($conn->query($sql)->num_rows>1){
+                
+                $uhid =generateRandomID($consultant);
+              }
+              
               
                 
                 //auto generate uhid

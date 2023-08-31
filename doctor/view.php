@@ -14,10 +14,22 @@ $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
 if(isset($_POST['add_follow'])){
-    $date=$_POST['follow_date'];
-    $sql="UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' where `id`='$id';";
+
+ if(isset($_POST['follow_up']) && $_POST['follow_up'] !== ''){
+    $date=$_POST['follow_up'];
+    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' WHERE `id`='$id';";
     $res = $conn->query($sql);
 
+ }
+ else{
+    $selectedDuration = intval($_POST['follow_duration']); // Get the selected duration in days
+    
+    $currentDate = date('Y-m-d'); // Get the current date
+    $newDate = date('Y-m-d', strtotime($currentDate . ' + ' . $selectedDuration . ' days')); 
+    
+    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$newDate' WHERE `id`='$id';";
+    $res = $conn->query($sql);
+ }
 }
 
 if (isset($_POST['template_btn'])) {
@@ -62,49 +74,6 @@ if (isset($_POST['template_btn'])) {
 
 ?>
 <script> const Id = <?php echo $id; ?>;</script>
-<?php
-    if (isset($_REQUEST['submit_changes'])) {
-        $i = 1;
-        while (isset($_POST["description1_$i"])) {
-            echo $_POST["description1_$i"];
-            if ($_POST["description1_$i"] != "none"  &&  $_POST["qty_$i"] != 0 ) {
-                $description = $_POST["description1_$i"];
-                $amount = $_POST["amount1_$i"];
-                $qty = $_POST["qty1_$i"];
-                $total = $_POST["total1_$i"];
-                $id = $_GET['id'];
-                $sql10 = "SELECT * FROM patient_records WHERE id = '$id';";
-                $data10 = $conn->query($sql10);
-                $res10 = $data10->fetch_assoc();
-                $username = $res10['mobile'];
-                $password = $res10['mobile'];
-                $is_opd = 1;
-                $update2 = "UPDATE `p_log` SET `is_opd` = '$is_opd',`username`='$username',`password`='$password' WHERE `id` = '$id'";
-                $conn->query($update2);
-
-                $sql11 = "INSERT INTO opd_bill (patient_id,description,amount,qty,total) VALUES ($id,'$description','$amount','$qty','$total');";
-                if ($conn->query($sql11) === TRUE) {
-                    $i++;
-                } else {
-                    echo "<div class='alert alert-danger'>Error Updating Bill</div>";
-                }
-
-            } else {
-                $i++;
-            }
-
-        }
-        echo "<div class='alert alert-success'>Bill Updated Successfully</div>";
-    }
-    if (isset($_REQUEST['delete'])) {
-        $sql30 = "DELETE FROM opd_bill WHERE id = {$_POST['bill_id']} ;";
-        if ($conn->query($sql30) === TRUE) {
-            echo "<div class='alert alert-success'>Bill Deleted Successfully</div>";
-        } else {
-            echo "<div class='alert alert-danger'>Error Deleting Bill</div>";
-        }
-    }
-    ?>
 <!DOCTYPE html>
 
 <head>
@@ -258,13 +227,27 @@ if (isset($_POST['template_btn'])) {
                                    if ($res['is_followup'] == 0) {
                                        echo '<div>
                                        <button  class="btn btn-success" name="add_follow">Add follow up</button>
-                                       <input type="date" class="mx-3" name="follow_date" min= '. date('Y-m-d', strtotime('+1 day')).'>
+                                       <input type="date" name="follow_up">
+                                       <select name="follow_duration" class="mx-3">
+                                       <option value="1">1 day</option>
+                                       <option value="2">2 days</option>
+                                       <option value="3">3 days</option>
+                                       <option value="5">5 days</option>
+                                       <option value="7">1 week</option>
+                                       <option value="10">10 days</option>
+                                       <option value="15">15 days</option>
+                                       <option value="20">20 days</option>
+                                       <option value="30">1 month</option>
+                                       <option value="45">1.5 months</option>
+                                       <option value="60">2 months</option>
+                                       <option value="90">3 months</option>
+                                   </select>
                                        </div>';
    
                                    } else {
                                     echo '<div>
                                     <button  class="btn btn-success" disabled>
-                                  followup Date</button><input type="date" class="mx-3"  value="'.$res['follow_date'].'" readonly>
+                                  followup Date</button><input type="text" class="mx-3"  value="'.$res['follow_date'].'" readonly>
                                     </div>';
                                       
                                    }
@@ -1119,10 +1102,6 @@ data;
                     </form>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     <!-- medicine save -->
@@ -1132,14 +1111,13 @@ data;
         while (isset($_POST["med_name_$i"])) {
 
             if ($_POST["med_name_$i"] !== "") {
-                if ($_REQUEST['type_' . $i] != 'E/D') {
                     $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
                     $quantity = $_POST["quantity_$i"];
                     $morning = $_POST["morning_$i"];
                     $afternoon = $_POST["afternoon_$i"];
                     $night = $_POST["night_$i"];
                     $type = $_POST["type_$i"];
-                    $eat = $_POST["eat_$i"];
+                    $eat = (isset($_POST["eat_$i"]))?$_POST["eat_$i"]:"";
                     $days = $_POST["days_$i"];
                     $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,eat,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$eat','$type');";
                     if ($conn->query($sql) === TRUE) {
@@ -1147,22 +1125,7 @@ data;
                     } else {
                         echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
                     }
-                } else {
-                    $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
-                    $quantity = $_POST["quantity_$i"];
-                    $morning = $_POST["morning_$i"];
-                    $afternoon = $_POST["afternoon_$i"];
-                    $night = $_POST["night_$i"];
-                    $type = $_POST["type_$i"];
-                    $days = $_POST["days_$i"];
-                    $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$type');";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
-                    }
-
-                }
+                
             } else {
                 $i++;
             }
