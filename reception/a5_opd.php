@@ -26,9 +26,14 @@ $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
 
-$sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id' ORDER BY id DESC";
+$sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id'";
 $query_2=mysqli_query($conn,$sql_2);
 $res_2=mysqli_fetch_assoc($query_2);
+
+
+$sql2="SELECT * FROM opd_admin";
+$row=mysqli_query($conn,$sql2);
+$row2=mysqli_fetch_assoc($row);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -185,13 +190,18 @@ $res_2=mysqli_fetch_assoc($query_2);
         </div>
         <?php include_once("../header/images.php") ?>
 
-        <h3 class="text-center text-dark my-2 ">OPD Bill</h3>
+        <h5 class="text-center text-dark my-2 ">OPD/RECEIPT Bill</h5>
         <div>
-    <div style="border-bottom: 3px solid black; margin-bottom : 10px;"></div>
+    <div class="container text-center">
     <div class="row">
-        <div class="col-6"><strong>UHID No: </strong><?php echo $res2['uhid'];?>
+        <div class="col-4"><strong>UHID No: </strong><?php echo $res2['uhid'];?>
     </div>
-        <div class="col-6"><strong>Name:</strong>
+    <div class="col-4">
+    <strong>Bill No:
+            <?php echo date("Y"). "/" .$id ?>
+            </strong></div>
+           
+        <div class="col-4"><strong>Name:</strong>
             <?php echo strtoupper($res['name']); ?>
         </div>
         <div class="col-3"><strong>Age:</strong>
@@ -200,53 +210,30 @@ $res_2=mysqli_fetch_assoc($query_2);
         <div class="col-3"><strong>Sex:</strong>
             <?php echo $res['sex']; ?>
         </div><br>
-        <div class="col-6"><strong>Consultant:</strong>
+        <div class="col-3"><strong>Consultant:</strong>
             <?php echo $res['consultant']; ?>
         </div>
+        <div class="col-3"><strong>Date :</strong>
+    <?php echo $res['reg_date'];?></div>
+    </div>
    
-        <div class="col mx-3" style = "display: flex; justify-content: flex-end;" >
-            <script src="../barcode.js"></script>
-            <canvas id="barcode"></canvas>
-            <script>
-                const canvas = document.getElementById('barcode');
-                const opts = {
-                    bcid: 'code39',  // Barcode type set to Code 39
-                    text: '<?php echo $id; ?>',  // Numeric value with variable length
-                    scale: 2,  // Scale factor for the barcode size
-                    height: 10,  // Height of the barcode in mm
-                    includetext: false,  // Include the barcode text
-                };
-
-                bwipjs.toCanvas(canvas, opts, function (err) {
-                    if (err) {
-                        console.error('Error generating barcode:', err);
-                    } else {
-                        console.log('Barcode generated successfully');
-                    }
-                });
+        
             </script>
         </div><br>
 
     </div>
-    <div style="border-bottom: 3px solid black; margin-bottom : 10px;  margin-top: 10px;"></div>
-        <strong>Bill No:
-            <?php echo date("Y"). "/" .$id ?>
-            </strong>
-           
+      
     <form method="POST" action="opd_bill.php?id=<?php echo $id; ?>">
-        <div class="container-fluid" style="margin-top: 20px;">
+        <div class="container-fluid" >
             <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">OPD BILL</h6>
-                </div>
+            <div class="">
+               
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
 
                             <tr>
-                                <th>Sr.No</th>
                                 <th>Description</th>
                                 <th>Amount(Rs.)</th>
                                 <th>Qty</th>
@@ -262,7 +249,6 @@ $res_2=mysqli_fetch_assoc($query_2);
                                 $sr = 1;
                                 while ($res = $data->fetch_assoc()) {
                                     echo '<tr>';
-                                    echo '<td>' . $sr . '</td>';
                                     echo '<td>' . $res['description'] . '</td>';
                                     echo '<td>' . $res['amount'] . '</td>';
                                     echo '<td>' . $res['qty'] . '</td>';
@@ -283,6 +269,8 @@ $res_2=mysqli_fetch_assoc($query_2);
         </div>
 
     </form>
+    <div class="row">
+    <div class="col-6">
     <label for="" class="form-label">Payment Mode : <strong>
     <?php echo $res_2['pay_method'];?>
     </strong></label><br>
@@ -291,24 +279,105 @@ $res_2=mysqli_fetch_assoc($query_2);
     if($pay_method!="CASH"){
         echo '<label for="" class="form-label">Payment Id : <strong>'.$res_2['payment_id'].'
         </strong></label>';
-    }?>
-    <h5 style="text-align: right; margin-right: 2em; font-size:14px;">SubTotal : <span id="subtotal">
-            <?php echo $subtotal; ?>
-        </span></h5>
-    <h5 style="text-align: right; margin-right: 2em; font-size:14px;">
-       Discount :
-<?php
+    }?></div>
+    <div class="col-6">
+   <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
+            <?php
         $sql = "select opd_discount from p_log where id = '$id';";
         $res = $conn->query($sql)->fetch_assoc();
+        if($res['opd_discount']!=0){
+            echo ' <h6 style="text-align : right;margin-right:  2rem;">SubTotal : <span id="subtotal">';
+            echo $subtotal; 
+            echo ' </span></h6>';
+            echo ' <h6 style="text-align : right;margin-right:  2rem;"> Discount : ';
+            echo $res['opd_discount'];echo '</h6>';
+        }
         ?>
-        <?php echo $res['opd_discount']; ?>
+            <h6 style="text-align : right;margin-right: 2rem;">
+                <?php echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?> : 
+                <span id="grandtotal">
+                    <?php if($res['opd_discount']!=0){
+                        echo $subtotal-$res['opd_discount'];
+                    }
+                    else{
+                         echo $subtotal;
+                    }
+                      ?>
+                </span>
+            </h6> </div></div>
+            <?php
+function numberToWords($number) {
+    $words = [
+        1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five",
+        6 => "six", 7 => "seven", 8 => "eight", 9 => "nine", 10 => "ten",
+        11 => "eleven", 12 => "twelve", 13 => "thirteen", 14 => "fourteen", 15 => "fifteen",
+        16 => "sixteen", 17 => "seventeen", 18 => "eighteen", 19 => "nineteen",
+        20 => "twenty", 30 => "thirty", 40 => "forty", 50 => "fifty",
+        60 => "sixty", 70 => "seventy", 80 => "eighty", 90 => "ninety"
+    ];
 
-    </h5>
-    <h5 style="text-align: right; margin-right: 2em; font-size:14px;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
-            <?php echo $subtotal; ?>
-        </span></h5> <br><br>
-    <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
-    <h6>Thank You !</h6>
+    if ($number < 20) {
+        return $words[$number];
+    } elseif ($number < 100) {
+        return $words[$number - ($number % 10)] . '-' . $words[$number % 10];
+    } elseif ($number < 1000) {
+        return $words[floor($number / 100)] . " hundred " . numberToWords($number % 100);
+    } elseif ($number < 100000) {
+        return numberToWords(floor($number / 1000)) . " thousand " . numberToWords($number % 1000);
+    } elseif ($number < 10000000) {
+        return numberToWords(floor($number / 100000)) . " lakh " . numberToWords($number % 100000);
+    } elseif ($number < 1000000000) {
+        return numberToWords(floor($number / 10000000)) . " crore " . numberToWords($number % 10000000);
+    } else {
+        return "Number out of range";
+    }
+}
+$number = $subtotal-$res['opd_discount'];
+if($number<=0){
+    echo '';
+}
+else{
+    
+    $textualRepresentation = numberToWords($number);
+    echo "<strong>Received With Thanks </strong>";
+    echo  '<strong>'.ucwords($textualRepresentation).' Only</strong>' ;
+}
+?>
+<div class="row">
+    <div class="col-6">
+
+    <div class=" d-flex justify-content-between mt-4">
+                <div>
+                    <script src="../barcode.js"></script>
+                    <canvas id="barcode"></canvas>
+                    <script>
+                    const canvas = document.getElementById('barcode');
+                    const opts = {
+                        bcid: 'code39', // Barcode type set to Code 39
+                        text: '<?php echo $id; ?>', // Numeric value with variable length
+                        scale: 2, // Scale factor for the barcode size
+                        height: 5, // Height of the barcode in mm
+                        includetext: false, // Include the barcode text
+                    };
+
+                    bwipjs.toCanvas(canvas, opts, function(err) {
+                        if (err) {
+                            console.error('Error generating barcode:', err);
+                        } else {
+                            console.log('Barcode generated successfully');
+                        }
+                    });
+                    </script>
+                </div></div>
+    </div>
+    <div class="col-6">
+    <h6 style="text-align: right; "><?php echo $row2['opd_sign'];?></h6>
+    
+    </div>
+</div>
+
+   <h6 class="text-center"><?php echo $row2['bottom'];?></h6>
+
     </div>
 </body>
 <script>

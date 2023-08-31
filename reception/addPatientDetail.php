@@ -265,7 +265,40 @@ $title = $data->fetch_assoc();
 
               $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql45);
+              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $conn->query($sql46);
+              $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql47);
+              $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql48);
+              $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql49);
+              $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql50);
+              $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql51);
+              $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql52);
+              $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql53);
+              $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql54);
+              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql55);
+              $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql56);
+              $sql57= "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql57);
+              $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql58);
+              $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql60);
+              $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql61);
+              $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql62);
 
+              
               $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
 
 

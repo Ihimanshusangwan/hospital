@@ -26,6 +26,8 @@ $bloob = explode("&", $blood['bloob']);
 
 $newValue = json_decode($blood['new'],true);
 
+$s_de = json_decode($blood['a'],true);
+
 ?>
 
 <!DOCTYPE html>
@@ -439,6 +441,56 @@ $newValue = json_decode($blood['new'],true);
     </h6>
 </div>
 
+
+<h4 class="text-center mt-3">Tranfusion Reaction Form </h4>
+        <div class="row">
+        <div class="col-6"><strong>Blood Group : </strong><?php echo $s_de[1];?>
+        </div>
+        <div class="col-6"><strong>BLood Bank No. :</strong> <?php echo $s_de[2];?>
+        </div>
+        <div class="col-6"><strong>Blood Bag No.:</strong> <?php echo $s_de[3];?>
+        </div>
+        <div class="col-6"><strong>Date :</strong> <?php echo $s_de[4];?>
+        </div>
+        
+        <div class="col-12"><strong>Type of Blood /Component  :</strong> <?php echo $s_de[5];?>
+        </div>
+        <div class="div-6"><strong>Time Issue :</strong> <?php echo $s_de[6];?>
+        </div>
+        <div class="col-6"><strong>Time of Starting Transfusion :</strong> <?php echo $s_de[7];?>
+        </div>
+        <div class="col-6"><strong>Time of completion  :</strong> <?php echo $s_de[8];?>
+        </div>
+        <div class="col-6"><strong>Nature of transfusion reaction :</strong> <?php echo $s_de[9];?>
+        </div>
+        <div class="col-6"><strong>Sign and Symptoms to BTR  :</strong> <?php echo $s_de[10];?>
+        </div>
+        <div class="col-6"><strong>Fever :</strong> <?php echo $s_de[11];?>
+        </div>
+        <div class="col-6"><strong>Pain :</strong> <?php echo $s_de[12];?>
+        </div>
+        <div class="col-12"><strong>Allergic Symptoms :</strong> <?php echo $s_de[13];?>
+        </div>
+        <div class="col-12" style="text-decoration:underline;"><strong>Vitals</strong></div>
+        <div class="col-3"><strong>Temp :</strong> <?php echo $s_de[14];?>
+        </div>
+        <div class="col-3"><strong>Pulse :</strong> <?php echo $s_de[15];?>
+        </div>
+        <div class="col-3"><strong>BP :</strong> <?php echo $s_de[16];?>
+        </div>
+        <div class="col-3"><strong>Respiration :</strong> <?php echo $s_de[17];?>
+        </div>
+        <div class="col-12"><strong>Samples : </strong><?php echo $s_de[18];?>
+        </div>
+        <div class="col-4"><strong>Collection Personal Name :</strong> <?php echo $s_de[19];?>   
+        </div>
+        <div class="col-3"><strong>Date :</strong> <?php echo $s_de[20];?>
+        </div>
+        <div class="col-2"><strong>Time : </strong><?php echo $s_de[21];?>
+        </div>
+        <div class="col-3"><strong>Signature :</strong> <?php echo $s_de[22];?>
+        </div>
+        </div>
    
     <h6>Thank You !</h6>
 </body>

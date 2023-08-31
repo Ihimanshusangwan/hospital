@@ -19,7 +19,7 @@ $sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Investigations</title>
+    <title>Add Investigations Lab</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     
@@ -34,7 +34,7 @@ $sql1=mysqli_query($conn,"SELECT * FROM investigation_view");
    <form action="" method="POST">
    <div class="row">
     <div class="col-3">
-   <label for="" class="form-label " style="margin-top:20px;" ><strong>Add Investigations :</strong> </label>
+   <label for="" class="form-label " style="margin-top:20px;" ><strong>Add Investigations Lab:</strong> </label>
    </div>
     <div class="col-8">
     <input type="text" class="form-control "style="margin:20px;" name="description" id="">

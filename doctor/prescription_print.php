@@ -98,7 +98,7 @@ if (!isset($res12['inp'])) {
             echo '<div style="margin-top: 150px;"></div>';
         }
         ?>
-        <h3 class="text-center">Prescription</h3>
+        <div class="container text-center mt-4">
         <div class="row">
             <div class="col-4"><strong>Name:</strong>
                 <?php echo strtoupper($res['name']); ?>
@@ -109,12 +109,12 @@ if (!isset($res12['inp'])) {
             <div class="col-4"><strong>Age:</strong>
                 <?php echo strtoupper($res['age']); ?>
             </div>
+            <div class="col-4"><strong>Date:</strong>
+        <?php echo $res['reg_date'];?></div>
             <div class="col-4  mt-2"><strong>Sex:</strong>
                 <?php echo $res['sex']; ?>
             </div><br>
-            <div class="col-4  mt-2"><strong>Consultant:</strong>
-                <?php echo $res['consultant']; ?>
-            </div>
+           
             <div class="col-4 mt-2" style="width:20px;">
                 <script src="../barcode.js"></script>
                 <canvas id="barcode"></canvas>
@@ -135,6 +135,7 @@ if (!isset($res12['inp'])) {
                     }
                 });
                 </script>
+            </div>
             </div>
         </div>
         <div style="margin-bottom : 5px;  margin-top: 10px;"></div>
@@ -189,8 +190,14 @@ if (!isset($res12['inp'])) {
 
         <div class="col-12">
             <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
-                <strong>Investigations:</strong>
+                <strong>Investigations Lab:</strong>
                 <?php echo $res['investigation']; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-12">
+            <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
+                <strong>Investigations Imaging:</strong>
+                <?php echo $res['investigation_imaging']; ?>
             <?php endif; ?>
         </div>
         <div class="col-12">
@@ -210,18 +217,17 @@ if (!isset($res12['inp'])) {
         <?php if (in_array('med_checkbox', $checkboxes)): ?>
             <div class="container-fluid" style="margin-top: 10px;">
                 <!-- DataTales Example -->
-                <h6 class="text-primary">Prescriptions</h6>
                         <div>
                             <table class="table border-dark" id="dataTable" width="100%" cellspacing="0">
                                 <tr>
-                                    <th class="col-1">Types</th>
+                                    <th class="col-1">Rx</th>
                                     <th class="col-3">Medicine</th>
                                     <th class="col-1">सकाळ</th>
                                     <th class="col-1">दुपार</th>
                                     <th class="col-1">रात्र</th>
                                     <th class="col-1">कधी घ्यायच्या </th>
                                     <th class="col-1">किती दिवस </th>
-                                    <th class="col-1">Qty</th>
+                                    <!-- <th class="col-1">Qty</th> -->
 
                                 </tr>
                                 <tbody id="tbody">
@@ -231,14 +237,14 @@ if (!isset($res12['inp'])) {
                                     $i = 1;
                                     while ($res = $data->fetch_assoc()) {
                                         echo '<tr>';
-                                        echo '<td>' . $res['type'] . '</td>';
-                                        echo '<td>' . $res['med_name'] . '</td>';
+                                        echo '<td>' . $i . '</td>';
+                                        echo '<td>' .$res['type'] .". ". $res['med_name'] . '</td>';
                                         echo '<td>' . $res['morning'] . '</td>';
                                         echo '<td>' . $res['afternoon'] . '</td>';
                                         echo '<td>' . $res['night'] . '</td>';
                                         echo '<td>' . $res['eat'] . '</td>';
                                         echo '<td>' . $res['days'] . '</td>';
-                                        echo '<td>' . $res['quantity'] . '</td>';
+                                       // echo '<td>' . $res['quantity'] . '</td>';
                                         echo '</tr>';
                                         $i++;
                                     }
@@ -602,8 +608,33 @@ if (!isset($res12['inp'])) {
     date_default_timezone_set('Asia/Kolkata');
     $currentDateTime = date('Y-m-d H:i');
 echo $currentDateTime; ?></h6>
-    <h6 class="text-center mt-4">Use Generic Medicine</h6>
+<?php 
+$sql = "SELECT * FROM patient_records WHERE id = '$id';";
+$data = $conn->query($sql);
+$res = $data->fetch_assoc();
+?>
+ <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
+               <strong> <?php echo $res['consultant']; ?></strong>
+            </div>
+
+            <?php
+$sql10 = "SELECT * FROM `change_label` WHERE 1";
+$data10 = $conn->query($sql10);
+$res10 = $data10->fetch_assoc();
+?>
+<div class="row">
+    <div class="col-2">
+    <img style="height: 8rem; width: 8rem;" src="data:image/jpg;base64,<?php echo base64_encode($res10['pre_barcode']); ?>">
+
     </div>
+    <div class="col-5">
+        
+<h6 style="font-size:12px; margin-top:0.5rem;"><strong>Scan QR Code <br> for Appointment</strong></h6>
+    </div>
+</div>
+
+<h6 class="text-center mt-4"><?php echo isset($res10['pre_bottom']); ?></h6>
+
     <script>
     window.print();
     </script>

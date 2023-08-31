@@ -89,13 +89,19 @@ if (isset($_POST['submit'])) {
     $_POST['bloob45'] . '&' . $_POST['bloob46']
     . '&' . $_POST['bloob47'] . '&' . $_POST['bloob48'] . '&' . $_POST['bloob49'];
 
-  $update = "UPDATE `blood` SET `dr` = '$dr',`nur` = '$nur',`trans`='$trans',`cros`='$cros',`blooa`='$blooa',`bloob`='$bloob',`new` = '$newValue' WHERE `id` = '$id'";
+    $a=array();
+    for($i=0;$i<23;$i++){
+      $element=isset($_POST[$i]) ? $_POST[$i] : '';
+      array_push($a, $element);
+    }
+    $a_en=json_encode($a);
+  $update = "UPDATE `blood` SET `dr` = '$dr',`nur` = '$nur',`trans`='$trans',`cros`='$cros',`blooa`='$blooa',`bloob`='$bloob',`new` = '$newValue' , a='$a_en' WHERE `id` = '$id'";
   $conn->query($update);
   $x = 1;
 
 
 }
-error_reporting(0); 
+error_reporting(0);
 $sql3 = "SELECT * FROM `blood`  WHERE id = '$id';";
 $data3 = $conn->query($sql3);
 $blood = $data3->fetch_assoc();
@@ -104,6 +110,8 @@ $nur = explode("&", $blood['nur']);
 $blooa = explode("&", $blood['blooa']);
 $bloob = explode("&", $blood['bloob']);
 $newValue = json_decode($blood['new'],true);
+$s_de = json_decode($blood['a'],true);
+
 
 ?>
 <!DOCTYPE html>
@@ -1387,6 +1395,75 @@ $newValue = json_decode($blood['new'],true);
           Any reaction should be immediately informed to RMO & Quality dept.
         </h6>
         
+        <h4 class="text-center mt-3">Tranfusion Reaction Form </h4>
+        <div class="row">
+        <div class="col-4">Blood Group
+          <input type="text" name="1" id="" value="<?php echo $s_de[1];?>" class="form-control">
+        </div>
+        <div class="col-4">BLood Bank No.
+        <input type="text" name="2" id="" value="<?php echo $s_de[2];?>" class="form-control">
+        </div>
+        <div class="col-4">Blood Bag No.
+        <input type="text" name="3" id="" value="<?php echo $s_de[3];?>" class="form-control">
+        </div>
+        <div class="col-4">Date
+        <input type="date" name="4" id=""  value="<?php echo $s_de[4];?>"class="form-control">
+        </div>
+        
+        <div class="col-8">Type of Blood /Component
+        <input type="text" name="5" id=""  value="<?php echo $s_de[5];?>"class="form-control">
+        </div>
+        <div class="div-6">Time Issue
+        <input type="text" name="6" id="" value="<?php echo $s_de[6];?>" class="form-control">
+        </div>
+        <div class="col-3">Time of Starting Transfusion
+        <input type="time" name="7" id="" value="<?php echo $s_de[7];?>" class="form-control">
+        </div>
+        <div class="col-3">Time of completion
+        <input type="time" name="8" id="" value="<?php echo $s_de[8];?>" class="form-control">
+        </div>
+        <div class="col-6">Nature of transfusion reaction
+        <input type="text" name="9" id="" value="<?php echo $s_de[9];?>"class="form-control">
+        </div>
+        <div class="col-4">Sign and Symptoms to BTR 
+        <input type="text" name="10" id="" value="<?php echo $s_de[10];?>" class="form-control">
+        </div>
+        <div class="col-4">Fever
+        <input type="text" name="11" id="" value="<?php echo $s_de[11];?>" class="form-control">
+        </div>
+        <div class="col-4">Pain
+        <input type="text" name="12" id="" value="<?php echo $s_de[12];?>" class="form-control">
+        </div>
+        <div class="col-3">Allergic Symptoms
+        <input type="text" name="13 " id="" value="<?php echo $s_de[13];?>" class="form-control">
+        </div>
+        <div class="col-1" style="text-decoration:underline;">Vitals :</div>
+        <div class="col-2">Temp
+        <input type="text" name="14" id="" value="<?php echo $s_de[14];?>" class="form-control"></div>
+        <div class="col-2">Pulse
+        <input type="text" name="15" id="" value="<?php echo $s_de[15];?>" class="form-control"></div>
+        <div class="col-2">BP
+        <input type="text" name="16" id="" value="<?php echo $s_de[16];?>" class="form-control"></div>
+        <div class="col-2">Respiration
+        <input type="text" name="17" id="" value="<?php echo $s_de[17];?>" class="form-control"></div>
+        <div class="col-12">Samples
+        <input type="text" name="18" id="" value="<?php echo $s_de[18];?>" class="form-control"></div>
+        <div class="col-4">Collection Personal Name
+        <input type="text" name="19" id="" value="<?php echo $s_de[19];?>" class="form-control"></div>
+        <div class="col-3">Date
+        <input type="date" name="20" id="" value="<?php echo $s_de[20];?>" class="form-control"></div>
+        <div class="col-2">Time
+        <input type="time" name="21" id="" value="<?php echo $s_de[21];?>" class="form-control"></div>
+        <div class="col-3">Signature
+        <input type="text" name="22" id=""  value="<?php echo $s_de[22];?>"class="form-control">
+        </div>
+        
+
+
+
+
+
+        </div>
       </div>
       <button type="submit" class="btn btn-primary ml-auto" name="submit" value="submit" id="submit"  >Submit</button>
     </form>

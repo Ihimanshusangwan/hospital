@@ -296,7 +296,43 @@ $title = $data->fetch_assoc();
 
               $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql45);
+              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $conn->query($sql46);
+              
+              $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql47);
+              $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql48);
+              $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql49);
+              $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql50);
+              $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql51);
+              $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql52);
+              $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql53);
+              $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql54);
 
+              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql55);
+              $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql56);
+              $sql57= "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql57);
+              $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql58);
+              $sql59= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql59);
+              $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql60);
+              $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql61);
+              $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql62);
+            
 
               $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
 
