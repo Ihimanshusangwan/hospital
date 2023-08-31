@@ -283,6 +283,23 @@ $title = $data->fetch_assoc();
               $conn->query($sql53);
               $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
               $conn->query($sql54);
+              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql55);
+              $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql56);
+              $sql57= "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql57);
+              $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql58);
+              $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql60);
+              $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql61);
+              $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql62);
+
+              
+
               $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
               $conn->query($sql29);
               

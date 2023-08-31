@@ -17,7 +17,7 @@
  $title = $data->fetch_assoc();
  
 $x=0;
- if(isset($_POST['submit'])){
+ if(isset($_POST['submit'])){ 
     $asa=$_POST['asa'];
     $complaint=$_POST['complaint'];
     $history=$_POST['history'];
@@ -283,7 +283,7 @@ $sql3=mysqli_query($conn,$update);
     <div class="container">
         <div class="col p-4 m-4 shadow-lg rounded">
         <a class="btn btn-primary" href="ortho_forms.php?id=<?php echo $id; ?>">Dashboard</a>
-           <a href=".php?id=<?php echo $id; ?>" class=" btn btn-success"
+           <a href="anes_print.php?id=<?php echo $id; ?>" class=" btn btn-success"
             id="dashboard">Print</a>
             
             <div class="row">

@@ -307,12 +307,8 @@ error_reporting(0);
                             <div class="col-6">
                                <strong>Vitals Stable :</strong><?php  echo $dis[4];  ?>
                             </div>
-<<<<<<< HEAD
                             <div class="col-12">
                             <table class="table table-bordered mt-4">
-=======
-                            <table class="table table-bordered mt-2">
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -332,11 +328,7 @@ error_reporting(0);
                 </tr>
             </tbody>
         </table>
-<<<<<<< HEAD
                             </div>
-=======
-
->>>>>>> 31de678f6cc9e916edd15c86d7b64b6b42dafd24
                             
                             
     </div>

@@ -142,6 +142,7 @@ if (!isset($res12['inp'])) {
                     </script>
                 </div>
             </div>
+            </div>
         </div>
         <div style="margin-bottom : 5px;  margin-top: 10px;"></div>
     </div>

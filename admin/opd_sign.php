@@ -10,9 +10,11 @@ if(isset($_POST['save'])){
 $sql2="SELECT * FROM opd_admin";
 $row=mysqli_query($conn,$sql2);
 $row2=mysqli_fetch_assoc($row);
-if($row2==0){
-    $insert="INSERT INTO opd_admin id VALUES '(1)'";
+if(mysqli_num_rows($row)<1){
+    $insert="INSERT INTO opd_admin (id) VALUES (1)";
+    $sql=mysqli_query($conn,$insert);
 }
+error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html lang="en">

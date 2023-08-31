@@ -74,7 +74,6 @@ if (isset($_POST['template_btn'])) {
 
 ?>
 <script> const Id = <?php echo $id; ?>;</script>
-
 <!DOCTYPE html>
 
 <head>

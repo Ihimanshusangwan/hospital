@@ -1,83 +1,27 @@
 <?php
- require("../admin/connect.php");
- $id = $_GET['id'];
- session_start();
+$id = $_GET['id'];
+require("../admin/connect.php");
+session_start();
+$sql = "SELECT * FROM patient_records WHERE id = '$id';";
+$data = $conn->query($sql);
+$res = $data->fetch_assoc();
 
- $sql=mysqli_query($conn,"SELECT * FROM patient_records WHERE id = '$id';");
- $row=mysqli_fetch_assoc($sql);
+$sql1 = "SELECT * FROM patient_info WHERE patient_id = '$id';";
+$data1 = $conn->query($sql1);
+$res1 = $data1->fetch_assoc();
 
- $sql1=mysqli_query($conn,"SELECT * FROM patient_info WHERE patient_id = '$id';");
- $row1=mysqli_fetch_assoc($sql1);
+$sql2 = "SELECT * FROM ortho_p_insure WHERE id = '$id';";
+$data2 = $conn->query($sql2);
+$res2 = $data2->fetch_assoc();
+$sql = "SELECT * FROM titles WHERE id = 1;";
+$data = $conn->query($sql);
+$title = $data->fetch_assoc();
 
- $sql2=mysqli_query($conn,"SELECT * FROM ortho_p_insure WHERE id = '$id';");
- $row2=mysqli_fetch_assoc($sql2);
- 
- $sql = "SELECT * FROM titles WHERE id = 1;";
- $data = $conn->query($sql);
- $title = $data->fetch_assoc();
- 
-$x=0;
- if(isset($_POST['submit'])){
-    $discharge=isset($_POST['discharge'])?$_POST['discharge']:'';
-    $dama=isset($_POST['dama'])?$_POST['dama']:'';
-    $date=isset($_POST['date'])?$_POST['date']:'';
-    $dis=isset($_POST['dis'])?$_POST['dis']:'';
-    $medradio=isset($_POST['medradio'])?$_POST['medradio']:'';
-    $medside=isset($_POST['medside'])?$_POST['medside']:'';
-    $genradio=isset($_POST['genradio'])?$_POST['genradio']:'';
-    $dietradio=isset($_POST['dietradio'])?$_POST['dietradio']:'';
-    $phyradio=isset($_POST['phyradio'])?$_POST['phyradio']:'';
-    $transradio=isset($_POST['transradio'])?$_POST['transradio']:'';
-    $reqradio=isset($_POST['reqradio'])?$_POST['reqradio']:'';
-    $ifradio=isset($_POST['ifradio'])?$_POST['ifradio']:'';
-    $discu=isset($_POST['discu'])?$_POST['discu']:'';
-    $lan=isset($_POST['lan'])?$_POST['lan']:'';
-    $aradio=isset($_POST['aradio'])?$_POST['aradio']:'';
-    $bradio=isset($_POST['bradio'])?$_POST['bradio']:'';
-    $cradio=isset($_POST['cradio'])?$_POST['cradio']:'';
-    $dradio=isset($_POST['dradio'])?$_POST['dradio']:'';
-    $eradio=isset($_POST['eradio'])?$_POST['eradio']:'';
-    $yradio=isset($_POST['yradio'])?$_POST['yradio']:'';
-    $sign=isset($_POST['sign'])?$_POST['sign']:'';
-    $sis=isset($_POST['sis'])?$_POST['sis']:'';
-    $doc1=isset($_POST['doc1'])?$_POST['doc1']:'';
-    $sis2=isset($_POST['sis2'])?$_POST['sis2']:'';
-    $doc2=isset($_POST['doc2'])?$_POST['doc2']:'';
 
-    $update = "UPDATE dama_dis SET 
-            discharge = '$discharge', 
-            dama = '$dama', 
-            date = '$date', 
-            dis = '$dis', 
-            medradio = '$medradio', 
-            medside = '$medside', 
-            genradio = '$genradio', 
-            dietradio = '$dietradio', 
-            phyradio = '$phyradio', 
-            transradio = '$transradio', 
-            reqradio = '$reqradio', 
-            ifradio = '$ifradio', 
-            discu = '$discu', 
-            lan = '$lan', 
-            aradio = '$aradio', 
-            bradio = '$bradio', 
-            cradio = '$cradio', 
-            dradio = '$dradio', 
-            eradio = '$eradio', 
-            yradio = '$yradio', 
-            sign = '$sign', 
-            sis = '$sis', 
-            doc1 = '$doc1', 
-            sis2 = '$sis2', 
-            doc2 = '$doc2' 
-            WHERE id = '$id'";
-$sql4=mysqli_query($conn,$update);
-   
- }
- $sql5=mysqli_query($conn,"SELECT * FROM dama_dis WHERE id=$id");
- $row5=mysqli_fetch_assoc($sql5);
+$sql5=mysqli_query($conn,"SELECT * FROM dama_dis WHERE id=$id");
+$row5=mysqli_fetch_assoc($sql5);
 
-   
+  error_reporting(0);
 ?>
 
 <!DOCTYPE html>
@@ -87,162 +31,54 @@ $sql4=mysqli_query($conn,$update);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handover patient valuable item</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-    <style type="text/css">
-        body {
-            background: lightgray;
-            animation: fade-in 1s linear;
+    <style>
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    @media print {
+
+        #button {
+            display: none !important;
         }
 
-        .fl {
-            animation: gelatine 1s;
+        @page {
+            size: A4;
         }
 
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 40px;
+        .noprint {
+            visibility: hidden;
         }
-
-        input[type="text"]::placeholder,
-        input[type="time"]::placeholder,
-        input[type="date"]::placeholder {
-            color: lightgrey;
-        }
-
-        textarea[type="text"]::placeholder {
-            color: lightgrey;
-        }
-
-        hr {
-            border: 1px solid black;
-        }
-
-        label {
-            animation: gelatine 1s;
-
-        }
-
-        select {
-            animation: gelatine 1s;
-            outline: none !important;
-            border-color: #C0C0C0;
-            box-shadow: 5px 5px 5px 5px #C0C0C0;
-            animation: gelatine 1s;
-        }
-
-        input[type="text"],
-        input[type="time"],
-        input[type="date"] {
-            outline: none !important;
-            border-color: #C0C0C0;
-            box-shadow: 5px 5px 5px 5px #C0C0C0;
-            animation: gelatine 1s;
-
-        }
-
-        textarea[type="text"] {
-            outline: none !important;
-            border-color: #C0C0C0;
-            box-shadow: 5px 5px 5px 5px #C0C0C0;
-            animation: gelatine 1s;
-        }
-
-        input[type="text"]:focus,
-        input[type="time"]:focus,
-        input[type="date"]:focus {
-            outline: none !important;
-            border-color: grey;
-            box-shadow: 2px 2px 2px 2px grey;
-        }
-
-        textarea[type="text"]:focus {
-            outline: none !important;
-            border-color: grey;
-            box-shadow: 2px 2px 2px 2px grey;
-        }
-
-        select:focus {
-            outline: none !important;
-            border-color: grey;
-            box-shadow: 2px 2px 2px 2px grey;
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes gelatine {
-            0% {
-                opacity: 0;
-                transform: translateX(2000px);
-            }
-
-            60% {
-                opacity: 1;
-                transform: translateX(-30px);
-            }
-
-            80% {
-                transform: translateX(10px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
+    }
     </style>
-    <title>Document</title>
 </head>
 
 <body class="m-2">
-    <div class="container">
-    <h1 class="text-center text-danger mt-3">
-                <?php echo $title['so'] ?>
-            </h1>
-            <h3 class=" fl text-center text-dark"> DAMA Discharge</h3>
-        <?php if($x==1){echo "<div class='alert alert-success'> Updated Successfully</div>";} ?>
+
+    <div id="button">
+        <button type="button" class="btn btn-danger mt-4 noprint" onclick="window.print()" id="print">Print</button>
+        <a href="dama_discharge.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
     </div>
-    
-    <div class="container">
-        <div class="col p-4 m-4 shadow-lg rounded">
-        <a class="btn btn-primary" href="ortho_forms.php?id=<?php echo $id; ?>">Dashboard</a>
-           <a href="dama_dis_print.php?id=<?php echo $id; ?>" class=" btn btn-success"
-            id="dashboard">Print</a>
-            
-            <div class="row">
-            <div class="col-md-4">
-        <label class="form-label mt-2">UHID No : <?php echo $row2['uhid'];?></label>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">IPD No: <?php echo $row2['ipd'];?></label>
-        </div>
-      <div class="col-md-4">
-        <label class="form-label mt-2">Date : <?php echo $row2['date'];?></label>
-        </div>
-      <div class="col-md-4">
-        <label class="form-label mt-2">Patient's Name : <?php echo $row['name']; ?></label>
-       </div>
-     
-        <div class="col-md-4">
-          <label class="form-label">Sex: <?php echo $row['sex'];?></label>
-        </div>
-        <div class="col-md-4">
-        <label class="form-label">Address :  <?php echo $row['address']." , ".$row['taluka']." , ".$row['district']; ?></label>
-        <br>
-        </div>
-      
-    </div>
-            <form action="" method="post">
+    <?php include_once("../header/images.php") ?>
+    <h3 class="text-center text-dark my-3 ">DAMA Discharge</h3>
+
+    <?php include_once("../header/header.php") ?>
             <div class="col-12">Discharge Process Documentation Form (If be filled by the nurses, doctors and MSW at the time of Discharge / Transfer is advised)</div>
             <div class="row">
                <div class="col-3"><input type="checkbox" name="discharge" id="" value="discharge" <?php if($row5['discharge']=="discharge"){
@@ -251,8 +87,7 @@ $sql4=mysqli_query($conn,$update);
                 <div class="col-3"><input type="checkbox" name="dama" id=""value="dama" <?php if($row5['dama']=="dama"){
                             echo 'checked';
                         }?>> DAMA / LAMA</div>
-                <div class="col-1">Date : </div>
-                <div class="col-3"><input type="date" class="form-control" name="date" id="" value="<?php echo $row5['date'];?>"></div>
+                <div class="col-4">Date : <?php echo $row5['date'];?></div>
             </div>
             <div class="row">
                 <div class="col-12">Discharge Plans are generally discussed by consultant with patient or patients relative at the time of
@@ -265,7 +100,7 @@ be transferred to a suitable location of choice or back to home.
             <div class="row mt-3">
                 <div class="col-3"><strong>Discharge Summary</strong></div>
                 <div class="col-3">
-                    <input type="checkbox" name="dis" id="" value="dis" <?php if($row5['discharge']=="dis"){
+                    <input type="checkbox" name="dis" id="" value="dis" <?php if($row5['dis']=="dis"){
                             echo 'checked';
                         }?> >
                     Discussed
@@ -377,7 +212,7 @@ can contact your GP in the first instance. They can contact the Hospital if nece
 Uwe also mate that this Has been   
                 </div>
                 <div class="col-4 mt-1">explained to me/us in the Language</div>
-                <div class="col-3"><input type="text" name="lan" class="form-control" id=""value="<?php echo $row5['sis'];?>"></div>
+                <div class="col-3"><?php echo $row5['sis'];?></div>
                 <div class="col-5 mt-1">(mention language in which
 explained) that we</div>
                 <div class="col-12"> understand. With these understandings we give consent for discharge of my/my relative.
@@ -458,9 +293,8 @@ explained) that we</div>
             </div>
 
             <div class="row">
-                <div class="col-5 mt-3">Signature of the patient/ relative
-                    <input type="text" name="sign"class="form-control"value="<?php echo $row5['sign'];?>">
-                    </div><div class="col-1"></div>
+                <div class="col-5 mt-3">Signature of the patient/ relative <?php echo $row5['sign'];?>
+                </div><div class="col-1"></div>
                 <div class="col-6">
                     <table class="table table-bordered border-dark ">
                         <tr>
@@ -468,12 +302,12 @@ explained) that we</div>
                             <th>Duty Doctors Name with sign & date</th>
                         </tr>
                         <tr>
-                            <td><input type="text"class="form-control"  name="sis" value="<?php echo $row5['sis'];?>"id=""></td>
-                            <td><input type="text"class="form-control"  name="doc1" id=""value="<?php echo $row5['sis'];?>"></td>
+                            <td><?php echo $row5['sis'];?></td>
+                            <td><?php echo $row5['doc1'];?></td>
                         </tr>
                         <tr>
-                            <td><input type="date"class="form-control"  name="sis2" id=""value="<?php echo $row5['sis'];?>"></td>
-                            <td><input type="date"class="form-control"  name="doc2" id=""value="<?php echo $row5['sis'];?>"></td>
+                            <td><?php echo $row5['sis2'];?></td>
+                            <td><?php echo $row5['doc2'];?></td>
                         </tr>
                     </table>
                 </div>
@@ -481,11 +315,10 @@ explained) that we</div>
             </div>
                 
 
-                      <br>
-        <button type="submit" class="btn btn-primary ml-auto" name="submit" value="submit" id="submit"  >Submit</button>
-                            
-        </form>
-    </div>
+    <h6 class="text-center mt-3">Thank You !</h6>
 </body>
+<script>
+window.print();
+</script>
 
 </html>

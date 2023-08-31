@@ -203,7 +203,7 @@ error_reporting(0);
         <div class="container shadow-lg rounded">
            
             <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-success m-2">Dashboard</a>
-            <a href=".php?id=<?php echo $id; ?>" class="btn btn-success m-2">Print</a>
+            <a href="incidence_print.php?id=<?php echo $id; ?>" class="btn btn-success m-2">Print</a>
            <div class="row">
            <div class="col-md-4">
                     <label class="form-label">UHID No:

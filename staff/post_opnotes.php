@@ -19,24 +19,18 @@
 $x=0;
  if (isset($_REQUEST['submit'])) {
     $i = 1;
-    while (isset($_POST["date_$i"])) {
-        if ($_POST["date_$i"] !== "") {
-            $date=$_POST["date_$i"] ;
+    while (isset($_POST["time_$i"])) {
+        if ($_POST["time_$i"] !== "") {
             $time = $_POST["time_$i"];
-            $temp = $_POST["temp_$i"];
             $pulse = $_POST["pulse_$i"];
             $bp = $_POST["bp_$i"];
-            $spo = $_POST["spo_$i"];
-            $time2 = $_POST["time2_$i"];
             $fluid = $_POST["fluid_$i"];
-            $oral = $_POST["oral_$i"];
-            $intake = $_POST["intake_$i"];
+            $relaxant = $_POST["relaxant_$i"];
+            $drug = $_POST["drug_$i"];
             $urine_output = $_POST["urine_output_$i"];
-            $others = $_POST["others_$i"];
-            $total_output = $_POST["total_output_$i"];
 
-            $sql3= "INSERT INTO `acc_maternity`(pt_id,`date`, `time`, `temp`, `pulse`, `bp`, `spo`, `time2`, `fluid`, `oral`, `intake`, `urine_output`, `others`, `total_output`) VALUES
-            ($id,'$date','$time','$temp','$pulse','$bp','$spo','$time2','$fluid','$oral','$intake','$urine_output','$others','$total_output');";
+            $sql3= "INSERT INTO `post_opnotes`(pt_id, `time`,  `pulse`, `bp`, `fluid`,`relaxant`, `drug`, `urine_output`) VALUES
+            ($id,'$time','$pulse','$bp','$fluid','$relaxant','$drug','$urine_output');";
            if ($conn->query($sql3) === TRUE) {
              $i++;
            } else {
@@ -50,7 +44,7 @@ $x=0;
 }
 
 if (isset($_REQUEST['delete'])) {
-    $sql3 = "DELETE FROM acc_maternity WHERE id = {$_POST['scan_id']} ;";
+    $sql3 = "DELETE FROM post_opnotes WHERE id = {$_POST['scan_id']} ;";
     if ($conn->query($sql3) === TRUE) {
       echo "<div class='alert alert-success'>Deleted Successfully</div>";
     } else {
@@ -58,7 +52,7 @@ if (isset($_REQUEST['delete'])) {
     }
   }
   ?><?php
-    $sql3 = "SELECT * FROM acc_maternity WHERE pt_id = '$id';";
+    $sql3 = "SELECT * FROM post_opnotes WHERE pt_id = '$id';";
                     $data3 = $conn->query($sql3);
   
 ?>
@@ -70,7 +64,6 @@ if (isset($_REQUEST['delete'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accident And Maternity Homes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style type="text/css">
@@ -199,19 +192,13 @@ if (isset($_REQUEST['delete'])) {
       items++;
       var html = "<tr>";
       html += "<td>" + items + "</td>";
-      html += "<td class='col-md-2'><input type='date' value=" + date2 + " name='date_" + items + "'> </td>";
       html += "<td class='col-md-2'><input type='time' name='time_" + items + "'></td>";
-      html += "<td><input type='text' name='temp_" + items + "'></td>";
       html += "<td><input type='text' name='pulse_" + items + "'></td>";
       html += "<td><input type='text' name='bp_" + items + "'></td>";
-      html += "<td><input type='text' name='spo_" + items + "'></td>";
-      html += "<td><input type='time' name='time2_" + items + "'></td>";
       html += "<td><input type='text' name='fluid_" + items + "'></td>";
-      html += "<td><input type='text' name='oral_" + items + "'></td>";
-      html += "<td><input type='text' name='intake_" + items + "'></td>";
+      html += "<td><input type='text' name='relaxant_" + items + "'></td>";
+      html += "<td><input type='text' name='drug_" + items + "'></td>";
       html += "<td><input type='text' name='urine_output_" + items + "'></td>";
-      html += "<td><input type='text' name='others_" + items + "'></td>";
-      html += "<td><input type='text' name='total_output_" + items + "'></td>";
       html += "<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>";
       html += "</tr>";
       var row = document.getElementById("tbody").insertRow();
@@ -221,7 +208,7 @@ if (isset($_REQUEST['delete'])) {
     function deleteRow(button) {
       button.parentElement.parentElement.children[2].children[0].value = "";
       button.parentElement.parentElement.style.display = "none";
-    }
+    } 
   </script>
     <title>Document</title>
 </head>
@@ -231,14 +218,14 @@ if (isset($_REQUEST['delete'])) {
         <h1 class="text-center text-danger mt-3">
             <?php echo $title['so'] ?>
         </h1>
-        <h3 class=" fl text-center text-dark">Accident And Maternity Homes</h3>
+        <h3 class=" fl text-center text-dark">Post Operative Notes</h3>
         <?php if($x==1){echo "<div class='alert alert-success'> Updated Successfully</div>";} ?>
     </div>
 
     <div class="container">
         <div class="col p-4 m-4 shadow-lg rounded">
             <a class="btn btn-primary" href="ortho_forms.php?id=<?php echo $id; ?>">Dashboard</a>
-            <a href="acc_print.php?id=<?php echo $id; ?>" class=" btn btn-success" id="dashboard">Print</a>
+            <a href="post_op_print.php?id=<?php echo $id; ?>" class=" btn btn-success" id="dashboard">Print</a>
             <div class="row">
                 <div class="col-md-4">
                     <label class="form-label mt-2">Patient's Name : <?php echo $row['name']; ?></label>
@@ -256,26 +243,17 @@ if (isset($_REQUEST['delete'])) {
             <table class="table table-bordered  border-secondary">
                 <thead >
                 <tr class="main-header">
-                    <th rowspan="2">Sno</th>
-                    <th rowspan="2">Date</th>
-                    <th rowspan="2">Time</th>
-                    <th rowspan="2">Temp</th>
-                    <th rowspan="2">Pulse</th>
-                    <th rowspan="2">BP</th>
-                    <th rowspan="2">SPO2</th>
-                    <th rowspan="2">Time</th>
-                    <th colspan="3" rowspan="1">Intake</th>
-                    <th colspan="3" rowspan="1">Outputs</th>
-                    <th rowspan="2">Delete</th>
-                </tr>
-                <tr>
-                    <th>IV Fluids</th>
-                    <th>Oral</th>
-                    <th>Total Intake</th>
+                    <th>Sno</th>
+                    <th >Time</th>
+                    <th >Pulse</th>
+                    <th>BP</th>
+                    <th>IV Fluid</th>
+                    <th>Relaxant</th>
+                    <th>IV Drugs</th>
                     <th>Urine Output</th>
-                    <th>Others</th>
-                    <th>Total Output</th>
+                    <th>Delete</th>
                 </tr>
+               
                
                 </thead>
                 <tbody id="tbody">
@@ -285,19 +263,13 @@ if (isset($_REQUEST['delete'])) {
                   while ($res = $data3->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $sr . '</td>';
-                    echo '<td>' . $res['date'] . '</td>';
                     echo '<td>' . $res['time'] . '</td>';
-                    echo '<td>' . $res['temp'] . '</td>';
                     echo '<td>' . $res['pulse'] . '</td>';
                     echo '<td>' . $res['bp'] . '</td>';
-                    echo '<td>' . $res['spo'] . '</td>';
-                    echo '<td>' . $res['time2'] . '</td>';
                     echo '<td>' . $res['fluid'] . '</td>';
-                    echo '<td>' . $res['oral'] . '</td>';
-                    echo '<td>' . $res['intake'] . '</td>';
+                    echo '<td>' . $res['relaxant'] . '</td>';
+                    echo '<td>' . $res['drug'] . '</td>';
                     echo '<td>' . $res['urine_output'] . '</td>';
-                    echo '<td>' . $res['others'] . '</td>';
-                    echo '<td>' . $res['total_output'] . '</td>';
                     echo "<td><form method='POST' action=''>
                                     <input type='hidden' value={$res['id']} name='scan_id' >
                                     <button type='submit' name = 'delete' class='btn btn-primary'>Delete</button> </form>" . '</td>';

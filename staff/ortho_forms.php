@@ -99,6 +99,8 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     <a href="case_sheet_audit.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Case Audit Sheet </button></a>
     <a href="nursing_intial_assesment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Nursing Intial Assesment </button></a>
     <a href="doctor_inital_asssesment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Doctor Initial Assesment</button></a>
+    <a href="anesthesia_record.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Anesthesia Record</button></a>
+    <a href="doctor_inpatient.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Doctor Inpatient Initial Assessment</button></a>
     <a href="dama_discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">DAMA Discharge</button></a>
     <a href="injection_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">IM /IV SC Injection Consent </button></a>
     <a href="immediate_reval.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Immediate pre-operative re-evaluation form </button></a>
@@ -109,7 +111,19 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
     <a href="nutritional_assessment.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Nutritional Assessment </button></a>
     <a href="invest_sheet.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Investigation Sheet </button></a>
     <a href="acc_maternity.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Accident And Maternity Homes</button></a>
-
+    <a href="surgery_safety.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Surgical Safety Checklist </button></a>
+    <a href="samatipatra0.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Samatipatra</button></a>
+    <a href="samatipatra.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Samatipatra 1 </button></a>
+    <a href="samatipatra2.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Samatipatra 2</button></a>
+    <a href="samatipatra3.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Samatipatra 3</button></a>
+    <a href="samatipatra4.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Samatipatra 4 </button></a>
+    <a href="patient_relative_feedback.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Patient & Relative Feedback ORM </button></a>
+    <a href="patient_family_education.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Patient & Family Education Record </button></a>
+    <a href="urinary_cather.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Urinary Catheter Bundle Follow Up</button></a>
+    <a href="room_check.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Room Check List </button></a>
+    <a href="pre_an_eval.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Pre Anesthesia Evaluation </button></a>
+    <a href="post_opnotes.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Post Operative Notes</button></a>
+  
 <script>
   function getCookieValue(cookieName) {
     const cookies = document.cookie.split("; ");
