@@ -95,7 +95,7 @@ document.addEventListener("click", function (event) {
       selectElement3.value = data.night;
       var str = row.children[6].children[0].getAttribute("name");
       var num = str[str.length - 1];
-      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option></select>`;
+      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
       row.children[5].children[0].value = data.eat;
       row.children[6].children[0].value = data.days;
       row.children[7].children[0].value = data.quantity;
@@ -130,7 +130,32 @@ document.addEventListener("click", function (event) {
       selectElement1.value = data.morning;
       selectElement2.value = data.afternoon;
       selectElement3.value = data.night;
-      row.children[5].innerHTML = ``;
+      var str = row.children[6].children[0].getAttribute("name");
+      var num = str[str.length - 1];
+      row.children[5].innerHTML = `<select name="eat_${num}"> <option value='3 times'>3 times</option>
+       <option value='4 times'>4 times</option>
+       <option value='5 times'>5 times</option>
+       <option value='6 times'>6 times</option>
+       <option value='8 times'>8 times</option>
+       <option value='9 times'>9 times</option>
+       <option value=' एक आठवडा'> एक आठवडा</option>
+       <option value='दोन आठवडे'>दोन आठवडे</option>
+       <option value=' तीन आठवडे एक महिना'> तीन आठवडे एक महिना</option></select>`;
+      row.children[5].children[0].value = data.eat;
+      row.children[6].children[0].value = data.days;
+      row.children[7].children[0].value = data.quantity;
+    }else if (data.type == "Inj") {
+      row.children[0].children[0].value = data.type;
+      var str = row.children[6].children[0].getAttribute("name");
+      var num = str[str.length - 1];
+      var selectElement1 = row.children[2];
+      var selectElement2 = row.children[3];
+      var selectElement3 = row.children[4];
+      selectElement1.innerHTML = `<input name="morning_${num}" value="${data.morning}" >`;
+      selectElement2.innerHTML = `<input name="afternoon_${num}" value="${data.afternoon}" >`;
+      selectElement3.innerHTML =`<input name="night_${num}" value="${data.night}" >`;
+      row.children[5].innerHTML = `<select name="eat_${num}"><option value="IM">IM</option><option value="IV">IV</option><option value="S/C">S/C</option><option value="Center Line">Center Line</option><option value="Intracath">Intracath</option></select>`;
+      row.children[5].children[0].value = data.eat;
       row.children[6].children[0].value = data.days;
       row.children[7].children[0].value = data.quantity;
     } else {
@@ -166,9 +191,8 @@ document.addEventListener("click", function (event) {
       selectElement1.value = data.morning;
       selectElement2.value = data.afternoon;
       selectElement3.value = data.night;
-      var str = row.children[6].children[0].getAttribute("name");
-      var num = str[str.length - 1];
-      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option></select>`;
+   
+      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
       row.children[5].children[0].value = data.eat;
       row.children[6].children[0].value = data.days;
       row.children[7].children[0].value = data.quantity;

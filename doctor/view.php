@@ -65,49 +65,7 @@ if (isset($_POST['template_btn'])) {
 
 ?>
 <script> const Id = <?php echo $id; ?>;</script>
-<?php
-    if (isset($_REQUEST['submit_changes'])) {
-        $i = 1;
-        while (isset($_POST["description1_$i"])) {
-            echo $_POST["description1_$i"];
-            if ($_POST["description1_$i"] != "none"  &&  $_POST["qty_$i"] != 0 ) {
-                $description = $_POST["description1_$i"];
-                $amount = $_POST["amount1_$i"];
-                $qty = $_POST["qty1_$i"];
-                $total = $_POST["total1_$i"];
-                $id = $_GET['id'];
-                $sql10 = "SELECT * FROM patient_records WHERE id = '$id';";
-                $data10 = $conn->query($sql10);
-                $res10 = $data10->fetch_assoc();
-                $username = $res10['mobile'];
-                $password = $res10['mobile'];
-                $is_opd = 1;
-                $update2 = "UPDATE `p_log` SET `is_opd` = '$is_opd',`username`='$username',`password`='$password' WHERE `id` = '$id'";
-                $conn->query($update2);
 
-                $sql11 = "INSERT INTO opd_bill (patient_id,description,amount,qty,total) VALUES ($id,'$description','$amount','$qty','$total');";
-                if ($conn->query($sql11) === TRUE) {
-                    $i++;
-                } else {
-                    echo "<div class='alert alert-danger'>Error Updating Bill</div>";
-                }
-
-            } else {
-                $i++;
-            }
-
-        }
-        echo "<div class='alert alert-success'>Bill Updated Successfully</div>";
-    }
-    if (isset($_REQUEST['delete'])) {
-        $sql30 = "DELETE FROM opd_bill WHERE id = {$_POST['bill_id']} ;";
-        if ($conn->query($sql30) === TRUE) {
-            echo "<div class='alert alert-success'>Bill Deleted Successfully</div>";
-        } else {
-            echo "<div class='alert alert-danger'>Error Deleting Bill</div>";
-        }
-    }
-    ?>
 <!DOCTYPE html>
 
 <head>
@@ -1148,14 +1106,13 @@ data;
         while (isset($_POST["med_name_$i"])) {
 
             if ($_POST["med_name_$i"] !== "") {
-                if ($_REQUEST['type_' . $i] != 'E/D') {
                     $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
                     $quantity = $_POST["quantity_$i"];
                     $morning = $_POST["morning_$i"];
                     $afternoon = $_POST["afternoon_$i"];
                     $night = $_POST["night_$i"];
                     $type = $_POST["type_$i"];
-                    $eat = $_POST["eat_$i"];
+                    $eat = (isset($_POST["eat_$i"]))?$_POST["eat_$i"]:"";
                     $days = $_POST["days_$i"];
                     $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,eat,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$eat','$type');";
                     if ($conn->query($sql) === TRUE) {
@@ -1163,22 +1120,7 @@ data;
                     } else {
                         echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
                     }
-                } else {
-                    $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
-                    $quantity = $_POST["quantity_$i"];
-                    $morning = $_POST["morning_$i"];
-                    $afternoon = $_POST["afternoon_$i"];
-                    $night = $_POST["night_$i"];
-                    $type = $_POST["type_$i"];
-                    $days = $_POST["days_$i"];
-                    $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$type');";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
-                    }
-
-                }
+                
             } else {
                 $i++;
             }

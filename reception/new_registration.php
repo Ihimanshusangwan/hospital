@@ -297,7 +297,7 @@ if (isset($_POST['submit'])) {
             $lastInitial = strtoupper(substr($lastName, 0, 1));
             
             $randomNumbers = '';
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 6; $i++) {
                 $randomNumbers .= rand(0, 9);
             }
             
