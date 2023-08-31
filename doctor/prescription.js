@@ -182,6 +182,9 @@ function change1(btn) {
     html += "<option value=' तीन आठवडे एक महिना'> तीन आठवडे एक महिना</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "'></td>";
   } else if (e === "Syrup") {
     //console.log('want to change to syrup');
     html += "<option value='E/D'>E/D</option>";
@@ -201,61 +204,34 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='morning_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1 ml'>1 ml</option>";
-    html += "<option value='2 ml'>2 ml</option>";
-    html += "<option value='3 ml'>3 ml</option>";
-    html += "<option value='4 ml'>4 ml</option>";
     html += "<option value='5 ml'>5 ml</option>";
-    html += "<option value='6 ml'>6 ml</option>";
-    html += "<option value='7 ml'>7 ml</option>";
-    html += "<option value='8 ml'>8 ml</option>";
-    html += "<option value='9 ml'>9 ml</option>";
     html += "<option value='10 ml'>10 ml</option>";
-    html += "<option value='11 ml'>11 ml</option>";
-    html += "<option value='12 ml'>12 ml</option>";
-    html += "<option value='13 ml'>13 ml</option>";
-    html += "<option value='14 ml'>14 ml</option>";
     html += "<option value='15 ml'>15 ml</option>";
+    html += "<option value='20 ml'>20 ml</option>";
+    html += "<option value='25 ml'>25 ml</option>";
+    html += "<option value='30 ml'>30 ml</option>";
     html += "</select>";
     html += "</td>";
     html += "<td>";
     html += "<select name='afternoon_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1 ml'>1 ml</option>";
-    html += "<option value='2 ml'>2 ml</option>";
-    html += "<option value='3 ml'>3 ml</option>";
-    html += "<option value='4 ml'>4 ml</option>";
     html += "<option value='5 ml'>5 ml</option>";
-    html += "<option value='6 ml'>6 ml</option>";
-    html += "<option value='7 ml'>7 ml</option>";
-    html += "<option value='8 ml'>8 ml</option>";
-    html += "<option value='9 ml'>9 ml</option>";
     html += "<option value='10 ml'>10 ml</option>";
-    html += "<option value='11 ml'>11 ml</option>";
-    html += "<option value='12 ml'>12 ml</option>";
-    html += "<option value='13 ml'>13 ml</option>";
-    html += "<option value='14 ml'>14 ml</option>";
     html += "<option value='15 ml'>15 ml</option>";
+    html += "<option value='20 ml'>20 ml</option>";
+    html += "<option value='25 ml'>25 ml</option>";
+    html += "<option value='30 ml'>30 ml</option>";
     html += "</select>";
     html += "</td>";
     html += "<td>";
     html += "<select name='night_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1 ml'>1 ml</option>";
-    html += "<option value='2 ml'>2 ml</option>";
-    html += "<option value='3 ml'>3 ml</option>";
-    html += "<option value='4 ml'>4 ml</option>";
     html += "<option value='5 ml'>5 ml</option>";
-    html += "<option value='6 ml'>6 ml</option>";
-    html += "<option value='7 ml'>7 ml</option>";
-    html += "<option value='8 ml'>8 ml</option>";
-    html += "<option value='9 ml'>9 ml</option>";
     html += "<option value='10 ml'>10 ml</option>";
-    html += "<option value='11 ml'>11 ml</option>";
-    html += "<option value='12 ml'>12 ml</option>";
-    html += "<option value='13 ml'>13 ml</option>";
-    html += "<option value='14 ml'>14 ml</option>";
     html += "<option value='15 ml'>15 ml</option>";
+    html += "<option value='20 ml'>20 ml</option>";
+    html += "<option value='25 ml'>25 ml</option>";
+    html += "<option value='30 ml'>30 ml</option>";
     html += "</select>";
     html += "</td>";
     html += "<td>";
@@ -267,6 +243,9 @@ function change1(btn) {
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "'></td>";
   } else if (e === "Cap") {
     //console.log('want to change to cap');
     html += "<option value='E/D'>E/D</option>";
@@ -286,7 +265,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='morning_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -302,7 +281,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='afternoon_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -318,7 +297,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='night_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -340,6 +319,9 @@ function change1(btn) {
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "' onclick='calcQyt(this);'></td>";
   } else if (e === "Tab") {
     //console.log('want to change to tab');
     html += "<option value='E/D'>E/D</option>";
@@ -359,7 +341,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='morning_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -375,7 +357,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='afternoon_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -391,7 +373,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='night_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -413,6 +395,9 @@ function change1(btn) {
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "'  onclick='calcQyt(this);'></td>";
   } else if (e === "Sachet") {
     //console.log('want to change to tab');
     html += "<option value='E/D'>E/D</option>";
@@ -432,7 +417,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='morning_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -448,7 +433,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='afternoon_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -464,7 +449,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='night_" + id + "'>";
     html += "<option value='0'>0</option>";
-    html += "<option value='1/2'>1/2</option>";
+    html += "<option value='0.5'>0.5</option>";
     html += "<option value='1'>1</option>";
     html += "<option value='2'>2</option>";
     html += "<option value='3'>3</option>";
@@ -486,6 +471,9 @@ function change1(btn) {
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "'  onclick='calcQyt(this);'></td>";
   } else if (e === "Inj") {
     //console.log('want to change to tab');
     html += "<option value='E/D'>E/D</option>";
@@ -520,9 +508,10 @@ function change1(btn) {
     html += "<option value='Center Line'>Center Line</option>";
     html += "</select>";
     html += "</td>";
+
+    html += "<td><input type='text' name='days_" + id + "'></td>";
+    html += "<td><input type='text' name='quantity_" + id + "'></td>";
   }
-  html += "<td><input type='text' name='days_" + id + "'></td>";
-  html += "<td><input type='text' name='quantity_" + id + "'></td>";
   html +=
     "<td><button class='btn btn-primary' type='button' onclick='deleteRow1(this);'>Delete</button></td>";
   html += "</tr>";
@@ -538,4 +527,15 @@ function deleteRow1(button) {
   var delete_name = button.parentElement.parentElement.children[1].children[0];
   delete_name.value = "";
   delete_name.parentElement.parentElement.style.display = "none";
+}
+
+function calcQyt(btn){
+  var days = parseFloat(btn.parentElement.previousElementSibling.children[0].value);
+  var night = parseFloat(btn.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.children[0].value);
+  var after = parseFloat(btn.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.children[0].value);
+  var mor = parseFloat(btn.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.children[0].value);
+  var qty = (mor + after + night )*days;
+  btn.value = qty;
+
+  
 }
