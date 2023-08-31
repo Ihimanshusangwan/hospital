@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2023 at 09:47 AM
+-- Generation Time: Aug 30, 2023 at 11:36 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -388,6 +388,108 @@ CREATE TABLE `cc_glass_rx` (
   `past_his` text DEFAULT NULL,
   `advice` text NOT NULL,
   `fer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cc_glass_rx1`
+--
+
+CREATE TABLE `cc_glass_rx1` (
+  `id` int(11) NOT NULL,
+  `dist1_input_1` text DEFAULT NULL,
+  `dist1_input_2` text DEFAULT NULL,
+  `dist1_input_3` text DEFAULT NULL,
+  `dist1_input_4` text DEFAULT NULL,
+  `dist1_input_5` text DEFAULT NULL,
+  `dist1_input_6` text DEFAULT NULL,
+  `dist1_input_7` text DEFAULT NULL,
+  `dist1_input_8` text DEFAULT NULL,
+  `near1_input_1` text DEFAULT NULL,
+  `near1_input_2` text DEFAULT NULL,
+  `near1_input_3` text DEFAULT NULL,
+  `near1_input_4` text DEFAULT NULL,
+  `near1_input_5` text DEFAULT NULL,
+  `near1_input_6` text DEFAULT NULL,
+  `near1_input_7` text DEFAULT NULL,
+  `near1_input_8` text DEFAULT NULL,
+  `be1_add` text DEFAULT NULL,
+  `re1` text DEFAULT NULL,
+  `le1_add` text DEFAULT NULL,
+  `glass1_type` text DEFAULT NULL,
+  `glass1_colour` text DEFAULT NULL,
+  `glass1_use` text DEFAULT NULL,
+  `pd1` text DEFAULT NULL,
+  `dist2_input_1` text DEFAULT NULL,
+  `dist2_input_2` text DEFAULT NULL,
+  `dist2_input_3` text DEFAULT NULL,
+  `dist2_input_4` text DEFAULT NULL,
+  `dist2_input_5` text DEFAULT NULL,
+  `dist2_input_6` text DEFAULT NULL,
+  `dist2_input_7` text DEFAULT NULL,
+  `dist2_input_8` text DEFAULT NULL,
+  `near2_input_1` text DEFAULT NULL,
+  `near2_input_2` text DEFAULT NULL,
+  `near2_input_3` text DEFAULT NULL,
+  `near2_input_4` text DEFAULT NULL,
+  `near2_input_5` text DEFAULT NULL,
+  `near2_input_6` text DEFAULT NULL,
+  `near2_input_7` text DEFAULT NULL,
+  `near2_input_8` text DEFAULT NULL,
+  `be2_add` text DEFAULT NULL,
+  `re2` text DEFAULT NULL,
+  `le2_add` text DEFAULT NULL,
+  `glass2_type` text DEFAULT NULL,
+  `glass2_colour` text DEFAULT NULL,
+  `glass2_use` text DEFAULT NULL,
+  `pd2` text DEFAULT NULL,
+  `dist3_input_1` text DEFAULT NULL,
+  `dist3_input_2` text DEFAULT NULL,
+  `dist3_input_3` text DEFAULT NULL,
+  `dist3_input_4` text DEFAULT NULL,
+  `dist3_input_5` text DEFAULT NULL,
+  `dist3_input_6` text DEFAULT NULL,
+  `dist3_input_7` text DEFAULT NULL,
+  `dist3_input_8` text DEFAULT NULL,
+  `near3_input_1` text DEFAULT NULL,
+  `near3_input_2` text DEFAULT NULL,
+  `near3_input_3` text DEFAULT NULL,
+  `near3_input_4` text DEFAULT NULL,
+  `near3_input_5` text DEFAULT NULL,
+  `near3_input_6` text DEFAULT NULL,
+  `near3_input_7` text DEFAULT NULL,
+  `near3_input_8` text DEFAULT NULL,
+  `be3_add` text DEFAULT NULL,
+  `re3` text DEFAULT NULL,
+  `le3_add` text DEFAULT NULL,
+  `glass3_type` text DEFAULT NULL,
+  `glass3_colour` text DEFAULT NULL,
+  `glass3_use` text DEFAULT NULL,
+  `pd3` text DEFAULT NULL,
+  `dist4_input_1` text DEFAULT NULL,
+  `dist4_input_2` text DEFAULT NULL,
+  `dist4_input_3` text DEFAULT NULL,
+  `dist4_input_4` text DEFAULT NULL,
+  `dist4_input_5` text DEFAULT NULL,
+  `dist4_input_6` text DEFAULT NULL,
+  `dist4_input_7` text DEFAULT NULL,
+  `dist4_input_8` text DEFAULT NULL,
+  `near4_input_1` text DEFAULT NULL,
+  `near4_input_2` text DEFAULT NULL,
+  `near4_input_3` text DEFAULT NULL,
+  `near4_input_4` text DEFAULT NULL,
+  `near4_input_5` text DEFAULT NULL,
+  `near4_input_6` text DEFAULT NULL,
+  `near4_input_7` text DEFAULT NULL,
+  `near4_input_8` text DEFAULT NULL,
+  `be4_add` text DEFAULT NULL,
+  `re4` text DEFAULT NULL,
+  `le4_add` text DEFAULT NULL,
+  `glass4_type` text DEFAULT NULL,
+  `glass4_colour` text DEFAULT NULL,
+  `glass4_use` text DEFAULT NULL,
+  `pd4` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2349,7 +2451,8 @@ CREATE TABLE `patient_records` (
   `follow_visit` tinyint(1) NOT NULL,
   `follow_approve` tinyint(1) NOT NULL,
   `follow_date` date DEFAULT NULL,
-  `follow_reg` tinyint(1) DEFAULT 0
+  `follow_reg` tinyint(1) DEFAULT 0,
+  `skip` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
