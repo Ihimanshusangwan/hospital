@@ -91,10 +91,6 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 ('admin@webifly.com', '123'),
 ('admin@webifly.com', '123'),
 ('admin@webifly.com', '123'),
-('admin@webifly.com', '123'),
-('admin@webifly.com', '123'),
-('admin@webifly.com', '123'),
-('admin@webifly.com', '123'),
 ('admin@webifly.com', '123');
 
 -- --------------------------------------------------------
@@ -393,6 +389,108 @@ CREATE TABLE `cc_glass_rx` (
   `past_his` text DEFAULT NULL,
   `advice` text NOT NULL,
   `fer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cc_glass_rx1`
+--
+
+CREATE TABLE `cc_glass_rx1` (
+  `id` int(11) NOT NULL,
+  `dist1_input_1` text DEFAULT NULL,
+  `dist1_input_2` text DEFAULT NULL,
+  `dist1_input_3` text DEFAULT NULL,
+  `dist1_input_4` text DEFAULT NULL,
+  `dist1_input_5` text DEFAULT NULL,
+  `dist1_input_6` text DEFAULT NULL,
+  `dist1_input_7` text DEFAULT NULL,
+  `dist1_input_8` text DEFAULT NULL,
+  `near1_input_1` text DEFAULT NULL,
+  `near1_input_2` text DEFAULT NULL,
+  `near1_input_3` text DEFAULT NULL,
+  `near1_input_4` text DEFAULT NULL,
+  `near1_input_5` text DEFAULT NULL,
+  `near1_input_6` text DEFAULT NULL,
+  `near1_input_7` text DEFAULT NULL,
+  `near1_input_8` text DEFAULT NULL,
+  `be1_add` text DEFAULT NULL,
+  `re1` text DEFAULT NULL,
+  `le1_add` text DEFAULT NULL,
+  `glass1_type` text DEFAULT NULL,
+  `glass1_colour` text DEFAULT NULL,
+  `glass1_use` text DEFAULT NULL,
+  `pd1` text DEFAULT NULL,
+  `dist2_input_1` text DEFAULT NULL,
+  `dist2_input_2` text DEFAULT NULL,
+  `dist2_input_3` text DEFAULT NULL,
+  `dist2_input_4` text DEFAULT NULL,
+  `dist2_input_5` text DEFAULT NULL,
+  `dist2_input_6` text DEFAULT NULL,
+  `dist2_input_7` text DEFAULT NULL,
+  `dist2_input_8` text DEFAULT NULL,
+  `near2_input_1` text DEFAULT NULL,
+  `near2_input_2` text DEFAULT NULL,
+  `near2_input_3` text DEFAULT NULL,
+  `near2_input_4` text DEFAULT NULL,
+  `near2_input_5` text DEFAULT NULL,
+  `near2_input_6` text DEFAULT NULL,
+  `near2_input_7` text DEFAULT NULL,
+  `near2_input_8` text DEFAULT NULL,
+  `be2_add` text DEFAULT NULL,
+  `re2` text DEFAULT NULL,
+  `le2_add` text DEFAULT NULL,
+  `glass2_type` text DEFAULT NULL,
+  `glass2_colour` text DEFAULT NULL,
+  `glass2_use` text DEFAULT NULL,
+  `pd2` text DEFAULT NULL,
+  `dist3_input_1` text DEFAULT NULL,
+  `dist3_input_2` text DEFAULT NULL,
+  `dist3_input_3` text DEFAULT NULL,
+  `dist3_input_4` text DEFAULT NULL,
+  `dist3_input_5` text DEFAULT NULL,
+  `dist3_input_6` text DEFAULT NULL,
+  `dist3_input_7` text DEFAULT NULL,
+  `dist3_input_8` text DEFAULT NULL,
+  `near3_input_1` text DEFAULT NULL,
+  `near3_input_2` text DEFAULT NULL,
+  `near3_input_3` text DEFAULT NULL,
+  `near3_input_4` text DEFAULT NULL,
+  `near3_input_5` text DEFAULT NULL,
+  `near3_input_6` text DEFAULT NULL,
+  `near3_input_7` text DEFAULT NULL,
+  `near3_input_8` text DEFAULT NULL,
+  `be3_add` text DEFAULT NULL,
+  `re3` text DEFAULT NULL,
+  `le3_add` text DEFAULT NULL,
+  `glass3_type` text DEFAULT NULL,
+  `glass3_colour` text DEFAULT NULL,
+  `glass3_use` text DEFAULT NULL,
+  `pd3` text DEFAULT NULL,
+  `dist4_input_1` text DEFAULT NULL,
+  `dist4_input_2` text DEFAULT NULL,
+  `dist4_input_3` text DEFAULT NULL,
+  `dist4_input_4` text DEFAULT NULL,
+  `dist4_input_5` text DEFAULT NULL,
+  `dist4_input_6` text DEFAULT NULL,
+  `dist4_input_7` text DEFAULT NULL,
+  `dist4_input_8` text DEFAULT NULL,
+  `near4_input_1` text DEFAULT NULL,
+  `near4_input_2` text DEFAULT NULL,
+  `near4_input_3` text DEFAULT NULL,
+  `near4_input_4` text DEFAULT NULL,
+  `near4_input_5` text DEFAULT NULL,
+  `near4_input_6` text DEFAULT NULL,
+  `near4_input_7` text DEFAULT NULL,
+  `near4_input_8` text DEFAULT NULL,
+  `be4_add` text DEFAULT NULL,
+  `re4` text DEFAULT NULL,
+  `le4_add` text DEFAULT NULL,
+  `glass4_type` text DEFAULT NULL,
+  `glass4_colour` text DEFAULT NULL,
+  `glass4_use` text DEFAULT NULL,
+  `pd4` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -764,9 +862,9 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`id`, `name`, `address`, `taluka`, `district`, `age`, `sex`, `dob`, `reg_date`, `mobile`, `email`, `password`, `type_of_visit`, `signature`) VALUES
-(1, 'Himanshu', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'ortho@gmail.com', '123', 'Ortho', ''),
-(2, 'Tanya', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'eye@gmail.com', '123', 'Eye', ''),
-(3, 'General', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'general@gmail.com', '123', 'General', '');
+(1, 'Dr. Himanshu Sangwan', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'ortho@gmail.com', '123', 'Ortho', ''),
+(2, 'Dr. Tanya Mishra', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'eye@gmail.com', '123', 'Eye', ''),
+(3, 'Dr. General general', '', '', '', 0, 'Male', '0000-00-00', '0000-00-00', '', 'general@gmail.com', '123', 'General', '');
 
 -- --------------------------------------------------------
 
@@ -2464,7 +2562,9 @@ CREATE TABLE `patient_records` (
   `is_followup` int(255) NOT NULL,
   `follow_visit` tinyint(1) NOT NULL,
   `follow_approve` tinyint(1) NOT NULL,
-  `follow_date` date DEFAULT NULL
+  `follow_date` date DEFAULT NULL,
+  `follow_reg` tinyint(1) DEFAULT 0,
+  `skip` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3459,6 +3559,8 @@ ALTER TABLE `blood`
 --
 -- Indexes for table `cc_glass_rx`
 --
+ALTER TABLE `cc_glass_rx1`
+  ADD PRIMARY KEY (`id`);
 ALTER TABLE `cc_glass_rx`
   ADD PRIMARY KEY (`id`);
 
@@ -4512,13 +4614,11 @@ ALTER TABLE `pt_image`
 
 --
 -- AUTO_INCREMENT for table `pt_rel_feedback`
---
 ALTER TABLE `pt_rel_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receptionists`
---
 ALTER TABLE `receptionists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
