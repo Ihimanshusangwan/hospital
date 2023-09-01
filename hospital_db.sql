@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2023 at 04:28 PM
+-- Generation Time: Sep 01, 2023 at 02:21 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -2564,7 +2564,8 @@ CREATE TABLE `patient_records` (
   `follow_approve` tinyint(1) NOT NULL,
   `follow_date` date DEFAULT NULL,
   `follow_reg` tinyint(1) DEFAULT 0,
-  `skip` tinyint(1) NOT NULL DEFAULT 0
+  `skip` tinyint(1) NOT NULL DEFAULT 0,
+  `review` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3559,9 +3560,13 @@ ALTER TABLE `blood`
 --
 -- Indexes for table `cc_glass_rx`
 --
-ALTER TABLE `cc_glass_rx1`
-  ADD PRIMARY KEY (`id`);
 ALTER TABLE `cc_glass_rx`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cc_glass_rx1`
+--
+ALTER TABLE `cc_glass_rx1`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4614,11 +4619,13 @@ ALTER TABLE `pt_image`
 
 --
 -- AUTO_INCREMENT for table `pt_rel_feedback`
+--
 ALTER TABLE `pt_rel_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receptionists`
+--
 ALTER TABLE `receptionists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
