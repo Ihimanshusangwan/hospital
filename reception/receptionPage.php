@@ -210,7 +210,7 @@ msg;
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
                     <span class="btn btn-warning mb-2" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
-
+                    <a href="reception_review.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Review Table</a>
                     <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
