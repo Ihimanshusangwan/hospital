@@ -13,7 +13,7 @@
                 while($row = $receptionists->fetch_assoc()){
                     echo<<<switches
                     <div class="form-check form-switch">
-                    <input class="form-check-input rec-check" type="checkbox" rec_id=" {$row['id']}">
+                    <input class="form-check-input rec-check" type="checkbox" rec_id=" {$row['id']}" id="rec_{$row['id']}">
                     <label for=""> {$row['name']}</label>
                 </div>
 

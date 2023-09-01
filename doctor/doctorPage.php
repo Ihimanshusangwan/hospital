@@ -225,6 +225,7 @@ $title = $data->fetch_assoc();
         document.addEventListener('DOMContentLoaded', startIdleTimer);
 
     </script>
+    <script src="checkbox.js"></script>
 
 
 </body>

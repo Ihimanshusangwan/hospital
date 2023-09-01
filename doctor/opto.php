@@ -1066,7 +1066,7 @@ error_reporting(0);
                             </thead>
                             <tbody id="tbody">
                                 <?php
-                                $sql = "SELECT * FROM opto_pres WHERE patient_id = $id ORDER BY id DESC;";
+                                $sql = "SELECT * FROM opto_pres WHERE patient_id = $id ORDER BY id ;";
                                 $data = $conn->query($sql);
                                 $i = 1;
                                 while ($res = $data->fetch_assoc()) {
