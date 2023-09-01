@@ -435,7 +435,7 @@ error_reporting(0);
         <div class="row mt-4">
             <div class="col-8 offset-1">
                 <div class="row">
-                    <div class="col"><strong>ADD AR:</strong></div>
+                    <div class="col"><strong>AR:</strong></div>
                     <div class="col"><strong>RE:</strong></div>
                     <div class="col"><strong>LE:</strong></div>
                 </div>
@@ -892,7 +892,7 @@ error_reporting(0);
 
 
                 <div class="row">
-                    <div class="col"><strong>TODAY GLASS PRESCRIPTIOM:</strong></div>
+                    <div class="col"><strong>TODAY GLASS PRESCRIPTION:</strong></div>
                     <div class="col"><strong>RE:</strong></div>
                     <div class="col"><strong>LE:</strong></div>
                 </div>
@@ -1815,8 +1815,8 @@ error_reporting(0);
             </div>
 
         </div>
+        <button type="submit" class="btn btn-success mx-auto d-flex mt-3 save_pre">save</button>
     </div>
-    <button type="submit" class="btn btn-success mx-auto d-flex mt-3 save_pre">save</button>
     </div>
 
     <!-- SURGERY -->
