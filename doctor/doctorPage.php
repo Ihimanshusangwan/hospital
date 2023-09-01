@@ -4,16 +4,25 @@ if (isset($_REQUEST['logout'])) {
     session_unset();
     session_destroy();
 }
-
 if (!isset($_SESSION['doctor_id']) && !isset($_SESSION['doctor_type'])) {
     header("location:login.php");
 }
-
 require("../admin/connect.php");
+$doc_id=$_SESSION['doctor_id'];
+if(isset($_POST['review'])){
+    $inp_id=$_POST['inp_id'];
+  $sql="UPDATE `patient_records` SET `review`='1' where `id`='$inp_id'";
+  $data=$conn->query($sql);
+  if(!$data){
+    echo '<div class="alert alert-danger " role="alert"> Something went wrong!</div>';
+  }
+}
+
 
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +72,16 @@ $title = $data->fetch_assoc();
                 </h3>
             </a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
-            <form class="form-inline my-2 my-lg-0" action="" method="POST">
+             <form class="form-inline" action="" method="POST">
                 <a class="navbar-brand btn btn-warning" href="image_gallery.php">Image Gallery</a>
+                <a class="navbar-brand btn btn-warning" href="tobe_review.php?id=<?php echo $doc_id;?>">Review Table</a>
                 <a class="navbar-brand btn btn-warning" href="template.php">Manage Templates</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">Logout</button>
                 </a>
             </form>
+           
+           
         </nav>
         <div>
             <hr style="height:15px;border-width:0;color:rgb(148, 28, 28);background-color:rgb(148, 30, 30)">
@@ -89,7 +101,8 @@ $title = $data->fetch_assoc();
                             <th>AGE</th>
                             <th>MOBILE</th>
                             <th>REFER STATUS</th>
-                            <th>View</th>
+                            <th>REVIEW PATIENT</th>
+                            <th>VIEW</th>
                             <th>OT NOTES</th>
                             <th>More</th>
                             <th>Images</th>
@@ -114,11 +127,12 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records WHERE consultant = '{$_SESSION['doctor_name']}' AND (is_registered = 1 OR is_visited = 1);";
+                        $sql = "SELECT * FROM patient_records WHERE consultant = '{$_SESSION['doctor_name']}' AND (is_registered = 1 OR is_visited = 1) AND review=0;";
                         $data = $conn->query($sql);
 
                         while ($res = $data->fetch_assoc()) {
@@ -136,16 +150,17 @@ $title = $data->fetch_assoc();
 
                                 echo '<td>Not Refered</td>';
                             }
+                             echo '<form method="POST"><td><button class="btn btn-primary mx-auto d-flex"  name="review" >Review</button></td>
+                                <input type="hidden" name="inp_id" value="'.$res['id'].'"></form>';
+
                             echo '<td><a href="view.php?id=' . $res['id'] . '" class="btn btn-primary">View</a></td>';
                             if ($res['is_admited'] == 1) {
                                 echo '<td><a href="OT.php?id=' . $res['id'] . '" class="btn btn-primary">OT Notes</a></td>';
 
-                            } else {
+                            } 
+                            else {
                                 echo '<td><button class="btn btn-primary" disabled>OT Notes</button></td>';
-
                             }
-                            
-
                             if ($res['type_of_visit'] == 'Eye') {
                                 echo '<td><a href="opto.php?id=' . $res['id'] . '" class="btn btn-primary">Ophthalmologist</a></td>';
                             } else {
