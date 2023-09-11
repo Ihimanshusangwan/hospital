@@ -209,14 +209,14 @@ msg;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
-                    <span class="btn btn-warning mb-2" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
-                    <a href="reception_review.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Review Table</a>
-                    <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">Filter</a>
-                    <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2">Scanner</a>
-                    <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View Appointments</a>
-                     <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View FollowUp</a>
-                     <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">View skip</a>
-                    <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2">New
+                    <span class="btn btn-warning mb-2 mx-2  btn-sm" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
+                    <a href="reception_review.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Review Table</a>
+                    <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Filter</a>
+                    <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Scanner</a>
+                    <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View Appointments</a>
+                     <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View FollowUp</a>
+                     <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View skip</a>
+                    <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">New
                         Registration</a>
                     <a class="navbar-brand">
                         <button type="submit" name="logout" style="margin-right: 1rem;" class="btn btn-danger  mb-2">
@@ -240,7 +240,7 @@ msg;
                 <table class="table table-bordered table-striped" id="table">
                     <thead class="table-primary">
                         <tr>
-                            <th>PATIENT ID</th>
+                            <th>OPD NO.</th>
                             <th>REG DATE</th>
                             <th>NAME</th>
                             <th>SEX</th>
@@ -254,13 +254,13 @@ msg;
                             <th>DELETE</th>
                             <th>OPD Bill</th>
                             <th>IPD Bill</th>
-                            <th>Details & Other Forms</th>
-                            <th>Eye Consent Form</th>
-                            <th>Ortho Consent Form</th>
+                            <th>Details</th>
+                            <!-- <th>Eye Consent Form</th>
+                            <th>Ortho Consent Form</th> -->
 
                         </tr>
                         <tr>
-                            <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Search Opd no">
                             </th>
                             <th><input type="date" class="form-control form-control-sm"
                                     placeholder="Search Registration Date"></th>
@@ -309,8 +309,8 @@ msg;
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
+                            <!-- <th></th>
+                            <th></th> -->
                             
                         </tr>
                     </thead>
@@ -327,8 +327,10 @@ msg;
                             } else {
                                 $type = 'Appointment';
                             }
-                            echo '<tr  data-row-id="' . $res['id'] . '" >';
-                            echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['id'] . '</td>';
+                            
+                           echo ($res['is_billed'])?'<tr  data-row-id="' . $res['id'] . '" class="table-success" >':'<tr  data-row-id="' . $res['id'] . '" >';
+                          
+                            echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['opd_no'] . '</td>';
 
                             echo '<td>' . $res['reg_date'] . '</td>';
                             echo '<td onclick="colorChange(this)" class="name-hover">' . $res['name'] . '</td>';
@@ -352,7 +354,7 @@ msg;
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
                                 <div class="col-4 mx-2 mt-1">';
-                                echo '<button class="btn btn-outline-warning  text-black change-color-button" name="skip"> Skip</button>';
+                                echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
                                 
                                 echo '</td>';
@@ -360,38 +362,39 @@ msg;
 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
-                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
+                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a></td>';
+                                // <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>
 
-                                if ($res['is_eye'] == '1' && $res['is_ortho'] == 0) {
-                                    echo <<<btn
+    //                             if ($res['is_eye'] == '1' && $res['is_ortho'] == 0) {
+    //                                 echo <<<btn
                               
-                                    <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
-                                    <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
-                                    <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
-        btn;
-                                } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 0) {
-                                    echo <<<btn
+    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
+    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
+    //                                 <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
+    //     btn;
+    //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 0) {
+    //                                 echo <<<btn
                               
-                                    <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
-                                    <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
-                                    <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" >Ortho Consent Forms</button></td>
-        btn;
-                                } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 1) {
-                                    echo <<<btn
+    //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
+    //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
+    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" >Ortho Consent Forms</button></td>
+    //     btn;
+    //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 1) {
+    //                                 echo <<<btn
                               
-                                    <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
-                                    <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent"  >Ortho Consent Forms</button>
-                                    </td>
-        btn;
+    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
+    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent"  >Ortho Consent Forms</button>
+    //                                 </td>
+    //     btn;
 
-                                } else {
-                                    echo <<<btn
-                                    <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
-                                    <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
-                                     <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
-                                     <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
-    btn;
-                                }
+    //                             } else {
+    //                                 echo <<<btn
+    //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
+    //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
+    //                                  <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
+    //                                  <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
+    // btn;
+    //                             }
 
                             } else {
                                 echo '<td>Not yet Admitted</td>';
@@ -409,7 +412,7 @@ msg;
                                
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
-                                <div class="col-4  mt-1">';
+                                <div class="col-4 mx-2 mt-1">';
                                 echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
                                
@@ -419,9 +422,10 @@ msg;
                                 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
-                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>';
-                                echo '<td><button class="btn btn-primary " disabled >Eye Consent Forms</button></td>';
-                                echo '<td><button class="btn btn-primary " disabled >Ortho Consent Forms</button></td>';
+                                echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> </td>';
+                                // <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a>
+                                // echo '<td><button class="btn btn-primary " disabled >Eye Consent Forms</button></td>';
+                                // echo '<td><button class="btn btn-primary " disabled >Ortho Consent Forms</button></td>';
                             }
                             echo '</tr>';
                         }
@@ -470,49 +474,49 @@ msg;
         });
         </script>
     <script>
-        const cookieName = "currentPatient";
-        function getCookieValue(cookieName) {
-            const cookies = document.cookie.split("; ");
-            for (const cookie of cookies) {
-                const [name, value] = cookie.split("=");
-                if (name === cookieName) {
-                    return value;
-                }
-            }
-            return null;
-        }
+        // const cookieName = "currentPatient";
+        // function getCookieValue(cookieName) {
+        //     const cookies = document.cookie.split("; ");
+        //     for (const cookie of cookies) {
+        //         const [name, value] = cookie.split("=");
+        //         if (name === cookieName) {
+        //             return value;
+        //         }
+        //     }
+        //     return null;
+        // }
 
 
 
-        function colorChange(tr) {
-            var rows = document.querySelectorAll("tr");
-            const pIdForColor = tr.parentElement.getAttribute("data-row-id");
+        // function colorChange(tr) {
+        //     var rows = document.querySelectorAll("tr");
+        //     const pIdForColor = tr.parentElement.getAttribute("data-row-id");
 
 
-            const expirationDate = new Date();
-            expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+        //     const expirationDate = new Date();
+        //     expirationDate.setFullYear(expirationDate.getFullYear() + 1);
 
-            const expires = "expires=" + expirationDate.toUTCString();
-            document.cookie = cookieName + "=" + pIdForColor + ";" + expires + ";path=/";
-            rows.forEach(function (row) {
-                row.classList.remove("table-success");
-                row.classList.remove("table-danger");
-                row.classList.remove("table-warning");
-            });
+        //     const expires = "expires=" + expirationDate.toUTCString();
+        //     document.cookie = cookieName + "=" + pIdForColor + ";" + expires + ";path=/";
+        //     rows.forEach(function (row) {
+        //         row.classList.remove("table-success");
+        //         row.classList.remove("table-danger");
+        //         row.classList.remove("table-warning");
+        //     });
 
-            var current = tr.parentElement;
-            var previous = current.nextElementSibling;
-            var next = current.previousElementSibling;
+        //     var current = tr.parentElement;
+        //     var previous = current.nextElementSibling;
+        //     var next = current.previousElementSibling;
 
-            current.classList.add("table-success");
-            if (next) {
-                next.classList.add("table-warning");
-            }
-            if (previous) {
-                previous.classList.add("table-danger");
-            }
+        //     current.classList.add("table-success");
+        //     if (next) {
+        //         next.classList.add("table-warning");
+        //     }
+        //     if (previous) {
+        //         previous.classList.add("table-danger");
+        //     }
 
-        }
+        // }
         const fullscreenAlert = document.getElementById('fullscreenAlert');
         const closeAlertButton = document.getElementById('closeAlert');
         if (newMsg == 1) {
@@ -643,6 +647,8 @@ msg;
     </script>
     <script>
         $(document).ready(function () {
+            var today = new Date();
+            var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
             var table = $('#table').DataTable({
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -651,6 +657,9 @@ msg;
                         header.off('click.DT');
                         header.removeClass('sorting_asc sorting_desc sorting');
                         header.addClass('no-sort');
+                        if (column.index() === 1) {
+                            column.search(formattedDate).draw();
+                        }
 
                         $('input', header).on('keyup change clear', function () {
                             if (column.search() !== this.value) {
@@ -713,33 +722,33 @@ msg;
 
         document.addEventListener('DOMContentLoaded', () => {
             startIdleTimer();
-            const pIdForColor = getCookieValue("currentPatient");
+            // const pIdForColor = getCookieValue("currentPatient");
 
-            if (pIdForColor !== null) {
-                const element = document.querySelector(`[data-row-id="${pIdForColor}"]`);
-                var rows = document.querySelectorAll("tr");
+            // if (pIdForColor !== null) {
+            //     const element = document.querySelector(`[data-row-id="${pIdForColor}"]`);
+            //     var rows = document.querySelectorAll("tr");
                 
-                rows.forEach(function (row) {
-                    row.classList.remove("table-success");
-                    row.classList.remove("table-danger");
-                    row.classList.remove("table-warning");
-                });
+            //     rows.forEach(function (row) {
+            //         row.classList.remove("table-success");
+            //         row.classList.remove("table-danger");
+            //         row.classList.remove("table-warning");
+            //     });
 
-                var current = element;
-                var previous = current.nextElementSibling;
-                var next = current.previousElementSibling;
+            //     var current = element;
+            //     var previous = current.nextElementSibling;
+            //     var next = current.previousElementSibling;
 
-                current.classList.add("table-success");
-                if (next) {
-                    next.classList.add("table-warning");
-                }
-                if (previous) {
-                    previous.classList.add("table-danger");
-                }
+            //     current.classList.add("table-success");
+            //     if (next) {
+            //         next.classList.add("table-warning");
+            //     }
+            //     if (previous) {
+            //         previous.classList.add("table-danger");
+            //     }
 
-            } else {
-                console.log("'currentPatient' cookie not found.");
-            }
+            // } else {
+            //     console.log("'currentPatient' cookie not found.");
+            // }
 
         });
 

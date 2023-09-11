@@ -16,14 +16,8 @@ $res2 = $data2->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
-
 if(isset($_POST['save'])){
-    $patient_1 = $_POST['patient_1'];
-    $patient_2 = $_POST['patient_2'];
-    $invest_1 = $_POST['invest_1'];
-    $invest_2 = $_POST['invest_2'];
-    $d_1 = $_POST['d_1'];
-    $d_2 = $_POST['d_2'];
+    $date = $_POST['date'];
     $name_1 = $_POST['name_1'];
     $name_2 = $_POST['name_2'];
     $name_3 = $_POST['name_3'];
@@ -44,21 +38,8 @@ if(isset($_POST['save'])){
     $sign_3 = $_POST['sign_3'];
     $sign_4 = $_POST['sign_4'];
     $sign_5 = $_POST['sign_5'];
-    $p_sign = $_POST['p_sign'];
-    $p_time = $_POST['p_time'];
-    $wit_name = $_POST['wit_name'];
-    $wit_details = $_POST['wit_details'];
-    $wit_date = $_POST['wit_date'];
-    $wit_rel = $_POST['wit_rel'];
-
-
-    $sql5="UPDATE `ref_consent` SET
-        `patient_1` = '$patient_1',
-        `patient_2` = '$patient_2',
-        `invest_1` = '$invest_1',
-        `invest_2` = '$invest_2',
-        `d_1`= '$d_1',
-        `d_2` = '$d_2',
+    $sql5="UPDATE `anesthesia_consent` SET
+        `date`='$date',
         `name_1` = '$name_1',
         `name_2` = '$name_2',
         `name_3` = '$name_3',
@@ -78,27 +59,19 @@ if(isset($_POST['save'])){
         `time_2` = '$time_2',
         `time_3` = '$time_3',
         `time_4` = '$time_4',
-        `time_5` = '$time_5',
-        `p_sign`='$p_sign',
-        `p_time`='$p_time',
-        `wit_name`='$wit_name',
-        `wit_details`='$wit_details',
-        `wit_rel`='$wit_rel',
-        `wit_date`='$wit_date'
-                WHERE  `id` = '$id' ";
+        `time_5` = '$time_5'  
+        WHERE  `id` = '$id' ";
        $check=$conn->query($sql5);
        if($check){
         echo "<div class='alert alert-success'> Updated Successfully</div>";
        }
 }
 
-$sql6="SELECT * FROM `ref_consent` WHERE `id` = '$id' ";
+$sql6="SELECT * FROM `anesthesia_consent` WHERE `id` = '$id' ";
 $data6=$conn->query($sql6);
 $res6=$data6->fetch_assoc();
-
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,34 +83,19 @@ $res6=$data6->fetch_assoc();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style type="text/css">
-    tboody,
-    th,
+    /* Add borders to the top and bottom of each row */
+    tr {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    /* Add borders to the left and right of each column */
     td {
-        border: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
     }
 
-    input[type="text"] {
-        padding: 10px;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        width: 200px;
-        height: 35px;
-    }
-
-    input[type="text"]:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 5px #4CAF50;
-    }
-
-    input[type="text"]:hover {
-        border-color: #555;
-    }
-
-    /* Style for placeholder text inside the input field */
-    input[type="text"]::placeholder {
-        color: #aaa;
-    }
 
     body {
         background: lightgray;
@@ -255,16 +213,15 @@ $res6=$data6->fetch_assoc();
 
     <div class="container shadow-lg rounded">
         <div id="button">
-            <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
+            <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
                 id="dashboard">Dashboard</a>
-            <a href="ref_consent_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger"
-                id="dashboard">print</a>
+            <a href="anesthesia_consent_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger"
+                id="dashboard">Print </a>
         </div>
         <h1 class="text-center text-danger mt-3">
             <?php echo $title['so'] ?>
         </h1>
-        <h3 class="text-center text-dark my-3 ">CONSENT FOR REFUSAL OF TREATMENT</h3>
-        <h3 class="text-center text-dark my-3 ">चिकित्सा / तपासणी नाकारण्या बाबत संमती</h3>
+        <h3 class="text-center text-dark my-3 ">INFORMED CONSENT FOR ANESTHESIA </h3>
         <div class="row">
             <div class="col-md-3">
                 <label class="form-label">UHID No: <?php echo $res2['uhid'];?></label>
@@ -308,41 +265,29 @@ $res6=$data6->fetch_assoc();
         </div>
         <hr>
         <form method="POST">
-            <div class="row" style="margin-top:30px;">
-                <div class="col-6"> <label for="">दिनांक </label> <input type="date" name="date"
-                        value="<?php echo $res6['date']; ?>"></div>
+            <div class="row">
+                <div class="col-9"></div>
+                <div class="col-3">
+                    <p class="style10">तारीख <input type="date" value="<?php echo $res6['date']; ?>" name="date">
+                </div>
             </div>
+            <p class=" style10"> 1. I understand that anesthesia services are needed so that my doctor can perform the
+                operation and procedure.
+            <p>
+            <p class=" style10">माझ्या डॉक्टरांना शस्त्रक्रिया करण्यासाठी भूल देण्याची गरज आहे याची मला जाणीव आहे. </p>
 
-            <p class=" style10" style="margin-top:30px;"> I am / My Patient <input type="text"
-                    value="<?php echo $res6['patient_1']; ?>" name="patient_1">
-                Have / has been advised for Treatment / Admission / Surgery / Investigation <input type="text"
-                    value="<?php echo $res6['invest_1']; ?>" name="invest_1">
-                on Date
-                <input type="date" value="<?php echo $res6['d_1']; ?>" name="d_1">at SHRI SIDDHIVINAYK NETRALAYA. I /
-                we do not wish to undergo the tretment that has been
-                advised to me. The Pros and Cons of refusal of treatment including possibility of death have been
-                explained
-                to me in the language that I understand. I/we are responsible for the outscomes after refusing the
-                treatment
-                advised by my consultant.I will not hold the hospital or any staff member of the hospital responsible
-                for
-                the outcoms of refusal of Treatment .
-
-            <p class=" style10">मला / आमच्या रुग्णाला नाव <input type="text" value="<?php echo $res6['patient_2']; ?>"
-                    name="patient_2"> चिकित्सा / भरती होणे / शल्यचिकित्सा / तपासणी
-                <input type="text" value="<?php echo $res6['invest_2']; ?>" name="invest_2"> ही श्री सिद्धिविनायक
-                नेत्रालय या
-                रुग्णालयात करण्याचा सल्ला दिनांक <input type="date" value="<?php echo $res6['d_2']; ?>" name="d_2">
-                रोजी उपरोक्त नमूद केलेल्या आमच्या डॉक्टरांनी दिलेल्या आहे. सादर चिकित्सा नाकारल्यामुळे उध्दभवणारे धोके
-                क्वचित मृत्यूची शक्यता याबाबत डॉक्टरांनी मला समजणाऱ्या भाषेमध्ये जाणीव करून दिलेली आहे. सल्ला
-                नाकारल्यामुळे
-                उध्दभवणाऱ्या धोक्याची मी / आम्ही स्वतः जबाबदार असू याची आम्हाला जाणीव आहे. या बाबत रुग्णालय किंवा
-                रुग्णालय
-                कर्मचारी हे जबाबदार असणार नाहीत. याची मला जाणीव आहे.
-            </p>
+            <p class="style10"> Patients receiving general anaesthesia may require wind pipe (Endotracheal Intubation ),
+                the
+                intubation may cause sore throat or hoarseness of voice and also teeth or denture may become loose . If
+                they
+                develop repiratory complications, they may put ventilator to support lungs. accidental death is
+                extremely
+                rare. however a remote possibility of this always exists in any surgery or anaesthesaia.
 
 
-            <p class="style10"> धन्यवाद ...!
+
+            <p class="style10"> धन्यवाद ...!</p>
+            <h2></h2>
 
             <table class="table border border-dark">
                 <tr>
@@ -409,30 +354,7 @@ $res6=$data6->fetch_assoc();
                             name="time_5"></td>
                 </tr>
             </table>
-            <div class="detail">
-                <div class="row">
-                    <div class="col-2">Signature of patient</div>
-                    <div class="col-3"><input type="text" name="p_sign" value="<?php echo $res6['p_sign'];?>"></div>
-                    <div class="col-2">Time</div>
-                    <div class="col-3"><input type="time" name="p_time" value="<?php echo $res6['p_time'];?>"></div>
-                </div>
-                <h4 class="text-center">Signature of witness - 1</h4>
-                <div class="row">
-                    <div class="col-2">Name </div>
-                    <div class="col-3"><input type="text" name="wit_name" value="<?php echo $res6['wit_name'];?>"></div>
-                    <div class="col-2">Relation :</div>
-                    <div class="col-3"><input type="text" name="wit_details" value="<?php echo $res6['wit_details'];?>">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2 mt-2">Contact Details :</div>
-                    <div class="col-3 mt-2"><input type="text" name="wit_rel" value="<?php echo $res6['wit_rel'];?>">
-                    </div>
-                    <div class="col-2 mt-2">date</div>
-                    <div class="col-3 mt-2"><input type="text" name="wit_date" value="<?php echo $res6['wit_date'];?>">
-                    </div>
-                </div>
-                <button class="btn btn-primary d-flex mx-auto" name="save">save</button>
+            <button class="btn btn-primary d-flex mx-auto" name="save">save</button>
         </form>
     </div>
 </body>

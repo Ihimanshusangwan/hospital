@@ -55,17 +55,27 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
         $is_ortho = 0;
       }
       $follow_reg=1;
+      $opd_no=1;
+      $sql = "select opd_no from opd_tracker where date='$reg_date'";
+      $result = $conn->query($sql);
+      if($result->num_rows >0){
+          $row=$result->fetch_assoc();
+          $opd_no = $row['opd_no'] + 1;
+          
+      $sql = "update opd_tracker set opd_no = $opd_no where date='$reg_date'";
+      $conn->query($sql);
+      }else{
     
-    $sql = "INSERT INTO patient_records (name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,follow_reg)
-    VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant','$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints','$follow_reg')";
+        $sql = "insert into opd_tracker(date,opd_no) values('$reg_date',1)";
+        $conn->query($sql);
+      }
+
+    $sql = "INSERT INTO patient_records (name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,follow_reg,opd_no)
+    VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant','$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints','$follow_reg',$opd_no)";
 
     if ($conn->query($sql) === TRUE) {
-      $inserted_patient_id = $conn->insert_id;
-      $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp) VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
-
         $inserted_patient_id = $conn->insert_id;
-        $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp)
-         VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
+        $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp) VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
         $conn->query($sql);
         $sql1 = "INSERT INTO p_insure(id) VALUES($inserted_patient_id);";
         $conn->query($sql1);
@@ -123,10 +133,6 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 
         $sql14 = "INSERT INTO acq(id) VALUES($inserted_patient_id);";
         $conn->query($sql14);
-
-        $day = date('d');
-        $month = date('m');
-        $year = date('Y');
 
         $sql15 = "INSERT INTO nutritional_ass(id) VALUES($inserted_patient_id);";
         $conn->query($sql15);
@@ -237,10 +243,8 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 
         $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
         $conn->query($sql45);
-
         $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
         $conn->query($sql46);
-
         $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
         $conn->query($sql47);
         $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
@@ -265,32 +269,59 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
         $conn->query($sql57);
         $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
         $conn->query($sql58);
-       $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+        $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
         $conn->query($sql60);
         $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
         $conn->query($sql61);
         $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
         $conn->query($sql62);
 
+        
 
         $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
         $conn->query($sql29);
-        
-        $uhid = $inserted_patient_id . '/' . $day . '/' . $month . '/' . $year;
+ 
+  
+  function generateRandomID($fullName) {
+      $nameParts = explode(" ", $fullName);
+      
+      $firstName = $nameParts[1];
+      $lastName = $nameParts[2];
+      
+      $firstInitial = strtoupper(substr($firstName, 0, 1));
+      $lastInitial = strtoupper(substr($lastName, 0, 1));
+      
+      $randomNumbers = '';
+      for ($i = 0; $i < 6; $i++) {
+          $randomNumbers .= rand(0, 9);
+      }
+      
+      $randomID = $firstInitial . $lastInitial . $randomNumbers;
+      return $randomID;
+  }
+    $uhid =generateRandomID($consultant);
+
+    
+  $sql = "select * from p_insure where uhid = '$uhid' ";
+  while($conn->query($sql)->num_rows>1){
+    
+    $uhid =generateRandomID($consultant);
+  }
+  
 
 
-        //auto generate uhid
-        $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
-        $conn->query($sql);
-        $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
-        $conn->query($sql);
+  //auto generate uhid
+  $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
+  $conn->query($sql);
+  $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
+  $conn->query($sql);
 
-        $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
+  $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
 
-        $update_last = "UPDATE `cor1` SET  description = '$description' WHERE id = '$inserted_patient_id';";
-        $conn->query($update_last);
-        echo "<span style='color:green;'>Patient added successfully</span>";
-            
+  $update_last = "UPDATE `cor1` SET  description = '$description' WHERE id = '$inserted_patient_id';";
+  $conn->query($update_last);
+  echo "<span style='color:green;'>New Registration Successfull </span>";
+     
       }
        else {
         echo "<div class='alert'> No Insertaion</div>";
@@ -348,7 +379,7 @@ if (isset($_POST['hold'])) {
 $sql = "SELECT * FROM patient_records  where  is_followup= 1  AND follow_approve=0 ORDER BY id ASC; ";
 $data = $conn->query($sql);
           if(!$res = $data->fetch_assoc()){
-            echo "<div class='alert alert-danger'>No Fellow</div>";
+            echo "<div class='alert alert-danger'>No Follow Up</div>";
           }
           else{
           }

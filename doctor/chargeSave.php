@@ -15,6 +15,8 @@ if (isset($_POST['selectedValue'])) {
 
     $sql = "INSERT INTO opd_bill (patient_id,description,amount,qty,total) VALUES ($id,'$description','$amount','$qty','$total');";
     if($conn->query($sql) == true){
+        $sql = "update patient_records set is_billed = 1 where id =$id;";
+        $conn->query($sql);
 
         $response = array("status" => "success");
     }else{

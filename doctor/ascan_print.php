@@ -151,7 +151,7 @@ $res2 = $data2->fetch_assoc();
                         </tr>
                         <tr>
                             <th scope="row">ACD</th>
-                            <td><?php echo $result6['acd_1']; ?>></td>
+                            <td><?php echo $result6['acd_1']; ?></td>
                             <td><?php echo $result6['acd_2']; ?></td>
                         </tr>
                         <tr>
@@ -161,13 +161,13 @@ $res2 = $data2->fetch_assoc();
                         </tr>
                         <tr>
                             <th scope="row">FORMULA</th>
-                            <td>d<?php echo $result6['formula_1']; ?></td>
+                            <td><?php echo $result6['formula_1']; ?></td>
                             <td><?php echo $result6['formula_2']; ?></td>
                         </tr>
                         <tr>
                             <th scope="row">IOL</th>
                             <td><?php echo $result6['iol_1']; ?></td>
-                            <td><?php echo $result6['iol_2']; ?>td>
+                            <td><?php echo $result6['iol_2']; ?></td>
                         </tr>
 
                     </tbody>

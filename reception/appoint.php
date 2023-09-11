@@ -41,9 +41,23 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
           if (isset($_REQUEST['submit'])) {
             $id = $_POST['id'];
             $date = $_POST['date'];
-            $update="UPDATE `patient_records` SET reg_date = '$date', is_approved= 1  WHERE `id` = '$id'";
+            $opd_no=1;
+            $sql = "select opd_no from opd_tracker where date='$date'";
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+                $row=$result->fetch_assoc();
+                $opd_no = $row['opd_no'] + 1;
+                
+            $sql = "update opd_tracker set opd_no = $opd_no where date='$date'";
+            $conn->query($sql);
+            }else{
+          
+              $sql = "insert into opd_tracker(date,opd_no) values('$date',1)";
+              $conn->query($sql);
+            }
+            $update="UPDATE `patient_records` SET reg_date = '$date', is_approved= 1,opd_no = $opd_no WHERE `id` = '$id'";
             $conn->query($update);
-            
+          
             $con = "select consultant from patient_records where id = $id;";
             $con_res = $conn->query($con)->fetch_assoc();
             $consultant = $con_res['consultant'];
@@ -132,7 +146,9 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             echo '</tr>';
                         }
                       }
+                     
                         ?>
+                        </form>
                     </tbody>
                 </table>
   </div>

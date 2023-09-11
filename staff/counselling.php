@@ -345,7 +345,7 @@ if(isset($_POST['submit'])){
 
     <div class="container shadow-lg rounded">
     <div id="button">
-        <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+        <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
         <a href="counselling_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger" id="dashboard">Print</a>
     </div>
     <h1 class="text-center text-danger mt-3">

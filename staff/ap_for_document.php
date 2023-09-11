@@ -221,7 +221,7 @@ $res5=$data5->fetch_assoc();
     <div class="container shadow-lg rounded">
 
         <div id="button">
-            <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
+            <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
                 id="dashboard">Dashboard</a>
             <a href="ap_for_document_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger">Print</a>
         </div>

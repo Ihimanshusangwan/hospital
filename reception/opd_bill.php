@@ -334,6 +334,7 @@ $res10=$data10->fetch_assoc();
     </div>
     <?php
     if (isset($_REQUEST['submit_changes'])) {
+        $is_billed=false;
         $i = 1;
         while (isset($_POST["description_$i"])) {
             echo $_POST["description_$i"];
@@ -357,6 +358,11 @@ $res10=$data10->fetch_assoc();
                     $i++;
                 } else {
                     echo "<div class='alert alert-danger'>Error Updating Bill</div>";
+                }
+                if($is_billed == false){
+                    $sql = "update patient_records set is_billed = 1 where id =$id;";
+                    $conn->query($sql);
+                    $is_billed = true;
                 }
 
             } else {

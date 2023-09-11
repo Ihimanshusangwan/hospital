@@ -18,13 +18,6 @@ $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
 if(isset($_POST['save'])){
-$date = $_POST['date'];
-$dr = $_POST['dr'];
-$dr_1 = $_POST['dr_1'];
-$red = $_POST['red'];
-$platelets = $_POST['platelets'];
-$plasma = $_POST['plasma'];
-  $cryo= $_POST['cryo'];
   $name_1 = $_POST['name_1'];
   $name_2 = $_POST['name_2'];
   $name_3 = $_POST['name_3'];
@@ -45,14 +38,7 @@ $plasma = $_POST['plasma'];
   $sign_3 = $_POST['sign_3'];
   $sign_4 = $_POST['sign_4'];
   $sign_5 = $_POST['sign_5'];
-  $query5 = "UPDATE `info_transfusion_consent` SET
-        `date` = '$date',
-        `dr` = '$dr',
-        `dr_1` = '$dr_1',
-        `red` = '$red',
-        `platelets` = '$platelets',
-        `plasma`='$plasma',
-        `cryo`='$cryo',
+  $query5 = "UPDATE `highrisk_consent` SET
         `name_1` = '$name_1',
         `name_2` = '$name_2',
         `name_3` = '$name_3',
@@ -82,7 +68,7 @@ $plasma = $_POST['plasma'];
 
   
 }
-$sql6="SELECT * FROM `info_transfusion_consent` WHERE `id` = '$id' ";
+$sql6="SELECT * FROM `highrisk_consent` WHERE `id` = '$id' ";
 $data6=$conn->query($sql6);
 $res6=$data6->fetch_assoc();
 
@@ -97,20 +83,17 @@ $res6=$data6->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-    <style type="text/css">
-    tboody,
-    th,
-    td {
+        <style type="text/css">
+    table,th,td {
         border: 1px solid black;
     }
-
     input[type="text"] {
         padding: 10px;
         border: 2px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
         width: 200px;
-        height: 35px;
+        height: 40px;
     }
 
     input[type="text"]:focus {
@@ -244,14 +227,11 @@ $res6=$data6->fetch_assoc();
    <div class="container shadow-lg rounded">
    <div id="button">
     
-   <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
-        <a href="info_transfusion_consent_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger" id="dashboard">print</a>
+   <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint" id="dashboard">Dashboard</a>
+        <a href="highrisk_consent_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger" >print</a>
     </div>
-    <h1 class="text-center text-danger mt-3">
-            <?php echo $title['so'] ?>
-        </h1>
-    <h3 class="text-center text-dark my-3 ">INFORMED CONSENT FOR TRANSFUSION OF BLOOD / BLOOD COMPONENTS</h3>
-    <h3 class="text-center text-dark my-3 "> रक्त किंवा रक्तातील घटक बदलण्या बाबत संमती पात्र </h3>
+    <h3 class="text-center text-dark my-3 ">HIGHRISK CONSENT FORM </h3>
+    <h3 class="text-center text-dark my-3 "> अतिजोखीम संमती पात्र </h3>
     <div class="row" >
       <div class="col-md-3" >
           <label class="form-label">UHID No: <?php echo $res2['uhid'];?></label>
@@ -294,36 +274,45 @@ $res6=$data6->fetch_assoc();
         </div>
     </div> 
     <hr>
-   <form method="POST">
-    <div class="row">
-        <div class="col-9"></div>
-        <div class="col-3">
-            <p class="style10"> दिनांक <input type="date" name="date" value="<?php echo $res6['date'];?>">
-        </div>
-    </div>
-    <p class="style24"> My Physician Dr. <input type="text" name="dr" value="<?php echo $res6['dr'];?>"> has informed me that during
-        treatment .I need or may need transfusion of whole blood and / or Fresh Frozen Plasma , Packed Cell , Platelets
-        or Cryoprecipitate in interest of my health and proper medical care . </p>
-    <p class="style24">माझ्या डॉक्टर <input type="text" name="dr_1" value="<?php echo $res6['dr_1'];?>"> कडून मला सगण्यात आलेले आहे कि,
-        मला आता तात्काळ किंवा वैधकीय उपचार चालू असतांना संपूर्ण रक्त बदलणे किंवा फ्रेश फ्रोझन प्लाझ्मा , पॅकड सेल्स ,
-        प्लेटलेट्स किंवा क्रायोप्रिसिपिटेट बदलणे हे माझ्या स्वास्थ्य , आरोग्य आणि वैधकीय काळजीसाठी गरजेचे आहे.
-    <p>
+   
+    <p class="style11"> 1.	I have been explained about the procedure / Surgery to be performed in this hospital <p class="style11">
+<p class="style11">मला / आम्हाला रुग्णावर करण्यात येणाऱ्या उपचार / शस्त्रक्रिये बाबत माहिती देण्यात आलेली आहे.  <p class="style11">
+	
+	<p class="style11"> २. Ihave been explained about high risk involved in the above procedure / surgery  .  </p>
+	<p class="style11"> वरील प्रक्रये / शल्यक्रियेमध्ये  सहभागी झालेल्या उच्च जोखमी बद्दल मला समजावून सांगितले गेले आहे.  <p class="style11">
 
-    <p class="style24">Red Cell <input type="text"  name="red" value="<?php echo $res6['red'];?>" > &nbsp;For Bleeding or Low Hemoglobin
-    <p>
-    <p class="style24"> Platelets<input type="text" name="platelets" value="<?php echo $res6['platelets'];?>"> &nbsp;For Bleeding or Low Platelet count
-    <p>
+	<p class="style11"> 3.	I have been explained about treatment options and probable benefits and high risk involved in each by my doctor . <p class="style11">
+	
+	<p class="style11"> या उपचार / शास्त्र क्रियेचा पद्धतीस उपलब्ध असलेल्या पर्यायी उपचार पद्धती तसेच त्यामुळे होणारे फायदे तसेच धोके या बाबत डॉक्टरांनी मला / आम्हाला माहिती दिलेली आहे.  <p class="style11">
+	
+	<p class="style11"> ४.	I understand that patients condition can deteriorate further and there is a high risk involved during or after the procedure / surgery including mortality .  <p class="style11">
+	
+	<p class="style11"> या उपचार / शस्त्रक्रियेच्या दरम्यान किंवा या उपचार / शस्त्रक्रियेच्या पद्धतीच्या नंतर रुग्णाची तब्येत आणखी खालावू शकते व त्यामुळे मृत्यू सुद्धा उध्दभवू शकतो याची मला / आम्हाला कल्पना आहे. .  <p class="style11">
+		
+		<p class="style11"> ५. I also have been explained that the patient may need prolong ICU/ICCU/PICU care which may include use of ventilator,intra aortic balloon pulsation etc. with an additional mortality and morbidity. </span> <p>		
+		<p class="style10 style11"> मला / आम्हाला / अशीही जाणीव करून देण्यात आलेली आहे कि , या उपचार / शस्त्रक्रियेच्या पद्धतीच्या दरम्यान रुग्णास दीर्घकाळ आय. सी. यु . / आय .सी.सी.यु . / एन .आय .सी .यु . मध्ये राहावे लागेल ज्यामध्ये व्हेंटिलेटर व इतर आधुनिक यंत्राचा वापर करावा लागेल ज्यामध्ये मृत्यूचा धोका उध्दभवू शकतो . .  <p class="style11">
+		
+	<p class="style11"> ६.	I am ready for getiing investigation , administration of medications , Injections , IV fluds , blood and blood products or any other advice suggested by doctor  .<p class="style11">	
+	<p class="style11"> डॉक्टरांकडून सांगण्यात आलेल्या सर्व तपासण्या ,औषधउपचार ,इंजेक्शन , रक्त व रक्तघटक बद्धल करण्यास मी तयार आहे. <p class="style11">
+	
+<p class="style11"> ७.	I have been explained that medical condition of patient is grave and management involves high risk that includes possibilities of loss of life , incapacitation or long / short term disabilities.<p class="style11">
 
-    <p class="style24"> Plasma<input type="text" name="plasma" value="<?php echo $res6['plasma'];?>"> &nbsp;For Restoring blood volume or providing
-        factors
-    <p>
-    <p class="style24">Cryoprecipitate<input type="text" name="cryo" value="<?php echo $res6['cryo'];?>"> &nbsp;For Special clotting factors
-    <p>
+<p class="style11"> रुग्णाची तब्येत गंभीर असल्या बाबत मला कल्पना देण्यात अली असून त्याचे उपचार करताना मृत्यू , असमर्थता किंवा अपंगत्व येण्याची शक्यता आहे याची मला / आम्हाला जाणीव आहे.  <p class="style11">
 
-    <p class="style10"> धन्यवाद ...!
+<p class="style11"> ८.	I have been explained about approximate expected expenditure. <p class="style11">
 
+<p class="style11"> उपचारासाठी लागणाऱ्या अपेक्षित खर्चा बाबत मला / आम्हाला कल्पना देण्यात आलेली आहे.  <p>
 
-    <table class="table border border-dark">
+<p class="style11"> 9.	I have been given opportunity to ask question about patient's condition , treatment details etc.All question's answers are answered satisfactorily. <p class="style11">
+
+<p class="style11"> रुग्णाच्या शारीरिक स्थिती बाबत तसेच त्याच्या आजार बाबत मला प्रश्न विचारण्याची संधी देण्यात आलेली आहे व त्या संबंधित सर्व शंकाचे निरसन करण्यात आलेले आहे. <p>
+
+<p class="style11"> 10.	I hereby give consent for the above Treatment / Surgery / Procedure out of my own free will. <p class="style11">
+
+<p class="style11"> मी स्वखुशीने माझ्या रुग्णाच्या उपचार / शास्त्रक्रियेस व संबंधित प्रक्रियेस संमती देत आहे .  <p>
+
+<form method="POST">
+<table class="table border border-dark">
                         <tr>
                             <th></th>
                             <th><label class="style12">Signature/ सही </label> </th>
@@ -369,7 +358,7 @@ $res6=$data6->fetch_assoc();
                         </tr>
                     </table>
                     <button class="btn btn-primary d-flex mx-auto" name="save">save</button>
-        </form>
+</form>
    </div>
 </body>
 

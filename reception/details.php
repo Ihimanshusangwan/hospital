@@ -52,21 +52,21 @@ require("../admin/connect.php");
         <button class="btn btn-primary m-2 multi-reference" id="details" destination="opd_bill"
           cookieName='opd-referer'>OPD Bill</button>
         <button class="btn btn-primary m-2 multi-reference" id="details" destination="more_forms"
-          cookieName='other-form-referer'>Other Forms</button>
+          cookieName='other-form-referer'>More Forms</button>
         <?php
         if ($row['is_admited'] == 1) { ?>
 
           <button class="btn btn-primary m-2 multi-reference" id="details" destination="ipd_bill"
             cookieName='ipd-referer'>IPD Bill</button>
           <?php if ($row['is_eye'] == 1) { ?>
-            <button class="btn btn-primary m-2 multi-reference" id="details" destination="consent"
-              cookieName='consent-referer'>Eye Consent Forms</button>
+            <!-- <button class="btn btn-primary m-2 multi-reference" id="details" destination="consent"
+              cookieName='consent-referer'>Eye Consent Forms</button> -->
             <button class="btn btn-primary m-2 multi-reference" id="../reception/details" destination="../staff/eye_forms"
               cookieName='eye-referer'>Eye Forms</button>
           <?php } ?>
-          <?php if ($row['is_ortho'] == 1) { ?>
+          <!-- <?php if ($row['is_ortho'] == 1) { ?>
             <button class="btn btn-primary m-2 multi-reference" id="details" destination="ortho_consent"
-              cookieName='ortho-consent-referer'>Ortho Consent Forms</button>
+              cookieName='ortho-consent-referer'>Ortho Consent Forms</button> -->
             <button class="btn btn-primary m-2 multi-reference" id="../reception/details" destination="../staff/ortho_forms"
               cookieName='ortho-referer'>Ortho Forms</button>
           <?php } ?>

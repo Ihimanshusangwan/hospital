@@ -88,209 +88,213 @@ if (isset($_POST['submit'])) {
 
     // If no errors, insert data into database
     if (empty($nameErr)) {
+        $opd_no=1;
+        $sql = "select opd_no from opd_tracker where date='$reg_date'";
+        $result = $conn->query($sql);
+        if($result->num_rows >0){
+            $row=$result->fetch_assoc();
+            $opd_no = $row['opd_no'] + 1;
+            
+        $sql = "update opd_tracker set opd_no = $opd_no where date='$reg_date'";
+        $conn->query($sql);
+        }else{
+      
+          $sql = "insert into opd_tracker(date,opd_no) values('$reg_date',1)";
+          $conn->query($sql);
+        }
 
-      $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,is_eye,is_ortho)
-      VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho)";
+        $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,is_eye,is_ortho,opd_no)
+        VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho,$opd_no)";
 
       if ($conn->query($sql) === TRUE) {
         $inserted_patient_id = $conn->insert_id;
-        $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp) VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
-        $conn->query($sql);
-        $sql1 = "INSERT INTO p_insure(id) VALUES($inserted_patient_id);";
-        $conn->query($sql1);
+              $sql = "INSERT INTO patient_info(patient_id,weight,pulse,bp,temp) VALUES($inserted_patient_id,'$weight','$pulse','$bp','$temp');";
+              $conn->query($sql);
+              $sql1 = "INSERT INTO p_insure(id) VALUES($inserted_patient_id);";
+              $conn->query($sql1);
 
-        $sql2 = "INSERT INTO p_init(id) VALUES($inserted_patient_id);";
-        $conn->query($sql2);
+              $sql2 = "INSERT INTO p_init(id) VALUES($inserted_patient_id);";
+              $conn->query($sql2);
 
-        $sql3 = "INSERT INTO p_general(id) VALUES($inserted_patient_id);";
-        $conn->query($sql3);
-        $sql1 = "INSERT INTO ortho_p_insure(id) VALUES($inserted_patient_id);";
-        $conn->query($sql1);
+              $sql3 = "INSERT INTO p_general(id) VALUES($inserted_patient_id);";
+              $conn->query($sql3);
+              $sql1 = "INSERT INTO ortho_p_insure(id) VALUES($inserted_patient_id);";
+              $conn->query($sql1);
 
-        $sql2 = "INSERT INTO ortho_p_init(id) VALUES($inserted_patient_id);";
-        $conn->query($sql2);
+              $sql2 = "INSERT INTO ortho_p_init(id) VALUES($inserted_patient_id);";
+              $conn->query($sql2);
 
-        $sql3 = "INSERT INTO ortho_p_general(id) VALUES($inserted_patient_id);";
-        $conn->query($sql3);
-        $sql3 = "INSERT INTO ortho_initial_counselling(patient_id) VALUES($inserted_patient_id);";
-        $conn->query($sql3);
-        $sql3 = "INSERT INTO ortho_pre_op_checklist(patient_id) VALUES($inserted_patient_id);";
-        $conn->query($sql3);
-        $sql3 = "INSERT INTO eye_pre_op_checklist(patient_id) VALUES($inserted_patient_id);";
-        $conn->query($sql3);
+              $sql3 = "INSERT INTO ortho_p_general(id) VALUES($inserted_patient_id);";
+              $conn->query($sql3);
+              $sql3 = "INSERT INTO ortho_initial_counselling(patient_id) VALUES($inserted_patient_id);";
+              $conn->query($sql3);
+              $sql3 = "INSERT INTO ortho_pre_op_checklist(patient_id) VALUES($inserted_patient_id);";
+              $conn->query($sql3);
+              $sql3 = "INSERT INTO eye_pre_op_checklist(patient_id) VALUES($inserted_patient_id);";
+              $conn->query($sql3);
 
+              $sql4 = "INSERT INTO ipd_bill1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql4);
 
-        $sql4 = "INSERT INTO ipd_bill1(id) VALUES($inserted_patient_id);";
-        $conn->query($sql4);
+              $sql5 = "INSERT INTO ipd_bill2(id) VALUES($inserted_patient_id);";
+              $conn->query($sql5);
 
-        $sql5 = "INSERT INTO ipd_bill2(id) VALUES($inserted_patient_id);";
-        $conn->query($sql5);
+              $sql6 = "INSERT INTO p_log(id) VALUES($inserted_patient_id);";
+              $conn->query($sql6);
 
-        $sql6 = "INSERT INTO p_log(id,username,password) VALUES($inserted_patient_id,'$mobile','$mobile');";
-        $conn->query($sql6);
+              $sql7 = "INSERT INTO discharge(id) VALUES($inserted_patient_id);";
+              $conn->query($sql7);
 
-        $sql7 = "INSERT INTO discharge(id) VALUES($inserted_patient_id);";
-        $conn->query($sql7);
+              $sql8 = "INSERT INTO vr_surgery(id) VALUES($inserted_patient_id);";
+              $conn->query($sql8);
 
-        $sql8 = "INSERT INTO vr_surgery(id) VALUES($inserted_patient_id);";
-        $conn->query($sql8);
+              $sql9 = "INSERT INTO ocu(id) VALUES($inserted_patient_id);";
+              $conn->query($sql9);
+              $sql9 = "INSERT INTO cor1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql9);
+              $sql10 = "INSERT INTO counsel(id) VALUES($inserted_patient_id);";
+              $conn->query($sql10);
 
-        $sql9 = "INSERT INTO ocu(id) VALUES($inserted_patient_id);";
-        $conn->query($sql9);
-        $sql9 = "INSERT INTO cor1(id) VALUES($inserted_patient_id);";
-        $conn->query($sql9);
+              $sql11 = "INSERT INTO blood(id) VALUES($inserted_patient_id);";
+              $conn->query($sql11);
 
-        $sql10 = "INSERT INTO counsel(id) VALUES($inserted_patient_id);";
-        $conn->query($sql10);
+              $sql12 = "INSERT INTO op(id) VALUES($inserted_patient_id);";
+              $conn->query($sql12);
 
-        $sql11 = "INSERT INTO blood(id) VALUES($inserted_patient_id);";
-        $conn->query($sql11);
+              $sql13 = "INSERT INTO ana(id) VALUES($inserted_patient_id);";
+              $conn->query($sql13);
 
-        $sql12 = "INSERT INTO op(id) VALUES($inserted_patient_id);";
-        $conn->query($sql12);
+              $sql14 = "INSERT INTO acq(id) VALUES($inserted_patient_id);";
+              $conn->query($sql14);
 
-        $sql13 = "INSERT INTO ana(id) VALUES($inserted_patient_id);";
-        $conn->query($sql13);
+              $sql15 = "INSERT INTO nutritional_ass(id) VALUES($inserted_patient_id);";
+              $conn->query($sql15);
 
+              $sql16 = "INSERT INTO histopath(id) VALUES($inserted_patient_id);";
+              $conn->query($sql16);
 
-        $sql14 = "INSERT INTO acq(id) VALUES($inserted_patient_id);";
-        $conn->query($sql14);
+              $sql17 = "INSERT INTO handover(id) VALUES($inserted_patient_id);";
+              $conn->query($sql17);
 
-        $sql15 = "INSERT INTO nutritional_ass(id) VALUES($inserted_patient_id);";
-        $conn->query($sql15);
+              $sql18 = "INSERT INTO fdata(id) VALUES($inserted_patient_id);";
+              $conn->query($sql18);
 
-        $sql16 = "INSERT INTO histopath(id) VALUES($inserted_patient_id);";
-        $conn->query($sql16);
+              $sql19 = "INSERT INTO mlc(id) VALUES($inserted_patient_id);";
+              $conn->query($sql19);
 
-        $sql17 = "INSERT INTO handover(id) VALUES($inserted_patient_id);";
-        $conn->query($sql17);
+              $sql20 = "INSERT INTO ortho_discharge(id) VALUES($inserted_patient_id);";
+              $conn->query($sql20);
+              $sql21 = "INSERT INTO case_audit_sheet(id) VALUES($inserted_patient_id);";
+              $conn->query($sql21);
 
-        $sql18 = "INSERT INTO fdata(id) VALUES($inserted_patient_id);";
-        $conn->query($sql18);
+              $sql22 = "INSERT INTO drug_administration(id) VALUES($inserted_patient_id);";
+              $conn->query($sql22);
 
-        $sql19 = "INSERT INTO mlc(id) VALUES($inserted_patient_id);";
-        $conn->query($sql19);
-
-        $sql20 = "INSERT INTO ortho_discharge(id) VALUES($inserted_patient_id);";
-        $conn->query($sql20);
-        $sql21 = "INSERT INTO case_audit_sheet(id) VALUES($inserted_patient_id);";
-        $conn->query($sql21);
-
-        $sql22 = "INSERT INTO drug_administration(id) VALUES($inserted_patient_id);";
-        $conn->query($sql22);
-
-        $sql23 = "INSERT INTO nurses_daily_record(id) VALUES($inserted_patient_id);";
-        $conn->query($sql23);
-
-        $sql25 = "INSERT INTO nurse_intial_assesment(id) VALUES($inserted_patient_id);";
-        $conn->query($sql25);
-        $sql25 = "INSERT INTO doctor_initail_assesment(id) VALUES($inserted_patient_id);";
-        $conn->query($sql25);
-
-        $sql26 = "INSERT INTO opto_ascan(id) VALUES($inserted_patient_id);";
-        $conn->query($sql26);
-
-        $sql27 = "INSERT INTO opto_examination(id) VALUES($inserted_patient_id);";
-        $conn->query($sql27);
-
-        $sql28 = "INSERT INTO opto_surgery(id) VALUES($inserted_patient_id);";
-        $conn->query($sql28);
-
-        $sql29 = "INSERT INTO cc_glass_rx(id) VALUES($inserted_patient_id);";
-        $conn->query($sql29);
-
-        $sql29 = "INSERT INTO pres_back(id) VALUES($inserted_patient_id);";
-        $conn->query($sql29);
-
-        $sql30 = "INSERT INTO hiv_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql30);
-
-        $sql31 = "INSERT INTO post_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql31);
-
-        $sql32 = "INSERT INTO general_info_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql32);
-
-        $sql33 = "INSERT INTO inform_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql33);
-
-        $sql34 = "INSERT INTO info_sur_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql34);
-
-        $sql35 = "INSERT INTO pre_operative_anesth(id) VALUES($inserted_patient_id);";
-        $conn->query($sql35);
-        $sql30 = "INSERT INTO minor_pro_consent (id) VALUES($inserted_patient_id);";
-        $conn->query($sql30);
-
-        $sql31 = "INSERT INTO ap_for_document(id) VALUES($inserted_patient_id);";
-        $conn->query($sql31);
-
-        $sql32 = "INSERT INTO anesthesia_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql32);
-
-        $sql33 = "INSERT INTO discharge_dama_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql33);
-
-        $sql35 = "INSERT INTO ref_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql35);
-
-        $sql36 = "INSERT INTO highrisk_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql36);
-
-        $sql37 = "INSERT INTO info_transfusion_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql37);
-
-        $sql38 = "INSERT INTO initial_counselling(id) VALUES($inserted_patient_id);";
-        $conn->query($sql38);
-
-        $sql39 = "INSERT INTO rate_charges(id) VALUES($inserted_patient_id);";
-        $conn->query($sql39);
-
-        $sql40 = "INSERT INTO general_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql40);
+              $sql23 = "INSERT INTO nurses_daily_record(id) VALUES($inserted_patient_id);";
+              $conn->query($sql23);
 
 
-        $sql44 = "INSERT INTO permission(id) VALUES($inserted_patient_id);";
-        $conn->query($sql44);
+              $sql25 = "INSERT INTO nurse_intial_assesment(id) VALUES($inserted_patient_id);";
+              $conn->query($sql25);
 
-        $sql42 = "INSERT INTO feedback_english(id) VALUES($inserted_patient_id);";
-        $conn->query($sql42);
+              $sql25 = "INSERT INTO doctor_initail_assesment(id) VALUES($inserted_patient_id);";
+              $conn->query($sql25);
 
-        $sql43 = "INSERT INTO feedback_marthi(id) VALUES($inserted_patient_id);";
-        $conn->query($sql43);
+              $sql26 = "INSERT INTO opto_ascan(id) VALUES($inserted_patient_id);";
+              $conn->query($sql26);
 
-        $sql41 = "INSERT INTO room_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql41);
+              $sql27 = "INSERT INTO opto_examination(id) VALUES($inserted_patient_id);";
+              $conn->query($sql27);
 
-        $sql42 = "INSERT INTO operation_record(id) VALUES($inserted_patient_id);";
-        $conn->query($sql42);
-        $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql44);
+              $sql28 = "INSERT INTO opto_surgery(id) VALUES($inserted_patient_id);";
+              $conn->query($sql28);
 
-        $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
-        $conn->query($sql45);
-        $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
-        $conn->query($sql46);
+              $sql29 = "INSERT INTO cc_glass_rx(id) VALUES($inserted_patient_id);";
+              $conn->query($sql29);
+              $sql30 = "INSERT INTO hiv_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql30);
 
+              $sql31 = "INSERT INTO post_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql31);
 
-        $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql47);
-        $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql48);
-        $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql49);
-        $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql50);
-        $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql51);
-        $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql52);
-        $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql53);
-        $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
-        $conn->query($sql54);
-        
-        $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $sql32 = "INSERT INTO general_info_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql32);
+
+              $sql33 = "INSERT INTO inform_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql33);
+
+              $sql34 = "INSERT INTO info_sur_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql34);
+
+              $sql35 = "INSERT INTO pre_operative_anesth(id) VALUES($inserted_patient_id);";
+              $conn->query($sql35);
+              $sql30 = "INSERT INTO minor_pro_consent (id) VALUES($inserted_patient_id);";
+              $conn->query($sql30);
+
+              $sql31 = "INSERT INTO ap_for_document(id) VALUES($inserted_patient_id);";
+              $conn->query($sql31);
+
+              $sql32 = "INSERT INTO anesthesia_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql32);
+
+              $sql33 = "INSERT INTO discharge_dama_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql33);
+
+              $sql35 = "INSERT INTO ref_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql35);
+
+              $sql36= "INSERT INTO highrisk_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql36);
+              
+              $sql37 = "INSERT INTO info_transfusion_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql37);
+              
+              $sql38 = "INSERT INTO initial_counselling(id) VALUES($inserted_patient_id);";
+              $conn->query($sql38);
+              
+              $sql39 = "INSERT INTO rate_charges(id) VALUES($inserted_patient_id);";
+              $conn->query($sql39);
+              
+              $sql40 = "INSERT INTO general_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql40);
+                              
+                              
+              $sql41 = "INSERT INTO room_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql41);
+
+              $sql44 = "INSERT INTO permission(id) VALUES($inserted_patient_id);";
+              $conn->query($sql44);
+
+              $sql42 = "INSERT INTO feedback_english(id) VALUES($inserted_patient_id);";
+              $conn->query($sql42);
+
+              $sql43 = "INSERT INTO feedback_marthi(id) VALUES($inserted_patient_id);";
+              $conn->query($sql43);
+
+              $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql44);
+
+              $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql45);
+              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $conn->query($sql46);
+              $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql47);
+              $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql48);
+              $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql49);
+              $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql50);
+              $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql51);
+              $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql52);
+              $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql53);
+              $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql54);
+              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
               $conn->query($sql55);
               $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
               $conn->query($sql56);
@@ -305,6 +309,10 @@ if (isset($_POST['submit'])) {
               $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
               $conn->query($sql62);
 
+              
+
+              $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql29);
        
         
         function generateRandomID($fullName) {
@@ -420,7 +428,7 @@ if (isset($_POST['submit'])) {
                             <div class="form-check col-3">
                                 <label for="reg_date">Reg Date:</label>
                                 <input type="date" class="form-control" placeholder="reg_date" id="reg_date"
-                                    name="reg_date" value="<?php echo $res['reg_date'];?>"  />
+                                    name="reg_date" value="<?php echo date('Y-m-d'); ?>"  />
                             </div>
                             <div class="form-check col-3">
                                 <label for="sex">Sex:</label>

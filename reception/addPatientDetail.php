@@ -88,9 +88,23 @@ $title = $data->fetch_assoc();
 
           // If no errors, insert data into database
           if (empty($nameErr)) {
+            $opd_no=1;
+            $sql = "select opd_no from opd_tracker where date='$reg_date'";
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+                $row=$result->fetch_assoc();
+                $opd_no = $row['opd_no'] + 1;
+                
+            $sql = "update opd_tracker set opd_no = $opd_no where date='$reg_date'";
+            $conn->query($sql);
+            }else{
+          
+              $sql = "insert into opd_tracker(date,opd_no) values('$reg_date',1)";
+              $conn->query($sql);
+            }
 
-            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,is_eye,is_ortho)
-            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho)";
+            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,type_of_visit,name_pwp,address_pwp,taluka_pwp,district_pwp,age_pwp,relation,sex_pwp,mobile_pwp,referred_by,patient_complaints,is_eye,is_ortho,opd_no)
+            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$tov', '$name_pwp', '$address_pwp', '$taluka_pwp', '$district_pwp', '$age_pwp', '$relation','$sex_pwp','$mobile_pwp','$referred_by','$patient_complaints',$is_eye,$is_ortho,$opd_no)";
 
             if ($conn->query($sql) === TRUE) {
               $inserted_patient_id = $conn->insert_id;
@@ -152,9 +166,7 @@ $title = $data->fetch_assoc();
 
               $sql14 = "INSERT INTO acq(id) VALUES($inserted_patient_id);";
               $conn->query($sql14);
-              $day = date('d');
-              $month = date('m');
-              $year = date('Y');
+             
 
               $sql15 = "INSERT INTO nutritional_ass(id) VALUES($inserted_patient_id);";
               $conn->query($sql15);

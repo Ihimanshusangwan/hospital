@@ -99,7 +99,7 @@ document.addEventListener("click", function (event) {
       selectElement3.value = data.night;
       var str = row.children[6].children[0].getAttribute("name");
       var num = str[str.length - 1];
-      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
+      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा  अगोदर">जेवणा  अगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
       row.children[5].children[0].value = data.eat;
       row.children[6].children[0].value = data.days;
       row.children[7].children[0].value = data.quantity;
@@ -195,11 +195,17 @@ document.addEventListener("click", function (event) {
       selectElement1.value = data.morning;
       selectElement2.value = data.afternoon;
       selectElement3.value = data.night;
+      
+      var str = row.children[6].children[0].getAttribute("name");
+      var num = str[str.length - 1];
 
-      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा आगोदर">जेवणा आगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
+      row.children[5].innerHTML = `<select name="eat_${num}"><option value="जेवणा नंतर">जेवणा नंतर</option><option value="जेवणा  अगोदर">जेवणा  अगोदर</option><option value='जिभे खाली'>जिभे खाली</option><option value='रेक्टल मध्ये'>रेक्टल मध्येे</option><option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option></select>`;
       row.children[5].children[0].value = data.eat;
       row.children[6].children[0].value = data.days;
       row.children[7].children[0].value = data.quantity;
+      row.children[7].children[0].onclick = function() {
+        calcQyt(row.children[7].children[0]);
+    };
     }
     // Fill the input or textarea with the selected row's value
     inputOrTextarea.value = dropdownRow.textContent;

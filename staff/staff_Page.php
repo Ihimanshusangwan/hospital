@@ -182,7 +182,7 @@ $title = $data->fetch_assoc();
                 <table class="table table-bordered table-striped" id="table">
                     <thead class="table-primary">
                         <tr>
-                            <th>PATIENT ID</th>
+                            <th>OPD NO.</th>
                             <th>REG DATE</th>
                             <th>NAME</th>
                             <th>SEX</th>
@@ -239,7 +239,7 @@ $title = $data->fetch_assoc();
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
-                            echo '<td>' . $res['id'] . '</td>';
+                            echo '<td>' . $res['opd_no'] . '</td>';
                             echo '<td>' . $res['reg_date'] . '</td>';
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';

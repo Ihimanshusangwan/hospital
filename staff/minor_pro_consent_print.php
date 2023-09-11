@@ -2,6 +2,7 @@
 $id = $_GET['id'];
 require("../admin/connect.php");
 session_start();
+error_reporting(0);
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
@@ -26,6 +27,7 @@ $res12=$data12->fetch_assoc();
 $inp=$res12['inp'];
 $inp_arr=json_decode($inp,true);
 $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
+
 
 ?>
 

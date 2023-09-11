@@ -111,14 +111,15 @@ $res2 = $data2->fetch_assoc();
             <div class="row">
                 <div class="col-12 ">
                     <?php
-                    $sql5 = "SELECT * FROM `cc_glass_rx`  WHERE `id`= '$id'";
+                    $sql5 = "SELECT * FROM `cc_glass_rx1`  WHERE `id`= $id";
                     $data5 = $conn->query($sql5);
                     $result5 = $data5->fetch_assoc();
+                    error_reporting(0);
                     // print_r($result5);
                     ?>
 
                     <div class="row">
-                        <div class="col"><strong>Glass details:</strong></div>
+                        <div class="col"><strong>TGP:</strong></div>
                         <div class="col"><strong>RE:</strong></div>
                         <div class="col offset-1"><strong>LE:</strong></div>
                     </div>
@@ -142,7 +143,7 @@ $res2 = $data2->fetch_assoc();
                                 <th scope="col">DIST</th>
                                 <?php for ($i = 1; $i < 9; $i++) {
                                     echo <<<data
-                                    <td>{$result5["dist_input_$i"]}</td>
+                                    <td>{$result5["dist4_input_$i"]}</td>
 data;
                                 } ?>
 
@@ -151,7 +152,7 @@ data;
                                 <th scope="col">NEAR</th>
                                 <?php for ($i = 1; $i < 9; $i++) {
                                     echo <<<data
-                                    <td>{$result5["near_input_$i"]}</td>
+                                    <td>{$result5["near4_input_$i"]}</td>
 data;
                                 } ?>
                             </tr>
@@ -160,19 +161,19 @@ data;
                     <div class="row">
                     <div class="col-3">
                         <strong>Glass Type:</strong>
-                        <?php echo $result5['glass_type']; ?>
+                        <?php echo $result5['glass4_type']; ?>
                     </div>
                     <div class="col-3">
                         <strong>Glass Color:</strong>
-                        <?php echo $result5['glass_colour']; ?>
+                        <?php echo $result5['glass4_colour']; ?>
                     </div>
                     <div class="col-3">
                         <strong>Glass Use:</strong>
-                        <?php echo $result5['glass_use']; ?>
+                        <?php echo $result5['glass4_use']; ?>
                     </div>
                     <div class="col-3">
                         <strong>PD:</label></strong>
-                            <?php echo $result5['pd']; ?>
+                            <?php echo $result5['pd4']; ?>
                     </div>
                 </div>
 

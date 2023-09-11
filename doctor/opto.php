@@ -171,11 +171,19 @@ error_reporting(0);
                         +Rx</a>
                     <a class="btn btn-primary" href="ascan_print.php?id=<?php echo $id; ?>">A-Scan</a>
                 </div>
+                <div class="btn-group my-2" role="group">
+                    <!-- 10 Buttons at the top -->
+                    <a class="btn btn-primary" href="ar_rx_print.php?id=<?php echo $id; ?>">AR +Rx</a>
+                    <a class="btn btn-primary" href="tyclo_rx_print.php?id=<?php echo $id; ?>">Tyclo +Rx</a>
+                    <a class="btn btn-primary" href="pgp_rx_print.php?id=<?php echo $id; ?>">PGP +Rx</a>
+                    <a class="btn btn-primary" href="tgp_rx_print.php?id=<?php echo $id; ?>">TGP +Rx</a>
+                </div>
             </div>
         </div>
     </div>
 
     <a href="doctorPage.php" class="btn btn-success m-2">Dashboard</a>
+    <a href="view2.php?id=<?php echo $id; ?>" class="btn btn-primary m-2">View </a>
     <div class="container">
 
         <div class="row justify-content-center">

@@ -8,14 +8,14 @@ if (!isset($_SESSION['doctor_id']) && !isset($_SESSION['doctor_type'])) {
     header("location:login.php");
 }
 require("../admin/connect.php");
-$doc_id=$_SESSION['doctor_id'];
-if(isset($_POST['review'])){
-    $inp_id=$_POST['inp_id'];
-  $sql="UPDATE `patient_records` SET `review`='1' where `id`='$inp_id'";
-  $data=$conn->query($sql);
-  if(!$data){
-    echo '<div class="alert alert-danger " role="alert"> Something went wrong!</div>';
-  }
+$doc_id = $_SESSION['doctor_id'];
+if (isset($_POST['review'])) {
+    $inp_id = $_POST['inp_id'];
+    $sql = "UPDATE `patient_records` SET `review`='1' where `id`='$inp_id'";
+    $data = $conn->query($sql);
+    if (!$data) {
+        echo '<div class="alert alert-danger " role="alert"> Something went wrong!</div>';
+    }
 }
 
 
@@ -33,7 +33,7 @@ $title = $data->fetch_assoc();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -72,16 +72,16 @@ $title = $data->fetch_assoc();
                 </h3>
             </a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
-             <form class="form-inline" action="" method="POST">
+            <form class="form-inline" action="" method="POST">
                 <a class="navbar-brand btn btn-warning" href="image_gallery.php">Image Gallery</a>
-                <a class="navbar-brand btn btn-warning" href="tobe_review.php?id=<?php echo $doc_id;?>">Review Table</a>
+                <a class="navbar-brand btn btn-warning" href="tobe_review.php?id=<?php echo $doc_id; ?>">Review Table</a>
                 <a class="navbar-brand btn btn-warning" href="template.php">Manage Templates</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">Logout</button>
                 </a>
             </form>
-           
-           
+
+
         </nav>
         <div>
             <hr style="height:15px;border-width:0;color:rgb(148, 28, 28);background-color:rgb(148, 30, 30)">
@@ -94,7 +94,7 @@ $title = $data->fetch_assoc();
                 <table class="table table-bordered table-striped" id="table">
                     <thead class="table-primary">
                         <tr>
-                            <th>PATIENT ID</th>
+                            <th>OPD NO.</th>
                             <th>REG DATE</th>
                             <th>NAME</th>
                             <th>SEX</th>
@@ -136,8 +136,9 @@ $title = $data->fetch_assoc();
                         $data = $conn->query($sql);
 
                         while ($res = $data->fetch_assoc()) {
-                            echo '<tr>';
-                            echo '<td>' . $res['id'] . '</td>';
+                           echo ($res['is_viewed'])?'<tr class="table-success">':'<tr>';
+                          
+                            echo '<td>' . $res['opd_no'] . '</td>';
                             echo '<td>' . $res['reg_date'] . '</td>';
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
@@ -150,15 +151,14 @@ $title = $data->fetch_assoc();
 
                                 echo '<td>Not Refered</td>';
                             }
-                             echo '<form method="POST"><td><button class="btn btn-primary mx-auto d-flex"  name="review" >Review</button></td>
-                                <input type="hidden" name="inp_id" value="'.$res['id'].'"></form>';
+                            echo '<form method="POST"><td><button class="btn btn-primary mx-auto d-flex"  name="review" >Review</button></td>
+                                <input type="hidden" name="inp_id" value="' . $res['id'] . '"></form>';
 
                             echo '<td><a href="view.php?id=' . $res['id'] . '" class="btn btn-primary">View</a></td>';
                             if ($res['is_admited'] == 1) {
                                 echo '<td><a href="OT.php?id=' . $res['id'] . '" class="btn btn-primary">OT Notes</a></td>';
 
-                            } 
-                            else {
+                            } else {
                                 echo '<td><button class="btn btn-primary" disabled>OT Notes</button></td>';
                             }
                             if ($res['type_of_visit'] == 'Eye') {
@@ -184,8 +184,12 @@ $title = $data->fetch_assoc();
     </section>
     <script src="chat.js"></script>
 
+
+
     <script>
         $(document).ready(function () {
+            var today = new Date();
+            var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
             var table = $('#table').DataTable({
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -195,6 +199,9 @@ $title = $data->fetch_assoc();
                         header.removeClass('sorting_asc sorting_desc sorting');
                         header.addClass('no-sort');
 
+                        if (column.index() === 1) {
+                            column.search(formattedDate).draw();
+                        }
                         $('input', header).on('keyup change clear', function () {
                             if (column.search() !== this.value) {
                                 column.search(this.value).draw();

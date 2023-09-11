@@ -66,7 +66,7 @@ $data = $conn->query($sql);
                 <table class="table table-bordered table-striped" id="table-all" mt-2>
                     <thead class="table-dark">
                         <tr>
-                            <th>PATIENT ID</th>
+                            <th>OPD NO.</th>
                             <th>NAME</th>
                             <th>SEX</th>
                             <th>AGE</th>
@@ -84,7 +84,7 @@ $data = $conn->query($sql);
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
-                            echo '<td>' . $res['id'] . '</td>';
+                            echo '<td>' . $res['opd_no'] . '</td>';
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';

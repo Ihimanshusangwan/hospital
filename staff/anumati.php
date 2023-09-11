@@ -191,7 +191,7 @@ tr {
   <div class="container shadow-lg rounded">
    
 <div id="button">
-            <a href="consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
+            <a href="eye_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
                 id="dashboard">Dashboard</a>
             <a href="anumati_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger"
                 id="dashboard">Print </a>

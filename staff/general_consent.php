@@ -226,7 +226,7 @@ $res6=$data6->fetch_assoc();
     <div class="container shadow-lg rounded">
 
         <div id="button">
-            <a href="ortho_consent.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
+            <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 noprint"
                 id="dashboard">Dashboard</a>
             <a href="general_consent_print.php?id=<?php echo $id; ?>" class="btn btn-info mt-4 btn-danger"
                 id="dashboard">Print</a>

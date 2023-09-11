@@ -324,8 +324,7 @@ $title = $data->fetch_assoc();
               $conn->query($sql57);
               $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
               $conn->query($sql58);
-              $sql59= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
-              $conn->query($sql59);
+           
               $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
               $conn->query($sql60);
               $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";

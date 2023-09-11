@@ -218,7 +218,7 @@ table, th, td {
     <form action="" method="post">
     <div class="container">
         <div class="col p-4 m-4 shadow-lg rounded">
-        <a class="btn btn-primary" href="consent.php?id=<?php echo $id; ?>">Dashboard</a>
+        <a class="btn btn-primary" href="eye_forms.php?id=<?php echo $id; ?>">Dashboard</a>
            <a href="info_surgery_consent.php?id=<?php echo $id; ?>" class=" btn btn-success"
             id="dashboard">Print</a>
             <div class="row">

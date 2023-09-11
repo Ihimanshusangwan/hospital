@@ -208,7 +208,7 @@ if (isset($_POST['template_btn'])) {
         </h1>
         <div class="row">
             <div class="col-6">
-                <a href="doctorPage.php" class="btn btn-primary m-2">Dashboard</a>
+                <a href="opto.php?id=<?php echo $id;?>" class="btn btn-primary m-2">Dashboard</a>
                 <a href="image_gallery.php" class="btn btn-primary m-2">Image Gallery</a>
 
                 <button class="btn btn-primary m-2 receipt" type="button">Print</button>

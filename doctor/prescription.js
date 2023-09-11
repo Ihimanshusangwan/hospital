@@ -96,6 +96,10 @@ function addItem1() {
   row.innerHTML = html;
   change_event_adder();
   liveFetchElements2();
+   const scrollAmount = 100; 
+    const currentScrollY = window.scrollY;
+    const newScrollY = currentScrollY + scrollAmount;
+    window.scrollTo(0, newScrollY);
 }
 
 function change1(btn) {
@@ -243,7 +247,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
@@ -321,7 +325,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
@@ -399,7 +403,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
@@ -476,7 +480,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
@@ -553,7 +557,8 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
@@ -631,7 +636,7 @@ function change1(btn) {
     html += "<td>";
     html += "<select name='eat_" + id + "'>";
     html += "<option value='जेवणा नंतर'>जेवणा नंतर</option>";
-    html += "<option value='जेवणा आगोदर'>जेवणा आगोदर</option>";
+    html += "<option value='जेवणा  अगोदर'>जेवणा  अगोदर</option>";
     html += "<option value='जिभे खाली'>जिभे खाली</option>";
     html += "<option value='रेक्टल मध्ये'>रेक्टल मध्येे</option>";
     html += "<option value='आठवड्यातून एकदा'>आठवड्यातून एकदा</option>";
