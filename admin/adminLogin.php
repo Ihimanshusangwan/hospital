@@ -6,7 +6,7 @@ if (isset($_REQUEST['logout'])) {
     header("location:../index.html");
 }
 //prevent access of admin page without login
-if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
+if (!isset($_SESSION['username'])) {
     header("location:login.php");
 }
 ?>
