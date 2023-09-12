@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2023 at 02:21 PM
+-- Generation Time: Sep 11, 2023 at 12:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -2142,6 +2142,18 @@ CREATE TABLE `opd_register` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `opd_tracker`
+--
+
+CREATE TABLE `opd_tracker` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `opd_no` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `operation_record`
 --
 
@@ -2498,32 +2510,6 @@ CREATE TABLE `ortho_p_insure` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `patient_info`
---
-
-CREATE TABLE `patient_info` (
-  `patient_id` int(11) NOT NULL,
-  `weight` varchar(10) NOT NULL,
-  `pulse` varchar(15) NOT NULL,
-  `bp` varchar(100) NOT NULL,
-  `temp` int(11) NOT NULL,
-  `history` varchar(2000) NOT NULL,
-  `diagnosis` varchar(2500) NOT NULL,
-  `fluid` varchar(2200) NOT NULL,
-  `examination` varchar(1000) NOT NULL,
-  `chief_complaint` varchar(1000) NOT NULL,
-  `family_history` varchar(1000) NOT NULL,
-  `procedure_done` varchar(1000) NOT NULL,
-  `ortho_fluid` text NOT NULL,
-  `investigation` text DEFAULT NULL,
-  `symptoms` text DEFAULT NULL,
-  `instructions` text DEFAULT NULL,
-  `investigation_imaging` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `patient_records`
 --
 
@@ -2565,7 +2551,10 @@ CREATE TABLE `patient_records` (
   `follow_date` date DEFAULT NULL,
   `follow_reg` tinyint(1) DEFAULT 0,
   `skip` tinyint(1) NOT NULL DEFAULT 0,
-  `review` tinyint(1) NOT NULL DEFAULT 0
+  `review` tinyint(1) NOT NULL DEFAULT 0,
+  `is_viewed` tinyint(1) NOT NULL DEFAULT 0,
+  `is_billed` tinyint(1) NOT NULL DEFAULT 0,
+  `opd_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -3912,6 +3901,12 @@ ALTER TABLE `opd_register`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `opd_tracker`
+--
+ALTER TABLE `opd_tracker`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `operation_record`
 --
 ALTER TABLE `operation_record`
@@ -3994,12 +3989,6 @@ ALTER TABLE `ortho_p_init`
 --
 ALTER TABLE `ortho_p_insure`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `patient_info`
---
-ALTER TABLE `patient_info`
-  ADD PRIMARY KEY (`patient_id`);
 
 --
 -- Indexes for table `patient_records`
@@ -4513,6 +4502,12 @@ ALTER TABLE `opd_charges`
 -- AUTO_INCREMENT for table `opd_register`
 --
 ALTER TABLE `opd_register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `opd_tracker`
+--
+ALTER TABLE `opd_tracker`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
