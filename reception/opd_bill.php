@@ -337,7 +337,6 @@ $res10=$data10->fetch_assoc();
         $is_billed=false;
         $i = 1;
         while (isset($_POST["description_$i"])) {
-            echo $_POST["description_$i"];
             if ($_POST["description_$i"] != "none"  &&  $_POST["qty_$i"] != 0 ) {
                 $description = $_POST["description_$i"];
                 $amount = $_POST["amount_$i"];

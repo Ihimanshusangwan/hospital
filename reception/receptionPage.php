@@ -353,8 +353,8 @@ msg;
                               
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
-                                <div class="col-4 mx-2 mt-1">';
-                                echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
+                                <div class="col-4 ">';
+                                echo '<button class="btn btn-outline-primary   change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
                                 
                                 echo '</td>';
@@ -412,8 +412,8 @@ msg;
                                
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
-                                <div class="col-4 mx-2 mt-1">';
-                                echo '<button class="btn btn-outline-primary  text-black change-color-button" name="skip"> Skip</button>';
+                                <div class="col-4 ">';
+                                echo '<button class="btn btn-outline-primary  change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
                                
                                 echo '</div>';
