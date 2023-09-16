@@ -3,14 +3,10 @@ require("../admin/connect.php");
 $sql = "SELECT * FROM titles WHERE id = 1;";
   $data = $conn->query($sql);
   $title = $data->fetch_assoc();
-  $sql = "SELECT * FROM titles WHERE id = 1;";
-  $data = $conn->query($sql);
-  $title = $data->fetch_assoc();
 
-
-if (isset($_POST['unskip'])) {
+if (isset($_POST['restore'])) {
     $id=$_POST['id'];
- $update="UPDATE `patient_records` SET `skip`= 0  WHERE `id` = '$id'";
+ $update="UPDATE `patient_records` SET `is_deleted`= 0  WHERE `id` = '$id'";
    $conn->query($update);
 }
 
@@ -45,46 +41,41 @@ if (isset($_POST['unskip'])) {
                 <?php echo $title['ro']?>
             </marquee>
         </h1>
-        <a href="receptionPage.php" class="btn btn-success m-2">Dashboard</a>
+        <a href="adminLogin.php" class="btn btn-success m-2">Dashboard</a>
         <div class="d-flex justify-content-between">
-            <h3 class="mx-3 my-2 inline-heading">View Skip Patient</h3>
+            <h3 class="mx-3 my-2 inline-heading"> Deleted Patients</h3>
         </div>
         <?php
 
-$sql = "SELECT * FROM patient_records  where   skip=1  AND follow_approve=0 ORDER BY id ASC; ";
+$sql = "SELECT * FROM patient_records  where is_deleted =1 ORDER BY id desc; ";
 $data = $conn->query($sql);
           if(!$res = $data->fetch_assoc()){
-            echo "<div class='alert alert-danger'>No Skip Patient</div>";
-          }
-          else{
+            echo "<div class='alert alert-danger'>No Deleted Patient</div>";
           }
 
      ?>
 
         <div class="container-fluid">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="table-all" mt-2>
+                <table class="table table-bordered table-striped" id="dataTable" mt-2>
                     <thead class="table-dark">
                         <tr>
-                            <th>OPD NO.</th>
+                            <th>Patient Id</th>
                             <th>NAME</th>
                             <th>SEX</th>
                             <th>AGE</th>
                             <th>MOBILE</th>
                             <th>CONSULTANT</th>
                             <th>REG DATE</th>
-                            <th>UNSKIP</th>
-                            <th>DELETE</th>
+                            <th>RESTORE</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
 
                         <?php
-                        $sql = "SELECT * FROM patient_records  where  skip=1 and is_deleted = 0 ORDER BY id ASC; ";
-                        $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
-                            echo '<td>' . $res['opd_no'] . '</td>';
+                            echo '<td>' . $res['id'] . '</td>';
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';
@@ -92,9 +83,8 @@ $data = $conn->query($sql);
                             echo '<td>' . $res['consultant'] . '</td>';
                             echo ' <form method="POST">
                             <td> <input type="hidden" name="id" value="' . $res['id'] . '">
-                            <input type="date"  name="date" value="' . $res['reg_date'] . '" > </td>';
-                            echo '<td> <button type="submit" name="unskip" class="btn btn-primary">Unskip</button></td>';
-                            echo '<td> <button type="submit" data-id="' . $res['id'] . '" name="delete" class="btn btn-danger delete_record">Delete</button></td>';
+                            ' . $res['reg_date'] . '</td>';
+                            echo '<td> <button type="submit" name="restore" class="btn btn-primary">Restore</button></td>';
                             echo'</form>';
                             echo '</tr>';
                         }
@@ -103,26 +93,14 @@ $data = $conn->query($sql);
                 </table>
             </div>
         </div>
-
-        <script>
-        $(document).ready(function() {
-            $(".delete_record").on("click", function(e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: "delete_patient.php",
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        location.reload(); // Refresh the page
-                    }
-                });
+</body>
+<script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                // Enable the search feature
+                searching: true
             });
         });
-        </script>
-</body>
+    </script>
 
 </html>

@@ -3,16 +3,36 @@ require("../admin/connect.php");
 $from = $_POST['from'];
 $to = $_POST['to'];
 $option_val=$_POST['option_val'];
-if($option_val!='all'){
+$option_val2=$_POST['option_val2'];
+if($option_val!='all' && $option_val2!="all"){
     $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
         FROM opd_bill
         JOIN patient_records ON opd_bill.patient_id = patient_records.id
         JOIN  p_insure ON  opd_bill.patient_id=p_insure.id 
         JOIN opd_bill_pay ON opd_bill.patient_id= opd_bill_pay.patient_id
-        WHERE opd_bill.description = '$option_val'
+        WHERE opd_bill.description = '$option_val' and opd_bill_pay.pay_method = '$option_val2'
         AND patient_records.reg_date BETWEEN  '$from' AND '$to' 
         ORDER BY opd_bill.id ASC";
 
+}
+else if($option_val!='all' && $option_val2=="all"){
+    $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
+    FROM opd_bill
+    JOIN patient_records ON opd_bill.patient_id = patient_records.id
+    JOIN  p_insure ON  opd_bill.patient_id=p_insure.id 
+    JOIN opd_bill_pay ON opd_bill.patient_id= opd_bill_pay.patient_id
+    WHERE opd_bill.description = '$option_val'
+    AND patient_records.reg_date BETWEEN  '$from' AND '$to' 
+    ORDER BY opd_bill.id ASC";
+}
+else if($option_val=='all' && $option_val2!="all"){
+    $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*
+    FROM opd_bill
+    JOIN patient_records ON opd_bill.patient_id = patient_records.id
+    JOIN  p_insure ON  opd_bill.patient_id=p_insure.id 
+    JOIN opd_bill_pay ON opd_bill.patient_id= opd_bill_pay.patient_id
+    WHERE opd_bill_pay.pay_method = '$option_val2'and patient_records.reg_date BETWEEN  '$from' AND '$to' 
+    ORDER BY opd_bill.id ASC";
 }
 else{
     $sql = "SELECT p_insure.*, patient_records.*, opd_bill.*, opd_bill_pay.*

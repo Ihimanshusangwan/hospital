@@ -12,11 +12,11 @@ require("../admin/connect.php");
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Document</title>
     <style type="text/css">
-    @media print {
-        #myForm {
-            display: none;
+        @media print {
+            #myForm {
+                display: none;
+            }
         }
-    }
     </style>
 </head>
 
@@ -27,22 +27,22 @@ require("../admin/connect.php");
 
                 <form id="myForm">
                     <div class="row m-2">
-                        <div class="col">
+                        <div class="col-5">
                             <div class="form-group row">
                                 <label class="col-sm-4">From :</label> <input type="date" class="form-control col"
                                     name="from">
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-5">
                             <div class="form-group row">
                                 <label class="col-sm-4">To :</label> <input type="date" class="form-control col"
                                     name="to">
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-6 mt-2">
                             <div class="form-group row">
                                 <label class="col-sm-4">Consultant:</label class="col-sm-2">
-                                <select  class="form-control col"  name="option_val">
+                                <select class="form-control col" name="option_val">
                                     <?php
                                     $sql16 = "SELECT * FROM `opd_charges` WHERE 1";
                                     $data16 = $conn->query($sql16);
@@ -51,15 +51,36 @@ require("../admin/connect.php");
                                             echo "<option value='{$row['description']}'>" . $row['description'] . "</option>";
                                         }
 
-                                       
+
                                     }
                                     echo "<option value='all'>All</option>";
 
                                     ?>
                                 </select>
                             </div>
+                            
                         </div>
-                        <div class="col">
+                        <div class="col-6 mt-2">
+                        <div class="form-group row">
+                                <label for="" class="col-sm-4">Payment Mode:</label>
+                                <select class="form-control col" name="option_val2">
+
+                                    <option value="all">All</option>
+                                    <option value="CASH">CASH</option>
+
+                                    <option value="CHECK">CHECK</option>
+
+                                    <option value="NEFT">NEFT</option>
+
+                                    <option value="CARD">CARD</option>
+
+                                    <option value="GOOGLE PAY">GOOGLE PAY</option>
+
+                                    <option value="PHONEPE">PHONEPE</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col mt-2">
                             <button type="button" name="submit" class="btn btn-primary btn-sm"
                                 id="search">Submit</button>
                             <a href="receptionPage.php" class="btn btn-danger btn-sm">Dashboard</a>
@@ -80,40 +101,41 @@ require("../admin/connect.php");
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="excel.js"></script>
         <script type="text/javascript">
-        $(document).ready(function() {
-            $("#search").click(function() {
-                var formData = $('#myForm').serializeArray();
-                $.ajax({
-                    type: 'POST',
-                    url: 'ajax_filter.php',
-                    data: formData,
-                    success: function(data) {
-                        $("#data_app").html(data);
-                        total();
-                        var rowCount = $('#table tr').length;
-                        rowCount--;
-                        $('#count').html('Record : ' + rowCount);
-                    }
+            $(document).ready(function () {
+                $("#search").click(function () {
+                    var formData = $('#myForm').serializeArray();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'ajax_filter.php',
+                        data: formData,
+                        success: function (data) {
+                            $("#data_app").html(data);
+                            total();
+                            
+                            var rowCount = $('#table tr').length;
+                            rowCount--;
+                            $('#count').html('Record : ' + rowCount);
+                        }
+                    });
                 });
             });
-        });
 
-        function total() {
-            var sum = 0;
-            $('.total').each(function() {
-                sum += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
+            function total() {
+                var sum = 0;
+                $('.total').each(function () {
+                    sum += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
+                });
+                $('#totalval').text('Total : ' + sum);
+
+            }
+
+            $(".xl").click(function () {
+                $("#table").table2excel({
+                    name: "Patwardhan Hospital LLP",
+                    filename: "filter", //do not include extension
+                    fileext: ".xls" // file extension
+                });
             });
-            $('#totalval').text('Total : ' + sum);
-
-        }
-
-        $(".xl").click(function() {
-            $("#table").table2excel({
-                name: "Patwardhan Hospital LLP",
-                filename: "filter", //do not include extension
-                fileext: ".xls" // file extension
-            });
-        });
         </script>
 
 </body>

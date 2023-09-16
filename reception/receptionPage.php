@@ -10,14 +10,14 @@ if (!isset($_SESSION['receptionist_id'])) {
 }
 require("../admin/connect.php");
 
-if(isset($_POST['skip'])){
-    $inp_id=$_POST['inp_id'];
-  $sql="UPDATE `patient_records` SET `skip`='1' where `id`='$inp_id'";
-  $data=$conn->query($sql);
-  if(!$data){
-    echo '<div class="alert alert-danger " role="alert"> Something went wrong!
+if (isset($_POST['skip'])) {
+    $inp_id = $_POST['inp_id'];
+    $sql = "UPDATE `patient_records` SET `skip`='1' where `id`='$inp_id'";
+    $data = $conn->query($sql);
+    if (!$data) {
+        echo '<div class="alert alert-danger " role="alert"> Something went wrong!
   </div>';
-  }
+    }
 }
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
@@ -209,13 +209,17 @@ msg;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
-                    <span class="btn btn-warning mb-2 mx-2  btn-sm" id="showAlert" onclick="showMsgOnBtn()">Messages </span>
-                    <a href="reception_review.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Review Table</a>
+                    <span class="btn btn-warning mb-2 mx-2  btn-sm" id="showAlert" onclick="showMsgOnBtn()">Messages
+                    </span>
+                    <a href="reception_review.php" style="margin-right: 1rem;"
+                        class="btn btn-warning mb-2 btn-sm">Review Table</a>
                     <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Filter</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Scanner</a>
-                    <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View Appointments</a>
-                     <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View FollowUp</a>
-                     <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View skip</a>
+                    <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View
+                        Appointments</a>
+                    <a href="followup.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View
+                        FollowUp</a>
+                    <a href="skip.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View skip</a>
                     <a href="addPatientDetail.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">New
                         Registration</a>
                     <a class="navbar-brand">
@@ -233,6 +237,45 @@ msg;
     <div>
         <hr style="height:15px;border-width:0;color:rgb(148, 28, 28);background-color:rgb(148, 30, 30)">
     </div>
+    <!--     
+    <section>
+        <div class="container-fluid border-primary ">
+            <div class="field">
+
+                <h4 class=" font mt-3">SEARCH PATIENTS</h4>
+                <form action="" method="POST">
+                    <div class="row m-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Patient Name:</label>
+                                <input type="text" placeholder="" class="form-control" name="search_name">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name">Patient UHID: </label>
+                                <input type="text" placeholder="" class="form-control" name="search_id" id="name">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Reg. Date: </label>
+                                <input type="date" class="form-control" name="search_date" id="date">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group mt-2 mb-2">
+                                <button type="submit" class="btn btn-primary " style="margin-top: 15px;"
+                                    name="search">Search</button>
+                                <button type="button" class="btn btn-outline-danger " style="margin-top: 15px;"
+                                    onclick="window.location.reload()">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section> -->
     <section>
         <div class="container-fluid">
             <h1 class="bg-light text-black p-2">PATIENT LIST</h1>
@@ -263,7 +306,8 @@ msg;
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Opd no">
                             </th>
                             <th><input type="date" class="form-control form-control-sm"
-                                    placeholder="Search Registration Date"></th>
+                                    placeholder="Search Registration Date" id="regDateSearch"
+                                    value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : date("Y-m-d"); ?>"></th>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Name"></th>
                             <th></th>
                             <th></th>
@@ -311,12 +355,16 @@ msg;
                             <th></th>
                             <!-- <th></th>
                             <th></th> -->
-                            
+
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records  where(is_registered = 1 OR is_visited = 1) AND skip = 0  ORDER BY id DESC ";
+                        $today = date("Y-m-d");
+                        if (isset($_GET['date'])) {
+                            $today = $_GET['date'];
+                        }
+                        $sql = "SELECT * FROM patient_records  where(is_registered = 1 OR is_visited = 1) AND skip = 0 and reg_date ='$today' and is_deleted = 0 ORDER BY id DESC ";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             $type = '';
@@ -327,9 +375,9 @@ msg;
                             } else {
                                 $type = 'Appointment';
                             }
-                            
-                           echo ($res['is_billed'])?'<tr  data-row-id="' . $res['id'] . '" class="table-success" >':'<tr  data-row-id="' . $res['id'] . '" >';
-                          
+
+                            echo ($res['is_billed']) ? '<tr  data-row-id="' . $res['id'] . '" class="table-success" >' : '<tr  data-row-id="' . $res['id'] . '" >';
+
                             echo '<td data-row-id="' . $res['id'] . '" class="a">' . $res['opd_no'] . '</td>';
 
                             echo '<td>' . $res['reg_date'] . '</td>';
@@ -350,52 +398,52 @@ msg;
                                     echo '<td>Not Refered</td>';
                                 }
                                 echo ' <td>';
-                              
+
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
                                 <div class="col-4 ">';
                                 echo '<button class="btn btn-outline-primary   change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
-                                
+
                                 echo '</td>';
-                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
+                                echo '<td><button class=" btn btn-outline-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
 
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="ipd-referer" destination="ipd_bill">IPD Bill</button></td>';
                                 echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a></td>';
                                 // <a href="more_forms.php?id=' . $res['id'] . '" class="btn btn-primary m-1 multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="other-form-referer" destination="more_forms">More Forms</a></td>
-
-    //                             if ($res['is_eye'] == '1' && $res['is_ortho'] == 0) {
-    //                                 echo <<<btn
-                              
-    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
-    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
-    //                                 <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
-    //     btn;
-    //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 0) {
-    //                                 echo <<<btn
-                              
-    //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
-    //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
-    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" >Ortho Consent Forms</button></td>
-    //     btn;
-    //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 1) {
-    //                                 echo <<<btn
-                              
-    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
-    //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent"  >Ortho Consent Forms</button>
-    //                                 </td>
-    //     btn;
-
-    //                             } else {
-    //                                 echo <<<btn
-    //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
-    //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
-    //                                  <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
-    //                                  <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
-    // btn;
-    //                             }
-
+                        
+                                //                             if ($res['is_eye'] == '1' && $res['is_ortho'] == 0) {
+                                //                                 echo <<<btn
+                        
+                                //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
+                                //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
+                                //                                 <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
+                                //     btn;
+                                //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 0) {
+                                //                                 echo <<<btn
+                        
+                                //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
+                                //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
+                                //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" >Ortho Consent Forms</button></td>
+                                //     btn;
+                                //                             } else if ($res['is_ortho'] == '1' && $res['is_eye'] == 1) {
+                                //                                 echo <<<btn
+                        
+                                //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent">Eye Consent Forms</button></td>
+                                //                                 <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent"  >Ortho Consent Forms</button>
+                                //                                 </td>
+                                //     btn;
+                        
+                                //                             } else {
+                                //                                 echo <<<btn
+                                //                                 <td><button class="btn btn-primary multi-reference " style="display: none;"" id="receptionPage" p-id="{$res['id']}" cookieName="consent-referer" destination="consent" disabled>Eye Consent Forms</button>
+                                //                                 <button class="btn btn-warning activate-form"  p_id="{$res['id']}" p_col="is_eye">Activate Eye Forms</button></td>
+                                //                                  <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="{$res['id']}" cookieName="ortho-consent-referer" destination="ortho_consent" style="display: none;">Ortho Consent Forms</button>
+                                //                                  <button class="btn btn-warning activate-form" p_id="{$res['id']}" p_col="is_ortho">Activate Ortho Forms</button></td>
+                                // btn;
+                                //                             }
+                        
                             } else {
                                 echo '<td>Not yet Admitted</td>';
 
@@ -409,17 +457,17 @@ msg;
                                 }
                                 echo ' <td>';
                                 echo '<div class="row  ">';
-                               
+
                                 echo '<form method="POST">
                                 <input type="text" style="display:none;" name="inp_id" value="' . $res['id'] . '">
                                 <div class="col-4 ">';
                                 echo '<button class="btn btn-outline-primary  change-color-button" name="skip"> Skip</button>';
                                 echo '</div></form>';
-                               
+
                                 echo '</div>';
                                 echo '</td>';
-                                echo '<td><button class=" btn btn-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
-                                
+                                echo '<td><button class=" btn btn-outline-danger delete_record" type="submit" data-id="' . $res['id'] . '">Delete</button></td>';
+
                                 echo ' <td><button class="btn btn-primary multi-reference" id="receptionPage" p-id="' . $res['id'] . '" cookieName="opd-referer" destination="opd_bill">OPD Bill</button></td>';
                                 echo '<td><button class="btn btn-primary" disabled>IPD Bill</button></td>';
                                 echo ' <td><a href="details.php?id=' . $res['id'] . '" class="btn btn-primary">Details</a> </td>';
@@ -455,8 +503,8 @@ msg;
     </div>
     <!-- script to delete patient -->
     <script>
-        $(document).ready(function() {
-            $(".delete_record").on("click", function(e) {
+        $(document).ready(function () {
+            $(".delete_record").on("click", function (e) {
                 e.preventDefault(); // Prevent the default form submission
 
                 var id = $(this).data("id");
@@ -466,13 +514,13 @@ msg;
                     data: {
                         id: id
                     },
-                    success: function(response) {
+                    success: function (response) {
                         location.reload(); // Refresh the page
                     }
                 });
             });
         });
-        </script>
+    </script>
     <script>
         // const cookieName = "currentPatient";
         // function getCookieValue(cookieName) {
@@ -647,8 +695,8 @@ msg;
     </script>
     <script>
         $(document).ready(function () {
-            var today = new Date();
-            var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+            // var today = new Date();
+            // var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
             var table = $('#table').DataTable({
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -657,9 +705,9 @@ msg;
                         header.off('click.DT');
                         header.removeClass('sorting_asc sorting_desc sorting');
                         header.addClass('no-sort');
-                        if (column.index() === 1) {
-                            column.search(formattedDate).draw();
-                        }
+                        // if (column.index() === 1) {
+                        //     column.search(formattedDate).draw();
+                        // }
 
                         $('input', header).on('keyup change clear', function () {
                             if (column.search() !== this.value) {
@@ -722,12 +770,19 @@ msg;
 
         document.addEventListener('DOMContentLoaded', () => {
             startIdleTimer();
+
+            document.getElementById("regDateSearch").addEventListener("change", () => {
+                let date = document.getElementById("regDateSearch").value;
+                window.location.href = "receptionPage.php?date=" + date;
+
+            })
+
             // const pIdForColor = getCookieValue("currentPatient");
 
             // if (pIdForColor !== null) {
             //     const element = document.querySelector(`[data-row-id="${pIdForColor}"]`);
             //     var rows = document.querySelectorAll("tr");
-                
+
             //     rows.forEach(function (row) {
             //         row.classList.remove("table-success");
             //         row.classList.remove("table-danger");

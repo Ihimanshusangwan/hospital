@@ -91,6 +91,10 @@ if (!isset($_SESSION['username'])) {
 
                 </a>
                 <a class="navbar-brand">
+                    <a href="deletedPatient.php" class="btn btn-primary mx-1">Deleted Patients</a>
+
+                </a>
+                <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                         Logout
                     </button>

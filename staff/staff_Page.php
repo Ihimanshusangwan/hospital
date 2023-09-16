@@ -235,7 +235,7 @@ $title = $data->fetch_assoc();
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records WHERE is_admited = 1 and is_registered= 1  or is_approved= 1 ORDER BY id DESC;";
+                        $sql = "SELECT * FROM patient_records WHERE is_admited = 1 and is_registered= 1  or is_approved= 1 and is_deleted = 0 ORDER BY id DESC;";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';

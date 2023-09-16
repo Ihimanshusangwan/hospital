@@ -111,7 +111,8 @@ $title = $data->fetch_assoc();
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
                             </th>
                             <th><input type="date" class="form-control form-control-sm"
-                                    placeholder="Search Registration Date"></th>
+                                    placeholder="Search Registration Date" id="regDateSearch"
+                                    value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : date("Y-m-d"); ?>"></th>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Name"></th>
                             <th></th>
                             <th></th>
@@ -132,7 +133,11 @@ $title = $data->fetch_assoc();
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM patient_records WHERE consultant = '{$_SESSION['doctor_name']}' AND (is_registered = 1 OR is_visited = 1) AND review=0;";
+                        $today = date("Y-m-d");
+                        if (isset($_GET['date'])) {
+                            $today = $_GET['date'];
+                        }
+                        $sql = "SELECT * FROM patient_records WHERE consultant = '{$_SESSION['doctor_name']}' AND (is_registered = 1 OR is_visited = 1) AND review=0 and reg_date ='$today' and is_deleted = 0;";
                         $data = $conn->query($sql);
 
                         while ($res = $data->fetch_assoc()) {
@@ -188,8 +193,8 @@ $title = $data->fetch_assoc();
 
     <script>
         $(document).ready(function () {
-            var today = new Date();
-            var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+            // var today = new Date();
+            // var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
             var table = $('#table').DataTable({
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -199,9 +204,9 @@ $title = $data->fetch_assoc();
                         header.removeClass('sorting_asc sorting_desc sorting');
                         header.addClass('no-sort');
 
-                        if (column.index() === 1) {
-                            column.search(formattedDate).draw();
-                        }
+                        // if (column.index() === 1) {
+                        //     column.search(formattedDate).draw();
+                        // }
                         $('input', header).on('keyup change clear', function () {
                             if (column.search() !== this.value) {
                                 column.search(this.value).draw();
@@ -244,7 +249,14 @@ $title = $data->fetch_assoc();
 
         document.addEventListener('mousemove', resetTimerOnClick);
 
-        document.addEventListener('DOMContentLoaded', startIdleTimer);
+        document.addEventListener('DOMContentLoaded',()=>{
+            startIdleTimer();
+            document.getElementById("regDateSearch").addEventListener("change", () => {
+                let date = document.getElementById("regDateSearch").value;
+                window.location.href = "doctorPage.php?date=" + date;
+
+            })
+        } );
 
     </script>
     <script src="checkbox.js"></script>

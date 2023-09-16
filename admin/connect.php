@@ -1,7 +1,7 @@
 <?php $servername = "localhost";
   $username = "root";
   $password = "";
-  $dbname = "hospital_db";
+  $dbname = "merge";
 
   // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
