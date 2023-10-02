@@ -6,7 +6,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 
 if (isset($_POST['restore'])) {
     $id=$_POST['id'];
- $update="UPDATE `patient_records` SET `is_deleted`= 0  WHERE `id` = '$id'";
+ $update="UPDATE `patient_records` SET `is_deleted`= 0 , delete_reason=''  WHERE `id` = '$id'";
    $conn->query($update);
 }
 
@@ -49,7 +49,7 @@ if (isset($_POST['restore'])) {
 
 $sql = "SELECT * FROM patient_records  where is_deleted =1 ORDER BY id desc; ";
 $data = $conn->query($sql);
-          if(!$res = $data->fetch_assoc()){
+          if($data->num_rows<1){
             echo "<div class='alert alert-danger'>No Deleted Patient</div>";
           }
 
@@ -67,6 +67,7 @@ $data = $conn->query($sql);
                             <th>MOBILE</th>
                             <th>CONSULTANT</th>
                             <th>REG DATE</th>
+                            <th>DELETE REASON</th>
                             <th>RESTORE</th>
                         </tr>
                     </thead>
@@ -84,6 +85,8 @@ $data = $conn->query($sql);
                             echo ' <form method="POST">
                             <td> <input type="hidden" name="id" value="' . $res['id'] . '">
                             ' . $res['reg_date'] . '</td>';
+                            
+                            echo '<td>' . $res['delete_reason'] . '</td>';
                             echo '<td> <button type="submit" name="restore" class="btn btn-primary">Restore</button></td>';
                             echo'</form>';
                             echo '</tr>';

@@ -10,7 +10,7 @@ require("../admin/connect.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Search</title>
     <style type="text/css">
         @media print {
             #myForm {
@@ -41,43 +41,22 @@ require("../admin/connect.php");
                         </div>
                         <div class="col-6 mt-2">
                             <div class="form-group row">
-                                <label class="col-sm-4">Consultant:</label class="col-sm-2">
+                                <label class="col-sm-4">Search Field:</label class="col-sm-2">
                                 <select class="form-control col" name="option_val">
-                                    <?php
-                                    $sql16 = "SELECT * FROM `opd_charges` WHERE 1";
-                                    $data16 = $conn->query($sql16);
-                                    if ($data16->num_rows > 0) {
-                                        while ($row = $data16->fetch_assoc()) {
-                                            echo "<option value='{$row['description']}'>" . $row['description'] . "</option>";
-                                        }
-
-
-                                    }
-                                    echo "<option value='all'>All</option>";
-
-                                    ?>
+                                  <option value='name'>Patient Name</option>
+                                  <option value='taluka'>Taluka</option>
+                                  <option value='district'>District</option>
+                                  <option value='address'>Address</option>
+                                  <option value='mobile'>Mobile No.</option>
+                                  <option value='uhid'>UHID</option>
                                 </select>
                             </div>
                             
                         </div>
                         <div class="col-6 mt-2">
                         <div class="form-group row">
-                                <label for="" class="col-sm-4">Payment Mode:</label>
-                                <select class="form-control col" name="option_val2">
-
-                                    <option value="all">All</option>
-                                    <option value="CASH">CASH</option>
-
-                                    <option value="CHECK">CHECK</option>
-
-                                    <option value="NEFT">NEFT</option>
-
-                                    <option value="CARD">CARD</option>
-
-                                    <option value="GOOGLE PAY">GOOGLE PAY</option>
-
-                                    <option value="PHONEPE">PHONEPE</option>
-                                </select>
+                                <label for="" class="col-sm-4">Search Value:</label>
+                                <input type="text" class="form-control col" name="option_val2" />
                             </div>
                         </div>
                         <div class="col mt-2">
@@ -97,7 +76,6 @@ require("../admin/connect.php");
 
             </div>
         </center>
-        <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="excel.js"></script>
         <script type="text/javascript">
@@ -106,11 +84,12 @@ require("../admin/connect.php");
                     var formData = $('#myForm').serializeArray();
                     $.ajax({
                         type: 'POST',
-                        url: 'ajax_filter.php',
+                        url: 'globalSearchFilter.php',
                         data: formData,
                         success: function (data) {
                             $("#data_app").html(data);
-                            total();
+                            // total();
+                            // console.log(data);
                             
                             var rowCount = $('#table tr').length;
                             rowCount--;

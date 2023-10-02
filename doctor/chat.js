@@ -44,14 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => response.text())
       .then((responseText) => {
-        if(responseText == "success"){
+        
+        // if(responseText === "success"){
         sendBtn.innerHTML = initialHtml;
         document.getElementById("msgBody").value = "";
         sendBtn.innerHTML = initialHtml;
         sendBtn.disabled= false;
-        }else{
-         alert('Error sending message');
-        }
+        // }else{
+        //  alert('Error sending message');
+        // }
       })
       .catch((error) => {
         console.error("Error:", error);

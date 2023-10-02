@@ -68,14 +68,25 @@ $title = $data->fetch_assoc();
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
                 <h3 style="color: aliceblue; padding-left: 5%;">
-                    <?php echo $title['dm'] ?>
+                    <?php echo $title['dm'] ;?>
                 </h3>
             </a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+            <a class="navbar-brand" href="#">
+                <h3 style="color: aliceblue; padding-left: 5%;">
+                    <?php echo $_SESSION['doctor_name'] ;?>
+                </h3>
+            </a>
+            
             <form class="form-inline" action="" method="POST">
-                <a class="navbar-brand btn btn-warning" href="image_gallery.php">Image Gallery</a>
-                <a class="navbar-brand btn btn-warning" href="tobe_review.php?id=<?php echo $doc_id; ?>">Review Table</a>
-                <a class="navbar-brand btn btn-warning" href="template.php">Manage Templates</a>
+                <a class="btn btn-primary mx-1" href="image_gallery.php">Image Gallery</a>
+                <a class="btn btn-primary mx-1" href="tobe_review.php?id=<?php echo $doc_id; ?>">Review Table</a>
+                <a class="btn btn-primary mx-1" href="template.php">Manage Templates</a>
+                
+                <a href="add_investigation.php" class="btn btn-primary mx-1">Add Investigation Lab</a>
+                <a href="add_invest_imaging.php" class="btn btn-primary mx-1">Add Investigation Imaging</a>
+                <a href="add_symptoms.php" class="btn btn-primary mx-1">Add Symptoms</a>
+                
+                <a href="add_instructions.php" class="btn btn-primary mx-1">Add Instructions</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">Logout</button>
                 </a>
@@ -100,12 +111,14 @@ $title = $data->fetch_assoc();
                             <th>SEX</th>
                             <th>AGE</th>
                             <th>MOBILE</th>
+                            <th>TYPE</th>
                             <th>REFER STATUS</th>
+                            <th>VISIT NO.</th>
                             <th>REVIEW PATIENT</th>
                             <th>VIEW</th>
-                            <th>OT NOTES</th>
+                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>OT NOTES</th>":"";?>  
                             <th>More</th>
-                            <th>Images</th>
+                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>Images</th>":"";?>  
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
@@ -117,6 +130,14 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th><select id="typeFilter" class='form-control form-control-sm'>
+                                    <option value="">All</option>
+                                    <option value="Registration">Registration</option>
+                                    <option value="Appointment">Appointment</option>
+                                    <option value="Follow Up">Follow Up</option>
+                                </select>
+
+                            </th>
                             <th><select id="referFilter" class='form-control form-control-sm'>
                                     <option value="">All</option>
                                     <option value="Refered by">Refered</option>
@@ -127,8 +148,9 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <th></th>
+                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
                             <th></th>
-                            <th></th>
+                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
                         </tr>
                     </thead>
                     <tbody>
@@ -141,6 +163,14 @@ $title = $data->fetch_assoc();
                         $data = $conn->query($sql);
 
                         while ($res = $data->fetch_assoc()) {
+                            $type = '';
+                            if ($res['follow_reg'] == 1) {
+                                $type = 'Follow Up';
+                            } else if ($res['is_registered'] == 1) {
+                                $type = 'Registration';
+                            } else {
+                                $type = 'Appointment';
+                            }
                            echo ($res['is_viewed'])?'<tr class="table-success">':'<tr>';
                           
                             echo '<td>' . $res['opd_no'] . '</td>';
@@ -149,6 +179,8 @@ $title = $data->fetch_assoc();
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';
                             echo '<td>' . $res['mobile'] . '</td>';
+                            
+                            echo '<td>' . $type . '</td>';
                             if ($res['is_refered'] == 1) {
 
                                 echo '<td>Refered by ' . $res['refered_by'] . '</td>';
@@ -156,21 +188,27 @@ $title = $data->fetch_assoc();
 
                                 echo '<td>Not Refered</td>';
                             }
+                            
+                            echo '<td>' . $res['visit_count'] . '</td>';
                             echo '<form method="POST"><td><button class="btn btn-primary mx-auto d-flex"  name="review" >Review</button></td>
                                 <input type="hidden" name="inp_id" value="' . $res['id'] . '"></form>';
 
                             echo '<td><a href="view.php?id=' . $res['id'] . '" class="btn btn-primary">View</a></td>';
-                            if ($res['is_admited'] == 1) {
-                                echo '<td><a href="OT.php?id=' . $res['id'] . '" class="btn btn-primary">OT Notes</a></td>';
-
-                            } else {
-                                echo '<td><button class="btn btn-primary" disabled>OT Notes</button></td>';
+                            if($_SESSION['doctor_type'] != 'Ortho'){
+                                if ($res['is_admited'] == 1) {
+                                    echo '<td><a href="OT.php?id=' . $res['id'] . '" class="btn btn-primary">OT Notes</a></td>';
+    
+                                } else {
+                                    echo '<td><button class="btn btn-primary" disabled>OT Notes</button></td>';
+                                }
                             }
-                            if ($res['type_of_visit'] == 'Eye') {
+                            
+                            // if ($res['type_of_visit'] == 'Eye') {
                                 echo '<td><a href="opto.php?id=' . $res['id'] . '" class="btn btn-primary">Ophthalmologist</a></td>';
-                            } else {
-                                echo "<td></td>";
-                            }
+                            // } else {
+                            //     echo "<td></td>";
+                            // }
+                            if($_SESSION['doctor_type'] != 'Ortho'){
                             if ($res['is_admited'] == 1) {
                                 echo '<td><a href="img.php?id=' . $res['id'] . '" class="btn btn-primary">Images</a></td>';
 
@@ -178,6 +216,7 @@ $title = $data->fetch_assoc();
                                 echo '<td><button class="btn btn-primary" disabled>Images</button></td>';
 
                             }
+                        }
 
                             echo '</tr>';
                         }
@@ -212,10 +251,15 @@ $title = $data->fetch_assoc();
                                 column.search(this.value).draw();
                             }
                         });
+                        $('#typeFilter').on('change', function () {
+                        var selectedValue = $(this).val();
+
+                        table.columns(6).search(selectedValue).draw();
+                    });
                         $('#referFilter').on('change', function () {
                             var selectedValue = $(this).val();
 
-                            table.columns(6).search(selectedValue).draw();
+                            table.columns(7).search(selectedValue).draw();
                         });
                     });
                 },

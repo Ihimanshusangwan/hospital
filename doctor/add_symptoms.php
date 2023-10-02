@@ -1,5 +1,9 @@
 <?php
 require("../admin/connect.php");
+session_start();
+if (!isset($_SESSION['doctor_id']) && !isset($_SESSION['doctor_type'])) {
+    header("location:login.php");
+}
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
@@ -7,11 +11,11 @@ $title = $data->fetch_assoc();
 if(isset($_POST['desc_sym'])){
     $desc_sym=$_POST['desc_sym'];
 
-    $sql = "INSERT INTO  symptoms_view (desc_sym) VALUES ('$desc_sym')";
+    $sql = "INSERT INTO  symptoms_view (desc_sym,dr_id) VALUES ('$desc_sym',{$_SESSION['doctor_id']});";
      $query=mysqli_query($conn, $sql);
      
 }
-$sql1=mysqli_query($conn,"SELECT * FROM symptoms_view");
+$sql1=mysqli_query($conn,"SELECT * FROM symptoms_view  where dr_id = {$_SESSION['doctor_id']};");
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +32,7 @@ $sql1=mysqli_query($conn,"SELECT * FROM symptoms_view");
      <h1 class="text-center text-danger m-3">
        <?php echo $title['ro'] ?>
     </h1>
-    <a href="adminLogin.php" class="btn btn-success m-2">Dashboard</a>
+    <a href="doctorPage.php" class="btn btn-success m-2">Dashboard</a>
     <div class="conatiner text-center" style="display:flex;justify-content:center;">
    <div class="card shadow-lg m-3 text-center" style="width:50rem;">
    <form method="POST">

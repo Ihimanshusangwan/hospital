@@ -13,23 +13,23 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
 
-if(isset($_POST['add_follow'])){
+if (isset($_POST['add_follow'])) {
 
- if(isset($_POST['follow_up']) && $_POST['follow_up'] !== ''){
-    $date=$_POST['follow_up'];
-    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' WHERE `id`='$id';";
-    $res = $conn->query($sql);
+    if (isset($_POST['follow_up']) && $_POST['follow_up'] !== '') {
+        $date = $_POST['follow_up'];
+        $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$date' WHERE `id`='$id';";
+        $res = $conn->query($sql);
 
- }
- else{
-    $selectedDuration = intval($_POST['follow_duration']); // Get the selected duration in days
-    
-    $currentDate = date('Y-m-d'); // Get the current date
-    $newDate = date('Y-m-d', strtotime($currentDate . ' + ' . $selectedDuration . ' days')); 
-    
-    $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$newDate' WHERE `id`='$id';";
-    $res = $conn->query($sql);
- }
+    }
+    //  else{
+//     $selectedDuration = intval($_POST['follow_duration']); // Get the selected duration in days
+
+    //     $currentDate = date('Y-m-d'); // Get the current date
+//     $newDate = date('Y-m-d', strtotime($currentDate . ' + ' . $selectedDuration . ' days')); 
+
+    //     $sql = "UPDATE `patient_records` SET `is_followup`='1', `follow_date`='$newDate' WHERE `id`='$id';";
+//     $res = $conn->query($sql);
+//  }
 }
 
 if (isset($_POST['template_btn'])) {
@@ -62,7 +62,7 @@ if (isset($_POST['template_btn'])) {
         $conn->query($sql);
 
     }
-   
+
     $sql = "UPDATE patient_info SET diagnosis = '{$template['diagnosis']}' WHERE patient_id = $id;";
     if ($conn->query($sql) === TRUE) {
         echo "<div class='alert alert-success'>Template Applied Successfully</div>";
@@ -87,110 +87,111 @@ if (isset($_POST['template_btn'])) {
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-    /* Full-screen popup */
-    .lab-popup {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+        /* Full-screen popup */
+        .lab-popup {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
-    /* Popup content */
-    .lab-popup-content {
-        position: relative;
-        margin: auto;
-        padding: 20px;
-        width: 80%;
-        max-width: 600px;
-        background-color: #fefefe;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
+        /* Popup content */
+        .lab-popup-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            background-color: #fefefe;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
 
-    /* Close button */
-    .lab-popup-close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 30px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        /* Close button */
+        .lab-popup-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    /* Checkboxes */
-    .lab-checkbox {
-        margin-bottom: 10px;
-    }
+        /* Checkboxes */
+        .lab-checkbox {
+            margin-bottom: 10px;
+        }
 
-    #selectBoxContainer {
-        transition: all 0.5s ease-in-out;
-    }
+        #selectBoxContainer {
+            transition: all 0.5s ease-in-out;
+        }
 
-    /* Add this CSS to your stylesheet or style block */
-    /* Add this CSS to your stylesheet or style block */
+        /* Add this CSS to your stylesheet or style block */
+        /* Add this CSS to your stylesheet or style block */
 
 
 
-    .modal-header .close {
-        padding-right: 9px;
-        padding-left: 9px;
-        font-size: 1.9rem;
-        background-color: white;
-        border: none;
-        color: black;
-        opacity: 0.7;
-        transition: opacity 0.2s ease-in-out;
-    }
+        .modal-header .close {
+            padding-right: 9px;
+            padding-left: 9px;
+            font-size: 1.9rem;
+            background-color: white;
+            border: none;
+            color: black;
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+        }
 
-    .modal-header .close:hover {
-        opacity: 1;
-    }
-    #followup-charges select option {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+        .modal-header .close:hover {
+            opacity: 1;
+        }
+
+        #followup-charges select option {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     </style>
 
 
     <script>
-    var item2 = 0;
-    var arr = ['X-ray', 'CT-SCAN', 'MRI', "Lab", "U.S.G"];
-    var used = [];
+        var item2 = 0;
+        var arr = ['X-ray', 'CT-SCAN', 'MRI', "Lab", "U.S.G"];
+        var used = [];
 
-    function addItem() {
-        if (arr.length > 0) {
-            item2++;
-            var html = "<tr>";
-            html += "<td>" + arr[0] + "</td>";
-            html += "<input type='hidden' name='test_type_" + item2 + "' value ='" + arr[0] + "' </input>";
-            html += "<td><textarea type='text' name='desc_" + item2 + "'></textarea>";
-            html += "<td><button class='btn btn-primary' type='button' onclick='deleteRow(this);'>Delete</button></td>"
-            html += "</tr>";
-            var row = document.getElementById("tbody2").insertRow();
-            row.innerHTML = html;
-            var valueToRemove = arr[0];
-            var index = arr.indexOf(valueToRemove);
-            arr.splice(index, 1);
-            used.push(valueToRemove);
+        function addItem() {
+            if (arr.length > 0) {
+                item2++;
+                var html = "<tr>";
+                html += "<td>" + arr[0] + "</td>";
+                html += "<input type='hidden' name='test_type_" + item2 + "' value ='" + arr[0] + "' </input>";
+                html += "<td><textarea type='text' name='desc_" + item2 + "'></textarea>";
+                html += "<td><button class='btn btn-primary' type='button' onclick='deleteRow(this);'>Delete</button></td>"
+                html += "</tr>";
+                var row = document.getElementById("tbody2").insertRow();
+                row.innerHTML = html;
+                var valueToRemove = arr[0];
+                var index = arr.indexOf(valueToRemove);
+                arr.splice(index, 1);
+                used.push(valueToRemove);
+            }
         }
-    }
 
-    function deleteRow(button) {
-        var target = button.parentElement.parentElement.children[0];
-        var type = target.innerHTML;
-        var index = used.indexOf(type);
-        used.splice(index, 1);
-        arr.push(type);
-        button.parentElement.parentElement.children[2].children[0].value = "";
-        target.parentElement.style.display = "none";
+        function deleteRow(button) {
+            var target = button.parentElement.parentElement.children[0];
+            var type = target.innerHTML;
+            var index = used.indexOf(type);
+            used.splice(index, 1);
+            arr.push(type);
+            button.parentElement.parentElement.children[2].children[0].value = "";
+            target.parentElement.style.display = "none";
 
-    }
+        }
     </script>
     <title>Shri Sidhivinayak Netralaya</title>
 </head>
@@ -215,20 +216,23 @@ if (isset($_POST['template_btn'])) {
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Use Templates
                 </button>
-                
+
 
 
             </div>
             <div class="col-4">
                 <form method="POST">
                     <?php
-                                   $sql = "SELECT * FROM patient_records WHERE id = $id;";
-                                   $res = $conn->query($sql)->fetch_assoc();
-                                   if ($res['is_followup'] == 0) {
-                                       echo '<div>
-                                       <button  class="btn btn-success" name="add_follow">Add follow up</button>
-                                       <input type="date" name="follow_up">
-                                       <select name="follow_duration" class="mx-3">
+                    $sql = "SELECT * FROM patient_records WHERE id = $id;";
+                    $res = $conn->query($sql)->fetch_assoc();
+                    if ($res['is_followup'] == 0) {
+                        echo '<div class="row">
+                                       <div class="col-5">
+                                       <input type="date" name="follow_up" class="m-1" id="follow-up-date" onchange="showDay(this)" >
+                                       </div>
+                                       <div class="col-5">
+                                       <select name="follow_duration" class="m-1" onchange="calculateFollowUpDate()" >
+                                       <option value="none" disabled selected>none</option>
                                        <option value="1">1 day</option>
                                        <option value="2">2 days</option>
                                        <option value="3">3 days</option>
@@ -242,69 +246,76 @@ if (isset($_POST['template_btn'])) {
                                        <option value="60">2 months</option>
                                        <option value="90">3 months</option>
                                    </select>
-                                       </div>';
-   
-                                   } else {
-                                    echo '<div>
+                                       </div> 
+                                       <div class="col-5">
+                                       <span id="follow-up-day" ></span>
+                                       </div>          
+                                       <div class="col-6">
+                                       <button class="btn btn-success" name="add_follow">Add Follow Up</button>
+                                       </div>          
+                                   </div>';
+
+                    } else {
+                        echo '<div>
                                     <button  class="btn btn-success" disabled>
-                                Follow Up Date</button><input type="text" class="mx-3"  value="'.$res['follow_date'].'" readonly>
+                                Follow Up Date</button><input type="text" class="mx-3"  value="' . $res['follow_date'] . '" readonly>
                                     </div>';
-                                      
-                                   }
-   
 
-                                $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
-                                $res = $conn->query($sql)->fetch_assoc();
-                                if ($res['is_admited'] == 0) {
-                                    echo '<input type="submit" class="btn btn-secondary  my-2" name="admit_patient" value="Admit Patient">';
+                    }
 
-                                } else {
-                                    echo '<input type="button" class="btn btn-success  my-2"  value="Patient Admited" disabled>';
-                                }
-                                echo '<div class="row" >
+
+                    $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
+                    $res = $conn->query($sql)->fetch_assoc();
+                    if ($res['is_admited'] == 0) {
+                        echo '<input type="submit" class="btn btn-secondary  my-2" name="admit_patient" value="Admit Patient">';
+
+                    } else {
+                        echo '<input type="button" class="btn btn-success  my-2"  value="Patient Admited" disabled>';
+                    }
+                    echo '<div class="row" >
                                 <select id="selectBoxContainer" style="display: none; class="form-control ">
                                 ';
 
-                                $sql = "SELECT name FROM doctors WHERE type_of_visit != '{$_SESSION['doctor_type']}'";
-                                $res = $conn->query($sql);
-                                while ($values = $res->fetch_assoc()) {
-                                    echo '
+                    $sql = "SELECT name FROM doctors WHERE type_of_visit != '{$_SESSION['doctor_type']}'";
+                    $res = $conn->query($sql);
+                    while ($values = $res->fetch_assoc()) {
+                        echo '
                                   <option value="' . $values['name'] . '">
                                     ' . $values['name'] . '
                                   </option>
                                   ';
-                                }
+                    }
 
-                                echo '
+                    echo '
                                 </select><button id="final-referButton" class="btn btn-primary " style="display: none;" p-id="' . $id . '" >Refer </button></div>
                             <button id="referButton" class="btn btn-warning  " >Refer Patient</button>';
-                                ?>
+                    ?>
                 </form>
 
 
 
             </div>
             <div class="col-2">
-            <div class=" shadow-lg rounded-3 p-2">
-                <h6>
-                    Add Opd Charge:
-                </h6>
-                <select class="form-control-sm" id = "followup-charge" style="width: 100%;">
-                <?php 
-                $opd = "select * from opd_charges where 1;";
-                $opd_res = $conn->query($opd);
-                while($row = $opd_res->fetch_assoc()){
-                    echo<<<data
+                <div class=" shadow-lg rounded-3 p-2">
+                    <h6>
+                        Add Opd Charge:
+                    </h6>
+                    <select class="form-control-sm" id="followup-charge" style="width: 100%;">
+                        <?php
+                        $opd = "select * from opd_charges where 1;";
+                        $opd_res = $conn->query($opd);
+                        while ($row = $opd_res->fetch_assoc()) {
+                            echo <<<data
                     <option value="{$row['id']}" >{$row['description']}</option>
 data;
-            
-                }
+
+                        }
 
 
-                ?>
-                </select>
-                <button class="btn btn-sm btn-success m-2 " id="charge-add-btn">Add</button>
-            </div>
+                        ?>
+                    </select>
+                    <button class="btn btn-sm btn-success m-2 " id="charge-add-btn">Add</button>
+                </div>
 
 
             </div>
@@ -332,16 +343,16 @@ data;
                                 $template_id = $row['id'];
                                 $template_name = htmlspecialchars($row['name']);
                                 ?>
-                        <div class="col">
-                            <form action="" method="post">
-                                <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
-                                    <?php echo $template_name; ?>
-                                </button>
+                                <div class="col">
+                                    <form action="" method="post">
+                                        <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
+                                            <?php echo $template_name; ?>
+                                        </button>
 
-                            </form>
-                        </div>
-                        <?php
+                                    </form>
+                                </div>
+                                <?php
                             }
                             echo "</div>";
                         } else {
@@ -470,7 +481,8 @@ data;
 
         <div class="text-dark mt-4" style="margin-left:7rem;font-weight:bold;">Complaint: <span
                 style="font-weight: bold;">
-                <?php echo $result['patient_complaints']; ?></span>
+                <?php echo $result['patient_complaints']; ?>
+            </span>
         </div>
 
 
@@ -511,80 +523,16 @@ data;
                     </div>
                 </form>
             </div>
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
-                <?php
-                if (isset($_REQUEST['exam_submit'])) {
-                    $examination = removeExtraSpaces($_REQUEST['examination']);
-                    $sql = "UPDATE patient_info SET examination = '$examination' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Examination Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Examination</div>";
-                    }
-                }
-                $sql = "SELECT examination FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="examination" class="text-danger">Examination:</label>
-                        <textarea type="text" name="examination" id="examination" class="form-control live-fetch"
-                            data-column="examination"
-                            data-table="patient_info"><?php echo $res['examination']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="exam_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="exam_checkbox" id="exam_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
-                <?php
-                if (isset($_REQUEST['diagnosis_submit'])) {
-                    $diagnosis = removeExtraSpaces($_REQUEST['diagnosis']);
-                    $sql = "UPDATE patient_info SET diagnosis = '$diagnosis' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Diagnosis Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Diagnosis</div>";
-                    }
-                }
-                $sql = "SELECT diagnosis FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="diagnosis" class="text-danger">Diagnosis:</label>
-                        <textarea type="text" name="diagnosis" id="diagnosis" class="form-control live-fetch"
-                            data-column="diagnosis"
-                            data-table="patient_info"><?php echo $res['diagnosis']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="diagnosis_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="diagnosis_checkbox"
-                                id="diagnosis_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
+            
+<?php
+ function removeExtraSpaces($str)
+                {
+                    return preg_replace('/\s{2,}/', ' ', $str);
+                } ?>
             <div class="col-md-2 shadow-lg rounded-3 m-4">
 
                 <?php
-                function removeExtraSpaces($str)
-                {
-                    return preg_replace('/\s{2,}/', ' ', $str);
-                }
+                
                 if (isset($_REQUEST['history_submit'])) {
                     $history = removeExtraSpaces($_REQUEST['history']);
                     $sql = "UPDATE patient_info SET history = '$history' WHERE patient_id = $id;";
@@ -600,7 +548,7 @@ data;
                 ?>
                 <form method="POST" action="">
                     <div class="form-group m-2">
-                        <label class="font-weight-bold" for="history" class="text-danger">History:</label>
+                        <label class="font-weight-bold" for="history" class="text-danger">Past History:</label>
                         <textarea type="text" name="history" id="history" class="form-control live-fetch"
                             data-column="history" data-table="patient_info"><?php echo $res['history']; ?></textarea>
                         <div class="dropdown-container"></div>
@@ -612,6 +560,41 @@ data;
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="history_checkbox"
                                 id="history_checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2 shadow-lg rounded-3 m-4">
+
+                <?php
+                
+                if (isset($_REQUEST['personal_history_submit'])) {
+                    $history = removeExtraSpaces($_REQUEST['personal_history']);
+                    $sql = "UPDATE patient_info SET personal_history = '$history' WHERE patient_id = $id;";
+                    if ($conn->query($sql) === TRUE) {
+                        echo "<div class='alert alert-success'>Personal History Updated Successfully</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating History</div>";
+                    }
+                }
+                $sql = "SELECT personal_history FROM patient_info WHERE patient_id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+                $historyValue = $res['personal_history'];
+                ?>
+                <form method="POST" action="">
+                    <div class="form-group m-2">
+                        <label class="font-weight-bold" for="history" class="text-danger">Personal History:</label>
+                        <textarea type="text" name="personal_history" id="history" class="form-control live-fetch"
+                            data-column="personal_history" data-table="patient_info"><?php echo $res['personal_history']; ?></textarea>
+                        <div class="dropdown-container"></div>
+                    </div>
+                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="submit" name="personal_history_submit" class="btn btn-info">Save</button>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="personal_history_checkbox"
+                                id="personal_history_checkbox">
                         </div>
                     </div>
                 </form>
@@ -668,8 +651,7 @@ data;
                 ?>
                 <form method="POST" action="">
                     <div class="form-group m-2">
-                        <label class="font-weight-bold" for="procedure_done" class="text-danger">Operative Procedure
-                            Done:</label>
+                        <label class="font-weight-bold" for="procedure_done" class="text-danger">Surgical History:</label>
                         <textarea type="text" name="procedure_done" id="procedure_done" class="form-control live-fetch"
                             data-column="procedure_done"
                             data-table="patient_info"><?php echo $res['procedure_done']; ?></textarea>
@@ -686,38 +668,107 @@ data;
                     </div>
                 </form>
             </div>
+            <div class="col-md-2 shadow-lg rounded-3 m-4">
 
-
-            <div class="col-md-4 shadow-lg rounded-3 mt-4 mx-3">
                 <?php
-                if (isset($_REQUEST['save_test'])) {
-                    $i = 1;
-                    while (isset($_POST["desc_$i"])) {
-                        if ($_POST["desc_$i"] != "") {
-                            $desc = filter_var($_POST["desc_$i"], FILTER_SANITIZE_STRING);
-                            $test_type = $_POST["test_type_$i"];
-                            $sql = "INSERT INTO test_advice (patient_id,type,description) VALUES ($id,'$test_type','$desc');";
-                            if ($conn->query($sql) === TRUE) {
-                                $i++;
-                            } else {
-                                echo "<div class='alert alert-danger'>Error Updating Advices</div>";
-                            }
-                        } else {
-                            $i++;
-                        }
-                    }
-                    echo "<div class='alert alert-success'>Advices Updated Successfully</div>";
-                }
-                if (isset($_REQUEST['delete_test'])) {
-                    $sql = "DELETE FROM test_advice WHERE id = {$_POST['test_id']} ;";
+                
+                if (isset($_REQUEST['medical_history_submit'])) {
+                    $history = removeExtraSpaces($_REQUEST['medical_history']);
+                    $sql = "UPDATE patient_info SET medical_history = '$history' WHERE patient_id = $id;";
                     if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Advice Deleted Successfully</div>";
+                        echo "<div class='alert alert-success'>medical History Updated Successfully</div>";
                     } else {
-                        echo "<div class='alert alert-danger'>Error Deleting Advice</div>";
+                        echo "<div class='alert alert-danger'>Error Updating History</div>";
                     }
                 }
-                $sql = "SELECT * FROM test_advice WHERE patient_id = $id;";
+                $sql = "SELECT medical_history FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
+                $historyValue = $res['medical_history'];
+                ?>
+                <form method="POST" action="">
+                    <div class="form-group m-2">
+                        <label class="font-weight-bolmedicalhistory" class="text-danger">Medical History:</label>
+                        <textarea type="text" name="medical_history" id="history" class="form-control live-fetch"
+                            data-column="medical_history" data-table="patient_info"><?php echo $res['medical_history']; ?></textarea>
+                        <div class="dropdown-container"></div>
+                    </div>
+                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="submit" name="medical_history_submit" class="btn btn-info">Save</button>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="medical_history_checkbox"
+                                id="medical_history_checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-3 shadow-lg rounded-3 m-4">
+                <?php
+                if (isset($_REQUEST['exam_submit'])) {
+                    $examination = removeExtraSpaces($_REQUEST['examination']);
+                    $sql = "UPDATE patient_info SET examination = '$examination' WHERE patient_id = $id;";
+                    if ($conn->query($sql) === TRUE) {
+                        echo "<div class='alert alert-success'>Examination Updated Successfully</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Examination</div>";
+                    }
+                }
+                $sql = "SELECT examination FROM patient_info WHERE patient_id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+                ?>
+                <form method="POST" action="">
+                    <div class="form-group m-2">
+                        <label class="font-weight-bold" for="examination" class="text-danger">Examination:</label>
+                        <textarea type="text" name="examination" id="examination" class="form-control live-fetch"
+                            data-column="examination"
+                            data-table="patient_info"><?php echo $res['examination']; ?></textarea>
+                        <div class="dropdown-container"></div>
+                    </div>
+                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="submit" name="exam_submit" class="btn btn-info">Save</button>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="exam_checkbox" id="exam_checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+
+
+            <!-- <div class="col-md-4 shadow-lg rounded-3 mt-4 mx-3">
+                <?php
+                // if (isset($_REQUEST['save_test'])) {
+                //     $i = 1;
+                //     while (isset($_POST["desc_$i"])) {
+                //         if ($_POST["desc_$i"] != "") {
+                //             $desc = filter_var($_POST["desc_$i"], FILTER_SANITIZE_STRING);
+                //             $test_type = $_POST["test_type_$i"];
+                //             $sql = "INSERT INTO test_advice (patient_id,type,description) VALUES ($id,'$test_type','$desc');";
+                //             if ($conn->query($sql) === TRUE) {
+                //                 $i++;
+                //             } else {
+                //                 echo "<div class='alert alert-danger'>Error Updating Advices</div>";
+                //             }
+                //         } else {
+                //             $i++;
+                //         }
+                //     }
+                //     echo "<div class='alert alert-success'>Advices Updated Successfully</div>";
+                // }
+                // if (isset($_REQUEST['delete_test'])) {
+                //     $sql = "DELETE FROM test_advice WHERE id = {$_POST['test_id']} ;";
+                //     if ($conn->query($sql) === TRUE) {
+                //         echo "<div class='alert alert-success'>Advice Deleted Successfully</div>";
+                //     } else {
+                //         echo "<div class='alert alert-danger'>Error Deleting Advice</div>";
+                //     }
+                // }
+                // $sql = "SELECT * FROM test_advice WHERE patient_id = $id;";
+                // $res = $conn->query($sql)->fetch_assoc();
                 ?>
                 <label class="font-weight-bold" for="history" class="text-danger">Advice :</label>
                 <div class="card-body p-2">
@@ -731,19 +782,19 @@ data;
                                 </tr>
                                 <tbody id="tbody2">
                                     <?php
-                                    $sql = "SELECT * FROM test_advice WHERE patient_id = $id ORDER BY id DESC;";
-                                    $data = $conn->query($sql);
-                                    $i = 1;
-                                    while ($res = $data->fetch_assoc()) {
-                                        echo '<tr>';
-                                        echo '<td>' . $res['type'] . '</td>';
-                                        echo '<td>' . $res['description'] . '</td>';
-                                        echo "<td><form method='POST' action=''>
-                                    <input type='hidden' value={$res['id']} name='test_id' >
-                                    <button type='submit' name = 'delete_test' class='btn btn-primary'>Delete</button> </form>" . '</td>';
-                                        echo '</tr>';
-                                        $i++;
-                                    }
+                                    // $sql = "SELECT * FROM test_advice WHERE patient_id = $id ORDER BY id DESC;";
+                                    // $data = $conn->query($sql);
+                                    // $i = 1;
+                                    // while ($res = $data->fetch_assoc()) {
+                                    //     echo '<tr>';
+                                    //     echo '<td>' . $res['type'] . '</td>';
+                                    //     echo '<td>' . $res['description'] . '</td>';
+                                    //     echo "<td><form method='POST' action=''>
+                                    // <input type='hidden' value={$res['id']} name='test_id' >
+                                    // <button type='submit' name = 'delete_test' class='btn btn-primary'>Delete</button> </form>" . '</td>';
+                                    //     echo '</tr>';
+                                    //     $i++;
+                                    // }
                                     ?>
                                 </tbody>
                             </table>
@@ -768,30 +819,30 @@ data;
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
                 <?php
                 if (isset($_REQUEST['save_inves'])) {
-                   
-                        echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
 
-                     $investigation = removeExtraSpaces($_REQUEST['investigation']);
-                             $sql = "UPDATE patient_info SET investigation = '$investigation' WHERE patient_id = $id;";
+                    echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
+
+                    $investigation = removeExtraSpaces($_REQUEST['investigation']);
+                    $sql = "UPDATE patient_info SET investigation = '$investigation' WHERE patient_id = $id;";
                     if ($conn->query($sql) === TRUE) {
-                                $i++;
-                            } else {
-                                echo "<div class='alert alert-danger'>Error Updating Investigation</div>";
-                            }
-                        } 
-               
+                        $i++;
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Investigation</div>";
+                    }
+                }
+
                 $sql = "SELECT investigation FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
-              ?>
+                ?>
                 <label class="font-weight-bold" for="" class="text-danger">Investigation Lab :</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
                         <textarea class="form-control mt-3" id="selected-investigation"
-                            name="investigation"><?php echo $res['investigation'];?></textarea>
+                            name="investigation"><?php echo $res['investigation']; ?></textarea>
 
 
                         <div class="row">
@@ -809,43 +860,43 @@ data;
                             </div>
 
                         </div>
-                        
-<div class="modal" id="investigationModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Investigations Lab</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><strong>
-                    &times;
-                    </strong></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="text-center">**Admin Configurable Data**</p>
-                <table class="mx-3">
-        <tr>
-            <th>Checkbox</th>
-            <th>Investigation Lab</th>
-        </tr>
-        
-        <?php
 
-                  
-        $i = 1;
-        $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view");
+                        <div class="modal" id="investigationModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Investigations Lab</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><strong>
+                                                    &times;
+                                                </strong></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                         
+                                        <table class="mx-3">
+                                            <tr>
+                                                <th>Checkbox</th>
+                                                <th>Investigation Lab</th>
+                                            </tr>
 
-        while ($res = mysqli_fetch_assoc($sql1)) {
-            echo '<tr>
+                                            <?php
+
+
+                                            $i = 1;
+                                            $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view where dr_id = {$_SESSION['doctor_id']};");
+
+                                            while ($res = mysqli_fetch_assoc($sql1)) {
+                                                echo '<tr>
                 <td>
-                    <input class="form-check-input checkbox-investigation" type="checkbox" name="inve_checkbox_'.$i.'"
-                    id="inves_checkbox_'.$i.'">
+                    <input class="form-check-input checkbox-investigation" type="checkbox" name="inve_checkbox_' . $i . '"
+                    id="inves_checkbox_' . $i . '">
                 </td>
-                <td>'.$res['description'].'</td>
+                <td>' . $res['description'] . '</td>
             </tr>';
-            $i++;
-        }
-        ?>
+                                                $i++;
+                                            }
+                                            ?>
                                         </table>
                                     </div>
                                 </div>
@@ -855,105 +906,105 @@ data;
                 </div>
             </div>
 
-            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
+            <div class=" col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
                 <?php
                 if (isset($_REQUEST['save_inves_imaging'])) {
-                   
-                        echo "<div class='alert alert-success'>Investigations Imaging Updated Successfully</div>";
 
-                     $investigation = removeExtraSpaces($_REQUEST['investigation_imaging']);
-                             $sql = "UPDATE patient_info SET investigation_imaging = '$investigation' WHERE patient_id = $id;";
+                    echo "<div class='alert alert-success'>Investigations Imaging Updated Successfully</div>";
+
+                    $investigation = removeExtraSpaces($_REQUEST['investigation_imaging']);
+                    $sql = "UPDATE patient_info SET investigation_imaging = '$investigation' WHERE patient_id = $id;";
                     if ($conn->query($sql) === TRUE) {
-                                $i++;
-                            } else {
-                                echo "<div class='alert alert-danger'>Error Updating Investigation Imaging</div>";
-                            }
-                        } 
-               
+                        $i++;
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Investigation Imaging</div>";
+                    }
+                }
+
                 $sql = "SELECT investigation_imaging FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
-              ?>
+                ?>
                 <label class="font-weight-bold" for="" class="text-danger">Investigation Imaging:</label>
                 <div class="card-body p-2">
                     <form action="" method="POST">
-                    <textarea class="form-control mt-3" id="selected-investigation_imaging" name="investigation_imaging" ><?php echo $res['investigation_imaging'];?></textarea>
+                        <textarea class="form-control mt-3" id="selected-investigation_imaging"
+                            name="investigation_imaging"><?php echo $res['investigation_imaging']; ?></textarea>
 
-                          
+
                         <div class="row">
                             <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary " name="save_inves_imaging"
-                                    value="Save">
+                                <input type="submit" class="btn btn-primary " name="save_inves_imaging" value="Save">
                             </div>
                             <div class="col-6 mt-2">
                                 <button type="button" id="invest_imaging" class="btn btn-primary "> Imaging</button>
                             </div>
                             <div class="col-1 mt-2">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="investigation_imaging_checkbox"
-                                        id="investigation_imaging_checkbox">
+                                    <input class="form-check-input" type="checkbox"
+                                        name="investigation_imaging_checkbox" id="investigation_imaging_checkbox">
                                 </div>
                             </div>
-                            
-                        </div>
-                        
-<div class="modal" id="investigationImagingModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Investigation Imaging</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><strong>
-                    &times;
-                    </strong></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="text-center">**Admin Configurable Data**</p>
-                <table class="mx-3">
-        <tr>
-            <th>Checkbox</th>
-            <th>Investigations Imaging</th>
-        </tr>
-        
-        <?php
-        $i = 1;
-        $sql1 = mysqli_query($conn, "SELECT * FROM add_invest_imaging");
 
-        while ($res = mysqli_fetch_assoc($sql1)) {
-            echo '<tr>
+                        </div>
+
+                        <div class="modal" id="investigationImagingModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Investigation Imaging</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><strong>
+                                                    &times;
+                                                </strong></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                         
+                                        <table class="mx-3">
+                                            <tr>
+                                                <th>Checkbox</th>
+                                                <th>Investigations Imaging</th>
+                                            </tr>
+
+                                            <?php
+                                            $i = 1;
+                                            $sql1 = mysqli_query($conn, "SELECT * FROM add_invest_imaging where dr_id = {$_SESSION['doctor_id']};");
+
+                                            while ($res = mysqli_fetch_assoc($sql1)) {
+                                                echo '<tr>
                 <td>
-                    <input class="form-check-input checkbox-investigation_imaging" type="checkbox" name="inve_imaging_checkbox_'.$i.'"
-                    id="inves_imaging_checkbox_'.$i.'">
+                    <input class="form-check-input checkbox-investigation_imaging" type="checkbox" name="inve_imaging_checkbox_' . $i . '"
+                    id="inves_imaging_checkbox_' . $i . '">
                 </td>
-                <td>'.$res['description'].'</td>
+                <td>' . $res['description'] . '</td>
             </tr>';
-            $i++;
-        }
-        ?>
-    </table>
-            </div>
-        </div>
-    </div>
-</div>
+                                                $i++;
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-            
 
-            
-            <div class="col-md-3 shadow-lg rounded-3 mt-4 mx-0 mb-4">
+
+
+            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
                 <?php
                 if (isset($_REQUEST['save_symptoms'])) {
                     echo "<div class='alert alert-success'>Symptoms Updated Successfully</div>";
                     $symptoms = filter_var($_REQUEST["symptoms"], FILTER_SANITIZE_STRING);
-                            $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
-                            if ($conn->query($sql) === TRUE) {
-                                $i++;
-                            } else {
-                                echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
-                            }
-                        } 
-               
+                    $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
+                    if ($conn->query($sql) === TRUE) {
+                        $i++;
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
+                    }
+                }
+
                 $sql = "SELECT symptoms FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
                 ?>
@@ -961,7 +1012,7 @@ data;
                 <div class="card-body p-2">
                     <form action="" method="POST">
                         <textarea class="form-control mt-3" id="selected-symptoms"
-                            name="symptoms"><?php echo $res['symptoms'];?></textarea>
+                            name="symptoms"><?php echo $res['symptoms']; ?></textarea>
 
                         <div class="row">
                             <div class="col-3 mt-2">
@@ -991,7 +1042,7 @@ data;
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="text-center">**Admin Configurable Data**</p>
+                                         
                                         <table class="mx-3">
                                             <tr>
                                                 <th>Checkbox</th>
@@ -999,20 +1050,20 @@ data;
                                             </tr>
 
                                             <?php
-        $i = 1;
-        $sql1 = mysqli_query($conn, "SELECT * FROM symptoms_view");
+                                            $i = 1;
+                                            $sql1 = mysqli_query($conn, "SELECT * FROM symptoms_view where dr_id = {$_SESSION['doctor_id']};");
 
-        while ($res = mysqli_fetch_assoc($sql1)) {
-            echo '<tr>
+                                            while ($res = mysqli_fetch_assoc($sql1)) {
+                                                echo '<tr>
                 <td>
-                    <input class="form-check-input checkbox-symptoms" type="checkbox" name="sym_checkbox_'.$i.'"
-                    id="symp_checkbox_'.$i.'">
+                    <input class="form-check-input checkbox-symptoms" type="checkbox" name="sym_checkbox_' . $i . '"
+                    id="symp_checkbox_' . $i . '">
                 </td>
-                <td>'.$res['desc_sym'].'</td>
+                <td>' . $res['desc_sym'] . '</td>
             </tr>';
-            $i++;
-        }
-        ?>
+                                                $i++;
+                                            }
+                                            ?>
                                         </table>
                                     </div>
                                 </div>
@@ -1021,18 +1072,18 @@ data;
                     </form>
                 </div>
             </div>
-            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 ">
+            <div class=" col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
                 <?php
                 if (isset($_REQUEST['save_instruction'])) {
                     echo "<div class='alert alert-success'>Instructions Updated Successfully</div>";
-                     $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
-                            $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
-                            if ($conn->query($sql) === TRUE) {
-                                $i++;
-                            } else {
-                                echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
-                            }
-                        } 
+                    $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
+                    $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
+                    if ($conn->query($sql) === TRUE) {
+                        $i++;
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
+                    }
+                }
                 $sql = "SELECT instructions FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
                 ?>
@@ -1040,7 +1091,7 @@ data;
                 <div class="card-body p-2">
                     <form action="" method="POST">
                         <textarea class="form-control mt-3" id="selected-instructions"
-                            name="instructions"><?php echo $res['instructions'];?></textarea>
+                            name="instructions"><?php echo $res['instructions']; ?></textarea>
 
                         <div class="row">
 
@@ -1070,7 +1121,7 @@ data;
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="text-center">**Admin Configurable Data**</p>
+                                         
                                         <table class="mx-3">
                                             <tr>
                                                 <th>Checkbox</th>
@@ -1078,20 +1129,20 @@ data;
                                             </tr>
 
                                             <?php
-        $i = 1;
-        $sql1 = mysqli_query($conn, "SELECT * FROM in_view");
+                                            $i = 1;
+                                            $sql1 = mysqli_query($conn, "SELECT * FROM in_view where dr_id = {$_SESSION['doctor_id']};");
 
-        while ($res = mysqli_fetch_assoc($sql1)) {
-            echo '<tr>
+                                            while ($res = mysqli_fetch_assoc($sql1)) {
+                                                echo '<tr>
                 <td>
-                    <input class="form-check-input checkbox-instruction" type="checkbox" name="in_checkbox_'.$i.'"
-                    id="inst_checkbox_'.$i.'">
+                    <input class="form-check-input checkbox-instruction" type="checkbox" name="in_checkbox_' . $i . '"
+                    id="inst_checkbox_' . $i . '">
                 </td>
-                <td>'.$res['instruction'].'</td>
+                <td>' . $res['instruction'] . '</td>
             </tr>';
-            $i++;
-        }
-        ?>
+                                                $i++;
+                                            }
+                                            ?>
                                         </table>
                                     </div>
                                 </div>
@@ -1102,36 +1153,70 @@ data;
                     </form>
                 </div>
             </div>
+            <div class="col-md-3 shadow-lg rounded-3 my-4 mx-1">
+                <?php
+                if (isset($_REQUEST['diagnosis_submit'])) {
+                    $diagnosis = removeExtraSpaces($_REQUEST['diagnosis']);
+                    $sql = "UPDATE patient_info SET diagnosis = '$diagnosis' WHERE patient_id = $id;";
+                    if ($conn->query($sql) === TRUE) {
+                        echo "<div class='alert alert-success'>Diagnosis Updated Successfully</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Error Updating Diagnosis</div>";
+                    }
+                }
+                $sql = "SELECT diagnosis FROM patient_info WHERE patient_id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+                ?>
+                <form method="POST" action="">
+                    <div class="form-group m-2">
+                        <label class="font-weight-bold" for="diagnosis" class="text-danger">Diagnosis:</label>
+                        <textarea type="text" name="diagnosis" id="diagnosis" class="form-control live-fetch"
+                            data-column="diagnosis"
+                            data-table="patient_info"><?php echo $res['diagnosis']; ?></textarea>
+                        <div class="dropdown-container"></div>
+                    </div>
+                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="submit" name="diagnosis_submit" class="btn btn-info">Save</button>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="diagnosis_checkbox"
+                                id="diagnosis_checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
     <!-- medicine save -->
     <?php
     if (isset($_REQUEST['submit_changes'])) {
-        $is_viewed =false;
+        $is_viewed = false;
         $i = 1;
         while (isset($_POST["med_name_$i"])) {
 
             if ($_POST["med_name_$i"] !== "") {
-                    $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
-                    $quantity = $_POST["quantity_$i"];
-                    $morning = $_POST["morning_$i"];
-                    $afternoon = $_POST["afternoon_$i"];
-                    $night = $_POST["night_$i"];
-                    $type = $_POST["type_$i"];
-                    $eat = (isset($_POST["eat_$i"]))?$_POST["eat_$i"]:"";
-                    $days = $_POST["days_$i"];
-                    $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,eat,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$eat','$type');";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
-                    }
-                    if($is_viewed == false){
-                        $sql = "update patient_records set is_viewed = 1 where id =$id;";
-                        $conn->query($sql);
-                        $is_viewed = true;
-                    }
-                
+                $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
+                $quantity = $_POST["quantity_$i"];
+                $morning = $_POST["morning_$i"];
+                $afternoon = $_POST["afternoon_$i"];
+                $night = $_POST["night_$i"];
+                $type = $_POST["type_$i"];
+                $eat = (isset($_POST["eat_$i"])) ? $_POST["eat_$i"] : "";
+                $days = $_POST["days_$i"];
+                $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,eat,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$eat','$type');";
+                if ($conn->query($sql) === TRUE) {
+                    $i++;
+                } else {
+                    echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
+                }
+                if ($is_viewed == false) {
+                    $sql = "update patient_records set is_viewed = 1 where id =$id;";
+                    $conn->query($sql);
+                    $is_viewed = true;
+                }
+
             } else {
                 $i++;
             }
@@ -1212,8 +1297,7 @@ data;
     <div class="card shadow my-4 container">
         <div class="card-header py-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="pres_back_checkbox" id="pres_back_checkbox"
-                    >
+                <input class="form-check-input" type="checkbox" name="pres_back_checkbox" id="pres_back_checkbox">
             </div>
         </div>
         <div class="card-body">
@@ -1506,7 +1590,7 @@ data;
         </div>
     </div>
 
-    <div id="labPopup" class="lab-popup">
+    <!-- <div id="labPopup" class="lab-popup">
         <div class="lab-popup-content">
             <span class="lab-popup-close">&times;</span>
             <h1 class="style1">HAEMATOLOGY</h1>
@@ -1565,7 +1649,7 @@ data;
                 class="lab-checkbox form-check-input">
             <label class="font-weight-bold" for="LAB24" class="form-check-label"> URIN BJ PROTEIN </label><br>
         </div>
-    </div>
+    </div> -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1584,63 +1668,63 @@ data;
     </div>
     <script src="prescription.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var referButton = document.getElementById("referButton");
-        var finalReferButton = document.getElementById("final-referButton");
-        var selectBoxContainer = document.getElementById("selectBoxContainer");
+        document.addEventListener("DOMContentLoaded", function () {
+            var referButton = document.getElementById("referButton");
+            var finalReferButton = document.getElementById("final-referButton");
+            var selectBoxContainer = document.getElementById("selectBoxContainer");
 
-        referButton.addEventListener("click", function(e) {
-            e.preventDefault();
-            referButton.style.display = "none";
-            finalReferButton.style.display = "inline-block";
-            finalReferButton.classList.add("col-2");
-            finalReferButton.classList.add("mx-2");
-            selectBoxContainer.style.display = "inline-block";
-            selectBoxContainer.classList.add("col-8");
-            selectBoxContainer.classList.add("mx-2");
+            referButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                referButton.style.display = "none";
+                finalReferButton.style.display = "inline-block";
+                finalReferButton.classList.add("col-2");
+                finalReferButton.classList.add("mx-2");
+                selectBoxContainer.style.display = "inline-block";
+                selectBoxContainer.classList.add("col-8");
+                selectBoxContainer.classList.add("mx-2");
 
-        });
+            });
 
-        finalReferButton.addEventListener("click", function(e) {
-            e.preventDefault();
-            var pId = finalReferButton.getAttribute("p-id");
-            var doctor = selectBoxContainer.value;
+            finalReferButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                var pId = finalReferButton.getAttribute("p-id");
+                var doctor = selectBoxContainer.value;
 
-            var data = {
-                pId: pId,
-                doctor: doctor
-            };
+                var data = {
+                    pId: pId,
+                    doctor: doctor
+                };
 
-            // Send the data to the PHP file using the fetch method
-            fetch('refer.php', {
+                // Send the data to the PHP file using the fetch method
+                fetch('refer.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 })
-                .then(response => response.text()).then((data) => {
-                    if (data == 'success') {
-                        $('#successModal').modal('show'); // Show the success modal
-                        var pName = document.getElementById("p_name").innerHTML;
-                        var successMessage =
-                            `<strong>${pName}</strong> Successfully Refered to <strong> ${doctor}</strong>`;
-                        document.querySelector("#modal-body > p").innerHTML = successMessage;
-                        document.addEventListener("click", () => {
-                            window.location.href = "doctorPage.php";
-                        })
+                    .then(response => response.text()).then((data) => {
+                        if (data == 'success') {
+                            $('#successModal').modal('show'); // Show the success modal
+                            var pName = document.getElementById("p_name").innerHTML;
+                            var successMessage =
+                                `<strong>${pName}</strong> Successfully Refered to <strong> ${doctor}</strong>`;
+                            document.querySelector("#modal-body > p").innerHTML = successMessage;
+                            document.addEventListener("click", () => {
+                                window.location.href = "doctorPage.php";
+                            })
 
-                    } else {
-                        console.log("error aa gya");
-                    }
-                })
-                .catch(function(error) {
-                    // Handle any errors that occurred during the fetch request
-                    console.error('Error:', error);
-                });
+                        } else {
+                            console.log("error aa gya");
+                        }
+                    })
+                    .catch(function (error) {
+                        // Handle any errors that occurred during the fetch request
+                        console.error('Error:', error);
+                    });
+            });
+
         });
-
-    });
     </script>
     <script src="../fetch_dropdown_script.js"></script>
     <script src="fetch_medicine.js"></script>
@@ -1648,213 +1732,245 @@ data;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-    const addFollow = () => {
-        let element = document.getElementById("fellow_inp");
-        element.innerHTML = "<input type='date' class='form-control'>";
-        let addButton = document.getElementById("addFellowButton");
-        addButton.disabled = true;
+        const addFollow = () => {
+            let element = document.getElementById("fellow_inp");
+            element.innerHTML = "<input type='date' class='form-control'>";
+            let addButton = document.getElementById("addFellowButton");
+            addButton.disabled = true;
 
-    }
+        }
     </script>
     <script src="chat.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $(".checkbox-instruction").change(function() {
-            var selectedInstructions = [];
-            $(".checkbox-instruction:checked").each(function() {
-                var instruction = $(this).closest("tr").find("td:last").text();
-                selectedInstructions.push(instruction);
-            });
-            $("#selected-instructions").val(selectedInstructions.join(" , "));
-        });
-    });
+        function showDay(dateInput) {
+            const followUpDay = document.getElementById('follow-up-day');
+            const followUpDate = new Date(dateInput.value);  
+            if (isNaN(followUpDate)) {
+                followUpDay.innerText = 'Invalid date';
+                return;
+            }
 
-    $(document).ready(function() {
-        $(".checkbox-investigation").change(function() {
-            var selectedInvestigation = [];
-            $(".checkbox-investigation:checked").each(function() {
-                var investigation = $(this).closest("tr").find("td:last").text();
-                selectedInvestigation.push(investigation);
+            const dayOfWeek = followUpDate.toLocaleDateString('en-US', { weekday: 'long' });
+            followUpDay.innerText = ` (${dayOfWeek})`;
+        }
+
+        function calculateFollowUpDate() {
+            const selectBox = document.querySelector('select[name="follow_duration"]');
+            const followUpDateInput = document.getElementById('follow-up-date');
+            const followUpDay = document.getElementById('follow-up-day');
+            const selectedValue = parseInt(selectBox.value, 10);
+
+            if (selectedValue) {
+                const currentDate = new Date();
+                const followUpDate = new Date(currentDate.getTime() + selectedValue * 24 * 60 * 60 * 1000);
+                const formattedDate = followUpDate.toISOString().split('T')[0];  // Format as YYYY-MM-DD
+                const dayOfWeek = followUpDate.toLocaleDateString('en-US', { weekday: 'long' });
+
+                followUpDateInput.value = formattedDate;
+                followUpDay.innerText = ` (${dayOfWeek})`;
+            } else {
+                followUpDateInput.value = '';
+                followUpDay.innerText = '';
+            }
+        }
+
+        $(document).ready(function () {
+            $(".checkbox-instruction").change(function () {
+                var selectedInstructions = [];
+                $(".checkbox-instruction:checked").each(function () {
+                    var instruction = $(this).closest("tr").find("td:last").text();
+                    selectedInstructions.push(instruction);
+                });
+                $("#selected-instructions").val(selectedInstructions.join(" , "));
             });
-            $("#selected-investigation").val(selectedInvestigation.join(" , "));
         });
-    });
-    $(document).ready(function() {
-        $(".checkbox-symptoms").change(function() {
-            var selectedSymptoms = [];
-            $(".checkbox-symptoms:checked").each(function() {
-                var symptoms = $(this).closest("tr").find("td:last").text();
-                selectedSymptoms.push(symptoms);
+
+        $(document).ready(function () {
+            $(".checkbox-investigation").change(function () {
+                var selectedInvestigation = [];
+                $(".checkbox-investigation:checked").each(function () {
+                    var investigation = $(this).closest("tr").find("td:last").text();
+                    selectedInvestigation.push(investigation);
+                });
+                $("#selected-investigation").val(selectedInvestigation.join(" , "));
             });
-            $("#selected-symptoms").val(selectedSymptoms.join(" , "));
         });
-    });
+        $(document).ready(function () {
+            $(".checkbox-symptoms").change(function () {
+                var selectedSymptoms = [];
+                $(".checkbox-symptoms:checked").each(function () {
+                    var symptoms = $(this).closest("tr").find("td:last").text();
+                    selectedSymptoms.push(symptoms);
+                });
+                $("#selected-symptoms").val(selectedSymptoms.join(" , "));
+            });
+        });
 
 
-$(document).ready(function () {
-    $(".checkbox-investigation_imaging").change(function () {
-        var selectedInvestigationImaging = [];
-        $(".checkbox-investigation_imaging:checked").each(function () {
-            var investigationImaging = $(this).closest("tr").find("td:last").text();
-            selectedInvestigationImaging.push(investigationImaging);
+        $(document).ready(function () {
+            $(".checkbox-investigation_imaging").change(function () {
+                var selectedInvestigationImaging = [];
+                $(".checkbox-investigation_imaging:checked").each(function () {
+                    var investigationImaging = $(this).closest("tr").find("td:last").text();
+                    selectedInvestigationImaging.push(investigationImaging);
+                });
+                $("#selected-investigation_imaging").val(selectedInvestigationImaging.join(" , "));
+            });
         });
-        $("#selected-investigation_imaging").val(selectedInvestigationImaging.join(" , "));
-    });
-});
-</script>
+    </script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById("instructionModal");
-        const instuctionButton = document.getElementById("instru");
-        const closeButton = modal.querySelector(".close");
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("instructionModal");
+            const instuctionButton = document.getElementById("instru");
+            const closeButton = modal.querySelector(".close");
 
-        instuctionButton.addEventListener("click", function() {
-            modal.style.display = "block";
-        });
+            instuctionButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
 
-        closeButton.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target === modal) {
+            closeButton.addEventListener("click", function () {
                 modal.style.display = "none";
-            }
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById("investigationModal");
-        const investigationButton = document.getElementById("invest");
-        const closeButton = modal.querySelector(".close");
+            });
 
-        investigationButton.addEventListener("click", function() {
-            modal.style.display = "block";
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("investigationModal");
+            const investigationButton = document.getElementById("invest");
+            const closeButton = modal.querySelector(".close");
 
-        closeButton.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
+            investigationButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
 
-        window.addEventListener("click", function(event) {
-            if (event.target === modal) {
+            closeButton.addEventListener("click", function () {
                 modal.style.display = "none";
-            }
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("investigationImagingModal");
-        const investigationImagingButton = document.getElementById("invest_imaging");
-        const closeButton = modal.querySelector(".close");
+            });
 
-        investigationImagingButton.addEventListener("click", function () {
-            modal.style.display = "block";
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("investigationImagingModal");
+            const investigationImagingButton = document.getElementById("invest_imaging");
+            const closeButton = modal.querySelector(".close");
 
-        closeButton.addEventListener("click", function () {
-            modal.style.display = "none";
-        });
+            investigationImagingButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
 
-        window.addEventListener("click", function (event) {
-            if (event.target === modal) {
+            closeButton.addEventListener("click", function () {
                 modal.style.display = "none";
-            }
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("symptomsModal");
-        const symptomsButton = document.getElementById("symptom");
-        const closeButton = modal.querySelector(".close");
+            });
 
-        symptomsButton.addEventListener("click", function() {
-            modal.style.display = "block";
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("symptomsModal");
+            const symptomsButton = document.getElementById("symptom");
+            const closeButton = modal.querySelector(".close");
 
-        closeButton.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
+            symptomsButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
 
-        window.addEventListener("click", function(event) {
-            if (event.target === modal) {
+            closeButton.addEventListener("click", function () {
                 modal.style.display = "none";
-            }
+            });
+
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
         });
-    });
     </script>
 
     <script>
-    $(document).ready(function() {
+        $(document).ready(function () {
 
-        $(".receipt").click(function() {
+            $(".receipt").click(function () {
 
-            const checkboxValues = $("input[type='checkbox']:checked")
-                .map(function() {
-                    return this.getAttribute('id');
-                })
-                .get();
+                const checkboxValues = $("input[type='checkbox']:checked")
+                    .map(function () {
+                        return this.getAttribute('id');
+                    })
+                    .get();
 
-            const jsonData = JSON.stringify(checkboxValues);
+                const jsonData = JSON.stringify(checkboxValues);
 
-            const encodedData = encodeURIComponent(jsonData);
+                const encodedData = encodeURIComponent(jsonData);
 
-            window.location.href = 'prescription_print.php?id=<?php echo $id; ?>&data=' + encodedData +
-                '&checkboxes=' + checkboxValues.join(',');
+                window.location.href = 'prescription_print.php?id=<?php echo $id; ?>&data=' + encodedData +
+                    '&checkboxes=' + checkboxValues.join(',');
 
-        });
-    });
-
-
-
-    const labButton = document.getElementById("labButton");
-    const labPopup = document.getElementById("labPopup");
-
-
-    labButton.addEventListener("click", function() {
-        labPopup.style.display = "block";
-    });
-
-    const closeButton = document.querySelector(".lab-popup-close");
-
-
-    // Add click event listener to the close button
-    closeButton.addEventListener("click", function() {
-        labPopup.style.display = "none";
-
-
-        // Get all the selected checkboxes
-        const checkboxes = document.querySelectorAll(".lab-checkbox:checked");
-
-        // Build the comma-separated list of selected checkboxes' values
-        let selectedValues = "";
-        checkboxes.forEach(function(checkbox) {
-            selectedValues += checkbox.value + ",";
+            });
         });
 
-        // Remove trailing comma
-        selectedValues = selectedValues.slice(0, -1);
 
-        // Create the lab description dynamically
-        createLabDescription(selectedValues);
-    });
 
-    // Function to create the lab description dynamically
-    function createLabDescription(selectedValues) {
-        item2++;
-        var html = "<tr>";
-        html += "<td>Lab</td>";
-        html += "<input type='hidden' name='test_type_" + item2 + "' value='Lab'>";
-        html += "<td><textarea type='text' name='desc_" + item2 + "'>" + selectedValues + "</textarea>";
-        html += "<td><button class='btn btn-primary' type='button' onclick='deleteRow(this);'>Delete</button></td>"
-        html += "</tr>";
-        var row = document.getElementById("tbody2").insertRow();
-        row.innerHTML = html;
-    }
+        // const labButton = document.getElementById("labButton");
+        // const labPopup = document.getElementById("labPopup");
+
+
+        // labButton.addEventListener("click", function () {
+        //     labPopup.style.display = "block";
+        // });
+
+        // const closeButton = document.querySelector(".lab-popup-close");
+
+
+        // // Add click event listener to the close button
+        // closeButton.addEventListener("click", function () {
+        //     labPopup.style.display = "none";
+
+
+        //     // Get all the selected checkboxes
+        //     const checkboxes = document.querySelectorAll(".lab-checkbox:checked");
+
+        //     // Build the comma-separated list of selected checkboxes' values
+        //     let selectedValues = "";
+        //     checkboxes.forEach(function (checkbox) {
+        //         selectedValues += checkbox.value + ",";
+        //     });
+
+        //     // Remove trailing comma
+        //     selectedValues = selectedValues.slice(0, -1);
+
+        //     // Create the lab description dynamically
+        //     createLabDescription(selectedValues);
+        // });
+
+        // // Function to create the lab description dynamically
+        // function createLabDescription(selectedValues) {
+        //     item2++;
+        //     var html = "<tr>";
+        //     html += "<td>Lab</td>";
+        //     html += "<input type='hidden' name='test_type_" + item2 + "' value='Lab'>";
+        //     html += "<td><textarea type='text' name='desc_" + item2 + "'>" + selectedValues + "</textarea>";
+        //     html += "<td><button class='btn btn-primary' type='button' onclick='deleteRow(this);'>Delete</button></td>"
+        //     html += "</tr>";
+        //     var row = document.getElementById("tbody2").insertRow();
+        //     row.innerHTML = html;
+        // }
     </script>
     <script src="checkbox.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>

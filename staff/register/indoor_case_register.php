@@ -41,8 +41,8 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
       html += "<td class='col-md-2'><input type='text' name='sex_" + items + "'></td>";
       html += "<td><input type='text' name='diagnosis_" + items + "'></td>";
       html += "<td><input type='text' name='professional_" + items + "'></td>";
-      html += "<td><input type='text' name='bill_no_" + items + "'></td>";
-      html += "<td><input type='text' name='receipt_no_" + items + "'></td>";
+      // html += "<td><input type='text' name='bill_no_" + items + "'></td>";
+      // html += "<td><input type='text' name='receipt_no_" + items + "'></td>";
       html += "<td><input type='text' name='remarks_" + items + "' value='<?php echo $_SESSION['staff_name'];?>'></td>";
       html +="<td><button class='btn btn-danger' type='button' onclick='deleteRow(this);'>Delete</button></td>";
       html += "</tr>";
@@ -94,13 +94,13 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
           $sex=$_POST["sex_$i"]  ;
           $diagnosis=$_POST["diagnosis_$i"]  ;
           $professional=$_POST["professional_$i"];
-          $bill_no=$_POST["bill_no_$i"];
-          $receipt_no=$_POST["receipt_no_$i"];
+          // $bill_no=$_POST["bill_no_$i"];
+          // $receipt_no=$_POST["receipt_no_$i"];
           $remarks=$_POST["remarks_$i"]  ;
          
 
-          $sql3= "INSERT INTO `indoor_case_register`(`date`, `ipd`, `uhid`, `date_of_addmission`, `date_of_discharge`, `name`, `contact_no`, `sex`, `age`, `diagnosis`, `professional`, `bill_no`, `receipt_no`, `remarks`) VALUES
-           ('$date','$ipd','$uhid','$date_of_addmission','$date_of_discharge','$name','$contact_no','$sex','$age','$diagnosis','$professional','$bill_no','$receipt_no','$remarks');";
+          $sql3= "INSERT INTO `indoor_case_register`(`date`, `ipd`, `uhid`, `date_of_addmission`, `date_of_discharge`, `name`, `contact_no`, `sex`, `age`, `diagnosis`, `professional`, `remarks`) VALUES
+           ('$date','$ipd','$uhid','$date_of_addmission','$date_of_discharge','$name','$contact_no','$sex','$age','$diagnosis','$professional','$remarks');";
           if ($conn->query($sql3) === TRUE) {
             $i++;
           } else {
@@ -155,8 +155,8 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                   <th>Sex</th>
                   <th>Dignosis</th>
                   <th>Nature of Professional Services Randerd</th>
-                  <th>Bill No. & Date</th>
-                  <th>Recept No. & Date</th>
+                  <!-- <th>Bill No. & Date</th>
+                  <th>Recept No. & Date</th> -->
                   <th>Remarks</th>
                   <th>Delete</th>
                 </tr>
@@ -178,8 +178,8 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                     echo '<td>' . $res['sex'] . '</td>';
                     echo '<td>' . $res['diagnosis'] . '</td>';
                     echo '<td>' . $res['professional'] . '</td>';
-                    echo '<td>' . $res['bill_no'] . '</td>';
-                    echo '<td>' . $res['receipt_no'] . '</td>';
+                    // echo '<td>' . $res['bill_no'] . '</td>';
+                    // echo '<td>' . $res['receipt_no'] . '</td>';
                     echo '<td>' . $res['remarks'] . '</td>';
                     echo "<td><form method='POST' action=''>
                                     <input type='hidden' value={$res['id']} name='scan_id' >

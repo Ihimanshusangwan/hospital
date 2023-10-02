@@ -1,4 +1,5 @@
-<?php $servername = "localhost";
+<?php 
+$servername = "localhost";
   $username = "root";
   $password = "";
   $dbname = "merge";
@@ -11,3 +12,4 @@
     die("Connection failed: " . $conn->connect_error);
   }
   ?>
+  

@@ -22,58 +22,53 @@ require("../admin/connect.php");
 
     <a href="receptionPage.php" class="btn btn-success m-2">Dashboard</a>
     <div class="forms">
-      <?php if (isset($_REQUEST['admit_patient'])) {
+      <?php if (isset($_POST['admit_patient'])) {
         $sql = "UPDATE patient_records SET is_admited = 1 WHERE id = $id;";
         $conn->query($sql);
 
       }
       ?>
+
       <form method="POST" action="" class="col">
         <?php
-        $sql = "SELECT is_admited FROM patient_records WHERE id = $id;";
-        $res = $conn->query($sql)->fetch_assoc();
-        if (isset($res['is_admited'])) {
-          if( $res['is_admited'] == 0){
-              echo '<input type="submit" class="btn btn-secondary btn m-2" name="admit_patient" value="Admit Patient">';
-          
-
-        } else {
-          echo '<input type="button" class="btn btn-success btn m-2"  value="Patient Admited" disabled>';
-        }
-      }
-
-        ?>
-      </form>
-      <?php
-      $sql = "select * from patient_records where id = $id;";
-      $data = $conn->query($sql);
-      if ($data->num_rows > 0) {
-        $row = $data->fetch_assoc(); ?>
+        $sql = "select * from patient_records where id = $id;";
+        $data = $conn->query($sql);
+        if ($data->num_rows > 0) {
+          $row = $data->fetch_assoc();
+          if ($row['is_admited'] == 0) {
+            echo '<input type="submit" class="btn btn-secondary btn m-2" name="admit_patient" value="Admit Patient">';
+          } else {
+            echo '<input type="button" class="btn btn-success btn m-2"  value="Patient Admited" disabled>';
+          }
+          ?>
+        </form>
         <button class="btn btn-primary m-2 multi-reference" id="details" destination="opd_bill"
           cookieName='opd-referer'>OPD Bill</button>
         <button class="btn btn-primary m-2 multi-reference" id="details" destination="more_forms"
           cookieName='other-form-referer'>More Forms</button>
         <?php
-        if ($row['is_admited'] == 1) { ?>
+        if ($row['is_admited'] == 1) {
+          ?>
 
           <button class="btn btn-primary m-2 multi-reference" id="details" destination="ipd_bill"
             cookieName='ipd-referer'>IPD Bill</button>
+
           <?php if ($row['is_eye'] == 1) { ?>
-            <!-- <button class="btn btn-primary m-2 multi-reference" id="details" destination="consent"
-              cookieName='consent-referer'>Eye Consent Forms</button> -->
+            <!--<button class="btn btn-primary m-2 multi-reference" id="details" destination="consent"
+            cookieName='consent-referer'>Eye Consent Forms</button>-->
             <button class="btn btn-primary m-2 multi-reference" id="../reception/details" destination="../staff/eye_forms"
               cookieName='eye-referer'>Eye Forms</button>
           <?php } ?>
-          <!-- <?php if ($row['is_ortho'] == 1) { ?>
-            <button class="btn btn-primary m-2 multi-reference" id="details" destination="ortho_consent"
-              cookieName='ortho-consent-referer'>Ortho Consent Forms</button> -->
+
+          <?php if ($row['is_ortho'] == 1) { ?>
+            <!--<button class="btn btn-primary m-2 multi-reference" id="details" destination="ortho_consent"
+            cookieName='ortho-consent-referer'>Ortho Consent Forms</button>-->
             <button class="btn btn-primary m-2 multi-reference" id="../reception/details" destination="../staff/ortho_forms"
               cookieName='ortho-referer'>Ortho Forms</button>
           <?php } ?>
           <?php
         }
         ?>
-
 
 
       </div>
@@ -150,14 +145,14 @@ require("../admin/connect.php");
           </ul>
 
         <?php } else {
-        echo <<<data
+          echo <<<data
       <div class="alert alert-danger" role="alert">
   NO Patient Record Found
 </div>
 
 data;
-      }
-      ?>
+        }
+        ?>
       </div>
     </div>
     <!-- <script src="../multi_reference_btn.js"></script> -->

@@ -61,41 +61,42 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
             $con = "select consultant from patient_records where id = $id;";
             $con_res = $conn->query($con)->fetch_assoc();
             $consultant = $con_res['consultant'];
-           
+            function generateRandomID($fullName) {
+              $nameParts = explode(" ", $fullName);
+              
+              $firstName = $nameParts[1];
+              $lastName = $nameParts[2];
+              
+              $firstInitial = strtoupper(substr($firstName, 0, 1));
+              $lastInitial = strtoupper(substr($lastName, 0, 1));
+              
+              $randomNumbers = '';
+              for ($i = 0; $i < 6; $i++) {
+                  $randomNumbers .= rand(0, 9);
+              }
+              
+              $randomID = $firstInitial . $lastInitial . $randomNumbers;
+              return $randomID;
+          }
+                $sql="select uhid from p_insure where id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+                $UHID = $res['uhid'];
+                if($UHID == ""){
+                  $uhid =generateRandomID($consultant);
                 
-                function generateRandomID($fullName) {
-                  $nameParts = explode(" ", $fullName);
-                  
-                  $firstName = $nameParts[1];
-                  $lastName = $nameParts[2];
-                  
-                  $firstInitial = strtoupper(substr($firstName, 0, 1));
-                  $lastInitial = strtoupper(substr($lastName, 0, 1));
-                  
-                  $randomNumbers = '';
-                  for ($i = 0; $i < 6; $i++) {
-                      $randomNumbers .= rand(0, 9);
+                  $sql = "select * from p_insure where uhid = '$uhid' ";
+                  while($conn->query($sql)->num_rows>1){
+                    
+                    $uhid =generateRandomID($consultant);
                   }
-                  
-                  $randomID = $firstInitial . $lastInitial . $randomNumbers;
-                  return $randomID;
-              }
-                $uhid =generateRandomID($consultant);
-  
                 
-              $sql = "select * from p_insure where uhid = '$uhid' ";
-              while($conn->query($sql)->num_rows>1){
+                    //auto generate uhid
+                    $sql = "update p_insure set uhid = '$uhid' where id = $id;";
+                    $conn->query($sql);
+                    $sql = "update ortho_p_insure set uhid = '$uhid' where id = $id;";
+                    $conn->query($sql);
+                }
                 
-                $uhid =generateRandomID($consultant);
-              }
-              
-              
-                
-                //auto generate uhid
-                $sql = "update p_insure set uhid = '$uhid' where id = $id;";
-                $conn->query($sql);
-                $sql = "update ortho_p_insure set uhid = '$uhid' where id = $id;";
-                $conn->query($sql);
             echo "<div class='alert alert-success'> Updated Successfully</div>";
 
           }

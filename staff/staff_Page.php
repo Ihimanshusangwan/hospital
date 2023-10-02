@@ -56,7 +56,12 @@ $title = $data->fetch_assoc();
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
                 <h3 style="color: aliceblue; padding-left: 5%;">
-                    <?php echo $title['sm'] ?>
+                    <?php echo $title['sm']; ?>
+                </h3>
+            </a>
+            <a class="navbar-brand" href="#">
+                <h3 style="color: aliceblue; padding-left: 5%;">
+                    <?php echo $_SESSION['staff_name']; ?>
                 </h3>
             </a>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
@@ -191,12 +196,14 @@ $title = $data->fetch_assoc();
                             <th>Type</th>
                             <th>Eye Forms</th>
                             <th>Ortho Forms</th>
+                            <th>Relative Details</th>
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
                             </th>
                             <th><input type="date" class="form-control form-control-sm"
-                                    placeholder="Search Registration Date"></th>
+                                    placeholder="Search Registration Date" id="regDateSearch"
+                                    value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : date("Y-m-d"); ?>"></th>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Name"></th>
                             <th></th>
                             <th></th>
@@ -231,11 +238,17 @@ $title = $data->fetch_assoc();
                                 </select></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+
                         <?php
-                        $sql = "SELECT * FROM patient_records WHERE is_admited = 1 and is_registered= 1  or is_approved= 1 and is_deleted = 0 ORDER BY id DESC;";
+                         $today = date("Y-m-d");
+                         if (isset($_GET['date'])) {
+                             $today = $_GET['date'];
+                         }
+                        $sql = "SELECT * FROM patient_records WHERE is_admited = 1 and (is_registered= 1  or is_approved= 1) and is_deleted = 0 and reg_date ='$today' ORDER BY id DESC;";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
@@ -276,6 +289,7 @@ $title = $data->fetch_assoc();
                                 
 btn;
                             }
+                            echo'<td><a class="btn btn-primary" href="relativeDetails.php?id=' . $res['id'] . '" >Relatives</a></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -399,6 +413,11 @@ btn;
                 order: [[0, 'desc']]
             });
         });
+        document.getElementById("regDateSearch").addEventListener("change", () => {
+                let date = document.getElementById("regDateSearch").value;
+                window.location.href = "staff_Page.php?date=" + date;
+
+            })
     </script>
 </body>
 

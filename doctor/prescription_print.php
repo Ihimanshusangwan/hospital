@@ -159,8 +159,14 @@ if (!isset($res12['inp'])) {
         ?>
     <div class="col-12">
         <?php if (in_array('history_checkbox', $checkboxes)): ?>
-        <strong>History:</strong>
+        <strong>Past History:</strong>
         <?php echo $res['history']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('personal_history_checkbox', $checkboxes)): ?>
+        <strong>Personal History:</strong>
+        <?php echo $res['personal_history']; ?>
         <?php endif; ?>
     </div>
     <div class="col-12">
@@ -189,8 +195,14 @@ if (!isset($res12['inp'])) {
     </div>
     <div class="col-12">
         <?php if (in_array('procedure_done_checkbox', $checkboxes)): ?>
-        <strong>Operative Procedure Done:</strong>
+        <strong>Surgical History:</strong>
         <?php echo $res['procedure_done']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('medical_history_checkbox', $checkboxes)): ?>
+        <strong>Medical History:</strong>
+        <?php echo $res['medical_history']; ?>
         <?php endif; ?>
     </div>
 

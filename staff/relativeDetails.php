@@ -34,10 +34,8 @@ $title = $data->fetch_assoc();
                 <?php echo $title['ro'] ?>
             </marquee>
         </h1>
-        <a href="details.php?id=<?php echo $id; ?>" class="btn btn-success m-2">Dashboard</a>
+        <a href="staff_Page.php?id=<?php echo $id; ?>" class="btn btn-success m-2">Dashboard</a>
         <div class="row p-4 pt-4">
-            <div class="col shadow-lg rounded m-2 p-4">
-                <h3 class="text-dark text-center ml-2"> Update Patient Details:</h3>
                 <?php
 
                 // Check if form is submitted
@@ -75,6 +73,16 @@ $title = $data->fetch_assoc();
                     $mobile_pwp = isset($_POST['mobile_pwp']) ? $_POST['mobile_pwp'] : '';
                     $referred_by = isset($_POST['rb']) ? $_POST['rb'] : '';
                     $patient_complaints = isset($_POST['pc']) ? $_POST['pc'] : '';
+                    if ($tov == "Eye") {
+                        $is_eye = 1;
+                        $is_ortho = 0;
+                    } else if ($tov == "Ortho") {
+                        $is_eye = 0;
+                        $is_ortho = 1;
+                    } else {
+                        $is_eye = 0;
+                        $is_ortho = 0;
+                    }
 
                     if (empty($nameErr)) {
 
@@ -100,8 +108,9 @@ $title = $data->fetch_assoc();
               sex_pwp = '$sex_pwp',
               mobile_pwp = '$mobile_pwp',
               referred_by = '$referred_by',
-              patient_complaints = '$patient_complaints'
-              
+              patient_complaints = '$patient_complaints',
+              is_eye = $is_eye,
+              is_ortho = $is_ortho
             WHERE id = '$id';";
                         $conn->query($sql);
 
@@ -120,6 +129,8 @@ $title = $data->fetch_assoc();
     $res=$conn->query($sql)->fetch_assoc();
     // print_r($res);
                     ?>
+                    
+                    <section style="display:none;">
                     <div class="form-group m-2">
                         <div class="row">
                             <label>Are you an Old Patient of this hospital ?</label>
@@ -140,7 +151,7 @@ $title = $data->fetch_assoc();
                         </div>
                     </div>
                     <input type="hidden" name="record_id" value="123" id="record_id">
-                    <section class="hide">
+                
                         <div class="form-group m-2 col-6  ">
                             <label for="name">Name of patient:</label>
                             <input name="name" id="name" value="<?php echo $res['name'];?>" class="form-control" placeholder="Name"  />
@@ -241,7 +252,7 @@ $title = $data->fetch_assoc();
                                 </div>
                             </div>
                         </div>
-                        <section style="display:none;">
+                            </section>
                         <h3 class="text-dark text-center ml-2 mt-5  ">Patient Relative Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="name">Name of Relative:</label>
@@ -253,12 +264,7 @@ $title = $data->fetch_assoc();
                         </div>
                         <div class="form-group m-2  col-6  ">
                             <label for="name">Address:</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="address-copy">
-                                <label class="form-check-label" for="exampleCheckbox">
-                                    Same as Patient's Address
-                                </label>
-                            </div>
+                            
 
                             <input name="address_pwp" id="address_pwp" value="<?php echo $res['address_pwp'];?>"class="form-control"
                                 placeholder="Address" />
@@ -293,7 +299,8 @@ $title = $data->fetch_assoc();
                             <input type="number" class="form-control" placeholder="mobile" value="<?php echo $res['mobile_pwp'];?>" id="mobile_pwp"
                                 name="mobile_pwp" />
                         </div>
-                        </section>
+                        
+                        <section style="display:none;">
                         <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="rb">Referred By:</label>
@@ -304,54 +311,18 @@ $title = $data->fetch_assoc();
                             <textarea name="pc" id="pc"  class="form-control"
                                 placeholder="Patient Complaint"><?php echo $res['patient_complaints'];?></textarea>
                         </div>
+                        </section>
                         <div class="form-group m-2  ">
                             <button type="submit" name="submit" id="submit" class="btn btn-primary mt-2">
                                 Update
                             </button>
                         </div>
-                    </section>
+                    
 
                 </form>
             </div>
         </div>
     </div>
-    <script>
-          var changeType = ()=>{
-      tovInput.value = typeData[consultantInput.value];
-    }
-    var typeData = <?php echo json_encode($typeData);?>;
-    var consultantInput = document.getElementById('consultant');
-    var tovInput = document.getElementById('tov');
-    changeType();
-        function calculateAge() {
-            var dob = document.getElementById('dob_date').value;
-            var today = new Date();
-            var birthDate = new Date(dob);
-            var age = today.getFullYear() - birthDate.getFullYear();
-            document.getElementById('age').value = age;
-        }
-        const patientAddress = document.getElementById("address");
-        const patientTaluka = document.getElementById("taluka");
-        const patientDistrict = document.getElementById("district");
-        const pwpTaluka = document.getElementById("taluka_pwp");
-        const pwpDistrict = document.getElementById("district_pwp");
-        const pwpAddress = document.getElementById("address_pwp");
-        
-    const addressCheckbox = document.getElementById("address-copy");
-
-        addressCheckbox.addEventListener("change", function () {
-            if (this.checked) {
-                pwpAddress.value = patientAddress.value;
-                pwpTaluka.value = patientTaluka.value;
-                pwpDistrict.value = patientDistrict.value;
-            } else {
-                pwpAddress.value = "";
-                pwpTaluka.value = "";
-                pwpDistrict.value = "";
-            }
-        });
-    </script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

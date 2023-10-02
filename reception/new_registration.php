@@ -315,34 +315,15 @@ if (isset($_POST['submit'])) {
               $conn->query($sql29);
        
         
-        function generateRandomID($fullName) {
-            $nameParts = explode(" ", $fullName);
-            
-            $firstName = $nameParts[1];
-            $lastName = $nameParts[2];
-            
-            $firstInitial = strtoupper(substr($firstName, 0, 1));
-            $lastInitial = strtoupper(substr($lastName, 0, 1));
-            
-            $randomNumbers = '';
-            for ($i = 0; $i < 6; $i++) {
-                $randomNumbers .= rand(0, 9);
-            }
-            
-            $randomID = $firstInitial . $lastInitial . $randomNumbers;
-            return $randomID;
-        }
-          $uhid =generateRandomID($consultant);
-
-          
-        $sql = "select * from p_insure where uhid = '$uhid' ";
-        while($conn->query($sql)->num_rows>1){
-          
-          $uhid =generateRandomID($consultant);
-        }
-        
-
-
+              $uhid = $_REQUEST['uhid'];
+              $sql = "select patient_records.visit_count from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' order by p_insure.id desc;";
+              $row = $conn->query($sql)->fetch_assoc();
+              $count = $row['visit_count'];
+              $count += 1;
+              $sql = "UPDATE patient_records
+              SET visit_count = $count
+              WHERE id = $inserted_patient_id;";
+              $conn->query($sql);
         //auto generate uhid
         $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
         $conn->query($sql);
@@ -368,6 +349,8 @@ if (isset($_POST['submit'])) {
                     <?php 
     $sql = "select * from patient_records join patient_info on patient_records.id = patient_info.patient_id where patient_records.id = $id;";
     $res=$conn->query($sql)->fetch_assoc();
+    $sql = "select uhid from p_insure where id =$id;";
+    $res2= $conn->query($sql)->fetch_assoc();
     // print_r($res);
                     ?>
                     <div class="form-group m-2">
@@ -389,6 +372,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="uhid" value="<?php echo $res2['uhid'];?>">
                     <input type="hidden" name="record_id" value="123" id="record_id">
                     <section class="hide">
                         <div class="form-group m-2 col-6  ">
@@ -492,6 +476,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
                         </div>
+                        <section style="display:none;">
                         <h3 class="text-dark text-center ml-2 mt-5  ">Patient Relative Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="name">Name of Relative:</label>
@@ -543,6 +528,7 @@ if (isset($_POST['submit'])) {
                             <input type="number" class="form-control" placeholder="mobile" value="<?php echo $res['mobile_pwp'];?>" id="mobile_pwp"
                                 name="mobile_pwp" />
                         </div>
+                            </section>
                         <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="rb">Referred By:</label>

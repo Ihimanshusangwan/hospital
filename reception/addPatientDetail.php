@@ -74,6 +74,7 @@ $title = $data->fetch_assoc();
           $mobile_pwp = isset($_POST['mobile_pwp']) ? $_POST['mobile_pwp'] : '';
           $referred_by = isset($_POST['rb']) ? $_POST['rb'] : '';
           $patient_complaints = isset($_POST['pc']) ? $_POST['pc'] : '';
+          $UHID = isset($_POST['uhid']) ? $_POST['uhid'] : '';
           if ($tov == "Eye") {
             $is_eye = 1;
             $is_ortho = 0;
@@ -88,17 +89,17 @@ $title = $data->fetch_assoc();
 
           // If no errors, insert data into database
           if (empty($nameErr)) {
-            $opd_no=1;
+            $opd_no = 1;
             $sql = "select opd_no from opd_tracker where date='$reg_date'";
             $result = $conn->query($sql);
-            if($result->num_rows >0){
-                $row=$result->fetch_assoc();
-                $opd_no = $row['opd_no'] + 1;
-                
-            $sql = "update opd_tracker set opd_no = $opd_no where date='$reg_date'";
-            $conn->query($sql);
-            }else{
-          
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $opd_no = $row['opd_no'] + 1;
+
+              $sql = "update opd_tracker set opd_no = $opd_no where date='$reg_date'";
+              $conn->query($sql);
+            } else {
+
               $sql = "insert into opd_tracker(date,opd_no) values('$reg_date',1)";
               $conn->query($sql);
             }
@@ -166,7 +167,7 @@ $title = $data->fetch_assoc();
 
               $sql14 = "INSERT INTO acq(id) VALUES($inserted_patient_id);";
               $conn->query($sql14);
-             
+
 
               $sql15 = "INSERT INTO nutritional_ass(id) VALUES($inserted_patient_id);";
               $conn->query($sql15);
@@ -244,22 +245,22 @@ $title = $data->fetch_assoc();
               $sql35 = "INSERT INTO ref_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql35);
 
-              $sql36= "INSERT INTO highrisk_consent(id) VALUES($inserted_patient_id);";
+              $sql36 = "INSERT INTO highrisk_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql36);
-              
+
               $sql37 = "INSERT INTO info_transfusion_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql37);
-              
+
               $sql38 = "INSERT INTO initial_counselling(id) VALUES($inserted_patient_id);";
               $conn->query($sql38);
-              
+
               $sql39 = "INSERT INTO rate_charges(id) VALUES($inserted_patient_id);";
               $conn->query($sql39);
-              
+
               $sql40 = "INSERT INTO general_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql40);
-                              
-                              
+
+
               $sql41 = "INSERT INTO room_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql41);
 
@@ -277,71 +278,84 @@ $title = $data->fetch_assoc();
 
               $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
               $conn->query($sql45);
-              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $sql46 = "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
               $conn->query($sql46);
-              $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+              $sql47 = "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
               $conn->query($sql47);
-              $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+              $sql48 = "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
               $conn->query($sql48);
-              $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+              $sql49 = "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
               $conn->query($sql49);
-              $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+              $sql50 = "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
               $conn->query($sql50);
-              $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+              $sql51 = "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
               $conn->query($sql51);
-              $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+              $sql52 = "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
               $conn->query($sql52);
-              $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $sql53 = "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
               $conn->query($sql53);
-              $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+              $sql54 = "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
               $conn->query($sql54);
-              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $sql55 = "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
               $conn->query($sql55);
-              $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
+              $sql56 = "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
               $conn->query($sql56);
-              $sql57= "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
+              $sql57 = "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
               $conn->query($sql57);
-              $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
+              $sql58 = "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
               $conn->query($sql58);
-              $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+              $sql60 = "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
               $conn->query($sql60);
-              $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
+              $sql61 = "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
               $conn->query($sql61);
-              $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
+              $sql62 = "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
               $conn->query($sql62);
 
-              
+
 
               $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
               $conn->query($sql29);
-              
 
-              function generateRandomID($fullName) {
+
+              function generateRandomID($fullName)
+              {
                 $nameParts = explode(" ", $fullName);
-                
+
                 $firstName = $nameParts[1];
                 $lastName = $nameParts[2];
-                
+
                 $firstInitial = strtoupper(substr($firstName, 0, 1));
                 $lastInitial = strtoupper(substr($lastName, 0, 1));
-                
+
                 $randomNumbers = '';
                 for ($i = 0; $i < 6; $i++) {
-                    $randomNumbers .= rand(0, 9);
+                  $randomNumbers .= rand(0, 9);
                 }
-                
+
                 $randomID = $firstInitial . $lastInitial . $randomNumbers;
                 return $randomID;
-            }
-              $uhid =generateRandomID($consultant);
+              }
+              if ($is_old_patient == "yes" && $UHID != "") {
+                $uhid = $UHID;
+                $sql = "select patient_records.visit_count from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' order by p_insure.id desc;";
+                $row = $conn->query($sql)->fetch_assoc();
+                $count = $row['visit_count'];
+                $count += 1;
+                $sql = "UPDATE patient_records
+                SET visit_count = $count
+                WHERE id = $inserted_patient_id;";
+                $conn->query($sql);
 
-              
-            $sql = "select * from p_insure where uhid = '$uhid' ";
-            while($conn->query($sql)->num_rows>1){
-              
-              $uhid =generateRandomID($consultant);
-            }
-            
+              } else {
+                $uhid = generateRandomID($consultant);
+                $sql = "select * from p_insure where uhid = '$uhid' ";
+                while ($conn->query($sql)->num_rows > 1) {
+
+                  $uhid = generateRandomID($consultant);
+                }
+              }
+
+
               //auto generate uhid
               $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
               $conn->query($sql);
@@ -386,13 +400,13 @@ $title = $data->fetch_assoc();
               </div>
             </div>
           </div>
+          <input type="hidden" name="uhid">
           <div class="form-group m-2 col-6 hidden">
             <label for="mobile">Enter Mobile Number:</label>
             <input type="text" class="form-control" placeholder="mobile" id="mobile_search" name="mobile_search"
               autocomplete="off" />
             <div id="mobile_dropdown" class="dropdown-menu" style="max-height: 200px; overflow-y: auto;"></div>
           </div>
-          <input type="hidden" name="record_id" value="123" id="record_id">
           <section class="hide">
             <div class="form-group m-2 col-6  ">
               <label for="name">Name of patient:</label>
@@ -451,7 +465,7 @@ $title = $data->fetch_assoc();
                 $res = $conn->query($sql);
                 $typeData = array();
                 while ($values = $res->fetch_assoc()) {
-                  $typeData["{$values['name']}"] =  $values['type_of_visit']; 
+                  $typeData["{$values['name']}"] = $values['type_of_visit'];
                   echo '
                   <option value="' . $values['name'] . '">
                     ' . $values['name'] . '
@@ -460,11 +474,11 @@ $title = $data->fetch_assoc();
                 }
                 ?>
               </select>
-            
+
             </div>
             <div class="form-group m-2 col-6  ">
               <label for="tov">Type of Visit:</label>
-             <input type="text" class="form-control" name="tov" id="tov" readonly>
+              <input type="text" class="form-control" name="tov" id="tov" readonly>
             </div>
             <div class="container mt-4  ">
               <div class="row">
@@ -487,53 +501,55 @@ $title = $data->fetch_assoc();
                 </div>
               </div>
             </div>
-            <h3 class="text-dark text-center ml-2 mt-5  ">Patient Relative Details:</h3>
-            <div class="form-group m-2  col-6  ">
-              <label for="name">Name of Relative:</label>
-              <input name="name_pwp" id="name_pwp" value="" class="form-control" placeholder="Name" />
-            </div>
-            <div class="form-group m-2  col-6  ">
-              <label for="name">Relation with Patient:</label>
-              <input name="relation" id="relation" value="" class="form-control" placeholder="Relation" />
-            </div>
-            <div class="form-group m-2  col-6  ">
-              <label for="name">Address:</label>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="address-copy">
-                <label class="form-check-label" for="exampleCheckbox">
-                  Same as Patient's Address
-                </label>
+            <section style="display: none;">
+              <h3 class="text-dark text-center ml-2 mt-5  ">Patient Relative Details:</h3>
+              <div class="form-group m-2  col-6  ">
+                <label for="name">Name of Relative:</label>
+                <input name="name_pwp" id="name_pwp" value="" class="form-control" placeholder="Name" />
               </div>
+              <div class="form-group m-2  col-6  ">
+                <label for="name">Relation with Patient:</label>
+                <input name="relation" id="relation" value="" class="form-control" placeholder="Relation" />
+              </div>
+              <div class="form-group m-2  col-6  ">
+                <label for="name">Address:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="address-copy">
+                  <label class="form-check-label" for="exampleCheckbox">
+                    Same as Patient's Address
+                  </label>
+                </div>
 
-              <input name="address_pwp" id="address_pwp" value="" class="form-control" placeholder="Address" />
-            </div>
-            <div class="row  ">
-              <div class="form-check col-3">
-                <label for="name">Taluka:</label>
-                <input name="taluka_pwp" id="taluka_pwp" value="" class="form-control" placeholder="Taluka" />
+                <input name="address_pwp" id="address_pwp" value="" class="form-control" placeholder="Address" />
               </div>
-              <div class="form-check col-3">
-                <label for="name">District:</label>
-                <input name="district_pwp" id="district_pwp" value="" class="form-control" placeholder="District" />
+              <div class="row  ">
+                <div class="form-check col-3">
+                  <label for="name">Taluka:</label>
+                  <input name="taluka_pwp" id="taluka_pwp" value="" class="form-control" placeholder="Taluka" />
+                </div>
+                <div class="form-check col-3">
+                  <label for="name">District:</label>
+                  <input name="district_pwp" id="district_pwp" value="" class="form-control" placeholder="District" />
+                </div>
               </div>
-            </div>
-            <div class="row  ">
-              <div class="form-check col-3">
-                <label for="age">Age</label>
-                <input class="form-control" placeholder="Age" id="age_pwp" name="age_pwp" value="" />
+              <div class="row  ">
+                <div class="form-check col-3">
+                  <label for="age">Age</label>
+                  <input class="form-control" placeholder="Age" id="age_pwp" name="age_pwp" value="" />
+                </div>
+                <div class="form-check col-3">
+                  <label for="sex">Sex:</label>
+                  <select class="form-control" name="sex_pwp" id="sex_pwp">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-check col-3">
-                <label for="sex">Sex:</label>
-                <select class="form-control" name="sex_pwp" id="sex_pwp">
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+              <div class="form-group m-2  col-6  ">
+                <label for="mobile">Mobile Number:</label>
+                <input type="number" class="form-control" placeholder="mobile" id="mobile_pwp" name="mobile_pwp" />
               </div>
-            </div>
-            <div class="form-group m-2  col-6  ">
-              <label for="mobile">Mobile Number:</label>
-              <input type="number" class="form-control" placeholder="mobile" id="mobile_pwp" name="mobile_pwp" />
-            </div>
+            </section>
             <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>
             <div class="form-group m-2  col-6  ">
               <label for="rb">Referred By:</label>
@@ -555,10 +571,10 @@ $title = $data->fetch_assoc();
     </div>
   </div>
   <script>
-    var changeType = ()=>{
+    var changeType = () => {
       tovInput.value = typeData[consultantInput.value];
     }
-    var typeData = <?php echo json_encode($typeData);?>;
+    var typeData = <?php echo json_encode($typeData); ?>;
     var consultantInput = document.getElementById('consultant');
     var tovInput = document.getElementById('tov');
     changeType();
@@ -604,7 +620,7 @@ $title = $data->fetch_assoc();
     const pwpTaluka = document.getElementById("taluka_pwp");
     const pwpDistrict = document.getElementById("district_pwp");
     const pwpAddress = document.getElementById("address_pwp");
-    const record_id = document.getElementById("record_id");
+    const uhid = document.querySelector('input[name="uhid"]');
 
     addressCheckbox.addEventListener("change", function () {
       if (this.checked) {
@@ -642,7 +658,6 @@ $title = $data->fetch_assoc();
     var mobileSearchInput = document.getElementById('mobile_search');
     var mobileDropdown = document.getElementById('mobile_dropdown');
     mobileSearchInput.addEventListener('input', handleMobileSearch);
-
     function handleMobileSearch(event) {
       var searchValue = event.target.value;
       fetch('fetch_mobile_numbers.php', {
@@ -654,69 +669,149 @@ $title = $data->fetch_assoc();
       })
         .then(response => response.json())
         .then(data => {
-          mobileDropdown.innerHTML = '';
-          data.forEach(mobileNumber => {
-            var dropdownItem = document.createElement('a');
-            dropdownItem.classList.add('dropdown-item');
-            dropdownItem.href = '#';
-            dropdownItem.textContent = mobileNumber;
-            dropdownItem.addEventListener('click', function () {
-              mobileSearchInput.value = mobileNumber;
-              mobileDropdown.innerHTML = '';
+          if (Array.isArray(data.mobileNumbers)) {
+            mobileDropdown.innerHTML = '';
+            data.mobileNumbers.forEach((mobileNumber, index) => {
+              var dropdownItem = document.createElement('a');
+              dropdownItem.classList.add('dropdown-item');
+              dropdownItem.href = '#';
+              dropdownItem.textContent = mobileNumber + " (" + data.names[index] + " ) ";
+              dropdownItem.addEventListener('click', function () {
+                mobileSearchInput.value = mobileNumber;
+                var selectedPatientId = data.ids[index];
 
-              fetch('fetch_record_details.php', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'mobile=' + encodeURIComponent(mobileNumber)
-              })
-                .then(response => response.json())
-                .then(details => {
-                  nameInput.value = details.name;
-                  addressInput.value = details.address;
-                  talukaInput.value = details.taluka;
-                  districtInput.value = details.district;
-                  ageInput.value = details.age;
-                  sexInput.value = details.sex;
-                  dobInput.value = details.dob_date;
-                  regDateInput.value = details.reg_date;
-                  mobileInput.value = details.mobile;
-                  consultantInput.value = details.consultant;
-                  tovInput.value = details.type_of_visit;
-                  weightInput.value = details.weight;
-                  pulseInput.value = details.pulse;
-                  bpInput.value = details.bp;
-                  tempInput.value = details.temp;
-                  namePwpInput.value = details.name_pwp;
-                  relationInput.value = details.relation;
-                  addressPwpInput.value = details.address_pwp;
-                  talukaPwpInput.value = details.taluka_pwp;
-                  districtPwpInput.value = details.district_pwp;
-                  agePwpInput.value = details.age_pwp;
-                  sexPwpInput.value = details.sex_pwp;
-                  mobilePwpInput.value = details.mobile_pwp;
-                  rbInput.value = details.referred_by;
-                  pcInput.value = details.patient_complaints;
-                  record_id.value = details.id;
-
-                  document.querySelector(".hide").style.display = "block";
-                  document.querySelector(".hidden").style.display = "none";
-
+                fetch('fetch_record_details.php', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  body: 'mobile=' + encodeURIComponent(mobileNumber) + '&id=' + encodeURIComponent(selectedPatientId)
                 })
-                .catch(error => {
-                  console.log('Error:', error);
-                });
-            });
-            mobileDropdown.appendChild(dropdownItem);
-          });
+                  .then(response => response.json())
+                  .then(details => {
+                    // console.log(details);
+                    document.querySelector(".hide").style.display = "block";
+                    document.querySelector(".hidden").style.display = "none";
+                    nameInput.value = details.name;
+                    addressInput.value = details.address;
+                    talukaInput.value = details.taluka;
+                    districtInput.value = details.district;
+                    ageInput.value = details.age;
+                    sexInput.value = details.sex;
+                    dobInput.value = details.dob_date;
+                    regDateInput.value = details.reg_date;
+                    mobileInput.value = details.mobile;
+                    consultantInput.value = details.consultant;
+                    tovInput.value = details.type_of_visit;
+                    weightInput.value = details.weight;
+                    pulseInput.value = details.pulse;
+                    bpInput.value = details.bp;
+                    tempInput.value = details.temp;
+                    namePwpInput.value = details.name_pwp;
+                    relationInput.value = details.relation;
+                    addressPwpInput.value = details.address_pwp;
+                    talukaPwpInput.value = details.taluka_pwp;
+                    districtPwpInput.value = details.district_pwp;
+                    agePwpInput.value = details.age_pwp;
+                    sexPwpInput.value = details.sex_pwp;
+                    mobilePwpInput.value = details.mobile_pwp;
+                    rbInput.value = details.referred_by;
+                    pcInput.value = details.patient_complaints;
+                    uhid.value = details.uhid;
 
-          mobileDropdown.style.display = 'block';
+                  })
+                  .catch(error => {
+                    console.error('Error:', error);
+                  });
+              });
+              mobileDropdown.appendChild(dropdownItem);
+            });
+            mobileDropdown.style.display = 'block';
+          } else {
+            console.error('Data.mobileNumbers is not an array:', data);
+          }
         })
         .catch(error => {
-          console.log('Error:', error);
+          console.error('Error:', error);
         });
     }
+
+    // function handleMobileSearch(event) {
+    //   var searchValue = event.target.value;
+    //   fetch('fetch_mobile_numbers.php', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: 'search=' + encodeURIComponent(searchValue)
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       mobileDropdown.innerHTML = '';
+    //       data.forEach(mobileNumber => {
+    //         var dropdownItem = document.createElement('a');
+    //         dropdownItem.classList.add('dropdown-item');
+    //         dropdownItem.href = '#';
+    //         dropdownItem.textContent = mobileNumber;
+    //         dropdownItem.addEventListener('click', function () {
+    //           mobileSearchInput.value = mobileNumber;
+    //           mobileDropdown.innerHTML = '';
+
+    //           fetch('fetch_record_details.php', {
+    //             method: 'POST',
+    //             headers: {
+    //               'Content-Type': 'application/x-www-form-urlencoded'
+    //             },
+    //             body: 'id=' + encodeURIComponent(mobileNumber)
+    //           })
+    //             .then(response => response.json())
+    //             .then(details => {
+    //               console.log(details);
+
+
+    //               document.querySelector(".hide").style.display = "block";
+    //               document.querySelector(".hidden").style.display = "none";
+    //               nameInput.value = details.name;
+    //               addressInput.value = details.address;
+    //               talukaInput.value = details.taluka;
+    //               districtInput.value = details.district;
+    //               ageInput.value = details.age;
+    //               sexInput.value = details.sex;
+    //               dobInput.value = details.dob_date;
+    //               regDateInput.value = details.reg_date;
+    //               mobileInput.value = details.mobile;
+    //               consultantInput.value = details.consultant;
+    //               tovInput.value = details.type_of_visit;
+    //               weightInput.value = details.weight;
+    //               pulseInput.value = details.pulse;
+    //               bpInput.value = details.bp;
+    //               tempInput.value = details.temp;
+    //               namePwpInput.value = details.name_pwp;
+    //               relationInput.value = details.relation;
+    //               addressPwpInput.value = details.address_pwp;
+    //               talukaPwpInput.value = details.taluka_pwp;
+    //               districtPwpInput.value = details.district_pwp;
+    //               agePwpInput.value = details.age_pwp;
+    //               sexPwpInput.value = details.sex_pwp;
+    //               mobilePwpInput.value = details.mobile_pwp;
+    //               rbInput.value = details.referred_by;
+    //               pcInput.value = details.patient_complaints;
+    //               record_id.value = details.id;
+
+    //             })
+    //             .catch(error => {
+    //               console.log('Error:', error);
+    //             });
+    //         });
+    //         mobileDropdown.appendChild(dropdownItem);
+    //       });
+
+    //       mobileDropdown.style.display = 'block';
+    //     })
+    //     .catch(error => {
+    //       console.log('Error:', error);
+    //     });
+    // }
     document.addEventListener('click', function (event) {
       if (!mobileDropdown.contains(event.target)) {
         mobileDropdown.innerHTML = '';

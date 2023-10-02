@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $receptionist_id= $data["id"];
             session_start();
             $_SESSION['receptionist_id'] = $receptionist_id;   
+            $_SESSION['name'] = $data['name'];   
                 header("location:receptionPage.php");
                 exit(); 
         } else {

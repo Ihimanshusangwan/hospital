@@ -206,6 +206,11 @@ msg;
                     <?php echo $title['rm'] ?>
                 </h3>
             </a>
+            <a class="navbar-brand text-right" href="#">
+                <h3 style="color: aliceblue; padding-left: 5%;">
+                    <?php echo $_SESSION['name'] ?>
+                </h3>
+            </a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <form class="form-inline my-2 my-lg-0" action="" method="POST">
 
@@ -214,6 +219,7 @@ msg;
                     <a href="reception_review.php" style="margin-right: 1rem;"
                         class="btn btn-warning mb-2 btn-sm">Review Table</a>
                     <a href="filter.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Filter</a>
+                    <a href="globalSearch.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Search</a>
                     <a href="scanner.html" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">Scanner</a>
                     <a href="appoint.php" style="margin-right: 1rem;" class="btn btn-warning mb-2 btn-sm">View
                         Appointments</a>
@@ -293,6 +299,7 @@ msg;
                             <th>ADMIT STATUS</th>
                             <th>TYPE</th>
                             <th>REFER STATUS</th>
+                            <th>VISIT NO.</th>
                             <th>SKIP</th>
                             <th>DELETE</th>
                             <th>OPD Bill</th>
@@ -338,6 +345,7 @@ msg;
                                     <option value="">All</option>
                                     <option value="Registration">Registration</option>
                                     <option value="Appointment">Appointment</option>
+                                    <option value="Follow Up">Follow Up</option>
                                 </select>
 
                             </th>
@@ -348,6 +356,7 @@ msg;
                                 </select>
 
                             </th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -397,6 +406,8 @@ msg;
 
                                     echo '<td>Not Refered</td>';
                                 }
+                                
+                            echo '<td>' . $res['visit_count'] . '</td>';
                                 echo ' <td>';
 
                                 echo '<form method="POST">
@@ -455,6 +466,8 @@ msg;
 
                                     echo '<td>Not Refered</td>';
                                 }
+                                
+                            echo '<td>' . $res['visit_count'] . '</td>';
                                 echo ' <td>';
                                 echo '<div class="row  ">';
 
@@ -503,23 +516,26 @@ msg;
     </div>
     <!-- script to delete patient -->
     <script>
-        $(document).ready(function () {
-            $(".delete_record").on("click", function (e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: "delete_patient.php",
-                    data: {
-                        id: id
-                    },
-                    success: function (response) {
-                        location.reload(); // Refresh the page
-                    }
-                });
+       $(document).ready(function () {
+    $(".delete_record").on("click", function (e) {
+        var deleteReason = window.prompt("Please provide a reason for deletion:", "");
+        if (deleteReason !== "" && deleteReason !== null) {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "delete_patient.php",
+                data: {
+                    id: id,
+                    deleteReason: deleteReason 
+                },
+                success: function (response) {
+                    location.reload(); 
+                }
             });
-        });
+        }
+    });
+});
+
     </script>
     <script>
         // const cookieName = "currentPatient";

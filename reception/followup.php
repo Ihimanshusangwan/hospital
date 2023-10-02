@@ -16,6 +16,8 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
     $sql="SELECT * FROM `patient_records` WHERE id='$id' ";
     $data=$conn->query($sql);
     $res=$data->fetch_assoc();
+    $sql = "select uhid from p_insure where id =$id;";
+    $res2= $conn->query($sql)->fetch_assoc();
     $address = isset($res['address']) ? filter_var($res['address'], FILTER_SANITIZE_STRING) : '';
     $taluka = isset($res['taluka']) ? filter_var($res['taluka'], FILTER_SANITIZE_STRING) : '';
     $district = isset($res['district']) ? filter_var($res['district'], FILTER_SANITIZE_STRING) : '';
@@ -280,36 +282,16 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
 
         $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
         $conn->query($sql29);
- 
-  
-  function generateRandomID($fullName) {
-      $nameParts = explode(" ", $fullName);
-      
-      $firstName = $nameParts[1];
-      $lastName = $nameParts[2];
-      
-      $firstInitial = strtoupper(substr($firstName, 0, 1));
-      $lastInitial = strtoupper(substr($lastName, 0, 1));
-      
-      $randomNumbers = '';
-      for ($i = 0; $i < 6; $i++) {
-          $randomNumbers .= rand(0, 9);
-      }
-      
-      $randomID = $firstInitial . $lastInitial . $randomNumbers;
-      return $randomID;
-  }
-    $uhid =generateRandomID($consultant);
 
-    
-  $sql = "select * from p_insure where uhid = '$uhid' ";
-  while($conn->query($sql)->num_rows>1){
-    
-    $uhid =generateRandomID($consultant);
-  }
-  
-
-
+        $uhid = $res2['uhid'];
+        $sql = "select patient_records.visit_count from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' order by p_insure.id desc;";
+        $row = $conn->query($sql)->fetch_assoc();
+        $count = $row['visit_count'];
+        $count += 1;
+        $sql = "UPDATE patient_records
+        SET visit_count = $count
+        WHERE id = $inserted_patient_id;";
+        $conn->query($sql);
   //auto generate uhid
   $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
   $conn->query($sql);

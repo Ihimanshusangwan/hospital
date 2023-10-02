@@ -148,6 +148,36 @@ if (isset($_POST['submit'])) {
   $res4 = $data4->fetch_assoc();
   
   
+  $remarks = $_SESSION['staff_name'];
+  $register = "select id from indoor_case_register where patient_id = '$id'; ";
+  $reg_result = $conn->query($register);
+  if($reg_result->num_rows==1){
+    // update
+    $update="UPDATE `indoor_case_register`
+    SET
+      `date` = '$date_time',
+      `ipd` = '$ipd',
+      `uhid` = '$uhid',
+      `date_of_addmission` = '$date',
+      `name` = '$name',
+      `contact_no` = '$contact $address',
+      `sex` = '$sex',
+      `age` = '$age',
+      `diagnosis` = '$f_diag',
+      `professional` = '$p_care',
+      `remarks` = '$remarks'
+    WHERE
+      `patient_id` = $id;
+    ";
+    $conn->query($update);
+  }else{
+    // insert
+    $insert= "INSERT INTO `indoor_case_register`(`date`, `ipd`, `uhid`, `date_of_addmission`, `date_of_discharge`, `name`, `contact_no`, `sex`, `age`, `diagnosis`, `professional`, `remarks`,patient_id) VALUES
+    ('$date_time','$ipd','$uhid','$date','','$name','$contact $address','$sex','$age','$f_diag','$p_care','$remarks',$id);";
+    $conn->query($insert);
+
+  }
+  
 
 }
 
