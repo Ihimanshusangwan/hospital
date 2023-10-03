@@ -216,6 +216,23 @@ if (isset($_POST['template_btn'])) {
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Use Templates
                 </button>
+                <?php 
+                $sql = "select uhid from p_insure where id = $id;";
+                $result = $conn->query($sql)->fetch_assoc();
+                $uhid = $result['uhid'];
+                $sql = "select patient_records.reg_date,patient_records.visit_count,p_insure.id from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' and p_insure.id < $id order by patient_records.visit_count desc;";
+                $previousVisit = $conn->query($sql);
+                if($previousVisit->num_rows >0){
+                    echo '<div class="form-group ">
+                    <div class="form-label "><strong>Previous visits: </strong></div> <select class="form-control-sm " onchange="previousVisit(this)"><option  ">Select</option>';
+                    while ($row=$previousVisit->fetch_assoc()){
+                        echo "<option value='{$row['id']}' >Visit No. {$row['visit_count']} on {$row['reg_date']}</option>";
+                    }
+                    echo'</select></div>';
+                }
+                
+                ?>
+                
 
 
 
@@ -228,10 +245,10 @@ if (isset($_POST['template_btn'])) {
                     if ($res['is_followup'] == 0) {
                         echo '<div class="row">
                                        <div class="col-5">
-                                       <input type="date" name="follow_up" class="m-1" id="follow-up-date" onchange="showDay(this)" >
+                                       <input type="date" name="follow_up" class="m-1 form-control-sm" id="follow-up-date" onchange="showDay(this)" >
                                        </div>
                                        <div class="col-5">
-                                       <select name="follow_duration" class="m-1" onchange="calculateFollowUpDate()" >
+                                       <select name="follow_duration" class="m-1 form-control-sm" onchange="calculateFollowUpDate()" >
                                        <option value="none" disabled selected>none</option>
                                        <option value="1">1 day</option>
                                        <option value="2">2 days</option>
@@ -822,6 +839,8 @@ data;
             </div> -->
             <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
                 <?php
+                
+                $i = 1;
                 if (isset($_REQUEST['save_inves'])) {
 
                     echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
@@ -883,7 +902,6 @@ data;
                                             <?php
 
 
-                                            $i = 1;
                                             $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view where dr_id = {$_SESSION['doctor_id']};");
 
                                             while ($res = mysqli_fetch_assoc($sql1)) {
@@ -1732,6 +1750,11 @@ data;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        function previousVisit(option){
+            let id = option.value;
+            window.location.href = "previous_visit.php?id="+id;
+
+        }
         const addFollow = () => {
             let element = document.getElementById("fellow_inp");
             element.innerHTML = "<input type='date' class='form-control'>";
