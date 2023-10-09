@@ -156,7 +156,28 @@ if (isset($_POST['template_btn'])) {
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+        canvas {
+            width: 100%;
+            border: 2px solid black;
+            height:70vh;
+            
+        }
+        #tools {
+            display: flex;
+        }
+        #colors {
+            display: flex;
+            margin-left: 10px;
+        }
+        .color {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+       
     </style>
+   
 
 
     <script>
@@ -216,21 +237,48 @@ if (isset($_POST['template_btn'])) {
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Use Templates
                 </button>
-                <?php 
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Open Canvas
+  </button>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="tools">
+        <button id="pen" class="btn btn-primary btn-sm m-2">Pen</button>
+        <button id="eraser"  class="btn btn-danger btn-sm m-2">Eraser</button>
+        <div id="colors" class="m-2">
+            <div class="color" style="background-color: red;"></div>
+            <div class="color" style="background-color: green;"></div>
+            <div class="color" style="background-color: blue;"></div>
+            <div class="color" style="background-color: yellow;"></div>
+            <div class="color" style="background-color: black;"></div>
+        </div>
+    </div>
+    <canvas id="drawingCanvas" width="100" height="100"></canvas>
+        <div class="modal-footer">
+          <button type="button" id="saveButton" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                <?php
                 $sql = "select uhid from p_insure where id = $id;";
                 $result = $conn->query($sql)->fetch_assoc();
                 $uhid = $result['uhid'];
-                $sql = "select patient_records.reg_date,patient_records.visit_count,p_insure.id from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' and p_insure.id < $id order by patient_records.visit_count desc;";
+                $sql = "select patient_records.reg_date,patient_records.visit_count,p_insure.id from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' and p_insure.id < $id and patient_records.is_deleted = 0 order by patient_records.visit_count desc;";
                 $previousVisit = $conn->query($sql);
-                if($previousVisit->num_rows >0){
+                if ($previousVisit->num_rows > 0) {
                     echo '<div class="form-group ">
                     <div class="form-label "><strong>Previous visits: </strong></div> <select class="form-control-sm " onchange="previousVisit(this)"><option  ">Select</option>';
-                    while ($row=$previousVisit->fetch_assoc()){
+                    while ($row = $previousVisit->fetch_assoc()) {
                         echo "<option value='{$row['id']}' >Visit No. {$row['visit_count']} on {$row['reg_date']}</option>";
                     }
-                    echo'</select></div>';
+                    echo '</select></div>';
                 }
-                
+
                 ?>
                 
 
@@ -360,16 +408,16 @@ data;
                                 $template_id = $row['id'];
                                 $template_name = htmlspecialchars($row['name']);
                                 ?>
-                                <div class="col">
-                                    <form action="" method="post">
-                                        <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
-                                            <?php echo $template_name; ?>
-                                        </button>
+                                                        <div class="col">
+                                                            <form action="" method="post">
+                                                                <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                                                                <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
+                                                                    <?php echo $template_name; ?>
+                                                                </button>
 
-                                    </form>
-                                </div>
-                                <?php
+                                                            </form>
+                                                        </div>
+                                                        <?php
                             }
                             echo "</div>";
                         } else {
@@ -542,14 +590,14 @@ data;
             </div>
             
 <?php
- function removeExtraSpaces($str)
-                {
-                    return preg_replace('/\s{2,}/', ' ', $str);
-                } ?>
+function removeExtraSpaces($str)
+{
+    return preg_replace('/\s{2,}/', ' ', $str);
+} ?>
             <div class="col-md-2 shadow-lg rounded-3 m-4">
 
                 <?php
-                
+
                 if (isset($_REQUEST['history_submit'])) {
                     $history = removeExtraSpaces($_REQUEST['history']);
                     $sql = "UPDATE patient_info SET history = '$history' WHERE patient_id = $id;";
@@ -584,7 +632,7 @@ data;
             <div class="col-md-2 shadow-lg rounded-3 m-4">
 
                 <?php
-                
+
                 if (isset($_REQUEST['personal_history_submit'])) {
                     $history = removeExtraSpaces($_REQUEST['personal_history']);
                     $sql = "UPDATE patient_info SET personal_history = '$history' WHERE patient_id = $id;";
@@ -688,7 +736,7 @@ data;
             <div class="col-md-2 shadow-lg rounded-3 m-4">
 
                 <?php
-                
+
                 if (isset($_REQUEST['medical_history_submit'])) {
                     $history = removeExtraSpaces($_REQUEST['medical_history']);
                     $sql = "UPDATE patient_info SET medical_history = '$history' WHERE patient_id = $id;";
@@ -839,7 +887,7 @@ data;
             </div> -->
             <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
                 <?php
-                
+
                 $i = 1;
                 if (isset($_REQUEST['save_inves'])) {
 
@@ -1749,6 +1797,155 @@ data;
     <script src="chargeSave.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    let canvas = document.getElementById("drawingCanvas");
+    let context = canvas.getContext("2d");
+    let penButton = document.getElementById("pen");
+    let eraserButton = document.getElementById("eraser");
+    let colors = document.querySelectorAll(".color");
+    let drawing = false;
+    let erasing = false;
+    let currentColor = "black";
+    let lineWidth = 1;
+
+    // Function to get the correct mouse position
+    function getMousePos(canvas, e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+    };
+}
+
+
+    function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getMousePos(canvas, e);
+        context.beginPath();
+        context.moveTo(pos.x, pos.y);
+    }
+
+    function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = (e.type === "touchmove") ? getMousePos(canvas, e.touches[0]) : getMousePos(canvas, e);
+
+        if (erasing) {
+            context.globalCompositeOperation = "destination-out";
+            context.strokeStyle = "rgba(255,255,255,1)";
+            context.lineWidth = lineWidth + 15; // Make the eraser slightly larger
+        } else {
+            context.globalCompositeOperation = "source-over";
+            context.strokeStyle = currentColor;
+            context.lineWidth = lineWidth;
+        }
+
+        context.lineTo(pos.x, pos.y);
+        context.stroke();
+    }
+
+    function stopDrawing() {
+        drawing = false;
+        context.closePath();
+    }
+
+    function resizeCanvas() {
+        // Preserve the current drawing
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        context.putImageData(imageData, 0, 0);
+    }
+
+    // Event listeners
+    canvas.addEventListener("mousedown", startDrawing);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", stopDrawing);
+    canvas.addEventListener("mouseleave", stopDrawing);
+
+    canvas.addEventListener("touchstart", startDrawing);
+    canvas.addEventListener("touchmove", draw);
+    canvas.addEventListener("touchend", stopDrawing);
+
+    window.addEventListener("resize", resizeCanvas);
+
+    penButton.addEventListener("click", () => {
+        erasing = false;
+    });
+
+    eraserButton.addEventListener("click", () => {
+        erasing = true;
+    });
+
+    colors.forEach((color) => {
+        color.addEventListener("click", () => {
+            currentColor = color.style.backgroundColor;
+        });
+    });
+
+    // Initialize canvas size
+    resizeCanvas();
+    
+    const saveButton = document.getElementById("saveButton");
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id'); // Extract the ID from the URL parameter
+
+
+function fetchAndDrawDrawing(id) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                const imageData = this.responseText;
+
+                // Create a new image object
+                const img = new Image();
+                img.onload = function() {
+                    // Clear the canvas
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw the image on the canvas
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = imageData;
+            } else {
+                console.error("Error fetching drawing:", this.statusText);
+            }
+        }
+    };
+    xhttp.open("GET", `fetch_drawing.php?id=${id}`, true);
+    xhttp.send();
+}
+fetchAndDrawDrawing(id);
+
+
+saveButton.addEventListener("click", () => {
+    const imageData = canvas.toDataURL();  // Convert canvas to base64 image data
+    saveDrawing(imageData, id); // Pass the imageData and ID to the saveDrawing function
+});
+
+function saveDrawing(imageData, id) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                alert("Drawing saved successfully!");
+            } else {
+                alert("Error saving drawing.");
+            }
+        }
+    };
+    xhttp.open("POST", "save_drawing.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("imageData=" + encodeURIComponent(imageData) + "&id=" + encodeURIComponent(id)); // Include the ID in the request
+}
+
+</script>
+
+
     <script>
         function previousVisit(option){
             let id = option.value;

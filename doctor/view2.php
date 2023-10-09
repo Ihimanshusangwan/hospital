@@ -220,7 +220,7 @@ if (isset($_POST['template_btn'])) {
                 $sql = "select uhid from p_insure where id = $id;";
                 $result = $conn->query($sql)->fetch_assoc();
                 $uhid = $result['uhid'];
-                $sql = "select patient_records.reg_date,patient_records.visit_count,p_insure.id from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' and p_insure.id < $id order by patient_records.visit_count desc;";
+                $sql = "select patient_records.reg_date,patient_records.visit_count,p_insure.id from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' and p_insure.id < and patient_records.is_deleted = 0 $id order by patient_records.visit_count desc;";
                 $previousVisit = $conn->query($sql);
                 if($previousVisit->num_rows >0){
                     echo '<div class="form-group ">

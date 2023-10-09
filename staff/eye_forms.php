@@ -147,6 +147,7 @@ $title = $data->fetch_assoc();
         <td><a href="anumati.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">अनुमतीपत्र</button></a></td>
         <td><a href="inform_sur_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Informed Consent
               form for surgery</button></a></td>
+        <td><a href="ALTK.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Automated Lamellar Therapeutic Keratoplasty</button></a></td>
       </tr>
 
     </table>
