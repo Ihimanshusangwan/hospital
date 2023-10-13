@@ -73,16 +73,7 @@ $title = $data->fetch_assoc();
                     $mobile_pwp = isset($_POST['mobile_pwp']) ? $_POST['mobile_pwp'] : '';
                     $referred_by = isset($_POST['rb']) ? $_POST['rb'] : '';
                     $patient_complaints = isset($_POST['pc']) ? $_POST['pc'] : '';
-                    if ($tov == "Eye") {
-                        $is_eye = 1;
-                        $is_ortho = 0;
-                    } else if ($tov == "Ortho") {
-                        $is_eye = 0;
-                        $is_ortho = 1;
-                    } else {
-                        $is_eye = 0;
-                        $is_ortho = 0;
-                    }
+                    
 
                     if (empty($nameErr)) {
 
@@ -108,9 +99,7 @@ $title = $data->fetch_assoc();
               sex_pwp = '$sex_pwp',
               mobile_pwp = '$mobile_pwp',
               referred_by = '$referred_by',
-              patient_complaints = '$patient_complaints',
-              is_eye = $is_eye,
-              is_ortho = $is_ortho
+              patient_complaints = '$patient_complaints'
             WHERE id = '$id';";
                         $conn->query($sql);
 

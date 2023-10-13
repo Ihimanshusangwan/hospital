@@ -197,6 +197,7 @@ $title = $data->fetch_assoc();
                             <th>Eye Forms</th>
                             <th>Ortho Forms</th>
                             <th>Relative Details</th>
+                            <th>Live Consents</th>
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
@@ -236,6 +237,7 @@ $title = $data->fetch_assoc();
                                     }
                                     ?>
                                 </select></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -290,6 +292,7 @@ $title = $data->fetch_assoc();
 btn;
                             }
                             echo'<td><a class="btn btn-primary" href="relativeDetails.php?id=' . $res['id'] . '" >Relatives</a></td>';
+                            echo'<td><button class="btn btn-primary multi-reference" id="staff_Page" p-id="'.$res['id'].'" cookieName="liveConsent-referer" destination="liveConsents">Live Consents </button></td>';
                             echo '</tr>';
                         }
                         ?>

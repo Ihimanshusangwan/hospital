@@ -35,8 +35,8 @@ $title = $data->fetch_assoc();
     <h1 class="text-center text-danger mt-3">
       <?php echo $title['so'] ?>
     </h1>
-    <button class="btn btn-success m-2" id="dashboard" cookieName="eye-referer">Dashboard</button>
-    <h3 class="text-center text-dark mt-3">Eye Forms</h3>
+    <button class="btn btn-success m-2" id="dashboard" cookieName="liveConsent-referer">Dashboard</button>
+    <h3 class="text-center text-dark mt-3">Live Consents</h3>
     <div class="row">
       <div class="col-md-3">
         <label class="form-label">UHID No:
@@ -99,58 +99,15 @@ $title = $data->fetch_assoc();
         </label>
       </div>
     </div>
-    <table class="table table-borderless">
-
-      <tr>
-
-        <td><a href="admission.php?id=<?php echo $id; ?>"><button class="btn btn-primary m-2">Admission
-              Form</button></a></td>
-        <td><a href="discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary m-2">Discharge
-              Form</button></a></td>
-        <td><a href="otNotes.php?id=<?php echo $id; ?>"><button class="btn btn-primary m-2">Observation
-              Chart</button></a></td>
-        <td><a href="continuation.php?id=<?php echo $id; ?>"> <button class="btn btn-primary m-2">Continuation
-              Sheet</button></a></td>
-
-      </tr>
-      <tr>
-        <td><a href="consumable_acquisition_form.php?id=<?php echo $id; ?>"><button
-              class="btn btn-primary m-2">Consumable Acquisition </button></a></td>
-        <td><a href="Pre-operative_Checklist.php?id=<?php echo $id; ?>"><button
-              class="btn btn-primary m-2">Pre-Operative Checklist</button></a></td>
-        <td><a href="OT.php?id=<?php echo $id; ?>"><button class="btn btn-primary m-2">OT Notes</button></a></td>
-        <td><a href="pre_operative_anesthesia.php?id=<?php echo $id; ?>"><button
-              class="btn btn-primary m-2">Pre-Operative Assessment by Anesthetist</button></a></td>
-      </tr>
-    </table>
-    <h3 class="text-center mb-3">Consent Forms
-    </h3>
+    
 
     <table class="table table-borderless">
-
-      <tr>
-
-        <td><a href="hiv_consent_mar.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">HIV Consent
-              Marathi</button></a></td>
-        <td><a href="hiv_consent_eng.php?id=<?php echo $id; ?>"> <button class="btn btn-primary mb-2">HIV Consent
-              English</button></a></td>
-        <td><a href="general_info_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">General Inform
-              Consent</button></a></td>
-        <td><a href="inform_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">विशेष संमती
-              पात्र</button></a></td>
+        <tr>
+      <td><a href="audioConsent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Audio Consent</button></a></td>
+      <td><a href="vedioConsent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">video Consent</button></a></td>
+      <td> </td>
+      <td> </td>
       </tr>
-      <tr>
-
-        <td><a href="postConsent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">ऑपरेशन नंतर पेशंटने
-              घ्यावयाची काळजी
-            </button></a></td>
-        <td><a href="anumati.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">अनुमतीपत्र</button></a></td>
-        <td><a href="inform_sur_consent.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Informed Consent
-              form for surgery</button></a></td>
-        <td><a href="ALTK.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Automated Lamellar Therapeutic Keratoplasty</button></a></td>
-      </tr>
-
-      
 
     </table>
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pregnancy Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Pregnancy Calculator</h1>
+        <div class="form-group mt-4">
+            <label for="lmp">Enter Last Menstrual Period:</label>
+            <input type="date" class="form-control-sm" id="lmp">
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate Due Date and Duration</button>
+        <p id="result" class="mt-3"></p>
+    </div>
+
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', calculateDueDate);
+
+        function calculateDueDate() {
+            const lmpInput = document.getElementById('lmp').value;
+            const lmpDate = new Date(lmpInput);
+
+            if (isNaN(lmpDate.getTime())) {
+                alert('Invalid date format. Please select a date.');
+                return;
+            }
+
+            const currentDate = new Date();
+            const diffInMilliseconds = currentDate - lmpDate;
+            const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+            const weeks = Math.floor(diffInDays / 7);
+            const days = diffInDays % 7;
+
+            const dueDate = new Date(lmpDate);
+            dueDate.setDate(lmpDate.getDate() + 280); // 280 days is the average pregnancy duration
+
+            const dueDateString = dueDate.toDateString();
+            const durationString = `<strong>Duration:</strong> ${weeks} weeks and ${days} days`;
+
+            document.getElementById('result').innerHTML = `<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}`;
+        }
+    </script>
+</body>
+</html>
