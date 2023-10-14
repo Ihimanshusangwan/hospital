@@ -48,6 +48,10 @@ if (!isset($_SESSION['username'])) {
                     <a href="configure_print.php" class="btn btn-primary mx-1">Configure Print Page
                     </a>
                 </a>
+                <a class="navbar-brand">
+                    <a href="pregnancyCalc.php" class="btn btn-primary mx-1">Pregnancy Calculator
+                    </a>
+                </a>
 
 
                 <a class="navbar-brand">

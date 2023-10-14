@@ -240,6 +240,33 @@ if (isset($_POST['template_btn'])) {
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Open Canvas
   </button>
+  <?php
+  $sql12="SELECT * FROM `config_print` WHERE 1";
+$data12=$conn->query($sql12);
+$res12=$data12->fetch_assoc();
+if (!isset($res12['inp'])) {
+    $inp_arr = array_fill(0, 4, 'option2');
+} else {
+    $inp = $res12['inp'];
+    $inp_arr = json_decode($inp, true);
+    $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+} 
+
+if($inp_arr[2]=='option1'){
+
+    echo<<<calc
+    <div class="container">
+        <h4 class="mt-5">Pregnancy Calculator</h4>
+        <div class="form-group mt-4">
+            <label for="lmp">Enter Last Menstrual Period:</label>
+            <input type="date" class="form-control-sm" id="lmp">
+        </div>
+        <button id="calculateButton" class="btn btn-primary btn-sm m-2">Calculate Due Date and Duration</button>
+        <p id="result" class="mt-3"></p>
+    </div>
+calc;
+} 
+?>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -1733,6 +1760,34 @@ function removeExtraSpaces($str)
         </div>
     </div>
     <script src="prescription.js"></script>
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', calculateDueDate);
+
+        function calculateDueDate() {
+            const lmpInput = document.getElementById('lmp').value;
+            const lmpDate = new Date(lmpInput);
+
+            if (isNaN(lmpDate.getTime())) {
+                alert('Invalid date format. Please select a date.');
+                return;
+            }
+
+            const currentDate = new Date();
+            const diffInMilliseconds = currentDate - lmpDate;
+            const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+            const weeks = Math.floor(diffInDays / 7);
+            const days = diffInDays % 7;
+
+            const dueDate = new Date(lmpDate);
+            dueDate.setDate(lmpDate.getDate() + 280); // 280 days is the average pregnancy duration
+
+            const dueDateString = dueDate.toDateString();
+            const durationString = `<strong>Duration:</strong> ${weeks} weeks and ${days} days`;
+
+            document.getElementById('result').innerHTML = `<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}`;
+        }
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var referButton = document.getElementById("referButton");

@@ -1,10 +1,9 @@
 <?php
 require("connect.php");
-
 error_reporting(0);
 if(isset($_POST['submit'])){
     $inp_arr=array();
-    for($i=1;$i<3;$i++){
+    for($i=1;$i<4;$i++){
         $element=$_POST['inp_'.$i];
         array_push($inp_arr,$element);
     }
@@ -12,7 +11,7 @@ if(isset($_POST['submit'])){
     $sql="UPDATE `config_print` SET `inp`='$inp_json' WHERE `id`='1';";
     $data=$conn->query($sql);
     if($data){
-        echo "<div class='alert alert-success'>Print Page Configure Successfully</div>";
+        echo "<div class='alert alert-success'>Pregnancy Configure Successfully</div>";
     }
 }
 $sql = "SELECT * FROM config_print WHERE id = 1;";
@@ -26,7 +25,7 @@ $data12=$conn->query($sql12);
 $res12=$data12->fetch_assoc();
 $inp=$res12['inp'];
 $inp_arr=json_decode($inp,true);
-$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,3,'option2');
+$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,4,'option2');
 
 
 ?>
@@ -44,14 +43,12 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,3,'option2');
 
 <body>
     <div class="container mb-4">
-        <h1 class="text-center text-danger mt-3">SHRI SIDDHIVINAYAK NETRALAYA</h1>
         <a href="adminLogin.php" class="btn btn-success m-2">Dashboard</a>
-        <h5 class="text-center mt-3">Select those Print Pages that Inculde Header</h5>
         <div class="row p-4 pt-4">
             <form method="post">
                 <div class="col shadow-lg rounded m-2 p-4">
                     <table class="table border border-dark">
-                        <tr>
+                        <tr style="display:none;">
                             <td>Medicine Perscription</td>
                             <td>
                                 <div class="form-check form-check-inline">
@@ -66,7 +63,7 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,3,'option2');
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="display:none;">
                             <td>Consent Form</td>
                             <td>
                                 <div class="form-check form-check-inline">
@@ -77,6 +74,21 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,3,'option2');
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="inp_2"
                                         value="option2" <?php echo $inp_arr[1]=='option2'?'checked':'';?>>
+                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr >
+                            <td>Pregnancy Calculator</td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inp_3" id="inlineRadio1"
+                                        value="option1" <?php echo $inp_arr[2]=='option1'?'checked':'';?>>
+                                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inp_3"
+                                        value="option2" <?php echo $inp_arr[2]=='option2'?'checked':'';?>>
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
                             </td>
