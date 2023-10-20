@@ -1988,6 +1988,10 @@ function saveDrawing(imageData, id) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 alert("Drawing saved successfully!");
+                $('#exampleModal').modal('hide');
+
+
+
             } else {
                 alert("Error saving drawing.");
             }

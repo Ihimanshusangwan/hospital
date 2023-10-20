@@ -21,7 +21,7 @@ $x=0;
  if(isset($_POST['submit'])){
     
     $a=array();
-    for ($i = 0; $i < 35; $i++) {
+    for ($i = 0; $i < 38; $i++) {
         $element = $_POST[ $i];
         array_push($a, $element);
     }
@@ -34,6 +34,38 @@ a='$a_en'
 WHERE id =$id;
 ";
 $sql3=mysqli_query($conn,$update);
+$date = date("Y-m-d");
+$uhid = $_POST['uhid'];
+$ipd = $_POST['ipd'];
+$name = $_POST['name'];
+$dept = $_POST['35'];
+$date_of_checkup = $_POST['36'];
+$checkup_done = $_POST['37'];
+$sign = $_POST['0'];
+  $register = "select id from pre_anas_checkup_record where patient_id = '$id'; ";
+  $reg_result = $conn->query($register);
+  if($reg_result->num_rows==1){
+    // update
+    $update="UPDATE pre_anas_checkup_record
+    SET 
+      date = '$date',
+      uhid = '$uhid',
+      ipd = '$ipd',
+      name = '$name',
+      dept = '$dept',
+      date_of_checkup = '$date_of_checkup',
+      checkup_done = '$checkup_done',
+      sign = '$sign'
+    WHERE 
+      patient_id = '$id';
+    ";
+    $conn->query($update);
+  }else{
+    // insert
+    $insert= "INSERT INTO pre_anas_checkup_record (date,uhid,ipd,name,dept,date_of_checkup,checkup_done,sign,patient_id) VALUES ('$date','$uhid','$ipd','$name','$dept','$date_of_checkup','$checkup_done','$sign',$id);";
+    $conn->query($insert);
+
+  }
 
 }
 $sql4=mysqli_query($conn,"SELECT * FROM pre_room_urinary WHERE id=$id;");
@@ -42,9 +74,7 @@ $row4=mysqli_fetch_assoc($sql4);
 if($row4){
     $a_de =  json_decode($row4['a'], true);
 }
-   
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -197,6 +227,9 @@ if($row4){
                </div>
             
             <form action="" method="post">
+                <input type="hidden" name="uhid" value="<?php echo $row2['uhid']; ?>" >
+                <input type="hidden" name="ipd" value="<?php echo $row2['ipd']; ?>" >
+                <input type="hidden" name="name" value="<?php echo $row['name']; ?>" >
             <div class="row">
                 <div class="col-4">Posted For :
                     <input type="text" name="1" id="" value="<?php echo $a_de[1];?>" class="form-control">
@@ -297,6 +330,16 @@ if($row4){
                 </div>
             </div>
             <div class="row">
+                <div class="col-6">Dept. of Surgery:
+                <input type="text" name="35" id=""value="<?php echo $a_de[35];?>" class="form-control">
+                </div>
+                <div class="col-6">Date of Pre Anesthesia:
+                <input type="date" name="36" id=""value="<?php echo $a_de[36];?>" class="form-control">
+                </div>
+                <div class="col-6">Pre Anas. Checkup Done Completely:
+                <input type="radio" name="37" id=""value="yes" <?php echo ($a_de[37]=='yes')? "checked": ""; ?> class=""> Yes
+                <input type="radio" name="37" id=""value="no" <?php echo ($a_de[37]=='no')? "checked": ""; ?> class="">No
+                </div>
                 <div class="col-6">Plan of Anesthesia
                 <input type="text" name="32" id=""value="<?php echo $a_de[32];?>" class="form-control">
                 </div>

@@ -180,8 +180,14 @@ if($row4){
         </div>
     </div>
     <div class="row">
-        <div class="col-6"><STRONG>Plan of Anesthesia
-               : </STRONG><?php echo $a_de[32];?>
+        <div class="col-6"><STRONG>Dept. of Surgery:
+               : </STRONG><?php echo $a_de[35];?>
+        </div>
+        <div class="col-6"><STRONG>Date of Pre Anesthesia:
+               : </STRONG><?php echo $a_de[36];?>
+        </div>
+        <div class="col-6"><STRONG>Pre Anas. Checkup Done Completely:
+               : </STRONG><?php echo $a_de[37];?>
         </div>
         <div class="col-6"><STRONG>Advice
                : </STRONG><?php echo $a_de[33];?>

@@ -183,7 +183,7 @@ $title = $data->fetch_assoc();
               Notes</button></a>
         </td>
         <td>
-          <a href="incidence_register.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Incidence Register
+          <a href="incidence_register.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Incidence Form
             </button></a>
         </td>
         <td>
@@ -230,9 +230,22 @@ $title = $data->fetch_assoc();
 
         <td><a href="discharge_summary.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Discharge
               Summary</button></a></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><a href="ambulance.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Ambulance
+              Summary</button></a></td>
+        <td><a href="dama.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">DAMA
+              </button></a></td>
+        <td><a href="ssi.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Surgical Site Injection (SSI)
+              </button></a></td>
+       
+        
+      </tr>
+      <tr>
+      <td><a href="incident.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Incident</button></a></td>
+      <td><a href="npi.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Needle Prick Injury Record</button></a></td>
+  
+      <td></td>
+      <td></td>
+
       </tr>
 
     </table>
