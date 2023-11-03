@@ -57,10 +57,20 @@
     VALUES ('$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile', '$mail', '$pass')";
 
       if ($conn->query($sql) === TRUE) {
+        
+        $id = $conn->insert_id;
+        if ($_FILES['signature']['name'] != "") {
+          $signature = $_FILES['signature'];
+          $filename = $signature['name'];
+          $ext = explode(".", $filename);
+          $extension = end($ext);
+          $newfile = "../staff/signatures/" . $id . "." . $extension;
+          $tmpfile = $signature['tmp_name'];
+          move_uploaded_file($tmpfile, $newfile);
+          $query2 = "UPDATE staff SET signature = '$newfile' WHERE id = '$id';";
+          $conn->query($query2);
+        }
         echo "<span style='color:green;'>New registration successfull</span>";
-        // redirect to the same page to prevent form resubmission
-        // header("Location: " . $_SERVER["PHP_SELF"]);
-        // exit();
 
       } else {
         echo "Error:";
@@ -126,6 +136,10 @@
           <div class="form-group m-2">
             <label for="pass">Password:</label>
             <input name="pass" type="password" id="pass" value="" class="form-control" placeholder="Password" />
+          </div>
+          <div class="form-group m-2">
+            <label for="signature">Upload Image:</label>
+            <input name="signature" type="file" id="signature" class="form-control-file" accept="image/*">
           </div>
           <div class="form-group m-2">
             <button type="submit" name="submit" id="submit" class="btn btn-outline-danger mt-2">

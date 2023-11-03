@@ -94,6 +94,7 @@ $title = $data->fetch_assoc();
                             <th>AGE</th>
                             <th>CONSULTANT</th>
                             <th>Type</th>
+                            <th>Canvas</th>
                             <th>Prescription</th>
 
                         </tr>
@@ -136,6 +137,7 @@ $title = $data->fetch_assoc();
                                     ?>
                                 </select></th>
                             <th></th>
+                            <th></th>
 
                         </tr>
                     </thead>
@@ -157,7 +159,8 @@ $title = $data->fetch_assoc();
                             echo '<td>' . $res['age'] . '</td>';
                             echo '<td>' . $res['consultant'] . '</td>';
                             echo '<td>' . $res['type_of_visit'] . '</td>';
-                            echo '<td><a class="btn btn-primary" href="pres_print.php?id=' . $res['id'] . '" >Prescription</a></td>';
+                            echo '<td><a class="btn btn-primary" href="pres_print.php?id=' . $res['id'] . '" >Hand written Pres.</a></td>';
+                            echo '<td><a class="btn btn-primary" href="pres_print2.php?id=' . $res['id'] . '" >Prescription</a></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -200,11 +203,12 @@ $title = $data->fetch_assoc();
             });
         });
         document.getElementById("regDateSearch").addEventListener("change", () => {
+            console.log("clicked");
             let date = document.getElementById("regDateSearch").value;
-            window.location.href = "staff_Page.php?date=" + date;
+            window.location.href = "medical_Page.php?date=" + date;
 
         })
-    </scrip>
+    </script>
 </body>
 
 </html>

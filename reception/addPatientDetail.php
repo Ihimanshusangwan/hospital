@@ -361,6 +361,25 @@ $title = $data->fetch_assoc();
               $conn->query($sql);
               $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
               $conn->query($sql);
+              if (isset($_FILES["image"])) {
+                $imageUploadPath = "images/patient_images/"; // Directory to store images
+                $imageName = $_FILES["image"]["name"];
+            
+            
+                $newImageName = $uhid . "_" . $imageName;
+                $imagePath = $imageUploadPath . $newImageName;
+              
+            
+                // Move the uploaded file to the designated directory with the new filename
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
+                    
+                    $sql = "insert into patient_images(uhid,path) values('$uhid',' $imagePath');";
+                    $conn->query($sql);
+            
+                } else {
+                    echo "Image upload failed.";
+                }
+            }
 
               $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
 
@@ -498,6 +517,10 @@ $title = $data->fetch_assoc();
                 <div class="col-sm-2">
                   <label class="form-label">Temperature</label>
                   <input name="temp" type="text" class="form-control" id="temp" placeholder="Enter Temperature">
+                </div>
+                <div class="col">
+                  <label class="form-label">Image: </label>
+                  <input name="image" type="file" class="form-control" id="image">
                 </div>
               </div>
             </div>

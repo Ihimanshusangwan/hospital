@@ -115,20 +115,20 @@ document.addEventListener("click", function (event) {
       // Loop to create options from 1 ml to 15 ml
       for (let ml = 1; ml <= 10; ml++) {
         let option = document.createElement("option");
-        option.value = `${ml}  थेंब`;
-        option.textContent = `${ml}  थेंब`;
+        option.value = `${ml} थेंब`;
+        option.textContent = `${ml} थेंब`;
         selectElement1.appendChild(option);
       }
       for (let ml = 1; ml <= 10; ml++) {
         let option = document.createElement("option");
-        option.value = `${ml}  थेंब`;
-        option.textContent = `${ml}  थेंब`;
+        option.value = `${ml} थेंब`;
+        option.textContent = `${ml} थेंब`;
         selectElement2.appendChild(option);
       }
       for (let ml = 1; ml <= 10; ml++) {
         let option = document.createElement("option");
-        option.value = `${ml}  थेंब`;
-        option.textContent = `${ml}  थेंब`;
+        option.value = `${ml} थेंब`;
+        option.textContent = `${ml} थेंब`;
         selectElement3.appendChild(option);
       }
       selectElement1.value = data.morning;

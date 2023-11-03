@@ -73,6 +73,25 @@ $title = $data->fetch_assoc();
                     $mobile_pwp = isset($_POST['mobile_pwp']) ? $_POST['mobile_pwp'] : '';
                     $referred_by = isset($_POST['rb']) ? $_POST['rb'] : '';
                     $patient_complaints = isset($_POST['pc']) ? $_POST['pc'] : '';
+                    if (isset($_FILES["image"])) {
+                        $imageUploadPath = "relative_images/"; // Directory to store images
+                        $imageName = $_FILES["image"]["name"];
+                    
+                    
+                        $newImageName = $id . "_" . $imageName;
+                        $imagePath = $imageUploadPath . $newImageName;
+                      
+                    
+                        // Move the uploaded file to the designated directory with the new filename
+                        if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
+                            
+                            $sql = "insert into relative_images(id,path) values('$id',' $imagePath');";
+                            $conn->query($sql);
+                    
+                        } else {
+                            echo "Image upload failed.";
+                        }
+                    }
                     
 
                     if (empty($nameErr)) {
@@ -288,6 +307,10 @@ $title = $data->fetch_assoc();
                             <input type="number" class="form-control" placeholder="mobile" value="<?php echo $res['mobile_pwp'];?>" id="mobile_pwp"
                                 name="mobile_pwp" />
                         </div>
+                        <div class="col-5">
+                  <label class="form-label">Image: </label>
+                  <input name="image" type="file" class="form-control" id="image">
+                </div>
                         
                         <section style="display:none;">
                         <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>

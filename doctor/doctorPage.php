@@ -117,8 +117,9 @@ $title = $data->fetch_assoc();
                             <th>REVIEW PATIENT</th>
                             <th>VIEW</th>
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>OT NOTES</th>":"";?>  
-                            <th>More</th>
-                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>Images</th>":"";?>  
+                            <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>More</th>":"";?>  
+            
+                            <?php echo ($_SESSION['doctor_type'] == 'Ortho')?" <th>Images</th>":"";?>  
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
@@ -149,8 +150,9 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
-                            <th></th>
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
+                           
+                            <?php echo ($_SESSION['doctor_type'] == 'Ortho')?" <th></th>":"";?> 
                         </tr>
                     </thead>
                     <tbody>
@@ -202,21 +204,20 @@ $title = $data->fetch_assoc();
                                     echo '<td><button class="btn btn-primary" disabled>OT Notes</button></td>';
                                 }
                             }
+                            if($_SESSION['doctor_type'] == 'Eye'){
+                                
+                                echo '<td><a href="opto.php?id=' . $res['id'] . '" class="btn btn-primary">Ophthalmologist</a></td>';
+                                
+                            }
                             
                             // if ($res['type_of_visit'] == 'Eye') {
-                                echo '<td><a href="opto.php?id=' . $res['id'] . '" class="btn btn-primary">Ophthalmologist</a></td>';
                             // } else {
                             //     echo "<td></td>";
                             // }
-                            if($_SESSION['doctor_type'] != 'Ortho'){
-                            if ($res['is_admited'] == 1) {
+                           
                                 echo '<td><a href="img.php?id=' . $res['id'] . '" class="btn btn-primary">Images</a></td>';
 
-                            } else {
-                                echo '<td><button class="btn btn-primary" disabled>Images</button></td>';
-
-                            }
-                        }
+                        
 
                             echo '</tr>';
                         }
