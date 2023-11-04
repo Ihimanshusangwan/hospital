@@ -27,7 +27,7 @@ $title = $data->fetch_assoc();
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <title>Medical</title>
+    <title>Lab</title>
     <style>
         .dl-horizontal dt {
             white-space: normal;
@@ -94,8 +94,7 @@ $title = $data->fetch_assoc();
                             <th>AGE</th>
                             <th>CONSULTANT</th>
                             <th>Type</th>
-                            <th>Canvas</th>
-                            <th>Prescription</th>
+                            <th>Lab</th>
 
                         </tr>
                         <tr>
@@ -137,7 +136,6 @@ $title = $data->fetch_assoc();
                                     ?>
                                 </select></th>
                             <th></th>
-                            <th></th>
 
                         </tr>
                     </thead>
@@ -159,8 +157,7 @@ $title = $data->fetch_assoc();
                             echo '<td>' . $res['age'] . '</td>';
                             echo '<td>' . $res['consultant'] . '</td>';
                             echo '<td>' . $res['type_of_visit'] . '</td>';
-                            echo '<td><a class="btn btn-primary" href="pres_print.php?id=' . $res['id'] . '" >Hand written Pres.</a></td>';
-                            echo '<td><a class="btn btn-primary" href="pres_print2.php?id=' . $res['id'] . '" >Prescription</a></td>';
+                            echo '<td><a class="btn btn-primary" href="lab_print.php?id=' . $res['id'] . '" >Lab Tests</a></td>';
                             echo '</tr>';
                         }
                         ?>
@@ -205,7 +202,7 @@ $title = $data->fetch_assoc();
         document.getElementById("regDateSearch").addEventListener("change", () => {
             console.log("clicked");
             let date = document.getElementById("regDateSearch").value;
-            window.location.href = "medical_Page.php?date=" + date;
+            window.location.href = "lab_Page.php?date=" + date;
 
         })
     </script>

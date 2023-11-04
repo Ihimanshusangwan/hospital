@@ -240,33 +240,7 @@ if (isset($_POST['template_btn'])) {
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Open Canvas
   </button>
-  <?php
-  $sql12="SELECT * FROM `config_print` WHERE 1";
-$data12=$conn->query($sql12);
-$res12=$data12->fetch_assoc();
-if (!isset($res12['inp'])) {
-    $inp_arr = array_fill(0, 4, 'option2');
-} else {
-    $inp = $res12['inp'];
-    $inp_arr = json_decode($inp, true);
-    $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
-} 
 
-if($inp_arr[2]=='option1'){
-
-    echo<<<calc
-    <div class="container">
-        <h4 class="mt-5">Pregnancy Calculator</h4>
-        <div class="form-group mt-4">
-            <label for="lmp">Enter Last Menstrual Period:</label>
-            <input type="date" class="form-control-sm" id="lmp">
-        </div>
-        <button id="calculateButton" class="btn btn-primary btn-sm m-2">Calculate Due Date and Duration</button>
-        <p id="result" class="mt-3"></p>
-    </div>
-calc;
-} 
-?>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -435,16 +409,16 @@ data;
                                 $template_id = $row['id'];
                                 $template_name = htmlspecialchars($row['name']);
                                 ?>
-                                                        <div class="col">
-                                                            <form action="" method="post">
-                                                                <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                                                <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
-                                                                    <?php echo $template_name; ?>
-                                                                </button>
+                                                                        <div class="col">
+                                                                            <form action="" method="post">
+                                                                                <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                                                                                <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
+                                                                                    <?php echo $template_name; ?>
+                                                                                </button>
 
-                                                            </form>
-                                                        </div>
-                                                        <?php
+                                                                            </form>
+                                                                        </div>
+                                                                        <?php
                             }
                             echo "</div>";
                         } else {
@@ -576,44 +550,120 @@ data;
                 <?php echo $result['patient_complaints']; ?>
             </span>
         </div>
+        <?php
+        $sql12 = "SELECT * FROM `config_print` WHERE 1";
+        $data12 = $conn->query($sql12);
+        $res12 = $data12->fetch_assoc();
+        $sql13 = "SELECT pregDetails FROM `patient_info` WHERE patient_id=$id";
+        $data13 = $conn->query($sql13);
+        $res13 = $data13->fetch_assoc();
+        if (!isset($res12['inp'])) {
+            $inp_arr = array_fill(0, 4, 'option2');
+        } else {
+            $inp = $res12['inp'];
+            $inp_arr = json_decode($inp, true);
+            $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+        }
+
+        if ($inp_arr[2] == 'option1') {
+
+            echo <<<calc
+            <div class="text-dark mt-4" style="margin-left:7rem;font-weight:bold;">Pregnancy: <span
+                style="font-weight: bold;">
+                {$res13['pregDetails']}
+            </span>
+        </div>
+            
+            
+            
+calc;
+        }
+        ?>
 
 
 
         <div class="row">
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
+        <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
                 <?php
-                if (isset($_REQUEST['chief_complaint_submit'])) {
-                    $chiefComplaint = removeExtraSpaces($_REQUEST['chief_complaint']);
-                    $sql = "UPDATE patient_info SET chief_complaint = '$chiefComplaint' WHERE patient_id = $id;";
+                
+                $i = 1;
+                if (isset($_REQUEST['save_complaints'])) {
+                    echo "<div class='alert alert-success'>Chief Complaints Updated Successfully</div>";
+                    $complaints = filter_var($_REQUEST["complaints"], FILTER_SANITIZE_STRING);
+                    $sql = "UPDATE patient_info SET chief_complaint='$complaints' WHERE patient_id=$id;";
                     if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Chief Complaint Updated Successfully</div>";
+                        $i++;
                     } else {
-                        echo "<div class='alert alert-danger'>Error Updating Chief Complaint</div>";
+                        echo "<div class='alert alert-danger'>Error Updating Complaints</div>";
                     }
                 }
+
                 $sql = "SELECT chief_complaint FROM patient_info WHERE patient_id = $id;";
                 $res = $conn->query($sql)->fetch_assoc();
-                $chiefComplaintValue = $res['chief_complaint'];
                 ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="chief_complaint" class="text-danger">Chief
-                            Complaint:</label>
-                        <textarea type="text" name="chief_complaint" id="chief_complaint"
-                            class="form-control live-fetch" data-column="chief_complaint"
-                            data-table="patient_info"><?php echo $res['chief_complaint']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="chief_complaint_submit" class="btn btn-info">Save</button>
+                <label class="font-weight-bold" for="" class="text-danger">Chief Complaints :</label>
+                <div class="card-body p-2">
+                    <form action="" method="POST">
+                        <textarea class="form-control mt-3" id="selected-complaints"
+                            name="complaints"><?php echo $res['chief_complaint']; ?></textarea>
+
+                        <div class="row">
+                            <div class="col-3 mt-2">
+                                <input type="submit" class="btn btn-primary " name="save_complaints" value="Save">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <button type="button" id="complaints" class="btn btn-primary ">Complaints</button>
+                            </div>
+                            <div class="col-1 mt-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="complaints_checkbox"
+                                        id="complaints_checkbox">
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="chief_complaint_checkbox"
-                                id="chief_complaint_checkbox">
+
+                        <div class="modal" id="complaintsModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Chief Complaints</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><strong>
+                                                    &times;
+                                                </strong></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                         
+                                        <table class="mx-3">
+                                            <tr>
+                                                <th>Checkbox</th>
+                                                <th>Chief Complaints</th>
+                                            </tr>
+
+                                            <?php
+                                            $i = 1;
+                                            $sql1 = mysqli_query($conn, "SELECT * FROM chief_complaints where dr_id = {$_SESSION['doctor_id']};");
+
+                                            while ($res = mysqli_fetch_assoc($sql1)) {
+                                                echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-complaints" type="checkbox" name="complaints_checkbox_' . $i . '"
+                    id="complaints_checkbox_' . $i . '">
+                </td>
+                <td>' . $res['complaints'] . '</td>
+            </tr>';
+                                                $i++;
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             
 <?php
@@ -1760,34 +1810,7 @@ function removeExtraSpaces($str)
         </div>
     </div>
     <script src="prescription.js"></script>
-    <script>
-        document.getElementById('calculateButton').addEventListener('click', calculateDueDate);
-
-        function calculateDueDate() {
-            const lmpInput = document.getElementById('lmp').value;
-            const lmpDate = new Date(lmpInput);
-
-            if (isNaN(lmpDate.getTime())) {
-                alert('Invalid date format. Please select a date.');
-                return;
-            }
-
-            const currentDate = new Date();
-            const diffInMilliseconds = currentDate - lmpDate;
-            const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-
-            const weeks = Math.floor(diffInDays / 7);
-            const days = diffInDays % 7;
-
-            const dueDate = new Date(lmpDate);
-            dueDate.setDate(lmpDate.getDate() + 280); // 280 days is the average pregnancy duration
-
-            const dueDateString = dueDate.toDateString();
-            const durationString = `<strong>Duration:</strong> ${weeks} weeks and ${days} days`;
-
-            document.getElementById('result').innerHTML = `<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}`;
-        }
-    </script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var referButton = document.getElementById("referButton");
@@ -2085,6 +2108,16 @@ function saveDrawing(imageData, id) {
                 $("#selected-symptoms").val(selectedSymptoms.join(" , "));
             });
         });
+        $(document).ready(function () {
+            $(".checkbox-complaints").change(function () {
+                var selectedSymptoms = [];
+                $(".checkbox-complaints:checked").each(function () {
+                    var symptoms = $(this).closest("tr").find("td:last").text();
+                    selectedSymptoms.push(symptoms);
+                });
+                $("#selected-complaints").val(selectedSymptoms.join(" , "));
+            });
+        });
 
 
         $(document).ready(function () {
@@ -2159,6 +2192,25 @@ function saveDrawing(imageData, id) {
         document.addEventListener("DOMContentLoaded", function () {
             const modal = document.getElementById("symptomsModal");
             const symptomsButton = document.getElementById("symptom");
+            const closeButton = modal.querySelector(".close");
+
+            symptomsButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
+
+            closeButton.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("complaintsModal");
+            const symptomsButton = document.getElementById("complaints");
             const closeButton = modal.querySelector(".close");
 
             symptomsButton.addEventListener("click", function () {

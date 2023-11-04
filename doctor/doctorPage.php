@@ -87,6 +87,7 @@ $title = $data->fetch_assoc();
                 <a href="add_symptoms.php" class="btn btn-primary mx-1">Add Symptoms</a>
                 
                 <a href="add_instructions.php" class="btn btn-primary mx-1">Add Instructions</a>
+                <a href="add_chief_complaints.php" class="btn btn-primary mx-1">Add Cheif Complaints</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">Logout</button>
                 </a>
@@ -119,7 +120,7 @@ $title = $data->fetch_assoc();
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>OT NOTES</th>":"";?>  
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th>More</th>":"";?>  
             
-                            <?php echo ($_SESSION['doctor_type'] == 'Ortho')?" <th>Images</th>":"";?>  
+                        <th>Images</th>
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
@@ -151,8 +152,7 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
                             <?php echo ($_SESSION['doctor_type'] != 'Ortho')?" <th></th>":"";?> 
-                           
-                            <?php echo ($_SESSION['doctor_type'] == 'Ortho')?" <th></th>":"";?> 
+                           <th></th>
                         </tr>
                     </thead>
                     <tbody>

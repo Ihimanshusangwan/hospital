@@ -1,6 +1,7 @@
 <?php
 $id = $_GET['id'];
 require("../admin/connect.php");
+// error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,9 +23,16 @@ require("../admin/connect.php");
 
     <a href="receptionPage.php" class="btn btn-success m-2">Dashboard</a>
     <div class="forms">
-      <?php if (isset($_POST['admit_patient'])) {
+      <?php
+       if (isset($_POST['admit_patient'])) {
         $sql = "UPDATE patient_records SET is_admited = 1 WHERE id = $id;";
         $conn->query($sql);
+
+      }
+       if (isset($_POST['pregDate'])) {
+        
+        $sql = "UPDATE patient_info SET pregDate = '{$_POST['pregDate']}' , pregDetails = '{$_POST['pregDetails']}' WHERE patient_id = $id;";
+       $conn->query($sql);
 
       }
       ?>
@@ -72,6 +80,52 @@ require("../admin/connect.php");
 
 
       </div>
+      <?php
+  $sql12="SELECT * FROM `config_print` WHERE 1";
+$data12=$conn->query($sql12);
+$res12=$data12->fetch_assoc();
+  $sql13="SELECT pregDate,pregDetails FROM `patient_info` WHERE patient_id=$id";
+$data13=$conn->query($sql13);
+$res13=$data13->fetch_assoc();
+if (!isset($res12['inp'])) {
+    $inp_arr = array_fill(0, 4, 'option2');
+} else {
+    $inp = $res12['inp'];
+    $inp_arr = json_decode($inp, true);
+    $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+} 
+
+if($inp_arr[2]=='option1' && !$res13['pregDate']){
+
+    echo<<<calc
+    <div class="container">
+        <h4 class="mt-2">Pregnancy Calculator</h4>
+        <div class="form-group mt-4">
+            <label for="lmp">Enter Last Menstrual Period:</label>
+            <input type="date" class="form-control-sm" id="lmp">
+        </div>
+        <button id="calculateButton" class="btn btn-primary btn-sm m-2">Calculate Due Date and Duration</button>
+        <p id="result" class="mt-3"></p>
+    </div>
+calc;
+} else if($res13['pregDate']){
+  
+  echo<<<calc
+  <div class="container">
+  {$res13['pregDetails']}
+  </div>
+  <div class="container">
+      <h4 class="mt-2">Pregnancy Calculator</h4>
+      <div class="form-group mt-4">
+          <label for="lmp">Enter Last Menstrual Period:</label>
+          <input type="date" class="form-control-sm" id="lmp" value='{$res13['pregDate']}'>
+      </div>
+      <button id="calculateButton" class="btn btn-primary btn-sm m-2">ReCalculate Due Date and Duration</button>
+      <p id="result" class="mt-3"></p>
+  </div>
+calc;
+}
+?>
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Patient Information</h5>
@@ -171,6 +225,42 @@ data;
           window.location.href = destination + ".php?id=" + "<?php echo $id; ?>";
         });
       });
+    </script>
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', calculateDueDate);
+
+        function calculateDueDate() {
+            const lmpInput = document.getElementById('lmp').value;
+            const lmpDate = new Date(lmpInput);
+
+            if (isNaN(lmpDate.getTime())) {
+                alert('Invalid date format. Please select a date.');
+                return;
+            }
+
+            const currentDate = new Date();
+            const diffInMilliseconds = currentDate - lmpDate;
+            const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+            const weeks = Math.floor(diffInDays / 7);
+            const days = diffInDays % 7;
+
+            const dueDate = new Date(lmpDate);
+            dueDate.setDate(lmpDate.getDate() + 280); // 280 days is the average pregnancy duration
+
+            const dueDateString = dueDate.toDateString();
+            const durationString = `<strong>Duration:</strong> ${weeks} weeks and ${days} days`;
+            
+            const dataToSave = lmpInput;
+
+            document.getElementById('result').innerHTML = `<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}<br>
+            <form method='POST'>
+            <input type='hidden' name ='pregDate' value = '${dataToSave}'>
+            <input type='hidden' name ='pregDetails' value = '<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}'>
+            <button class= 'btn btn-success' type='submit'>Save</button>
+            </form>`;
+        }
+       
     </script>
 </body>
 
