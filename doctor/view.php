@@ -214,7 +214,7 @@ if (isset($_POST['template_btn'])) {
 
         }
     </script>
-    <title>Shri Sidhivinayak Netralaya</title>
+    <title> <?php echo $title['do'] ?></title>
 </head>
 
 <body style="background-color: #90D0E5;">

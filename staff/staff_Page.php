@@ -65,16 +65,16 @@ $title = $data->fetch_assoc();
                 </h3>
             </a>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal1">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal1">
                     Eye Registers
                 </button>
-                   
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal">
-                     Ortho Registers
+
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal">
+                    Ortho Registers
                 </button>
 
                 <a href="floor_cleaning.php?month=<?php echo date('Y-m'); ?>" class="btn btn-secondary">Floor
-                        Cleaning</a>
+                    Cleaning</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                         Logout
@@ -98,18 +98,27 @@ $title = $data->fetch_assoc();
                     <h5 class="modal-title" id="largeModalLabel">Registers</h5>
                 </div>
                 <div class="modal-body">
-                <a class=" btn btn-primary mb-2"
+                    <a class=" btn btn-primary mb-2"
                         href="register/pre_anasthesia_checkup_record.php?month=<?php echo date('Y-m'); ?>">Pre
                         Anasthesia Checkup Record</a>
-                    <a href="register/vac_employee.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Vaccination To Employee Register</button></a>
-                    <a href="register/venti_pneumonia.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Ventilator Associated Pneumonia</button></a>
-                    <a href="register/medical_error_record.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Medical Error Record</button></a>
-                    <a href="register/repeat_surgery_record.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Repeat Surgery Record</button></a>
-                    <a href="register/postpone_surgery_record.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Postpone Surgery Record</button></a>
-                    <a href="register/needle_injury_record.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Needle Prick Injury Record</button></a>
-                    <a href="register/wrong_side_record.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Wrong Side Surgery Record</button></a>
-                    <a href="register/refr_temp_register.php?month=<?php echo date("Y-m"); ?>"><button class="btn btn-primary mb-2">Refrigerator Temp. Register</button></a>
-                    <a class=" btn btn-primary mb-2" href="register/ambulance_register.php?month=<?php echo date('Y-m'); ?>">
+                    <a href="register/vac_employee.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Vaccination To Employee Register</button></a>
+                    <a href="register/venti_pneumonia.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Ventilator Associated Pneumonia</button></a>
+                    <a href="register/medical_error_record.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Medical Error Record</button></a>
+                    <a href="register/repeat_surgery_record.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Repeat Surgery Record</button></a>
+                    <a href="register/postpone_surgery_record.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Postpone Surgery Record</button></a>
+                    <a href="register/needle_injury_record.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Needle Prick Injury Record</button></a>
+                    <a href="register/wrong_side_record.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Wrong Side Surgery Record</button></a>
+                    <a href="register/refr_temp_register.php?month=<?php echo date("Y-m"); ?>"><button
+                            class="btn btn-primary mb-2">Refrigerator Temp. Register</button></a>
+                    <a class=" btn btn-primary mb-2"
+                        href="register/ambulance_register.php?month=<?php echo date('Y-m'); ?>">
                         Ambulance Register</a>
 
                     <a class="btn btn-primary mb-2"
@@ -132,17 +141,19 @@ $title = $data->fetch_assoc();
                         href="register/drug_reaction_record.php?month=<?php echo date('Y-m'); ?>">
                         Durg Reaction Record</a>
 
-                    <a class="btn btn-primary mb-2" href="register/incident_register.php?month=<?php echo date('Y-m'); ?>">
+                    <a class="btn btn-primary mb-2"
+                        href="register/incident_register.php?month=<?php echo date('Y-m'); ?>">
                         Incident Register</a>
 
                     <a class="btn btn-primary mb-2"
                         href="register/indoor_case_register.php?month=<?php echo date('Y-m'); ?>">
                         Indoor Case Register</a>
 
-                    <a class="btn btn-primary mb-2" href="register/opd_register.php?month=<?php echo date('Y-m'); ?>"> 
-                    OPD Register</a>
+                    <a class="btn btn-primary mb-2" href="register/opd_register.php?month=<?php echo date('Y-m'); ?>">
+                        OPD Register</a>
 
-                    <a class="btn btn-primary mb-2" href="register/patient_register_ot.php?month=<?php echo date('Y-m'); ?>">
+                    <a class="btn btn-primary mb-2"
+                        href="register/patient_register_ot.php?month=<?php echo date('Y-m'); ?>">
                         Patient Register (OT)</a>
 
                     <a class="btn btn-primary mb-2"
@@ -168,9 +179,12 @@ $title = $data->fetch_assoc();
                     <h5 class="modal-title" id="largeModalLabel">Eye Registers</h5>
                 </div>
                 <div class="modal-body">
-                        <a href="investigation.php?month=<?php echo date('Y-m');; ?>"><button class="btn btn-primary mb-2">A'Scan Register</button></a>
-                        <a href="laser.php?month=<?php echo date('Y-m'); ?>"><button class="btn btn-primary mb-2">Laser Register</button></a>
-    
+                    <a href="investigation.php?month=<?php echo date('Y-m');
+                    ; ?>"><button
+                            class="btn btn-primary mb-2">A'Scan Register</button></a>
+                    <a href="laser.php?month=<?php echo date('Y-m'); ?>"><button class="btn btn-primary mb-2">Laser
+                            Register</button></a>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -178,7 +192,19 @@ $title = $data->fetch_assoc();
             </div>
         </div>
     </div>
+    <?php
+    $sql12 = "SELECT * FROM `config_print` WHERE 1";
+    $data12 = $conn->query($sql12);
+    $res12 = $data12->fetch_assoc();
+    if (!isset($res12['inp'])) {
+        $inp_arr = array_fill(0, 4, 'option2');
+    } else {
+        $inp = $res12['inp'];
+        $inp_arr = json_decode($inp, true);
+        $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+    }
 
+    ?>
     <!-- Table Start -->
     <section>
         <div class="container-fluid">
@@ -198,6 +224,9 @@ $title = $data->fetch_assoc();
                             <th>Ortho Forms</th>
                             <th>Relative Details</th>
                             <th>Live Consents</th>
+                            <?php if ($inp_arr[2] == 'option1') {
+                                echo"<th>Delivery Notes</th>";
+                            } ?>
                         </tr>
                         <tr>
                             <th><input type="text" class="form-control form-control-sm" placeholder="Search Patient ID">
@@ -240,16 +269,18 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
+                            <th></th>  <?php if ($inp_arr[2] == 'option1') {
+                                echo"<th></th>";
+                            } ?>
                         </tr>
                     </thead>
                     <tbody>
 
                         <?php
-                         $today = date("Y-m-d");
-                         if (isset($_GET['date'])) {
-                             $today = $_GET['date'];
-                         }
+                        $today = date("Y-m-d");
+                        if (isset($_GET['date'])) {
+                            $today = $_GET['date'];
+                        }
                         $sql = "SELECT * FROM patient_records WHERE is_admited = 1 and (is_registered= 1  or is_approved= 1) and is_deleted = 0 and reg_date ='$today' ORDER BY id DESC;";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
@@ -291,8 +322,11 @@ $title = $data->fetch_assoc();
                                 
 btn;
                             }
-                            echo'<td><a class="btn btn-primary" href="relativeDetails.php?id=' . $res['id'] . '" >Relatives</a></td>';
-                            echo'<td><button class="btn btn-primary multi-reference" id="staff_Page" p-id="'.$res['id'].'" cookieName="liveConsent-referer" destination="liveConsents">Live Consents </button></td>';
+                            echo '<td><a class="btn btn-primary" href="relativeDetails.php?id=' . $res['id'] . '" >Relatives</a></td>';
+                            echo '<td><button class="btn btn-primary multi-reference" id="staff_Page" p-id="' . $res['id'] . '" cookieName="liveConsent-referer" destination="liveConsents">Live Consents </button></td>';
+                           if ($inp_arr[2] == 'option1') {
+                                echo"<td><a class='btn btn-primary ' href='deliveryNotes.php?id=".$res['id']."' >Delivery Notes</a></td>";
+                            }
                             echo '</tr>';
                         }
                         ?>
@@ -417,10 +451,10 @@ btn;
             });
         });
         document.getElementById("regDateSearch").addEventListener("change", () => {
-                let date = document.getElementById("regDateSearch").value;
-                window.location.href = "staff_Page.php?date=" + date;
+            let date = document.getElementById("regDateSearch").value;
+            window.location.href = "staff_Page.php?date=" + date;
 
-            })
+        })
     </script>
 </body>
 
