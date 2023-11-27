@@ -225,12 +225,18 @@ error_reporting(0);
                     </div>
                     <div class="col-6"></div>
                     <div class="col-2">रुग्ण / नातेवाईक सही</div>
-                    <div class="col-4"><input type="text" name="4"value="<?php echo $c_de['4'];?>" id="" class="form-control"></div>
+                    <div class="col-4">
+                    <input type="radio" name="4" value='patient_sign' <?php echo ($c_de['4'] =="patient_sign")?"checked":""; ?>  > Patient Sign    
+                    <input type="radio" name="4" value='relative_sign'  <?php echo ($c_de['4'] =="relative_sign")?"checked":""; ?>> Relative Sign <br>   
+                    <input type="radio" name="4" value='patient_name'  <?php echo ($c_de['4'] =="patient_name")?"checked":""; ?> <?php echo ($c_de['4']=="")?"checked":""; ?>> Patient Name    
+                    <input type="radio" name="4" value='relative_name'  <?php echo ($c_de['4'] =="relative_name")?"checked":""; ?>> Relative Name    
+                 </div>
                     <div class="col-1">तारीख :</div>
                     <div class="col-3"><input type="date" name="5"value="<?php echo $c_de['5'];?>" id="" class="form-control"></div>
                     <div class="col-2"></div>
                     <div class="col-1">नाव :</div>
-                    <div class="col-5"><input type="text" name="6"value="<?php echo $c_de['6'];?>" id="" class="form-control"></div>
+                    <div class="col-5"> <input type="radio" name="6" value='patient_name'  <?php echo ($c_de['6'] =="patient_name")?"checked":""; ?> <?php echo ($c_de['6']=="")?"checked":""; ?>> Patient Name    
+                    <input type="radio" name="6" value='relative_name'  <?php echo ($c_de['6'] =="relative_name")?"checked":""; ?>> Relative Name   </div>
 
                     <div class="col-12 text-center mt-4"> <strong>रुग्ण अत्यावस्थ असल्याची माहिती</strong></div>
                     <div class="col-12">मला, माझ्या / माझी नातेवाईक</div>

@@ -8,6 +8,7 @@ require("../admin/connect.php");
 $id = $_GET['id'];
 error_reporting(0);
 
+
 if (isset($_POST['submit'])) { 
 
     $register = "select id from discharge_routine_register where patient_id = '$id'; ";

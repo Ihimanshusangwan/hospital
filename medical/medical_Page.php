@@ -148,7 +148,7 @@ $title = $data->fetch_assoc();
                         if (isset($_GET['date'])) {
                             $today = $_GET['date'];
                         }
-                        $sql = "SELECT * FROM patient_records WHERE (is_registered= 1  or is_approved= 1) and is_deleted = 0 and reg_date ='$today' ORDER BY id DESC;";
+                        $sql = "SELECT * FROM patient_records WHERE (is_registered= 1  or is_approved= 1) and is_deleted = 0 and is_viewed = 1 and reg_date ='$today' ORDER BY id DESC;";
                         $data = $conn->query($sql);
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';

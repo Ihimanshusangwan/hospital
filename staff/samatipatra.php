@@ -24,6 +24,7 @@ if(isset($_POST['submit'])){
     }
 
     $a_en=json_encode($a);
+    // print_r($a_en);
 
     $update="UPDATE samtipatra1 SET
     a='$a_en'
@@ -38,6 +39,7 @@ $a_de = array_fill(0, 26, '');
 if($row4){
     $a_de = json_decode($row4['a'], true);
 }
+// print_r($a_de);
 error_reporting(0);
 
 ?>
@@ -216,7 +218,7 @@ error_reporting(0);
                         <div class="col-6"><input type="text" name="2" id="" readonly
                                 value=" <?php echo $row['name']; ?>" class="form-control"></div>
                         <div class="col-1 mt-1">वय:</div>
-                        <div class="col-2"><input type="text" value=" <?php echo $a_de['age']; ?>" readonly name="" id=""
+                        <div class="col-2"><input type="text" value=" <?php echo $row['age']; ?>" readonly name="" id=""
                                 class="form-control"></div>
                         <div class="col-1 mt-1">वर्ष:</div>
                         <div class="col-1 mt-1">पत्ता:</div>
@@ -295,11 +297,17 @@ error_reporting(0);
 
                         <div class="col-2 mt-4">संमतीची दिनांक व वेळ :</div>
                         <div class="col-4 mt-3"><input type="datetime-local" value="<?php echo $a_de['12'];?>"class="form-control" name="12" id=""></div>
-                        <div class="col-3 mt-4">पेशंट/पालकाची सही / अंगठा :</div>
-                        <div class="col-3 mt-3"><input type="text" name="13"value="<?php echo $a_de['13'];?>" id="" class="form-control"></div>
-                        <div class="col-6 mb-4"></div>
+                        <div class="row">
+                              <div class="col-3 mt-4">पेशंट/पालकाची सही / अंगठा:</div>
+                         
+                              <?php generateRadioInputsForSignatures($a_de,'13'); ?>
+                        </div>
+                      
+ 
                         <div class="col-2 mt-1 mb-4"> पेशंट / पालकाचे नाव:</div>
-                        <div class="col-4 mb-4"><input type="text" name="14" value="<?php echo $a_de['14'];?>"id="" class="form-control"></div>
+                        
+                        <?php generateRadioInputsForNames($a_de,'14'); ?>
+                       
                         <hr>
                         <div class="col-6">Doctor / delegate Statement: I have explained the procedure to the patient
                             and the potential risks
@@ -365,15 +373,15 @@ error_reporting(0);
 
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-6"> पेशंट/पालकाची सही/अंगठा :</div>
-                                <div class="col-6"><input type="text" name="24"value="<?php echo $a_de['24'];?>" id="" class="form-control"></div>
-                                <div class="col-6"> पेशंट / पालकाचे नाव :</div>
-                                <div class="col-6"><input type="text" name="25" value="<?php echo $a_de['25'];?>"id="" class="form-control"></div>
-                            </div>
+                          <div class="row">
+                              <div class="col-3 mt-4">पेशंट/पालकाची सही / अंगठा:</div>
+                            <?php generateRadioInputsForSignatures($a_de,'24'); ?>
                         </div>
-                    </div>
+                      
+ 
+                        <div class="col-2 mt-1 mb-4"> पेशंट / पालकाचे नाव:</div>
+                       
+                        <?php generateRadioInputsForNames($a_de,'25'); ?>
                 </div>
 
             </div>

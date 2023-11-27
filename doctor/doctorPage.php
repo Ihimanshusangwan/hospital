@@ -88,6 +88,7 @@ $title = $data->fetch_assoc();
                 
                 <a href="add_instructions.php" class="btn btn-primary mx-1">Add Instructions</a>
                 <a href="add_chief_complaints.php" class="btn btn-primary mx-1">Add Cheif Complaints</a>
+                <a href="add_examinations.php" class="btn btn-primary mx-1">Add Examinations</a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">Logout</button>
                 </a>
@@ -173,7 +174,7 @@ $title = $data->fetch_assoc();
                             } else {
                                 $type = 'Appointment';
                             }
-                           echo ($res['is_viewed'])?'<tr class="table-success">':'<tr>';
+                           echo ($res['is_viewed'])?'<tr class="table-success" >':'<tr>';
                           
                             echo '<td>' . $res['opd_no'] . '</td>';
                             echo '<td>' . $res['reg_date'] . '</td>';

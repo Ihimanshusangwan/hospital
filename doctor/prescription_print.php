@@ -1,6 +1,8 @@
 <?php
+session_start();
 require("../admin/connect.php");
 $id = $_GET['id'];
+error_reporting(0);
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 // select * from opd where p_id = id;
 $result = $conn->query($sql);
@@ -157,6 +159,65 @@ if (!isset($res12['inp'])) {
         $values = json_decode(urldecode($data), true);
 
         ?>
+                <div class="row">
+<div class="text-dark m-2 col" ><strong>Weight: </strong><span
+            >
+                <?php echo $res['weight']; ?>
+            </span>
+        </div>
+
+<div class="text-dark m-2 col" ><strong>Pulse:  </strong><span
+            >
+                <?php echo $res['pulse']; ?>
+            </span>
+        </div>
+<div class="text-dark m-2 col" ><strong>BP: </strong> <span
+            >
+                <?php echo $res['bp']; ?>
+            </span>
+        </div>
+<div class="text-dark m-2 col" ><strong>Temp: </strong><span
+            >
+                <?php echo $res['temp']; ?>
+            </span>
+        </div>
+
+</div>
+<?php
+        $sql12 = "SELECT * FROM `config_print` WHERE 1";
+        $data12 = $conn->query($sql12);
+        $res12 = $data12->fetch_assoc();
+        $sql13 = "SELECT * FROM `patient_info` WHERE patient_id=$id";
+        $data13 = $conn->query($sql13);
+        $res13 = $data13->fetch_assoc();
+        if (!isset($res12['inp'])) {
+            $inp_arr = array_fill(0, 4, 'option2');
+        } else {
+            $inp = $res12['inp'];
+            $inp_arr = json_decode($inp, true);
+            $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+        }
+
+        if ($inp_arr[2] == 'option1') {
+
+            echo <<<calc
+            <div class="text-dark m--4"><strong>Pregnancy: </strong><span
+               >
+                {$res13['pregDetails']}
+            </span>
+        </div>
+            
+            
+            
+calc;
+        }
+        ?>
+        <div class="col-12">
+        <?php if (in_array('complaints_checkbox', $checkboxes)): ?>
+        <strong>Chief Complaint:</strong>
+        <?php echo $res['chief_complaint']; ?>
+        <?php endif; ?>
+    </div>
     <div class="col-12">
         <?php if (in_array('history_checkbox', $checkboxes)): ?>
         <strong>Past History:</strong>
@@ -181,12 +242,7 @@ if (!isset($res12['inp'])) {
         <?php echo $res['examination']; ?>
         <?php endif; ?>
     </div>
-    <div class="col-12">
-        <?php if (in_array('chief_complaint_checkbox', $checkboxes)): ?>
-        <strong>Chief Complaint:</strong>
-        <?php echo $res['chief_complaint']; ?>
-        <?php endif; ?>
-    </div>
+    
     <div class="col-12">
         <?php if (in_array('family_history_checkbox', $checkboxes)): ?>
         <strong>Family History:</strong>
@@ -206,30 +262,14 @@ if (!isset($res12['inp'])) {
         <?php endif; ?>
     </div>
 
-    <div class="col-12">
-        <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
-        <strong>Investigations Lab:</strong>
-        <?php echo $res['investigation']; ?>
-        <?php endif; ?>
-    </div>
-    <div class="col-12">
-        <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
-        <strong>Investigations Imaging:</strong>
-        <?php echo $res['investigation_imaging']; ?>
-        <?php endif; ?>
-    </div>
+   
     <div class="col-12">
         <?php if (in_array('symptoms_checkbox', $checkboxes)): ?>
         <strong>Symptoms:</strong>
         <?php echo $res['symptoms']; ?>
         <?php endif; ?>
     </div>
-    <div class="col-12">
-        <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
-        <strong>Instruction:</strong>
-        <?php echo $res['instructions']; ?>
-        <?php endif; ?>
-    </div>
+   
 
 
     <?php if (in_array('med_checkbox', $checkboxes)): ?>
@@ -275,6 +315,30 @@ if (!isset($res12['inp'])) {
     </div>
     </div>
     <?php endif; ?>
+    <?php
+        $sql = "SELECT * FROM patient_info WHERE patient_id = '$id';";
+        $res = $conn->query($sql)->fetch_assoc();
+
+        ?>
+
+    <div class="col-12">
+        <?php if (in_array('investigation_checkbox', $checkboxes)): ?>
+        <strong>Investigations Lab:</strong>
+        <?php echo $res['investigation']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('investigation_imaging_checkbox', $checkboxes)): ?>
+        <strong>Investigations Imaging:</strong>
+        <?php echo $res['investigation_imaging']; ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+        <?php if (in_array('instructions_checkbox', $checkboxes)): ?>
+        <strong>Instruction:</strong>
+        <?php echo $res['instructions']; ?>
+        <?php endif; ?>
+    </div>
     <?php if (in_array('advice_checkbox', $checkboxes)): ?>
     <div class="container-fluid" style="margin-top: 20px;">
         <!-- DataTales Example -->
@@ -637,9 +701,21 @@ echo $formattedDate ;
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
+$sql = "SELECT signature FROM doctors WHERE id = '{$_SESSION['doctor_id']}';";
+$data = $conn->query($sql);
+$dr = $data->fetch_assoc();
+// print_r($dr);
+//  echo "../admin/".$dr['signature'] ;
+
 ?>
+    <div style="text-align:right; margin-right:2rem;" >
+        <div>
+        <img src="<?php echo "../admin/".$dr['signature']; ?> " alt="" style='height: 5rem; width:7rem; '>
+        </div>
+        
     <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
         <strong> <?php echo $res['consultant']; ?></strong>
+    </div>
     </div>
 
     <?php

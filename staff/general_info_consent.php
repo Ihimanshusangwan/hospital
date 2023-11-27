@@ -11,6 +11,9 @@
 
  $sql2=mysqli_query($conn,"SELECT * FROM p_insure WHERE id = '$id';");
  $row2=mysqli_fetch_assoc($sql2);
+
+ $sql3=mysqli_query($conn,"SELECT * FROM patient_images WHERE uhid = '{$row2['uhid']}';");
+ $row3=mysqli_fetch_assoc($sql3);
  
 
  $sql = "SELECT * FROM titles WHERE id = 1;";
@@ -273,7 +276,14 @@ table, th, td {
     <td>Patient / Relative :</td>
     <?php 
     ?>
-    <td><input  type="text" class="form-control" id="" placeholder="Patient/ Relative Sign" name="sign1" value="<?php echo $row6['sign1'];?>"></td>
+    <td>
+    <img src="<?php echo"../reception/{$row3['path']}" ;?>" alt="">
+        <!-- <input  type="text" class="form-control" id="" placeholder="Patient/ Relative Sign" name="sign1" value=" -->
+        <?php 
+        // echo $row6['sign1'];
+        ?>
+        <!-- "> -->
+</td>
     <td><input  type="text" class="form-control" id="" placeholder="Patient/ Relative Name" name="name1" value="<?php echo $row6['name1'];?>"></td>
     <td><input  type="date" class="form-control" id="" placeholder="Date" name="date1" value="<?php echo $row6['date1'];?>"></td>
       </tr>

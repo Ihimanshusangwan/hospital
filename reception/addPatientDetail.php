@@ -361,19 +361,27 @@ $title = $data->fetch_assoc();
               $conn->query($sql);
               $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
               $conn->query($sql);
+
+              if (isset($_POST['pregDate'])) {
+        
+                $sql = "UPDATE patient_info SET pregDate = '{$_POST['pregDate']}' , pregDetails = '{$_POST['pregDetails']}' WHERE patient_id = $inserted_patient_id;";
+               $conn->query($sql);
+        
+              }
+
               if (isset($_FILES["image"])) {
                 $imageUploadPath = "images/patient_images/"; // Directory to store images
                 $imageName = $_FILES["image"]["name"];
             
             
                 $newImageName = $uhid . "_" . $imageName;
-                $imagePath = $imageUploadPath . $newImageName;
+                $imagePath = $imageUploadPath.$newImageName;
               
             
                 // Move the uploaded file to the designated directory with the new filename
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
                     
-                    $sql = "insert into patient_images(uhid,path) values('$uhid',' $imagePath');";
+                    $sql = "insert into patient_images(uhid,path) values('$uhid','$imagePath');";
                     $conn->query($sql);
             
                 } else {
@@ -573,6 +581,33 @@ $title = $data->fetch_assoc();
                 <input type="number" class="form-control" placeholder="mobile" id="mobile_pwp" name="mobile_pwp" />
               </div>
             </section>
+            <?php
+  $sql12="SELECT * FROM `config_print` WHERE 1";
+$data12=$conn->query($sql12);
+$res12=$data12->fetch_assoc();
+ 
+if (!isset($res12['inp'])) {
+    $inp_arr = array_fill(0, 4, 'option2');
+} else {
+    $inp = $res12['inp'];
+    $inp_arr = json_decode($inp, true);
+    $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+} 
+
+if($inp_arr[2]=='option1'){
+
+    echo<<<calc
+    <div class="container">
+        <h4 class="mt-2">Pregnancy Calculator</h4>
+        <div class="form-group mt-4">
+            <label for="lmp">Enter Last Menstrual Period:</label>
+            <input type="date" class="form-control-sm" id="lmp" oninput="calculateDueDate()">
+        </div>
+        <p id="result" class="mt-3"></p>
+    </div>
+calc;
+}
+?>
             <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>
             <div class="form-group m-2  col-6  ">
               <label for="rb">Referred By:</label>
@@ -594,6 +629,37 @@ $title = $data->fetch_assoc();
     </div>
   </div>
   <script>
+    function calculateDueDate() {
+            const lmpInput = document.getElementById('lmp').value;
+            const lmpDate = new Date(lmpInput);
+
+            if (isNaN(lmpDate.getTime())) {
+                alert('Invalid date format. Please select a date.');
+                return;
+            }
+
+            const currentDate = new Date();
+            const diffInMilliseconds = currentDate - lmpDate;
+            const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+            const weeks = Math.floor(diffInDays / 7);
+            const days = diffInDays % 7;
+
+            const dueDate = new Date(lmpDate);
+            dueDate.setDate(lmpDate.getDate() + 280); // 280 days is the average pregnancy duration
+
+            const dueDateString = dueDate.toDateString();
+            const durationString = `<strong>Duration:</strong> ${weeks} weeks and ${days} days`;
+            
+            const dataToSave = lmpInput;
+
+            document.getElementById('result').innerHTML = `<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}<br>
+            <form method='POST'>
+            <input type='hidden' name ='pregDate' value = '${dataToSave}'>
+            <input type='hidden' name ='pregDetails' value = '<strong>Estimated Due Date:</strong> ${dueDateString}<br>${durationString}'>
+            </form>`;
+        }
+       
     var changeType = () => {
       tovInput.value = typeData[consultantInput.value];
     }

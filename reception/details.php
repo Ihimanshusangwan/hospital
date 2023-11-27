@@ -98,7 +98,6 @@ if (!isset($res12['inp'])) {
 if($inp_arr[2]=='option1' && !$res13['pregDate']){
 
     echo<<<calc
-    <a href="birth.php?id=$id" class="btn btn-primary btn-sm">Birth Certificate</a>
     <div class="container">
         <h4 class="mt-2">Pregnancy Calculator</h4>
         <div class="form-group mt-4">
@@ -112,7 +111,6 @@ calc;
 } else if($res13['pregDate']){
   
   echo<<<calc
-  <a href="birth.php?id=$id" class="btn btn-primary btn-sm">Birth Certificate</a>
   <div class="container">
   {$res13['pregDetails']}
   </div>

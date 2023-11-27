@@ -158,9 +158,21 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
 $data = $conn->query($sql);
 $res = $data->fetch_assoc();
 ?>
+   
+   <?php 
+if($dr['signature']!=""):
+
+?>
+    <div style="text-align:right; margin-right:2rem;" >
+        <div>
+        <img src="<?php echo "../admin/".$dr['signature']; ?> " alt="" style='height: 5rem; width:7rem; '>
+        </div>
+        
     <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
         <strong> <?php echo $res['consultant']; ?></strong>
     </div>
+    <?php endif; ?>
+
 
     <?php
 $sql10 = "SELECT * FROM `change_label` WHERE 1";

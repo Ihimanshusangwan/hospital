@@ -215,7 +215,7 @@ if (isset($_POST['template_btn'])) {
 
         }
     </script>
-    <title>Shri Sidhivinayak Netralaya</title>
+    <title> <?php echo $title['do'] ?></title>
 </head>
 
 <body style="background-color: #90D0E5;">
@@ -242,6 +242,7 @@ if (isset($_POST['template_btn'])) {
     Open Canvas
   </button>
 
+
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -266,6 +267,27 @@ if (isset($_POST['template_btn'])) {
       </div>
     </div>
   </div>
+  <?php
+
+  // Fetch uploaded files for the user from the database
+  $sql = "SELECT * FROM reports WHERE id = $id";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+      echo '<div class="col-5">
+    <h4>Reports</h4>
+     <ul class="list-group">';
+      while ($row = $result->fetch_assoc()) {
+          $fileName = basename($row["path"]);
+          $filePath = $row["path"];
+
+          echo '<li class="list-group-item">
+                <a href="#" class="file-link" data-file="' . $filePath . '">' . $fileName . '</a>
+             </li>';
+      }
+      echo '</ul></div>';
+  }
+  ?>
                 <?php
                 $sql = "select uhid from p_insure where id = $id;";
                 $result = $conn->query($sql)->fetch_assoc();
@@ -2298,6 +2320,25 @@ function saveDrawing(imageData, id) {
         //     row.innerHTML = html;
         // }
     </script>
+    <script>
+    // Add click event listener to all elements with the 'file-link' class
+    document.querySelectorAll('.file-link').forEach(function(link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            // Get the data-file attribute value (file path)
+            var filePath = link.getAttribute('data-file');
+
+            // Use JavaScript to initiate file download
+            var anchor = document.createElement('a');
+            anchor.href = '../lab/download.php?file=' + filePath;
+            anchor.download = filePath.split('/').pop(); // Extract filename from path
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        });
+    });
+</script>
     <script src="checkbox.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

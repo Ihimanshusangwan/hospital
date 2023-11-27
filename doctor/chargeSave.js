@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((result) => {
           if (result.status == "success") {
             addButton.disabled = false;
+            const div = document.getElementById('charge-save-alert');
+            div.innerHTML=`<div class='alert alert-success'> Charge Added </div>`;
+            // console.log(div);
           } else {
             console.error("Error:");
           }

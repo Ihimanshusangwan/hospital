@@ -95,6 +95,7 @@ $title = $data->fetch_assoc();
                             <th>CONSULTANT</th>
                             <th>Type</th>
                             <th>Lab</th>
+                            <th>Reports</th>
 
                         </tr>
                         <tr>
@@ -136,6 +137,7 @@ $title = $data->fetch_assoc();
                                     ?>
                                 </select></th>
                             <th></th>
+                            <th></th>
 
                         </tr>
                     </thead>
@@ -158,6 +160,7 @@ $title = $data->fetch_assoc();
                             echo '<td>' . $res['consultant'] . '</td>';
                             echo '<td>' . $res['type_of_visit'] . '</td>';
                             echo '<td><a class="btn btn-primary" href="lab_print.php?id=' . $res['id'] . '" >Lab Tests</a></td>';
+                            echo '<td><a class="btn btn-primary" href="lab_reports.php?id=' . $res['id'] . '" >Reports</a></td>';
                             echo '</tr>';
                         }
                         ?>

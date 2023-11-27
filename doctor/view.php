@@ -7,11 +7,13 @@ if (!isset($_SESSION['doctor_id'])) {
     header("location:login.php");
 }
 require("../admin/connect.php");
-
+error_reporting(0);
 $id = $_GET['id'];
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
+$sql = "update patient_records set is_viewed = 1 where id =$id;";
+$conn->query($sql);
 
 if (isset($_POST['add_follow'])) {
 
@@ -241,6 +243,7 @@ if (isset($_POST['template_btn'])) {
     Open Canvas
   </button>
 
+
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -265,6 +268,27 @@ if (isset($_POST['template_btn'])) {
       </div>
     </div>
   </div>
+  <?php
+
+  // Fetch uploaded files for the user from the database
+  $sql = "SELECT * FROM reports WHERE patient_id = $id";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+      echo '<div class="col-5">
+    <h4>Reports</h4>
+     <ul class="list-group">';
+      while ($row = $result->fetch_assoc()) {
+          $fileName = basename($row["path"]);
+          $filePath = $row["path"];
+
+          echo '<li class="list-group-item">
+                <a href="#" class="file-link" data-file="' . $filePath . '">' . $fileName . '</a>
+             </li>';
+      }
+      echo '</ul></div>';
+  }
+  ?>
                 <?php
                 $sql = "select uhid from p_insure where id = $id;";
                 $result = $conn->query($sql)->fetch_assoc();
@@ -366,6 +390,20 @@ if (isset($_POST['template_btn'])) {
                     <h6>
                         Add Opd Charge:
                     </h6>
+
+                    <div id="charge-save-alert">
+                        <?php
+                    $opd = "select * from opd_bill where patient_id = $id;";
+                        $opd_res = $conn->query($opd);
+                       if($opd_res->num_rows > 0 ){
+                        echo '<div class="alert alert-success" role="alert">Charges Added </div>';
+                    
+                       }
+
+
+                        ?>
+
+                    </div>
                     <select class="form-control-sm" id="followup-charge" style="width: 100%;">
                         <?php
                         $opd = "select * from opd_charges where 1;";
@@ -409,16 +447,16 @@ data;
                                 $template_id = $row['id'];
                                 $template_name = htmlspecialchars($row['name']);
                                 ?>
-                                                                        <div class="col">
-                                                                            <form action="" method="post">
-                                                                                <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                                                                <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
-                                                                                    <?php echo $template_name; ?>
-                                                                                </button>
+                                                                                <div class="col">
+                                                                                    <form action="" method="post">
+                                                                                        <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                                                                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
+                                                                                            <?php echo $template_name; ?>
+                                                                                        </button>
 
-                                                                            </form>
-                                                                        </div>
-                                                                        <?php
+                                                                                    </form>
+                                                                                </div>
+                                                                                <?php
                             }
                             echo "</div>";
                         } else {
@@ -551,12 +589,13 @@ data;
             </span>
         </div>
         <?php
+        $sql13 = "SELECT * FROM `patient_info` WHERE patient_id=$id";
+        $data13 = $conn->query($sql13);
+        $res13 = $data13->fetch_assoc();
+        
         $sql12 = "SELECT * FROM `config_print` WHERE 1";
         $data12 = $conn->query($sql12);
         $res12 = $data12->fetch_assoc();
-        $sql13 = "SELECT pregDetails FROM `patient_info` WHERE patient_id=$id";
-        $data13 = $conn->query($sql13);
-        $res13 = $data13->fetch_assoc();
         if (!isset($res12['inp'])) {
             $inp_arr = array_fill(0, 4, 'option2');
         } else {
@@ -579,766 +618,653 @@ data;
 calc;
         }
         ?>
+<div class="row">
+<div class="text-dark m-2 col" >Weight:<span
+                style="font-weight: bold;">
+                <?php echo $res13['weight']; ?>
+            </span>
+        </div>
 
+<div class="text-dark m-2 col" >Pulse: <span
+                style="font-weight: bold;">
+                <?php echo $res13['pulse']; ?>
+            </span>
+        </div>
+<div class="text-dark m-2 col" >BP: <span
+                style="font-weight: bold;">
+                <?php echo $res13['bp']; ?>
+            </span>
+        </div>
+<div class="text-dark m-2 col" >Temp:<span
+                style="font-weight: bold;">
+                <?php echo $res13['temp']; ?>
+            </span>
+        </div>
 
+</div>
+<?php
+if (isset($_REQUEST['all-view-data'])) {
+    $complaints = filter_var($_REQUEST["complaints"], FILTER_SANITIZE_STRING);
+    $sql = "UPDATE patient_info SET chief_complaint='$complaints' WHERE patient_id=$id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Complaints</div>";
+    }
+    $history = removeExtraSpaces($_REQUEST['history']);
+    $sql = "UPDATE patient_info SET history = '$history' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating History</div>";
+    }
+    $history = removeExtraSpaces($_REQUEST['personal_history']);
+    $sql = "UPDATE patient_info SET personal_history = '$history' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating History</div>";
+    }
+    $familyHistory = removeExtraSpaces($_REQUEST['family_history']);
+    $sql = "UPDATE patient_info SET family_history = '$familyHistory' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Family History</div>";
+    }
+    $procedureDone = removeExtraSpaces($_REQUEST['procedure_done']);
+    $sql = "UPDATE patient_info SET procedure_done = '$procedureDone' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Operative Procedure Done</div>";
+    }
+    $history = removeExtraSpaces($_REQUEST['medical_history']);
+    $sql = "UPDATE patient_info SET medical_history = '$history' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating History</div>";
+    }
+    $examination = removeExtraSpaces($_REQUEST['examination']);
+    $sql = "UPDATE patient_info SET examination = '$examination' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating examination</div>";
+    }
+    $investigation = removeExtraSpaces($_REQUEST['investigation']);
+    $sql = "UPDATE patient_info SET investigation = '$investigation' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Investigation</div>";
+    }
+    $investigation = removeExtraSpaces($_REQUEST['investigation_imaging']);
+    $sql = "UPDATE patient_info SET investigation_imaging = '$investigation' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Investigation Imaging</div>";
+    }
+    $symptoms = filter_var($_REQUEST["symptoms"], FILTER_SANITIZE_STRING);
+    $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
+    if ($conn->query($sql) === TRUE) {
+        
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
+    }
+    $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
+    $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
+    if ($conn->query($sql) === TRUE) {
+        
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
+    }
+    $diagnosis = removeExtraSpaces($_REQUEST['diagnosis']);
+    $sql = "UPDATE patient_info SET diagnosis = '$diagnosis' WHERE patient_id = $id;";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "<div class='alert alert-danger'>Error Updating Diagnosis</div>";
+    }
+    echo "<div class='alert alert-success'> Updated Successfully</div>";
+}?>
 
-        <div class="row">
-        <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
-                <?php
-                
-                $i = 1;
-                if (isset($_REQUEST['save_complaints'])) {
-                    echo "<div class='alert alert-success'>Chief Complaints Updated Successfully</div>";
-                    $complaints = filter_var($_REQUEST["complaints"], FILTER_SANITIZE_STRING);
-                    $sql = "UPDATE patient_info SET chief_complaint='$complaints' WHERE patient_id=$id;";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Complaints</div>";
-                    }
-                }
+<div class="row">
+    <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
+       <?php
 
-                $sql = "SELECT chief_complaint FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="" class="text-danger">Chief Complaints :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <textarea class="form-control mt-3" id="selected-complaints"
-                            name="complaints"><?php echo $res['chief_complaint']; ?></textarea>
+        $sql = "SELECT chief_complaint FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        $chiefComplaintValue = $res['chief_complaint'];
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Chief Complaints :</label>
+        <div class="card-body p-2">
+            <form action="" method="POST">
+                <textarea class="form-control mt-3" id="selected-complaints"
+                    name="complaints"><?php echo $res['chief_complaint']; ?></textarea>
 
-                        <div class="row">
-                            <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary " name="save_complaints" value="Save">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <button type="button" id="complaints" class="btn btn-primary ">Complaints</button>
-                            </div>
-                            <div class="col-1 mt-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="complaints_checkbox"
-                                        id="complaints_checkbox">
-                                </div>
-                            </div>
-
+                <div class="row">
+                  
+                    <div class="col-6 mt-2">
+                        <button type="button" id="complaints" class="btn btn-primary ">Complaints</button>
+                    </div>
+                    <div class="col-1 mt-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="complaints_checkbox"
+                                id="complaints_checkbox">
                         </div>
+                    </div>
 
-                        <div class="modal" id="complaintsModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Chief Complaints</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                         
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Chief Complaints</th>
-                                            </tr>
+                </div>
 
-                                            <?php
-                                            $i = 1;
-                                            $sql1 = mysqli_query($conn, "SELECT * FROM chief_complaints where dr_id = {$_SESSION['doctor_id']};");
+                <div class="modal" id="complaintsModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chief Complaints</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><strong>
+                                            &times;
+                                        </strong></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
 
-                                            while ($res = mysqli_fetch_assoc($sql1)) {
-                                                echo '<tr>
+                                <table class="mx-3">
+                                    <tr>
+                                        <th>Checkbox</th>
+                                        <th>Chief Complaints</th>
+                                    </tr>
+
+                                    <?php
+                                    $i = 1;
+                                    $sql1 = mysqli_query($conn, "SELECT * FROM chief_complaints where dr_id = {$_SESSION['doctor_id']};");
+
+                                    while ($res = mysqli_fetch_assoc($sql1)) {
+                                        echo '<tr>
                 <td>
                     <input class="form-check-input checkbox-complaints" type="checkbox" name="complaints_checkbox_' . $i . '"
                     id="complaints_checkbox_' . $i . '">
                 </td>
                 <td>' . $res['complaints'] . '</td>
             </tr>';
-                                                $i++;
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
-                                </div>
+                                        $i++;
+                                    }
+                                    ?>
+                                </table>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+        </div>
+    </div>
+
+    <?php
+    function removeExtraSpaces($str)
+    {
+        return preg_replace('/\s{2,}/', ' ', $str);
+    } ?>
+    <div class="col-md-2 shadow-lg rounded-3 m-4">
+
+        <?php
+
+    
+        $sql = "SELECT history FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        $historyValue = $res['history'];
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bold" for="history" class="text-danger">Past History:</label>
+            <textarea type="text" name="history" id="history" class="form-control live-fetch" data-column="history"
+                data-table="patient_info"><?php echo $res['history']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
+           
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="history_checkbox" id="history_checkbox">
             </div>
+        </div>
+
+    </div>
+    <div class="col-md-2 shadow-lg rounded-3 m-4">
+
+        <?php
+
+       
+        $sql = "SELECT personal_history FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        $historyValue = $res['personal_history'];
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bold" for="history" class="text-danger">Personal History:</label>
+            <textarea type="text" name="personal_history" id="history" class="form-control live-fetch"
+                data-column="personal_history"
+                data-table="patient_info"><?php echo $res['personal_history']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
+          
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="personal_history_checkbox"
+                    id="personal_history_checkbox">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 shadow-lg rounded-3 m-4">
+        <?php
+       
+        $sql = "SELECT family_history FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        $familyHistoryValue = $res['family_history'];
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bold" for="family_history" class="text-danger">Family/Drug
+                History:</label>
+            <textarea type="text" name="family_history" id="family_history" class="form-control live-fetch"
+                data-column="family_history" data-table="patient_info"><?php echo $res['family_history']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
+           
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="family_history_checkbox"
+                    id="family_history_checkbox">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 shadow-lg rounded-3 m-4">
+        <?php
+     
+        $sql = "SELECT procedure_done FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bold" for="procedure_done" class="text-danger">Surgical History:</label>
+            <textarea type="text" name="procedure_done" id="procedure_done" class="form-control live-fetch"
+                data-column="procedure_done" data-table="patient_info"><?php echo $res['procedure_done']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
             
-<?php
-function removeExtraSpaces($str)
-{
-    return preg_replace('/\s{2,}/', ' ', $str);
-} ?>
-            <div class="col-md-2 shadow-lg rounded-3 m-4">
-
-                <?php
-
-                if (isset($_REQUEST['history_submit'])) {
-                    $history = removeExtraSpaces($_REQUEST['history']);
-                    $sql = "UPDATE patient_info SET history = '$history' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>History Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating History</div>";
-                    }
-                }
-                $sql = "SELECT history FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                $historyValue = $res['history'];
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="history" class="text-danger">Past History:</label>
-                        <textarea type="text" name="history" id="history" class="form-control live-fetch"
-                            data-column="history" data-table="patient_info"><?php echo $res['history']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="history_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="history_checkbox"
-                                id="history_checkbox">
-                        </div>
-                    </div>
-                </form>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="procedure_done_checkbox"
+                    id="procedure_done_checkbox">
             </div>
-            <div class="col-md-2 shadow-lg rounded-3 m-4">
+        </div>
 
-                <?php
+    </div>
+    <div class="col-md-2 shadow-lg rounded-3 m-4">
 
-                if (isset($_REQUEST['personal_history_submit'])) {
-                    $history = removeExtraSpaces($_REQUEST['personal_history']);
-                    $sql = "UPDATE patient_info SET personal_history = '$history' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Personal History Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating History</div>";
-                    }
-                }
-                $sql = "SELECT personal_history FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                $historyValue = $res['personal_history'];
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="history" class="text-danger">Personal History:</label>
-                        <textarea type="text" name="personal_history" id="history" class="form-control live-fetch"
-                            data-column="personal_history" data-table="patient_info"><?php echo $res['personal_history']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="personal_history_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="personal_history_checkbox"
-                                id="personal_history_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
+        <?php
 
-            <div class="col-md-2 shadow-lg rounded-3 m-4">
-                <?php
-                if (isset($_REQUEST['family_history_submit'])) {
-                    $familyHistory = removeExtraSpaces($_REQUEST['family_history']);
-                    $sql = "UPDATE patient_info SET family_history = '$familyHistory' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Family History Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Family History</div>";
-                    }
-                }
-                $sql = "SELECT family_history FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                $familyHistoryValue = $res['family_history'];
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="family_history" class="text-danger">Family/Drug
-                            History:</label>
-                        <textarea type="text" name="family_history" id="family_history" class="form-control live-fetch"
-                            data-column="family_history"
-                            data-table="patient_info"><?php echo $res['family_history']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="family_history_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="family_history_checkbox"
-                                id="family_history_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-2 shadow-lg rounded-3 m-4">
-                <?php
-                if (isset($_REQUEST['procedure_done_submit'])) {
-                    $procedureDone = removeExtraSpaces($_REQUEST['procedure_done']);
-                    $sql = "UPDATE patient_info SET procedure_done = '$procedureDone' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Operative Procedure Done Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Operative Procedure Done</div>";
-                    }
-                }
-                $sql = "SELECT procedure_done FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="procedure_done" class="text-danger">Surgical History:</label>
-                        <textarea type="text" name="procedure_done" id="procedure_done" class="form-control live-fetch"
-                            data-column="procedure_done"
-                            data-table="patient_info"><?php echo $res['procedure_done']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="procedure_done_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="procedure_done_checkbox"
-                                id="procedure_done_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-2 shadow-lg rounded-3 m-4">
-
-                <?php
-
-                if (isset($_REQUEST['medical_history_submit'])) {
-                    $history = removeExtraSpaces($_REQUEST['medical_history']);
-                    $sql = "UPDATE patient_info SET medical_history = '$history' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>medical History Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating History</div>";
-                    }
-                }
-                $sql = "SELECT medical_history FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                $historyValue = $res['medical_history'];
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bolmedicalhistory" class="text-danger">Medical History:</label>
-                        <textarea type="text" name="medical_history" id="history" class="form-control live-fetch"
-                            data-column="medical_history" data-table="patient_info"><?php echo $res['medical_history']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="medical_history_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="medical_history_checkbox"
-                                id="medical_history_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="col-md-3 shadow-lg rounded-3 m-4">
-                <?php
-                if (isset($_REQUEST['exam_submit'])) {
-                    $examination = removeExtraSpaces($_REQUEST['examination']);
-                    $sql = "UPDATE patient_info SET examination = '$examination' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Examination Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Examination</div>";
-                    }
-                }
-                $sql = "SELECT examination FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="examination" class="text-danger">Examination:</label>
-                        <textarea type="text" name="examination" id="examination" class="form-control live-fetch"
-                            data-column="examination"
-                            data-table="patient_info"><?php echo $res['examination']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="exam_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="exam_checkbox" id="exam_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
+       
+        $sql = "SELECT medical_history FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        $historyValue = $res['medical_history'];
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bolmedicalhistory" class="text-danger">Medical History:</label>
+            <textarea type="text" name="medical_history" id="history" class="form-control live-fetch"
+                data-column="medical_history"
+                data-table="patient_info"><?php echo $res['medical_history']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
             
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="medical_history_checkbox"
+                    id="medical_history_checkbox">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
+        <?php
+
+        $i = 1;
+       
+
+        $sql = "SELECT examination FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Examinations :</label>
+        <div class="card-body p-2">
+            <textarea class="form-control mt-3" id="selected-examination"
+                name="examination"><?php echo $res['examination']; ?></textarea>
 
 
-            <!-- <div class="col-md-4 shadow-lg rounded-3 mt-4 mx-3">
-                <?php
-                // if (isset($_REQUEST['save_test'])) {
-                //     $i = 1;
-                //     while (isset($_POST["desc_$i"])) {
-                //         if ($_POST["desc_$i"] != "") {
-                //             $desc = filter_var($_POST["desc_$i"], FILTER_SANITIZE_STRING);
-                //             $test_type = $_POST["test_type_$i"];
-                //             $sql = "INSERT INTO test_advice (patient_id,type,description) VALUES ($id,'$test_type','$desc');";
-                //             if ($conn->query($sql) === TRUE) {
-                //                 $i++;
-                //             } else {
-                //                 echo "<div class='alert alert-danger'>Error Updating Advices</div>";
-                //             }
-                //         } else {
-                //             $i++;
-                //         }
-                //     }
-                //     echo "<div class='alert alert-success'>Advices Updated Successfully</div>";
-                // }
-                // if (isset($_REQUEST['delete_test'])) {
-                //     $sql = "DELETE FROM test_advice WHERE id = {$_POST['test_id']} ;";
-                //     if ($conn->query($sql) === TRUE) {
-                //         echo "<div class='alert alert-success'>Advice Deleted Successfully</div>";
-                //     } else {
-                //         echo "<div class='alert alert-danger'>Error Deleting Advice</div>";
-                //     }
-                // }
-                // $sql = "SELECT * FROM test_advice WHERE patient_id = $id;";
-                // $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="history" class="text-danger">Advice :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <div class="row">
+                
+                <div class="col-6 mt-2">
+                    <button type="button" id="examination" class="btn btn-primary ">Examinations</button>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="exam_checkbox" id="exam_checkbox">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal" id="examinationModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Examinations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong>
+                                        &times;
+                                    </strong></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <table class="mx-3">
                                 <tr>
-                                    <th class="col-md-2">Serial</th>
-                                    <th>Description</th>
-                                    <th>Delete</th>
+                                    <th>Checkbox</th>
+                                    <th>Examinations</th>
                                 </tr>
-                                <tbody id="tbody2">
-                                    <?php
-                                    // $sql = "SELECT * FROM test_advice WHERE patient_id = $id ORDER BY id DESC;";
-                                    // $data = $conn->query($sql);
-                                    // $i = 1;
-                                    // while ($res = $data->fetch_assoc()) {
-                                    //     echo '<tr>';
-                                    //     echo '<td>' . $res['type'] . '</td>';
-                                    //     echo '<td>' . $res['description'] . '</td>';
-                                    //     echo "<td><form method='POST' action=''>
-                                    // <input type='hidden' value={$res['id']} name='test_id' >
-                                    // <button type='submit' name = 'delete_test' class='btn btn-primary'>Delete</button> </form>" . '</td>';
-                                    //     echo '</tr>';
-                                    //     $i++;
-                                    // }
-                                    ?>
-                                </tbody>
+
+                                <?php
+
+
+                                $sql1 = mysqli_query($conn, "SELECT * FROM examinations where dr_id = {$_SESSION['doctor_id']};");
+
+                                while ($res = mysqli_fetch_assoc($sql1)) {
+                                    echo '<tr>
+                <td>
+                    <input class="form-check-input checkbox-examination" type="checkbox" name="examination_checkbox_' . $i . '"
+                    id="examination_checkbox_' . $i . '">
+                </td>
+                <td>' . $res['examination'] . '</td>
+            </tr>';
+                                    $i++;
+                                }
+                                ?>
                             </table>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-secondary my-2" onclick="addItem();">Add</button>
-                            </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-secondary  my-2" name="save_test" value="Save">
-                            </div>
-                            <div class="col">
-                                <button type="button" id="labButton" class="btn btn-secondary my-2">Lab</button>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="advice_checkbox"
-                                        id="advice_checkbox">
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div> -->
-            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
-                <?php
+            </div>
+        </div>
+    </div>
 
-                $i = 1;
-                if (isset($_REQUEST['save_inves'])) {
-
-                    echo "<div class='alert alert-success'>Investigations Updated Successfully</div>";
-
-                    $investigation = removeExtraSpaces($_REQUEST['investigation']);
-                    $sql = "UPDATE patient_info SET investigation = '$investigation' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Investigation</div>";
-                    }
-                }
-
-                $sql = "SELECT investigation FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="" class="text-danger">Investigation Lab :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <textarea class="form-control mt-3" id="selected-investigation"
-                            name="investigation"><?php echo $res['investigation']; ?></textarea>
+    <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4">
+        <?php
+        $sql = "SELECT investigation FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Investigation Lab :</label>
+        <div class="card-body p-2">
+            <textarea class="form-control mt-3" id="selected-investigation"
+                name="investigation"><?php echo $res['investigation']; ?></textarea>
 
 
-                        <div class="row">
-                            <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary " name="save_inves" value="Save">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <button type="button" id="invest" class="btn btn-primary "> Lab</button>
-                            </div>
-                            <div class="col-1 mt-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="investigation_checkbox"
-                                        id="investigation_checkbox">
-                                </div>
-                            </div>
+            <div class="row">
+                
+                <div class="col-6 mt-2">
+                    <button type="button" id="invest" class="btn btn-primary "> Lab</button>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="investigation_checkbox"
+                            id="investigation_checkbox">
+                    </div>
+                </div>
 
+            </div>
+
+            <div class="modal" id="investigationModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Investigations Lab</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong>
+                                        &times;
+                                    </strong></span>
+                            </button>
                         </div>
+                        <div class="modal-body">
 
-                        <div class="modal" id="investigationModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Investigations Lab</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                         
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Investigation Lab</th>
-                                            </tr>
+                            <table class="mx-3">
+                                <tr>
+                                    <th>Checkbox</th>
+                                    <th>Investigation Lab</th>
+                                </tr>
 
-                                            <?php
+                                <?php
 
 
-                                            $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view where dr_id = {$_SESSION['doctor_id']};");
+                                $sql1 = mysqli_query($conn, "SELECT * FROM investigation_view where dr_id = {$_SESSION['doctor_id']};");
 
-                                            while ($res = mysqli_fetch_assoc($sql1)) {
-                                                echo '<tr>
+                                while ($res = mysqli_fetch_assoc($sql1)) {
+                                    echo '<tr>
                 <td>
                     <input class="form-check-input checkbox-investigation" type="checkbox" name="inve_checkbox_' . $i . '"
                     id="inves_checkbox_' . $i . '">
                 </td>
                 <td>' . $res['description'] . '</td>
             </tr>';
-                                                $i++;
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                    $i++;
+                                }
+                                ?>
+                            </table>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class=" col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
-                <?php
-                if (isset($_REQUEST['save_inves_imaging'])) {
+    <div class=" col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
+        <?php
 
-                    echo "<div class='alert alert-success'>Investigations Imaging Updated Successfully</div>";
-
-                    $investigation = removeExtraSpaces($_REQUEST['investigation_imaging']);
-                    $sql = "UPDATE patient_info SET investigation_imaging = '$investigation' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Investigation Imaging</div>";
-                    }
-                }
-
-                $sql = "SELECT investigation_imaging FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="" class="text-danger">Investigation Imaging:</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <textarea class="form-control mt-3" id="selected-investigation_imaging"
-                            name="investigation_imaging"><?php echo $res['investigation_imaging']; ?></textarea>
+        $sql = "SELECT investigation_imaging FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Investigation Imaging:</label>
+        <div class="card-body p-2">
+            <textarea class="form-control mt-3" id="selected-investigation_imaging"
+                name="investigation_imaging"><?php echo $res['investigation_imaging']; ?></textarea>
 
 
-                        <div class="row">
-                            <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary " name="save_inves_imaging" value="Save">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <button type="button" id="invest_imaging" class="btn btn-primary "> Imaging</button>
-                            </div>
-                            <div class="col-1 mt-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox"
-                                        name="investigation_imaging_checkbox" id="investigation_imaging_checkbox">
-                                </div>
-                            </div>
+            <div class="row">
+                
+                <div class="col-6 mt-2">
+                    <button type="button" id="invest_imaging" class="btn btn-primary "> Imaging</button>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="investigation_imaging_checkbox"
+                            id="investigation_imaging_checkbox">
+                    </div>
+                </div>
 
+            </div>
+
+            <div class="modal" id="investigationImagingModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Investigation Imaging</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong>
+                                        &times;
+                                    </strong></span>
+                            </button>
                         </div>
+                        <div class="modal-body">
 
-                        <div class="modal" id="investigationImagingModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Investigation Imaging</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                         
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Investigations Imaging</th>
-                                            </tr>
+                            <table class="mx-3">
+                                <tr>
+                                    <th>Checkbox</th>
+                                    <th>Investigations Imaging</th>
+                                </tr>
 
-                                            <?php
-                                            $i = 1;
-                                            $sql1 = mysqli_query($conn, "SELECT * FROM add_invest_imaging where dr_id = {$_SESSION['doctor_id']};");
+                                <?php
+                                $i = 1;
+                                $sql1 = mysqli_query($conn, "SELECT * FROM add_invest_imaging where dr_id = {$_SESSION['doctor_id']};");
 
-                                            while ($res = mysqli_fetch_assoc($sql1)) {
-                                                echo '<tr>
+                                while ($res = mysqli_fetch_assoc($sql1)) {
+                                    echo '<tr>
                 <td>
                     <input class="form-check-input checkbox-investigation_imaging" type="checkbox" name="inve_imaging_checkbox_' . $i . '"
                     id="inves_imaging_checkbox_' . $i . '">
                 </td>
                 <td>' . $res['description'] . '</td>
             </tr>';
-                                                $i++;
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                    $i++;
+                                }
+                                ?>
+                            </table>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-
-
-
-            <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
-                <?php
-                if (isset($_REQUEST['save_symptoms'])) {
-                    echo "<div class='alert alert-success'>Symptoms Updated Successfully</div>";
-                    $symptoms = filter_var($_REQUEST["symptoms"], FILTER_SANITIZE_STRING);
-                    $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
-                    }
-                }
-
-                $sql = "SELECT symptoms FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="" class="text-danger">Symptoms :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <textarea class="form-control mt-3" id="selected-symptoms"
-                            name="symptoms"><?php echo $res['symptoms']; ?></textarea>
-
-                        <div class="row">
-                            <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary " name="save_symptoms" value="Save">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <button type="button" id="symptom" class="btn btn-primary ">Symptoms</button>
-                            </div>
-                            <div class="col-1 mt-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="symptoms_checkbox"
-                                        id="symptoms_checkbox">
-                                </div>
-                            </div>
-
+        </div>
+    </div>
+    <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
+        <?php
+        $sql = "SELECT symptoms FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Symptoms :</label>
+        <div class="card-body p-2">
+            <textarea class="form-control mt-3" id="selected-symptoms"
+                name="symptoms"><?php echo $res['symptoms']; ?></textarea>
+            <div class="row">     
+                <div class="col-6 mt-2">
+                    <button type="button" id="symptom" class="btn btn-primary ">Symptoms</button>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="symptoms_checkbox" id="symptoms_checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="symptomsModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Symptoms</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong>
+                                        &times;
+                                    </strong></span>
+                            </button>
                         </div>
+                        <div class="modal-body">
+                            <table class="mx-3">
+                                <tr>
+                                    <th>Checkbox</th>
+                                    <th>Symptoms</th>
+                                </tr>
+                                <?php
+                                $i = 1;
+                                $sql1 = mysqli_query($conn, "SELECT * FROM symptoms_view where dr_id = {$_SESSION['doctor_id']};");
 
-                        <div class="modal" id="symptomsModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Symptoms</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                         
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Symptoms</th>
-                                            </tr>
-
-                                            <?php
-                                            $i = 1;
-                                            $sql1 = mysqli_query($conn, "SELECT * FROM symptoms_view where dr_id = {$_SESSION['doctor_id']};");
-
-                                            while ($res = mysqli_fetch_assoc($sql1)) {
-                                                echo '<tr>
+                                while ($res = mysqli_fetch_assoc($sql1)) {
+                                    echo '<tr>
                 <td>
                     <input class="form-check-input checkbox-symptoms" type="checkbox" name="sym_checkbox_' . $i . '"
                     id="symp_checkbox_' . $i . '">
                 </td>
                 <td>' . $res['desc_sym'] . '</td>
             </tr>';
-                                                $i++;
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                    $i++;
+                                }
+                                ?>
+                            </table>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <div class=" col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
-                <?php
-                if (isset($_REQUEST['save_instruction'])) {
-                    echo "<div class='alert alert-success'>Instructions Updated Successfully</div>";
-                    $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
-                    $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
-                    if ($conn->query($sql) === TRUE) {
-                        $i++;
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
-                    }
-                }
-                $sql = "SELECT instructions FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <label class="font-weight-bold" for="" class="text-danger">Instructions :</label>
-                <div class="card-body p-2">
-                    <form action="" method="POST">
-                        <textarea class="form-control mt-3" id="selected-instructions"
-                            name="instructions"><?php echo $res['instructions']; ?></textarea>
-
-                        <div class="row">
-
-                            <div class="col-3 mt-2">
-                                <input type="submit" class="btn btn-primary" name="save_instruction" value="Save">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <button type="button" id="instru" class="btn btn-primary ">Instructions</button>
-                            </div>
-                            <div class="col-1 mt-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="instructions_checkbox"
-                                        id="instructions_checkbox">
-                                </div>
-                            </div>
+        </div>
+    </div>
+    <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
+        <?php
+        $sql = "SELECT instructions FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <label class="font-weight-bold" for="" class="text-danger">Instructions :</label>
+        <div class="card-body p-2">
+            <textarea class="form-control mt-3" id="selected-instructions"
+                name="instructions"><?php echo $res['instructions']; ?></textarea>
+            <div class="row"> 
+                <div class="col-6 mt-2">
+                    <button type="button" id="instru" class="btn btn-primary ">Instructions</button>
+                </div>
+                <div class="col-1 mt-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="instructions_checkbox"
+                            id="instructions_checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="instructionModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Instructions</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><strong>
+                                        &times;
+                                    </strong></span>
+                            </button>
                         </div>
+                        <div class="modal-body">
+                            <table class="mx-3">
+                                <tr>
+                                    <th>Checkbox</th>
+                                    <th>Instructions</th>
+                                </tr>
 
-                        <div class="modal" id="instructionModal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Instructions</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true"><strong>
-                                                    &times;
-                                                </strong></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                         
-                                        <table class="mx-3">
-                                            <tr>
-                                                <th>Checkbox</th>
-                                                <th>Instructions</th>
-                                            </tr>
+                                <?php
+                                $i = 1;
+                                $sql1 = mysqli_query($conn, "SELECT * FROM in_view where dr_id = {$_SESSION['doctor_id']};");
 
-                                            <?php
-                                            $i = 1;
-                                            $sql1 = mysqli_query($conn, "SELECT * FROM in_view where dr_id = {$_SESSION['doctor_id']};");
-
-                                            while ($res = mysqli_fetch_assoc($sql1)) {
-                                                echo '<tr>
+                                while ($res = mysqli_fetch_assoc($sql1)) {
+                                    echo '<tr>
                 <td>
                     <input class="form-check-input checkbox-instruction" type="checkbox" name="in_checkbox_' . $i . '"
                     id="inst_checkbox_' . $i . '">
                 </td>
                 <td>' . $res['instruction'] . '</td>
             </tr>';
-                                                $i++;
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                    $i++;
+                                }
+                                ?>
+                            </table>
                         </div>
-
-
-                    </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 shadow-lg rounded-3 my-4 mx-1">
-                <?php
-                if (isset($_REQUEST['diagnosis_submit'])) {
-                    $diagnosis = removeExtraSpaces($_REQUEST['diagnosis']);
-                    $sql = "UPDATE patient_info SET diagnosis = '$diagnosis' WHERE patient_id = $id;";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<div class='alert alert-success'>Diagnosis Updated Successfully</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Error Updating Diagnosis</div>";
-                    }
-                }
-                $sql = "SELECT diagnosis FROM patient_info WHERE patient_id = $id;";
-                $res = $conn->query($sql)->fetch_assoc();
-                ?>
-                <form method="POST" action="">
-                    <div class="form-group m-2">
-                        <label class="font-weight-bold" for="diagnosis" class="text-danger">Diagnosis:</label>
-                        <textarea type="text" name="diagnosis" id="diagnosis" class="form-control live-fetch"
-                            data-column="diagnosis"
-                            data-table="patient_info"><?php echo $res['diagnosis']; ?></textarea>
-                        <div class="dropdown-container"></div>
-                    </div>
-                    <div class="form-group m-2 d-flex justify-content-between align-items-center">
-                        <div>
-                            <button type="submit" name="diagnosis_submit" class="btn btn-info">Save</button>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="diagnosis_checkbox"
-                                id="diagnosis_checkbox">
-                        </div>
-                    </div>
-                </form>
-            </div>
-
         </div>
     </div>
+    <div class="col-md-3 shadow-lg rounded-3 my-4 mx-1">
+        <?php    
+        $sql = "SELECT diagnosis FROM patient_info WHERE patient_id = $id;";
+        $res = $conn->query($sql)->fetch_assoc();
+        ?>
+        <div class="form-group m-2">
+            <label class="font-weight-bold" for="diagnosis" class="text-danger">Diagnosis:</label>
+            <textarea type="text" name="diagnosis" id="diagnosis" class="form-control live-fetch"
+                data-column="diagnosis" data-table="patient_info"><?php echo $res['diagnosis']; ?></textarea>
+            <div class="dropdown-container"></div>
+        </div>
+        <div class="form-group m-2 d-flex justify-content-between align-items-center">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="diagnosis_checkbox" id="diagnosis_checkbox">
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <button type="submit" name='all-view-data' class="btn btn-success m-3">Save</button>
+</div>
+</div>
+</form>
     <!-- medicine save -->
     <?php
     if (isset($_REQUEST['submit_changes'])) {
         $is_viewed = false;
         $i = 1;
         while (isset($_POST["med_name_$i"])) {
-
             if ($_POST["med_name_$i"] !== "") {
                 $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
                 $quantity = $_POST["quantity_$i"];
@@ -1359,11 +1285,9 @@ function removeExtraSpaces($str)
                     $conn->query($sql);
                     $is_viewed = true;
                 }
-
             } else {
                 $i++;
             }
-
         }
         echo "<div class='alert alert-success'>Prescription Updated Successfully</div>";
     }
@@ -1417,12 +1341,11 @@ function removeExtraSpaces($str)
                                 echo '<td>' . $res['quantity'] . '</td>';
                                 echo "<td><form method='POST' action=''>
                                     <input type='hidden' value={$res['id']} name='pres_id' >
-                                    <button type='submit' name = 'delete' class='btn btn-primary'>Delete</button> </form>" . '</td>';
+                                    <button type='submit' name = 'delete' class='btn btn-primary'>Delete</button></form>" . '</td>';
                                 echo '</tr>';
                                 $i++;
                             }
                             ?>
-
                         </tbody>
                     </table>
                 </div>
@@ -1433,7 +1356,6 @@ function removeExtraSpaces($str)
     </div>
     <!-- pres back -->
     <?php
-
     $sql = "select * from pres_back where id = $id;";
     $res = $conn->query($sql)->fetch_assoc();
     ?>
@@ -1732,67 +1654,6 @@ function removeExtraSpaces($str)
             </form>
         </div>
     </div>
-
-    <!-- <div id="labPopup" class="lab-popup">
-        <div class="lab-popup-content">
-            <span class="lab-popup-close">&times;</span>
-            <h1 class="style1">HAEMATOLOGY</h1>
-            <input type="checkbox" id="LAB1" name="LAB1" value="CBC" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB1" class="form-check-label"> CBC </label><br>
-            <input type="checkbox" id="LAB2" name="LAB2" value="KFT" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB2" class="form-check-label"> KFT</label><br>
-            <input type="checkbox" id="LAB3" name="LAB3" value="LFT" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB3" class="form-check-label"> LFT</label><br>
-            <input type="checkbox" id="LAB4" name="LAB4" value="HIV" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB4" class="form-check-label"> HIV</label> <br>
-            <input type="checkbox" id="LAB5" name="LAB5" value="T3,T4TSH" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB5" class="form-check-label"> T3,T4TSH</label> <br>
-            <input type="checkbox" id="LAB6" name="LAB6" value="TSH" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB6" class="form-check-label"> TSH</label> <br>
-            <input type="checkbox" id="LAB7" name="LAB7" value="ESR" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB7" class="form-check-label"> ESR</label> <br>
-            <input type="checkbox" id="LAB8" name="LAB8" value="PS FOR MP" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB8" class="form-check-label"> PS FOR MP</label> <br>
-            <input type="checkbox" id="LAB9" name="LAB9" value="BLOOD GROUP" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB9" class="form-check-label"> BLOOD GROUP </label><br>
-            <input type="checkbox" id="LAB10" name="LAB10" value="PT,INR" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB10" class="form-check-label"> PT,INR </label><br>
-            <input type="checkbox" id="LAB11" name="LAB11" value="APTT" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB11" class="form-check-label"> APTT </label><br>
-            <h1 class="style1">SEROLOGY</h1>
-            <input type="checkbox" id="LAB12" name="LAB12" value="WIDAL (SLIDE METHOD)"
-                class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB12" class="form-check-label"> WIDAL (SLIDE METHOD) </label><br>
-            <input type="checkbox" id="LAB13" name="LAB13" value="HBSAG" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB13" class="form-check-label"> HBSAG </label><br>
-            <input type="checkbox" id="LAB14" name="LAB14" value="HIV I & II (RAPID)"
-                class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB14" class="form-check-label"> HIV I & II (RAPID) </label><br>
-            <input type="checkbox" id="LAB15" name="LAB15" value="VDRL" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB15" class="form-check-label"> VDRL </label><br>
-            <input type="checkbox" id="LAB16" name="LAB16" value="CRP (LATEX)" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB16" class="form-check-label"> CRP (LATEX) </label><br>
-            <input type="checkbox" id="LAB17" name="LAB17" value="RA FACTOR (LATEX)"
-                class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB17" class="form-check-label"> RA FACTOR (LATEX) </label><br>
-            <h1 class="style1">URINE</h1>
-            <input type="checkbox" id="LAB18" name="LAB18" value="URIN ROUTINE" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB18" class="form-check-label"> URIN ROUTINE </label><br>
-            <input type="checkbox" id="LAB19" name="LAB19" value="URINE BSBP" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB19" class="form-check-label"> URINE BSBP </label><br>
-            <input type="checkbox" id="LAB20" name="LAB20" value="ACETONE" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB20" class="form-check-label"> ACETONE </label><br>
-            <input type="checkbox" id="LAB21" name="LAB21" value="MICROALBUMIN" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB21" class="form-check-label"> MICROALBUMIN </label><br>
-            <input type="checkbox" id="LAB22" name="LAB22" value="PREGNANCY TEST" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB22" class="form-check-label"> PREGNANCY TEST </label><br>
-            <input type="checkbox" id="LAB23" name="LAB23" value="KETON BODIES" class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB23" class="form-check-label"> KETON BODIES </label><br>
-            <input type="checkbox" id="LAB24" name="LAB24" value="URIN BJ PROTEIN"
-                class="lab-checkbox form-check-input">
-            <label class="font-weight-bold" for="LAB24" class="form-check-label"> URIN BJ PROTEIN </label><br>
-        </div>
-    </div> -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1810,7 +1671,6 @@ function removeExtraSpaces($str)
         </div>
     </div>
     <script src="prescription.js"></script>
-    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var referButton = document.getElementById("referButton");
@@ -1867,7 +1727,6 @@ function removeExtraSpaces($str)
                         console.error('Error:', error);
                     });
             });
-
         });
     </script>
     <script src="../fetch_dropdown_script.js"></script>
@@ -2087,6 +1946,16 @@ function saveDrawing(imageData, id) {
                 $("#selected-instructions").val(selectedInstructions.join(" , "));
             });
         });
+        $(document).ready(function () {
+            $(".checkbox-examination").change(function () {
+                var selectedexamination = [];
+                $(".checkbox-examination:checked").each(function () {
+                    var examination = $(this).closest("tr").find("td:last").text();
+                    selectedexamination.push(examination);
+                });
+                $("#selected-examination").val(selectedexamination.join(" , "));
+            });
+        });
 
         $(document).ready(function () {
             $(".checkbox-investigation").change(function () {
@@ -2135,6 +2004,25 @@ function saveDrawing(imageData, id) {
         document.addEventListener("DOMContentLoaded", function () {
             const modal = document.getElementById("instructionModal");
             const instuctionButton = document.getElementById("instru");
+            const closeButton = modal.querySelector(".close");
+
+            instuctionButton.addEventListener("click", function () {
+                modal.style.display = "block";
+            });
+
+            closeButton.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("examinationModal");
+            const instuctionButton = document.getElementById("examination");
             const closeButton = modal.querySelector(".close");
 
             instuctionButton.addEventListener("click", function () {
@@ -2250,53 +2138,26 @@ function saveDrawing(imageData, id) {
             });
         });
 
+</script>
+    <script>
+    // Add click event listener to all elements with the 'file-link' class
+    document.querySelectorAll('.file-link').forEach(function(link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
 
+            // Get the data-file attribute value (file path)
+            var filePath = link.getAttribute('data-file');
 
-        // const labButton = document.getElementById("labButton");
-        // const labPopup = document.getElementById("labPopup");
-
-
-        // labButton.addEventListener("click", function () {
-        //     labPopup.style.display = "block";
-        // });
-
-        // const closeButton = document.querySelector(".lab-popup-close");
-
-
-        // // Add click event listener to the close button
-        // closeButton.addEventListener("click", function () {
-        //     labPopup.style.display = "none";
-
-
-        //     // Get all the selected checkboxes
-        //     const checkboxes = document.querySelectorAll(".lab-checkbox:checked");
-
-        //     // Build the comma-separated list of selected checkboxes' values
-        //     let selectedValues = "";
-        //     checkboxes.forEach(function (checkbox) {
-        //         selectedValues += checkbox.value + ",";
-        //     });
-
-        //     // Remove trailing comma
-        //     selectedValues = selectedValues.slice(0, -1);
-
-        //     // Create the lab description dynamically
-        //     createLabDescription(selectedValues);
-        // });
-
-        // // Function to create the lab description dynamically
-        // function createLabDescription(selectedValues) {
-        //     item2++;
-        //     var html = "<tr>";
-        //     html += "<td>Lab</td>";
-        //     html += "<input type='hidden' name='test_type_" + item2 + "' value='Lab'>";
-        //     html += "<td><textarea type='text' name='desc_" + item2 + "'>" + selectedValues + "</textarea>";
-        //     html += "<td><button class='btn btn-primary' type='button' onclick='deleteRow(this);'>Delete</button></td>"
-        //     html += "</tr>";
-        //     var row = document.getElementById("tbody2").insertRow();
-        //     row.innerHTML = html;
-        // }
-    </script>
+            // Use JavaScript to initiate file download
+            var anchor = document.createElement('a');
+            anchor.href = '../lab/download.php?file=' + filePath;
+            anchor.download = filePath.split('/').pop(); // Extract filename from path
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        });
+    });
+</script>
     <script src="checkbox.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

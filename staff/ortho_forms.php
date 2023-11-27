@@ -190,6 +190,10 @@ $title = $data->fetch_assoc();
           <a href="ortho_discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Discharge
               Card</button></a>
         </td>
+        <td>
+          <a href="gynec_discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Gynec Discharge
+              Card</button></a>
+        </td>
       </tr>
       <tr>
         <td><a href="ortho_observation_chart.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Observation

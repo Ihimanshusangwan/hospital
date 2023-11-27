@@ -64,6 +64,19 @@ $title = $data->fetch_assoc();
                     <?php echo $_SESSION['staff_name']; ?>
                 </h3>
             </a>
+            <?php
+    $sql12 = "SELECT * FROM `config_print` WHERE 1";
+    $data12 = $conn->query($sql12);
+    $res12 = $data12->fetch_assoc();
+    if (!isset($res12['inp'])) {
+        $inp_arr = array_fill(0, 4, 'option2');
+    } else {
+        $inp = $res12['inp'];
+        $inp_arr = json_decode($inp, true);
+        $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
+    }
+
+    ?>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal1">
                     Eye Registers
@@ -72,6 +85,12 @@ $title = $data->fetch_assoc();
                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal">
                     Ortho Registers
                 </button>
+                <?php if ($inp_arr[2] == 'option1') {
+                               echo'<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal2">
+                               Gynec Registers
+                           </button>';
+                            } ?>
+                
 
                 <a href="floor_cleaning.php?month=<?php echo date('Y-m'); ?>" class="btn btn-secondary">Floor
                     Cleaning</a>
@@ -192,19 +211,32 @@ $title = $data->fetch_assoc();
             </div>
         </div>
     </div>
-    <?php
-    $sql12 = "SELECT * FROM `config_print` WHERE 1";
-    $data12 = $conn->query($sql12);
-    $res12 = $data12->fetch_assoc();
-    if (!isset($res12['inp'])) {
-        $inp_arr = array_fill(0, 4, 'option2');
-    } else {
-        $inp = $res12['inp'];
-        $inp_arr = json_decode($inp, true);
-        $inp_arr = is_array($inp_arr) ? $inp_arr : array_fill(0, 4, '');
-    }
+    <div class="modal fade" id="largeModal2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="largeModalLabel">Gynec Registers</h5>
+                </div>
+                <div class="modal-body">
+                    <a href="register/autoclaveRegister.php?month=<?php echo date('Y-m');
+                    ; ?>"><button
+                            class="btn btn-primary mb-2">AutoClave Register</button></a>
+                    <a href="register/evacuationRegister.php?month=<?php echo date('Y-m'); ?>"><button class="btn btn-primary mb-2">Evacuation Register
+                            </button></a>
+                    <a href="register/fumigationRegister.php?month=<?php echo date('Y-m'); ?>"><button class="btn btn-primary mb-2">Fumigation Register
+                            </button></a>
+                    <a href="register/deliveryRegister.php?month=<?php echo date('Y-m'); ?>"><button class="btn btn-primary mb-2">Delivery Register
+                            </button></a>
 
-    ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Table Start -->
     <section>
         <div class="container-fluid">
@@ -225,7 +257,10 @@ $title = $data->fetch_assoc();
                             <th>Relative Details</th>
                             <th>Live Consents</th>
                             <?php if ($inp_arr[2] == 'option1') {
+                                echo"<th>Gynec Forms</th>";
                                 echo"<th>Delivery Notes</th>";
+                                echo"<th>New Form</th>";
+                                echo"<th>Birth Certificate</th>";
                             } ?>
                         </tr>
                         <tr>
@@ -270,6 +305,9 @@ $title = $data->fetch_assoc();
                             <th></th>
                             <th></th>
                             <th></th>  <?php if ($inp_arr[2] == 'option1') {
+                                echo"<th></th>";
+                                echo"<th></th>";
+                                echo"<th></th>";
                                 echo"<th></th>";
                             } ?>
                         </tr>
@@ -325,7 +363,10 @@ btn;
                             echo '<td><a class="btn btn-primary" href="relativeDetails.php?id=' . $res['id'] . '" >Relatives</a></td>';
                             echo '<td><button class="btn btn-primary multi-reference" id="staff_Page" p-id="' . $res['id'] . '" cookieName="liveConsent-referer" destination="liveConsents">Live Consents </button></td>';
                            if ($inp_arr[2] == 'option1') {
+                                echo"<td><a class='btn btn-primary ' href='gynec_forms.php?id=".$res['id']."' >Gynec Forms</a></td>";
                                 echo"<td><a class='btn btn-primary ' href='deliveryNotes.php?id=".$res['id']."' >Delivery Notes</a></td>";
+                                echo"<td><a class='btn btn-primary ' href='newGynecForm.php?id=".$res['id']."' >New Form</a></td>";
+                                echo"<td><a class='btn btn-primary ' href='birth_print.php?id=".$res['id']."' >Birth</a></td>";
                             }
                             echo '</tr>';
                         }
