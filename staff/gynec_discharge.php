@@ -186,7 +186,7 @@ $data = json_decode($res['data'], true);
     
     <div class="container">
         <div class="col p-4 m-4 shadow-lg rounded">
-            <a class="btn btn-primary m-2" href="ortho_forms.php?id=<?php echo $id; ?>">Dashboard</a>
+            <a class="btn btn-primary m-2" href="gynec_forms.php?id=<?php echo $id; ?>">Dashboard</a>
             <a class="btn btn-primary m-2" href="gynec_discharge_print.php?id=<?php echo $id; ?>">Print</a>
             <button onclick="location.reload();" class="btn btn-success">Refresh</button>
 

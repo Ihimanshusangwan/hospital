@@ -117,6 +117,10 @@ $title = $data->fetch_assoc();
           <a href="delivery.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2">Delivery Register
             </button></a>
         </td>
+        <td>
+          <a href="gynec_discharge.php?id=<?php echo $id; ?>"><button class="btn btn-primary mb-2"> Gynec Discharge
+              Card</button></a>
+        </td>
       </tr>
       
 
