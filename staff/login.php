@@ -46,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $staff_id= $data["id"];
             $staff_name = $data["name"];
             session_start();
-            $_SESSION['staff_id'] = $staff_id;  
+            $_SESSION['staff_id'] = $staff_id;     
+            $_SESSION['type'] = "staff";   
             $_SESSION['staff_name'] = $staff_name;
                 header("location:staff_Page.php");
                 exit(); 

@@ -221,7 +221,7 @@ session_start();
 
 <body>
   <div class="container">
-    <h1 class="text-center text-danger mt-3">SHRI SIDDHIVINAYAK NETRALAYA</h1>
+    <h1 class="text-center text-danger mt-3"><?php echo $title['dm'] ;?></h1>
     <a href="ortho_forms.php?id=<?php echo $id; ?>" class="btn btn-success m-2">Dashboard</a>
     <h3 class="text-center text-dark mt-3">Observation Chart</h3>
     <div class="row">

@@ -8,7 +8,7 @@ $searchData = json_decode($jsonData);
 $searchName = $searchData->name;
 $searchMobile = $searchData->mobile;
 
-$query = "SELECT * FROM patient_records WHERE name LIKE '%$searchName%' AND mobile = '$searchMobile'";
+$query = "SELECT patient_records.*, p_insure.uhid FROM patient_records join p_insure on patient_records.id = p_insure.id WHERE name LIKE '%$searchName%' AND mobile = '$searchMobile' order by patient_records.id desc;";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {

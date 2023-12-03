@@ -36,38 +36,48 @@ error_reporting(0);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <style>
-        body {
-            margin: 0;
+    body {
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .ba {
+        border: 1px solid grey;
+    }
+    .bl{
+        border-left: 1px solid grey;
+    }
+    .mle{
+        margin-left :5px;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    @media print {
+
+        #button {
+            display: none !important;
         }
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
+        @page {
+            size: A4;
         }
 
-        .title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        .noprint {
+            visibility: hidden;
         }
-
-        @media print {
-
-            #button {
-                display: none !important;
-            }
-
-            @page {
-                size: A4;
-            }
-
-            .noprint {
-                visibility: hidden;
-            }
-        }
+    }
     </style>
 </head>
 
@@ -80,42 +90,45 @@ error_reporting(0);
     <?php include_once("../header/images.php") ?>
     <h3 class="text-center text-dark my-3 ">Transfer Form </h3>
     <?php include_once("../header/header.php") ?>
-    <hr />
     <div class="row">
         <div class="col-12">
             <strong>Treatment Details : </strong>
             <?php echo $con['treat']; ?>
         </div>
-        <div class="col-12 text-center">
+    </div>
+    <div class="row mt-1">
+        <div class="col-3 mle ba bl">
             <strong>Vitals at Transfer</strong>
         </div>
-        <div class="col-3">
+        <div class="col-2 ba">
             <strong>B.P: </strong>
             <?php echo $vital[0] ?>
         </div>
-        <div class="col-3">
+        <div class="col-2 ba">
             <strong>Pulse: </strong>
             <?php try {
                 echo $vital[1];
             } catch (Excetion $e) {
             } ?>
         </div>
-        <div class="col-3">
+        <div class="col-2 ba bl">
             <strong>R.R: </strong>
             <?php try {
                 echo $vital[2];
-            } catch (Excetion $e) {
+            }
+            catch (Excetion $e) {
             } ?>
         </div>
-        <div class="col-3">
+        <div class="col-2 ba">
             <strong>Other: </strong>
             <?php try {
                 echo $vital[3];
             } catch (Excetion $e) {
-            } ?>
+            } 
+            ?>
         </div>
-
-
+    </div>
+    <div class="row">
         <div class="col-12">
             <strong>Mental Status :</strong>
             <?php try {
@@ -133,15 +146,9 @@ error_reporting(0);
         <div class="col-12">
             <strong>Copy of Treatment Documentation Attached : </strong><?php echo $con['copy'];?>
         </div>
-        <div class="col-12 text-center">
-            <strong>Attachments with Patient</strong>
-        </div>
+        <strong class="text-center mt-2">Attachments with Patient</strong>
         <div class="col-12">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                    </tr>
-                </thead>
+            <table width="100%" class="table table-bordered">
                 <tbody>
                     <tr>
                         <td><?php  try{echo $attach[0];} catch(Excetion $e){}?></td>
@@ -152,20 +159,20 @@ error_reporting(0);
                         <td><?php  try{echo $attach[3];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $attach[4];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $attach[5];} catch(Excetion $e){}?></td>
-                       
+
                     </tr>
                     <tr>
-                    <td><?php  try{echo $attach[6];} catch(Excetion $e){}?></td>
-                    <td><?php  try{echo $attach[7];} catch(Excetion $e){}?></td>
-                    <td><?php  try{echo $attach[8];} catch(Excetion $e){}?></td>
+                        <td><?php  try{echo $attach[6];} catch(Excetion $e){}?></td>
+                        <td><?php  try{echo $attach[7];} catch(Excetion $e){}?></td>
+                        <td><?php  try{echo $attach[8];} catch(Excetion $e){}?></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-8">
+        <div class="col-6">
             <strong>Reason For Transfer :</strong><?php  try{echo $transfer[0];} catch(Excetion $e){}?>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <strong>Transfer To :</strong><?php  try{echo $transfer[1];} catch(Excetion $e){}?>
         </div>
         <div class="col-6">
@@ -174,14 +181,16 @@ error_reporting(0);
         <div class="col-6">
             <strong>Attending Staff : </strong><?php  try{echo $transfer[3];} catch(Excetion $e){}?>
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mt-3">
             <strong>CONSENT FOR TRANSFER</strong>
         </div>
         <div class="col-12">
-        <p class="text-danger">I/we,am/are willing to transfer the patient name <?php echo $res['name'];?>.As per advise of Doctor.The reason for transfer,condition of Patient,treatment,risks and consequences etc.Have been explained to me/us and understood by me/us</p>
+            <p class="text-danger text-sm lh-1">I/we,am/are willing to transfer the patient name
+                <?php echo $res['name'];?>.As per advise of Doctor.The reason for transfer,condition of
+                Patient,treatment,risks and consequences etc.Have been explained to me/us and understood by me/us</p>
         </div>
         <div class="col-12">
-        <table class="table table-bordered">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -196,7 +205,6 @@ error_reporting(0);
                         <td><?php  try{echo $conset[0];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $conset[1];} catch(Excetion $e){}?></td>
                         <td><?php  try{echo $conset[2];} catch(Excetion $e){}?></td>
-                        
                     </tr>
                     <tr>
                         <th scope="row">Time</th>
@@ -208,10 +216,11 @@ error_reporting(0);
             </table>
         </div>
     </div>
-    <h6>Thank You !</h6>
+    </div>
+    <h6 class="text-center">Thank You !</h6>
 </body>
 <script>
-    window.print();
+window.print();
 </script>
 
 </html>

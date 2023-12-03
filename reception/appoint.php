@@ -41,20 +41,62 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
           if (isset($_REQUEST['submit'])) {
             $id = $_POST['id'];
             $date = $_POST['date'];
-            $update="UPDATE `patient_records` SET reg_date = '$date', is_approved= 1  WHERE `id` = '$id'";
+            $opd_no=1;
+            $sql = "select opd_no from opd_tracker where date='$date'";
+            $result = $conn->query($sql);
+            if($result->num_rows >0){
+                $row=$result->fetch_assoc();
+                $opd_no = $row['opd_no'] + 1;
+                
+            $sql = "update opd_tracker set opd_no = $opd_no where date='$date'";
+            $conn->query($sql);
+            }else{
+          
+              $sql = "insert into opd_tracker(date,opd_no) values('$date',1)";
+              $conn->query($sql);
+            }
+            $update="UPDATE `patient_records` SET reg_date = '$date', is_approved= 1,opd_no = $opd_no WHERE `id` = '$id'";
             $conn->query($update);
-            $day = date('d');
-                $month = date('m');
-                $year = date('Y');
-                
-                $uhid = $id.'/'.$day.'/'.$month.'/'.$year;
+          
+            $con = "select consultant from patient_records where id = $id;";
+            $con_res = $conn->query($con)->fetch_assoc();
+            $consultant = $con_res['consultant'];
+            function generateRandomID($fullName) {
+              $nameParts = explode(" ", $fullName);
               
+              $firstName = $nameParts[1];
+              $lastName = $nameParts[2];
+              
+              $firstInitial = strtoupper(substr($firstName, 0, 1));
+              $lastInitial = strtoupper(substr($lastName, 0, 1));
+              
+              $randomNumbers = '';
+              for ($i = 0; $i < 6; $i++) {
+                  $randomNumbers .= rand(0, 9);
+              }
+              
+              $randomID = $firstInitial . $lastInitial . $randomNumbers;
+              return $randomID;
+          }
+                $sql="select uhid from p_insure where id = $id;";
+                $res = $conn->query($sql)->fetch_assoc();
+                $UHID = $res['uhid'];
+                if($UHID == ""){
+                  $uhid =generateRandomID($consultant);
                 
-                //auto generate uhid
-                $sql = "update p_insure set uhid = '$uhid' where id = $id;";
-                $conn->query($sql);
-                $sql = "update ortho_p_insure set uhid = '$uhid' where id = $id;";
-                $conn->query($sql);
+                  $sql = "select * from p_insure where uhid = '$uhid' ";
+                  while($conn->query($sql)->num_rows>1){
+                    
+                    $uhid =generateRandomID($consultant);
+                  }
+                
+                    //auto generate uhid
+                    $sql = "update p_insure set uhid = '$uhid' where id = $id;";
+                    $conn->query($sql);
+                    $sql = "update ortho_p_insure set uhid = '$uhid' where id = $id;";
+                    $conn->query($sql);
+                }
+                
             echo "<div class='alert alert-success'> Updated Successfully</div>";
 
           }
@@ -82,9 +124,7 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             <th>CONSULTANT</th>
                             <th>REG DATE</th>
                             <th>APPROVE </th>
-                            
-                            <!-- <th>TOTAL</th> -->
-                            
+
 
                         </tr>
                     </thead>
@@ -96,8 +136,6 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                         while ($res = $data->fetch_assoc()) {
                             echo '<tr>';
                             echo '<td>' . $res['id'] . '</td>';
-
-                            
                             echo '<td>' . $res['name'] . '</td>';
                             echo '<td>' . $res['sex'] . '</td>';
                             echo '<td>' . $res['age'] . '</td>';
@@ -106,12 +144,12 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             echo '<td> <input type="hidden" name="id" value="' . $res['id'] . '">
                             <input type="date"  name="date" value="' . $res['reg_date'] . '"> </td>';
                             echo '<td> <button  type="submit" name="submit" class="btn btn-primary">Approve</button></td>';
-                           
-                            
                             echo '</tr>';
                         }
                       }
+                     
                         ?>
+                        </form>
                     </tbody>
                 </table>
   </div>
@@ -186,10 +224,10 @@ $sql = "SELECT * FROM titles WHERE id = 1;";
                             echo '<td>' . $res['consultant'] . '</td>';
                             if( $res['is_visited'] == 0){
                               echo<<<data
-                              <td><form action="" method="POST">
+                              <td> <form action="" method="POST">
                               <input type="hidden" name="p_id" value="{$res['id']}">
                               <button type="submit" name="visit" value="is_visited" class="btn btn-success">Mark as Visited</button>
-                            </form></td>
+                            </form> </td>
 
 data;
                             }else{

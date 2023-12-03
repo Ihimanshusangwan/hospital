@@ -21,9 +21,14 @@ $res1 = $data1->fetch_assoc();
 $sql2 = "SELECT * FROM p_insure WHERE id = '$id';";
 $data2 = $conn->query($sql2);
 $res2 = $data2->fetch_assoc();
+
 $sql10="SELECT * FROM `change_label` WHERE 1";
 $data10=$conn->query($sql10);
 $res10=$data10->fetch_assoc();
+error_reporting(0);
+$sql_2="SELECT * FROM opd_bill_pay WHERE patient_id='$id'";
+$query_2=mysqli_query($conn,$sql_2);
+$res_2=mysqli_fetch_assoc($query_2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,8 +164,7 @@ window.print();
         <?php include_once("../header/images.php") ?>
         <h3 class="text-center text-dark my-2 ">OPD Bill</h3>
         <div>
-    <div style="border-bottom: 3px solid black; margin-bottom : 10px;"></div>
-    <div class="row">
+             <div class="row">
         <div class="col-6"><strong>UHID No: </strong><?php echo $res2['uhid'];?>
     </div>
         <div class="col-6"><strong>Name:</strong>
@@ -176,31 +180,8 @@ window.print();
             <?php echo $res['consultant']; ?>
         </div>
    
-        <div class="col mx-3" style = "display: flex; justify-content: flex-end;" >
-            <script src="../barcode.js"></script>
-            <canvas id="barcode"></canvas>
-            <script>
-                const canvas = document.getElementById('barcode');
-                const opts = {
-                    bcid: 'code39',  // Barcode type set to Code 39
-                    text: '<?php echo $id; ?>',  // Numeric value with variable length
-                    scale: 2,  // Scale factor for the barcode size
-                    height: 10,  // Height of the barcode in mm
-                    includetext: false,  // Include the barcode text
-                };
-
-                bwipjs.toCanvas(canvas, opts, function (err) {
-                    if (err) {
-                        console.error('Error generating barcode:', err);
-                    } else {
-                        console.log('Barcode generated successfully');
-                    }
-                });
-            </script>
-        </div><br>
-
+       
     </div>
-    <div style="border-bottom: 3px solid black; margin-bottom : 10px;  margin-top: 10px;"></div>
         <strong>Bill No:
             <?php echo date("Y"). "/" .$id ?>
             </strong>
@@ -255,31 +236,142 @@ window.print();
         </div>
 
     </form>
-    <h5 style="text-align: right; margin-right: 2em;">SubTotal : <span id="subtotal">
-            <?php echo $subtotal; ?>
-        </span></h5>
-    <h5 style="text-align: right; margin-right: 2em; row">
-       Discount : 
-        <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
-        <?php
+    <label for="" class="form-label">Payment Mode : <strong>
+    <?php echo $res_2['pay_method'];?>
+    </strong></label><br>
+    <?php 
+    $pay_method=$res_2['pay_method'];
+    if($pay_method!="CASH"){
+        echo '<label for="" class="form-label">Payment Id : <strong>'.$res_2['payment_id'].'
+        </strong></label>';
+    }?>
+    
+                        
+    
+            <input type="hidden" name="patient_id" value="<?php echo $id ?>" id="patient_id">
+            <?php
         $sql = "select opd_discount from p_log where id = '$id';";
         $res = $conn->query($sql)->fetch_assoc();
+        if($res['opd_discount']!=0){
+            echo ' <h6 style="margin-left:  33rem;">SubTotal : <span id="subtotal">';
+            echo $subtotal; 
+            echo ' </span></h6>';
+            echo ' <h6 style="margin-left:  33rem;"> Discount : ';
+            echo $res['opd_discount'];echo '</h6>';
+        }
         ?>
-        <input type="number" style="border: 0px; " name="discount"
-            class="col-1 ad " placeholder="Discount" id="discount" onchange="on_discount_change()"
-            value="<?php echo $res['opd_discount']; ?>" readonly>
+            <h6 style="margin-left: 33rem;">
+                <?php echo isset($res10['lable_1'])?$res10['lable_1']:'Grand Total';?> : 
+                <span id="grandtotal">
+                    <?php if($res['opd_discount']!=0){
+                        echo $subtotal-$res['opd_discount'];
+                    }
+                    else{
+                         echo $subtotal;
+                    }
+                      ?>
+                </span>
+            </h6>
+            <?php
 
-    </h5>
-    <h5 style="text-align: right; margin-right: 2em;"><?php  echo $res10['lable_1'];?> : <span id="grandtotal">
-            <?php echo $subtotal; ?>
-        </span></h5> <br><br><br>
-    <h6 style="text-align: right; margin-right: 3em;">Signature</h6>
-    <h6>Thank You !</h6>
+function numberToWords($number) {
+    $words = [
+        1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five", 6 => "six", 7 => "seven", 8 => "eight", 9 => "nine", 10 => "ten",
+        11 => "eleven", 12 => "twelve", 13 => "thirteen", 14 => "fourteen", 15 => "fifteen", 16 => "sixteen", 17 => "seventeen", 18 => "eighteen", 19 => "nineteen",
+        20 => "twenty", 30 => "thirty", 40 => "forty", 50 => "fifty", 60 => "sixty", 70 => "seventy", 80 => "eighty", 90 => "ninety"
+    ];
+
+    if ($number < 20) {
+        return $words[$number];
+    } 
+    elseif ($number < 100) {
+        return $words[$number - ($number % 10)] . '-' . $words[$number % 10];
+    }
+    elseif ($number < 1000) {
+        return $words[floor($number / 100)] . " hundred " . numberToWords($number % 100);
+    }
+    elseif ($number < 100000) {
+        return numberToWords(floor($number / 1000)) . " thousand " . numberToWords($number % 1000);
+    }
+    elseif ($number < 10000000) {
+        return numberToWords(floor($number / 100000)) . " lakh " . numberToWords($number % 100000);
+    }
+    elseif ($number < 1000000000) {
+        return numberToWords(floor($number / 10000000)) . " crore " . numberToWords($number % 10000000);
+    }
+    else {
+        return "Number out of range";
+    }
+}
+$number = $subtotal-$res['opd_discount'];
+if($number<=0){
+    echo '';
+}
+else{
+    
+    $textualRepresentation = numberToWords($number);
+    echo "Received With Thanks ";
+    echo  ucwords($textualRepresentation) .' Only';
+}
+?>
+
+            <div class=" d-flex justify-content-between mt-4">
+                <div>
+                    <script src="../barcode.js"></script>
+                    <canvas id="barcode"></canvas>
+                    <script>
+                    const canvas = document.getElementById('barcode');
+                    const opts = {
+                        bcid: 'code39', // Barcode type set to Code 39
+                        text: '<?php echo $id; ?>', // Numeric value with variable length
+                        scale: 2, // Scale factor for the barcode size
+                        height: 7, // Height of the barcode in mm
+                        includetext: false, // Include the barcode text
+                    };
+
+                    bwipjs.toCanvas(canvas, opts, function(err) {
+                        if (err) {
+                            console.error('Error generating barcode:', err);
+                        } else {
+                            console.log('Barcode generated successfully');
+                        }
+                    });
+                    </script>
+                </div>
+
+                <div>
+                    <label>Signature</label>
+                </div>
+
+            </div>
+        </div>
+        <?php 
+$sql = "SELECT * FROM patient_records WHERE id = '$id';";
+$data = $conn->query($sql);
+$res = $data->fetch_assoc();
+?>
+   
+   <?php 
+if($dr['signature']!=""):
+
+?>
+    <div style="text-align:right; margin-right:2rem;" >
+        <div>
+        <img src="<?php echo "../admin/".$dr['signature']; ?> " alt="" style='height: 5rem; width:7rem; '>
+        </div>
+        
+    <div class="col-12 mt-4" style="text-align:right; margin-right:2rem;">
+        <strong> <?php echo $res['consultant']; ?></strong>
     </div>
+    <?php endif; ?>
+
 </body>
 <script>
-    on_discount_change();
-    window.print();
+on_discount_change();
+window.print();
+</script>
+<script>
+    
 </script>
 
 </html>

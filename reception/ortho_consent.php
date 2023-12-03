@@ -78,17 +78,6 @@ $sql = "SELECT * FROM patient_records WHERE id = '$id';";
           <label class="form-label">Bed Number:<strong> <?php echo $res2['bed/room'];?></strong></label>
         </div>
       </div>
-      <a href="minor_pro_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Minor Procedures Consent</button></a>
-    <a href="ap_for_document.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Application for Document</button></a>
-    <a href="anesthesia_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Anesthesia Consent</button></a>
-    <a href="discharge_dama_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Discharge Dama Consent</button></a>
-    <a href="ref_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Refusal Treatment Consent</button></a>
-    <a href="general_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">General Informed Consent</button></a>
-    <a href="highrisk_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">High Risk Consent</button></a>
-    <a href="info_transfusion_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Transfusion of Blood Consent</button></a>
-    <a href="initial_counselling.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Initial Counselling Form</button></a>
-    <a href="rate_charges.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Rate Charges Samatipatra</button></a>
-    <a href="room_consent.php?id=<?php echo $id;?>"><button class="btn btn-primary mb-1">Room Consent</button></a>
     
 
 

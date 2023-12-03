@@ -79,7 +79,7 @@
         ?>
         <form id="form" action="" method="POST" enctype="multipart/form-data">
           <div class="form-group m-2">
-            <label for="name">Name of Doctor:</label>
+            <label for="name">Name of Doctor:(use format Dr. FirstName LastName)</label>
             <input name="name" id="name" value="" class="form-control" placeholder="Name" />
           </div>
           <div class="form-group m-2">

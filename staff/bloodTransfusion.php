@@ -1,4 +1,4 @@
-<?php 
+<?php
 require("../admin/connect.php");
 $id = $_GET['id'];
 $sql = "SELECT * FROM patient_records WHERE id = '$id';";
@@ -15,87 +15,103 @@ $res2 = $data2->fetch_assoc();
 $sql = "SELECT * FROM titles WHERE id = 1;";
 $data = $conn->query($sql);
 $title = $data->fetch_assoc();
-error_reporting(0);
-$x=0;
+// error_reporting(0);
+$x = 0;
 if (isset($_POST['submit'])) {
-  $dr = $_POST['dr0']. '&' . $_POST['dr1']. '&' . 
-  $_POST['dr2']. '&' . $_POST['dr3']. 
-  '&' . $_POST['dr4']. '&' . $_POST['dr5'] 
-  .'&'.$_POST['dr6'] .'&'.$_POST['dr7']
-  .'&'.$_POST['dr8'] ;
-  
-   $nur = $_POST['nur0']. '&' . $_POST['nur1']. '&' . 
-  $_POST['nur2']. '&' . $_POST['nur3']. 
-  '&' . $_POST['nur4'] ;
+  $new = array();
+  for($i =1;$i<=8;$i++){
+    $new[$i] = $_POST['new_'.$i]; 
+   }
+    $newValue = json_encode($new);
 
-  $cros =$_POST['cros'];
-  $trans =$_POST['trans'];
-  $blooa = $_POST['blooa0']. '&' . $_POST['blooa1']
-  . '&' . $_POST['blooa2']. '&' .
-  $_POST['blooa3']. '&' . $_POST['blooa4']. '&' . 
-  $_POST['blooa5'] .'&'.$_POST['blooa6'] 
-  .'&'.$_POST['blooa7'].'&'.$_POST['blooa8'].'&'.$_POST['blooa9']
-  . '&' .$_POST['blooa10']. '&' . $_POST['blooa11']
-  . '&' . $_POST['blooa12']. '&' .
-  $_POST['blooa13']. '&' . $_POST['blooa14']. '&' . 
-  $_POST['blooa15'].'&'.$_POST['blooa16'] 
-  .'&'.$_POST['blooa17'].'&'.$_POST['blooa18'].'&'.$_POST['blooa19']
-  . '&' .$_POST['blooa20']. '&' . $_POST['blooa21']
-  . '&' . $_POST['blooa22']. '&' .
-  $_POST['blooa23']. '&' . $_POST['blooa24']. '&' . 
-  $_POST['blooa25'].'&'.$_POST['blooa26'] 
-  .'&'.$_POST['blooa27'].'&'.$_POST['blooa28'].'&'.$_POST['blooa29']
-  . '&' .$_POST['blooa30']. '&' . $_POST['blooa31']
-  . '&' . $_POST['blooa32']. '&' .
-  $_POST['blooa33']. '&' . $_POST['blooa34']. '&' . 
-  $_POST['blooa35'].'&'.$_POST['blooa36'] 
-  .'&'.$_POST['blooa37'].'&'.$_POST['blooa38'].'&'.$_POST['blooa39']
-  . '&' .$_POST['blooa40']. '&' . $_POST['blooa41']
-  . '&' . $_POST['blooa42']. '&' .
-  $_POST['blooa43']. '&' . $_POST['blooa44']. '&' . 
-  $_POST['blooa45'].'&'.$_POST['blooa46'] 
-  .'&'.$_POST['blooa47'].'&'.$_POST['blooa48'].'&'.$_POST['blooa49']
-  . '&' .$_POST['blooa50'];
+  $dr = $_POST['dr0'] . '&' . $_POST['dr1'] . '&' .
+    $_POST['dr2'] . '&' . $_POST['dr3'] .
+    '&' . $_POST['dr4'] . '&' . $_POST['dr5']
+    . '&' . $_POST['dr6'] . '&' . $_POST['dr7']
+    . '&' . $_POST['dr8'];
 
-  $bloob = $_POST['bloob0']. '&' . $_POST['bloob1']
-  . '&' . $_POST['bloob2']. '&' .
-  $_POST['bloob3']. '&' . $_POST['bloob4']. '&' . 
-  $_POST['bloob5'] .'&'.$_POST['bloob6'] 
-  .'&'.$_POST['bloob7'].'&'.$_POST['bloob8'].'&'.$_POST['bloob9']
-  . '&' .$_POST['bloob10']. '&' . $_POST['bloob11']
-  . '&' . $_POST['bloob12']. '&' .
-  $_POST['bloob13']. '&' . $_POST['bloob14']. '&' . 
-  $_POST['bloob15'].'&'.$_POST['bloob16'] 
-  .'&'.$_POST['bloob17'].'&'.$_POST['bloob18'].'&'.$_POST['bloob19']
-  . '&' .$_POST['bloob20']. '&' . $_POST['bloob21']
-  . '&' . $_POST['bloob22']. '&' .
-  $_POST['bloob23']. '&' . $_POST['bloob24']. '&' . 
-  $_POST['bloob25'].'&'.$_POST['bloob26'] 
-  .'&'.$_POST['bloob27'].'&'.$_POST['bloob28'].'&'.$_POST['bloob29']
-  . '&' .$_POST['bloob30']. '&' . $_POST['bloob31']
-  . '&' . $_POST['bloob32']. '&' .
-  $_POST['bloob33']. '&' . $_POST['bloob34']. '&' . 
-  $_POST['bloob35'].'&'.$_POST['bloob36'] 
-  .'&'.$_POST['bloob37'].'&'.$_POST['bloob38'].'&'.$_POST['bloob39']
-  . '&' .$_POST['bloob40']. '&' . $_POST['bloob41']
-  . '&' . $_POST['bloob42']. '&' .
-  $_POST['bloob43']. '&' . $_POST['bloob44']. '&' . 
-  $_POST['bloob45'].'&'.$_POST['bloob46'] 
-  .'&'.$_POST['bloob47'].'&'.$_POST['bloob48'].'&'.$_POST['bloob49'];
+  $nur = $_POST['nur0'] . '&' . $_POST['nur1'] . '&' .
+    $_POST['nur2'] . '&' . $_POST['nur3'] .
+    '&' . $_POST['nur4'];
 
-  $update="UPDATE `blood` SET `dr` = '$dr',`nur` = '$nur',`trans`='$trans',`cros`='$cros',`blooa`='$blooa',`bloob`='$bloob' WHERE `id` = '$id'";
+  $cros = isset($_POST['cros'])?$_POST['cros']:"";
+  $trans = isset($_POST['trans'])?$_POST['trans']:"";
+  $blooa = $_POST['blooa0'] . '&' . $_POST['blooa1']
+    . '&' . $_POST['blooa2'] . '&' .
+    $_POST['blooa3'] . '&' . $_POST['blooa4'] . '&' .
+    $_POST['blooa5'] . '&' . $_POST['blooa6']
+    . '&' . $_POST['blooa7'] . '&' . $_POST['blooa8'] . '&' . $_POST['blooa9']
+    . '&' . $_POST['blooa10'] . '&' . $_POST['blooa11']
+    . '&' . $_POST['blooa12'] . '&' .
+    $_POST['blooa13'] . '&' . $_POST['blooa14'] . '&' .
+    $_POST['blooa15'] . '&' . $_POST['blooa16']
+    . '&' . $_POST['blooa17'] . '&' . $_POST['blooa18'] . '&' . $_POST['blooa19']
+    . '&' . $_POST['blooa20'] . '&' . $_POST['blooa21']
+    . '&' . $_POST['blooa22'] . '&' .
+    $_POST['blooa23'] . '&' . $_POST['blooa24'] . '&' .
+    $_POST['blooa25'] . '&' . $_POST['blooa26']
+    . '&' . $_POST['blooa27'] . '&' . $_POST['blooa28'] . '&' . $_POST['blooa29']
+    . '&' . $_POST['blooa30'] . '&' . $_POST['blooa31']
+    . '&' . $_POST['blooa32'] . '&' .
+    $_POST['blooa33'] . '&' . $_POST['blooa34'] . '&' .
+    $_POST['blooa35'] . '&' . $_POST['blooa36']
+    . '&' . $_POST['blooa37'] . '&' . $_POST['blooa38'] . '&' . $_POST['blooa39']
+    . '&' . $_POST['blooa40'] . '&' . $_POST['blooa41']
+    . '&' . $_POST['blooa42'] . '&' .
+    $_POST['blooa43'] . '&' . $_POST['blooa44'] . '&' .
+    $_POST['blooa45'] . '&' . $_POST['blooa46']
+    . '&' . $_POST['blooa47'] . '&' . $_POST['blooa48'] . '&' . $_POST['blooa49']
+    . '&' . $_POST['blooa50'];
+
+  $bloob = $_POST['bloob0'] . '&' . $_POST['bloob1']
+    . '&' . $_POST['bloob2'] . '&' .
+    $_POST['bloob3'] . '&' . $_POST['bloob4'] . '&' .
+    $_POST['bloob5'] . '&' . $_POST['bloob6']
+    . '&' . $_POST['bloob7'] . '&' . $_POST['bloob8'] . '&' . $_POST['bloob9']
+    . '&' . $_POST['bloob10'] . '&' . $_POST['bloob11']
+    . '&' . $_POST['bloob12'] . '&' .
+    $_POST['bloob13'] . '&' . $_POST['bloob14'] . '&' .
+    $_POST['bloob15'] . '&' . $_POST['bloob16']
+    . '&' . $_POST['bloob17'] . '&' . $_POST['bloob18'] . '&' . $_POST['bloob19']
+    . '&' . $_POST['bloob20'] . '&' . $_POST['bloob21']
+    . '&' . $_POST['bloob22'] . '&' .
+    $_POST['bloob23'] . '&' . $_POST['bloob24'] . '&' .
+    $_POST['bloob25'] . '&' . $_POST['bloob26']
+    . '&' . $_POST['bloob27'] . '&' . $_POST['bloob28'] . '&' . $_POST['bloob29']
+    . '&' . $_POST['bloob30'] . '&' . $_POST['bloob31']
+    . '&' . $_POST['bloob32'] . '&' .
+    $_POST['bloob33'] . '&' . $_POST['bloob34'] . '&' .
+    $_POST['bloob35'] . '&' . $_POST['bloob36']
+    . '&' . $_POST['bloob37'] . '&' . $_POST['bloob38'] . '&' . $_POST['bloob39']
+    . '&' . $_POST['bloob40'] . '&' . $_POST['bloob41']
+    . '&' . $_POST['bloob42'] . '&' .
+    $_POST['bloob43'] . '&' . $_POST['bloob44'] . '&' .
+    $_POST['bloob45'] . '&' . $_POST['bloob46']
+    . '&' . $_POST['bloob47'] . '&' . $_POST['bloob48'] . '&' . $_POST['bloob49'];
+
+    $a=array();
+    for($i=0;$i<23;$i++){
+      $element=isset($_POST[$i]) ? $_POST[$i] : '';
+      array_push($a, $element);
+    }
+    $a_en=json_encode($a);
+  $update = "UPDATE `blood` SET `dr` = '$dr',`nur` = '$nur',`trans`='$trans',`cros`='$cros',`blooa`='$blooa',`bloob`='$bloob',`new` = '$newValue' , a='$a_en' WHERE `id` = '$id'";
   $conn->query($update);
-  $x=1;
+  $x = 1;
 
 
 }
+error_reporting(0);
 $sql3 = "SELECT * FROM `blood`  WHERE id = '$id';";
-$data3 = $conn->query($sql3); 
+$data3 = $conn->query($sql3);
 $blood = $data3->fetch_assoc();
 $dr = explode("&", $blood['dr']);
 $nur = explode("&", $blood['nur']);
 $blooa = explode("&", $blood['blooa']);
 $bloob = explode("&", $blood['bloob']);
+$newValue = json_decode($blood['new'],true);
+$s_de = json_decode($blood['a'],true);
+
 
 ?>
 <!DOCTYPE html>
@@ -232,50 +248,52 @@ $bloob = explode("&", $blood['bloob']);
     <div class="container">
       <h1 class="text-center text-danger mt-3">SHRI SIDDHIVINAYAK NETRALAYA</h1>
       <h3 class="text-center text-dark mt-3">BLOOD  TRANSFUSION</h3>
-      <?php if($x==1){echo "<div class='alert alert-success'> Updated Successfully</div>";} ?>
+      <?php if ($x == 1) {
+        echo "<div class='alert alert-success'> Updated Successfully</div>";
+      } ?>
       <a class="btn btn-primary m-2" href="ortho_forms.php?id=<?php echo $id; ?>">Dashboard</a>
       <a href="ortho_blood_transfusion_print.php?id=<?php echo $id; ?>" class=" btn btn-success m-2"
             id="dashboard">Print</a>
 
       <div class="row" >
       <div class="col-md-3" >
-          <label class="form-label">UHID No: <?php echo $res2['uhid'];?></label>
+          <label class="form-label">UHID No: <?php echo $res2['uhid']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">IPD No: <?php echo $res2['ipd'];?></label>
+          <label class="form-label">IPD No: <?php echo $res2['ipd']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">Date of Admission : <?php echo $res2['date'];?></label>
+          <label class="form-label">Date of Admission : <?php echo $res2['date']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label" for="time_ad">Time of Admission : <?php echo $res2['time'];?></label>
+          <label class="form-label" for="time_ad">Time of Admission : <?php echo $res2['time']; ?></label>
         </div>
       </div>
       <div class="row g-3">
         <div class="col-md-3">
-          <label class="form-label">Name: <?php echo $res['name'];?></label>
+          <label class="form-label">Name: <?php echo $res['name']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">Age: <?php echo $res['age'];?></label>
+          <label class="form-label">Age: <?php echo $res['age']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">Sex: <?php echo $res['sex'];?></label>
+          <label class="form-label">Sex: <?php echo $res['sex']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">ICU/Ward Room No: <?php echo $res2['ward/icu'];?></label>
+          <label class="form-label">ICU/Ward Room No: <?php echo $res2['ward/icu']; ?></label>
         </div>
       </div>
       
 
       <div class="row">
         <div class="col-md-3">
-          <label class="form-label">Consultant: <?php echo $res['consultant'];?></label>
+          <label class="form-label">Consultant: <?php echo $res['consultant']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">Diagnosis: <?php echo $res1['diagnosis'];?></label>
+          <label class="form-label">Diagnosis: <?php echo $res1['diagnosis']; ?></label>
         </div>
         <div class="col-md-3">
-          <label class="form-label">Bed Number: <?php echo $res2['bed/room'];?></label>
+          <label class="form-label">Bed Number: <?php echo $res2['bed/room']; ?></label>
         </div>
     </div> 
     <form action="" method="post">
@@ -286,53 +304,64 @@ $bloob = explode("&", $blood['bloob']);
       <div class="row mt-4">
         <div class="col-3">
           <label class="form-label text-primary">Dr</label>
-          <input  type="text" class="form-control" id="" name="dr0"    value="<?php  echo $dr[0]; ?>"/>
+          <input  type="text" class="form-control" id="" name="dr0"    value="<?php echo $dr[0]; ?>"/>
         </div>
         <div class="col-3"> 
           <label class="form-label text-primary">Bloodgroup of Patient</label>
-          <input  type="text" class="form-control" id="" name="dr1"    value="<?php  echo $dr[1]; ?>"/>
+          <input  type="text" class="form-control" id="" name="dr1"    value="<?php echo $dr[1]; ?>"/>
         </div>
         <div class="col-3">
           <label class="form-label text-primary">Cross matched</label><br />
-          <input type="radio" name="cros" value="Yes" <?php if($blood['cros']=='Yes'){echo "checked";}?>/>
+          <input type="radio" name="cros" value="Yes" <?php if ($blood['cros'] == 'Yes') {
+            echo "checked";
+          } ?>/>
           <label style="margin-left: 0.5rem; margin-right: 1rem">Yes</label>
-          <input type="radio" name="cros" value="No" <?php if($blood['cros']=='No'){echo "checked";}?>/><label style="margin-left: 0.5rem">No</label>
+          <input type="radio" name="cros" value="No" <?php if ($blood['cros'] == 'No') {
+            echo "checked";
+          } ?>/><label style="margin-left: 0.5rem">No</label>
         </div>
         <div class="col-3">
           <label class="form-label text-danger">(If No:reason)</label>
-          <input  type="text" class="form-control" id="" name="dr2"    value="<?php  echo $dr[2]; ?>"/>
+          <input  type="text" class="form-control" id="" name="dr2"    value="<?php echo $dr[2]; ?>"/>
         </div>
       </div>
-
       <div class="row">
         <h6 class="mt-4 fl">Type:</h6>
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th scope="col"></th>
-              <th scope="col">WB</th>
-              <th scope="col"></th>
-              <th scope="col">PRP</th>
+              <td >WB</td>
+              <td > 
+<input type="text" class="form-control" name="new_1" value="<?php echo $newValue['1']; ?>"> </td>
+              <td >PRP</td>
+              <td >
+<input type="text" class="form-control" name="new_2" value="<?php echo $newValue['2']; ?>"></td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row"></th>
               <td>PRC</td>
-              <td></td>
+              <th >
+<input type="text" class="form-control" name="new_3" value="<?php echo $newValue['3']; ?>"></th>
               <td>Crypt</td>
+              <td>
+<input type="text" class="form-control" name="new_4" value="<?php echo $newValue['4']; ?>"></td>
             </tr>
             <tr>
-              <th scope="row"></th>
               <td>FFP</td>
-              <td></td>
+              <th >
+<input type="text" class="form-control" name="new_5" value="<?php echo $newValue['5']; ?>"></th>
               <td>Plasma</td>
+              <td>
+<input type="text" class="form-control" name="new_6" value="<?php echo $newValue['6']; ?>"></td>
             </tr>
             <tr>
-              <th scope="row"></th>
               <td>PLT</td>
-              <td></td>
+              <th >
+<input type="text" class="form-control" name="new_7" value="<?php echo $newValue['7']; ?>"></th>
               <td>Other</td>
+              <td>
+<input type="text" class="form-control" name="new_8" value="<?php echo $newValue['8']; ?>"></td>
             </tr>
           </tbody>
         </table>
@@ -341,13 +370,13 @@ $bloob = explode("&", $blood['bloob']);
       <div class="row">
         <div class="col-3">
           <label class="form-label text-primary">Fluid Volume Infused</label>
-          <input  type="text" class="form-control" id="" name="dr3"    value="<?php  echo $dr[3]; ?>"/>
+          <input  type="text" class="form-control" id="" name="dr3"    value="<?php echo $dr[3]; ?>"/>
         </div>
         <div class="col-5">
           <label class="form-label text-primary"
             >Blood bag details checked & B.T. Started by Dr :</label
           >
-          <input  type="text" class="form-control" id="" name="dr4"    value="<?php  echo $dr[4]; ?>"/>
+          <input  type="text" class="form-control" id="" name="dr4"    value="<?php echo $dr[4]; ?>"/>
         </div>
       </div>
       <table class="table table-bordered mt-4">
@@ -362,19 +391,19 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">Started At</th>
             <td>
-              <input  type="date" class="form-control" id="age" name="dr5"    value="<?php  echo $dr[5]; ?>"/>
+              <input  type="date" class="form-control" id="age" name="dr5"    value="<?php echo $dr[5]; ?>"/>
             </td>
             <td>
-              <input  type="time" class="form-control" id="age" name="dr6"    value="<?php  echo $dr[6]; ?>"/>
+              <input  type="time" class="form-control" id="age" name="dr6"    value="<?php echo $dr[6]; ?>"/>
             </td>
           </tr>
           <tr>
             <th scope="row">Completed At</th>
             <td>
-              <input  type="date" class="form-control" id="age" name="dr7"    value="<?php  echo $dr[7]; ?>"/>
+              <input  type="date" class="form-control" id="age" name="dr7"    value="<?php echo $dr[7]; ?>"/>
             </td>
             <td>
-              <input  type="time" class="form-control" id="age" name="dr8"    value="<?php  echo $dr[8]; ?>"/>
+              <input  type="time" class="form-control" id="age" name="dr8"    value="<?php echo $dr[8]; ?>"/>
             </td>
           </tr>
         </tbody>
@@ -398,11 +427,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">Pre Transfusion Vital</th>
             <td>
-              <input name="blooa8"    value="<?php  echo $blooa[8]; ?>" type="time" class="form-control" id="age" />
+              <input name="blooa8"    value="<?php echo $blooa[8]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa0"    value="<?php  echo $blooa[0]; ?>"
+              name="blooa0"    value="<?php echo $blooa[0]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -411,7 +440,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa1"    value="<?php  echo $blooa[1]; ?>"
+              name="blooa1"    value="<?php echo $blooa[1]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -420,7 +449,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa2"    value="<?php  echo $blooa[2]; ?>"
+              name="blooa2"    value="<?php echo $blooa[2]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -429,7 +458,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa3"    value="<?php  echo $blooa[3]; ?>"
+              name="blooa3"    value="<?php echo $blooa[3]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -438,7 +467,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa4"    value="<?php  echo $blooa[4]; ?>"
+              name="blooa4"    value="<?php echo $blooa[4]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -447,7 +476,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa5"    value="<?php  echo $blooa[5]; ?>"
+              name="blooa5"    value="<?php echo $blooa[5]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -456,7 +485,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa6"    value="<?php  echo $blooa[6]; ?>"
+              name="blooa6"    value="<?php echo $blooa[6]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -465,7 +494,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa7"    value="<?php  echo $blooa[7]; ?>"
+              name="blooa7"    value="<?php echo $blooa[7]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -476,11 +505,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 10 min</th>
             <td>
-              <input name="blooa9"    value="<?php  echo $blooa[9]; ?>" type="time" class="form-control" id="age" />
+              <input name="blooa9"    value="<?php echo $blooa[9]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa10"    value="<?php  echo $blooa[10]; ?>"
+              name="blooa10"    value="<?php echo $blooa[10]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -489,7 +518,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa11"    value="<?php  echo $blooa[11]; ?>"
+              name="blooa11"    value="<?php echo $blooa[11]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -498,7 +527,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa12"    value="<?php  echo $blooa[12]; ?>"
+              name="blooa12"    value="<?php echo $blooa[12]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -507,7 +536,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa13"    value="<?php  echo $blooa[13]; ?>"
+              name="blooa13"    value="<?php echo $blooa[13]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -516,7 +545,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa14"    value="<?php  echo $blooa[14]; ?>"
+              name="blooa14"    value="<?php echo $blooa[14]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -525,7 +554,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa15"    value="<?php  echo $blooa[15]; ?>"
+              name="blooa15"    value="<?php echo $blooa[15]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -534,7 +563,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa16"    value="<?php  echo $blooa[16]; ?>"
+              name="blooa16"    value="<?php echo $blooa[16]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -543,7 +572,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa17"    value="<?php  echo $blooa[17]; ?>"
+              name="blooa17"    value="<?php echo $blooa[17]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -554,11 +583,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 20 min</th>
             <td>
-              <input name="blooa18"    value="<?php  echo $blooa[18]; ?>" type="time" class="form-control" id="age" />
+              <input name="blooa18"    value="<?php echo $blooa[18]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa19"    value="<?php  echo $blooa[19]; ?>"
+              name="blooa19"    value="<?php echo $blooa[19]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -567,7 +596,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa20"    value="<?php  echo $blooa[20]; ?>"
+              name="blooa20"    value="<?php echo $blooa[20]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -576,7 +605,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa21"    value="<?php  echo $blooa[21]; ?>"
+              name="blooa21"    value="<?php echo $blooa[21]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -585,7 +614,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa22"    value="<?php  echo $blooa[22]; ?>"
+              name="blooa22"    value="<?php echo $blooa[22]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -594,7 +623,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa23"    value="<?php  echo $blooa[23]; ?>"
+              name="blooa23"    value="<?php echo $blooa[23]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -603,7 +632,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa24"    value="<?php  echo $blooa[24]; ?>"
+              name="blooa24"    value="<?php echo $blooa[24]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -612,7 +641,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa25"    value="<?php  echo $blooa[25]; ?>"
+              name="blooa25"    value="<?php echo $blooa[25]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -621,7 +650,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa26"    value="<?php  echo $blooa[26]; ?>"
+              name="blooa26"    value="<?php echo $blooa[26]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -632,11 +661,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 30 min</th>
             <td>
-              <input name="blooa27"    value="<?php  echo $blooa[27]; ?>" type="time" class="form-control" id="age" />
+              <input name="blooa27"    value="<?php echo $blooa[27]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa28"    value="<?php  echo $blooa[28]; ?>"
+              name="blooa28"    value="<?php echo $blooa[28]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -645,7 +674,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa29"    value="<?php  echo $blooa[29]; ?>"
+              name="blooa29"    value="<?php echo $blooa[29]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -654,7 +683,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa30"    value="<?php  echo $blooa[30]; ?>"
+              name="blooa30"    value="<?php echo $blooa[30]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -663,7 +692,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa31"    value="<?php  echo $blooa[31]; ?>"
+              name="blooa31"    value="<?php echo $blooa[31]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -672,7 +701,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa32"    value="<?php  echo $blooa[32]; ?>"
+              name="blooa32"    value="<?php echo $blooa[32]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -681,7 +710,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa33"    value="<?php  echo $blooa[33]; ?>"
+              name="blooa33"    value="<?php echo $blooa[33]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -690,7 +719,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa34"    value="<?php  echo $blooa[34]; ?>"
+              name="blooa34"    value="<?php echo $blooa[34]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -699,7 +728,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa35"    value="<?php  echo $blooa[35]; ?>"
+              name="blooa35"    value="<?php echo $blooa[35]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -710,11 +739,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 1 hr.</th>
             <td>
-              <input name="blooa36"    value="<?php  echo $blooa[36]; ?>" type="time" class="form-control" id="age" />
+              <input name="blooa36"    value="<?php echo $blooa[36]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa37"    value="<?php  echo $blooa[37]; ?>"
+              name="blooa37"    value="<?php echo $blooa[37]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -723,7 +752,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa38"    value="<?php  echo $blooa[38]; ?>"
+              name="blooa38"    value="<?php echo $blooa[38]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -732,7 +761,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa39"    value="<?php  echo $blooa[39]; ?>"
+              name="blooa39"    value="<?php echo $blooa[39]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -741,7 +770,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa40"    value="<?php  echo $blooa[40]; ?>"
+              name="blooa40"    value="<?php echo $blooa[40]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -750,7 +779,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa41"    value="<?php  echo $blooa[41]; ?>"
+              name="blooa41"    value="<?php echo $blooa[41]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -759,7 +788,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa42"    value="<?php  echo $blooa[42]; ?>"
+              name="blooa42"    value="<?php echo $blooa[42]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -768,7 +797,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa43"    value="<?php  echo $blooa[43]; ?>"
+              name="blooa43"    value="<?php echo $blooa[43]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -777,7 +806,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa44"    value="<?php  echo $blooa[44]; ?>"
+              name="blooa44"    value="<?php echo $blooa[44]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -788,11 +817,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 2 hrs.</th>
             <td>
-              <input  name="blooa45"    value="<?php  echo $blooa[45]; ?>" type="time" class="form-control" id="age" />
+              <input  name="blooa45"    value="<?php echo $blooa[45]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="blooa46"    value="<?php  echo $blooa[46]; ?>"
+              name="blooa46"    value="<?php echo $blooa[46]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -801,7 +830,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa47"    value="<?php  echo $blooa[47]; ?>"
+              name="blooa47"    value="<?php echo $blooa[47]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -810,7 +839,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa48"    value="<?php  echo $blooa[48]; ?>"
+              name="blooa48"    value="<?php echo $blooa[48]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -819,7 +848,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa49"    value="<?php  echo $blooa[49]; ?>"
+              name="blooa49"    value="<?php echo $blooa[49]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -828,7 +857,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="blooa50"    value="<?php  echo $blooa[50]; ?>"
+              name="blooa50"    value="<?php echo $blooa[50]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -837,7 +866,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob0"    value="<?php  echo $bloob[0]; ?>"
+              name="bloob0"    value="<?php echo $bloob[0]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -846,7 +875,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob1"    value="<?php  echo $bloob[1]; ?>"
+              name="bloob1"    value="<?php echo $bloob[1]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -855,7 +884,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob2"    value="<?php  echo $bloob[2]; ?>"
+              name="bloob2"    value="<?php echo $bloob[2]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -866,11 +895,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 3 hrs.</th>
             <td>
-              <input name="bloob3"    value="<?php  echo $bloob[3]; ?>" type="time" class="form-control" id="age" />
+              <input name="bloob3"    value="<?php echo $bloob[3]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="bloob4"    value="<?php  echo $bloob[4]; ?>"
+              name="bloob4"    value="<?php echo $bloob[4]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -879,7 +908,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob5"    value="<?php  echo $bloob[5]; ?>"
+              name="bloob5"    value="<?php echo $bloob[5]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -888,7 +917,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob6"    value="<?php  echo $bloob[6]; ?>"
+              name="bloob6"    value="<?php echo $bloob[6]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -897,7 +926,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob7"    value="<?php  echo $bloob[7]; ?>"
+              name="bloob7"    value="<?php echo $bloob[7]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -906,7 +935,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob8"    value="<?php  echo $bloob[8]; ?>"
+              name="bloob8"    value="<?php echo $bloob[8]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -915,7 +944,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob9"    value="<?php  echo $bloob[9]; ?>"
+              name="bloob9"    value="<?php echo $bloob[9]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -924,7 +953,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob10"    value="<?php  echo $bloob[10]; ?>"
+              name="bloob10"    value="<?php echo $bloob[10]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -933,7 +962,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob11"    value="<?php  echo $bloob[11]; ?>"
+              name="bloob11"    value="<?php echo $bloob[11]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -944,11 +973,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After 4 hrs.</th>
             <td>
-              <input name="bloob12"    value="<?php  echo $bloob[12]; ?>" type="time" class="form-control" id="age" />
+              <input name="bloob12"    value="<?php echo $bloob[12]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="bloob13"    value="<?php  echo $bloob[13]; ?>"
+              name="bloob13"    value="<?php echo $bloob[13]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -957,7 +986,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob14"    value="<?php  echo $bloob[14]; ?>"
+              name="bloob14"    value="<?php echo $bloob[14]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -966,7 +995,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob15"    value="<?php  echo $bloob[15]; ?>"
+              name="bloob15"    value="<?php echo $bloob[15]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -975,7 +1004,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob16"    value="<?php  echo $bloob[16]; ?>"
+              name="bloob16"    value="<?php echo $bloob[16]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -984,7 +1013,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob17"    value="<?php  echo $bloob[17]; ?>"
+              name="bloob17"    value="<?php echo $bloob[17]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -993,7 +1022,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob18"    value="<?php  echo $bloob[18]; ?>"
+              name="bloob18"    value="<?php echo $bloob[18]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1002,7 +1031,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob19"    value="<?php  echo $bloob[19]; ?>"
+              name="bloob19"    value="<?php echo $bloob[19]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1011,7 +1040,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob20"    value="<?php  echo $bloob[20]; ?>"
+              name="bloob20"    value="<?php echo $bloob[20]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1022,7 +1051,7 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">
               <input
-              name="bloob21"    value="<?php  echo $bloob[21]; ?>"
+              name="bloob21"    value="<?php echo $bloob[21]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1030,11 +1059,11 @@ $bloob = explode("&", $blood['bloob']);
               />
             </th>
             <td>
-              <input name="bloob22"    value="<?php  echo $bloob[22]; ?>" type="time" class="form-control" id="age" />
+              <input name="bloob22"    value="<?php echo $bloob[22]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="bloob23"    value="<?php  echo $bloob[23]; ?>"
+              name="bloob23"    value="<?php echo $bloob[23]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1043,7 +1072,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob24"    value="<?php  echo $bloob[24]; ?>"
+              name="bloob24"    value="<?php echo $bloob[24]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1052,7 +1081,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob25"    value="<?php  echo $bloob[25]; ?>"
+              name="bloob25"    value="<?php echo $bloob[25]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1061,7 +1090,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob26"    value="<?php  echo $bloob[26]; ?>"
+              name="bloob26"    value="<?php echo $bloob[26]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1070,7 +1099,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob27"    value="<?php  echo $bloob[27]; ?>"
+              name="bloob27"    value="<?php echo $bloob[27]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1079,7 +1108,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob28"    value="<?php  echo $bloob[28]; ?>"
+              name="bloob28"    value="<?php echo $bloob[28]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1088,7 +1117,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob29"    value="<?php  echo $bloob[29]; ?>"
+              name="bloob29"    value="<?php echo $bloob[29]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1097,7 +1126,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob30"    value="<?php  echo $bloob[30]; ?>"
+              name="bloob30"    value="<?php echo $bloob[30]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1108,7 +1137,7 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">
               <input
-              name="bloob31"    value="<?php  echo $bloob[31]; ?>"
+              name="bloob31"    value="<?php echo $bloob[31]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1116,11 +1145,11 @@ $bloob = explode("&", $blood['bloob']);
               />
             </th>
             <td>
-              <input name="bloob32"    value="<?php  echo $bloob[32]; ?>" type="time" class="form-control" id="age" />
+              <input name="bloob32"    value="<?php echo $bloob[32]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="bloob33"    value="<?php  echo $bloob[33]; ?>"
+              name="bloob33"    value="<?php echo $bloob[33]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1129,7 +1158,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob34"    value="<?php  echo $bloob[34]; ?>"
+              name="bloob34"    value="<?php echo $bloob[34]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1138,7 +1167,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob35"    value="<?php  echo $bloob[35]; ?>"
+              name="bloob35"    value="<?php echo $bloob[35]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1147,7 +1176,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob36"    value="<?php  echo $bloob[36]; ?>"
+              name="bloob36"    value="<?php echo $bloob[36]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1156,7 +1185,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob37"    value="<?php  echo $bloob[37]; ?>"
+              name="bloob37"    value="<?php echo $bloob[37]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1165,7 +1194,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob38"    value="<?php  echo $bloob[38]; ?>"
+              name="bloob38"    value="<?php echo $bloob[38]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1174,7 +1203,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob39"    value="<?php  echo $bloob[39]; ?>"
+              name="bloob39"    value="<?php echo $bloob[39]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1183,7 +1212,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob40"    value="<?php  echo $bloob[40]; ?>"
+              name="bloob40"    value="<?php echo $bloob[40]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1194,11 +1223,11 @@ $bloob = explode("&", $blood['bloob']);
           <tr>
             <th scope="row">After Completion</th>
             <td>
-              <input name="bloob41"    value="<?php  echo $bloob[41]; ?>" type="time" class="form-control" id="age" />
+              <input name="bloob41"    value="<?php echo $bloob[41]; ?>" type="time" class="form-control" id="age" />
             </td>
             <td>
               <input
-              name="bloob42"    value="<?php  echo $bloob[42]; ?>"
+              name="bloob42"    value="<?php echo $bloob[42]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1207,7 +1236,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob43"    value="<?php  echo $bloob[43]; ?>"
+              name="bloob43"    value="<?php echo $bloob[43]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1216,7 +1245,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob44"    value="<?php  echo $bloob[44]; ?>"
+              name="bloob44"    value="<?php echo $bloob[44]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1225,7 +1254,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob49"    value="<?php  echo $bloob[49]; ?>"
+              name="bloob49"    value="<?php echo $bloob[49]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1234,7 +1263,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob45"    value="<?php  echo $bloob[45]; ?>"
+              name="bloob45"    value="<?php echo $bloob[45]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1243,7 +1272,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob46"    value="<?php  echo $bloob[46]; ?>"
+              name="bloob46"    value="<?php echo $bloob[46]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1252,7 +1281,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob47"    value="<?php  echo $bloob[47]; ?>"
+              name="bloob47"    value="<?php echo $bloob[47]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1261,7 +1290,7 @@ $bloob = explode("&", $blood['bloob']);
             </td>
             <td>
               <input
-              name="bloob48"    value="<?php  echo $bloob[48]; ?>"
+              name="bloob48"    value="<?php echo $bloob[48]; ?>"
                 type="text"
                 class="form-control"
                 id="age"
@@ -1285,16 +1314,20 @@ $bloob = explode("&", $blood['bloob']);
           class="form-control"
           id="treatment"
           placeholder=""
-        ><?php  echo $nur[0]; ?></textarea>
+        ><?php echo $nur[0]; ?></textarea>
       </div>
       <div class="row mt-4">
         <div class="col-3">
           <h6 class="fl text-primary">
             <strong>Blood transfusion reaction:</strong>
           </h6>
-          <input type="radio" name="trans" value="Yes" <?php if($blood['trans']=='Yes'){echo "checked";}?>/>
+          <input type="radio" name="trans" value="Yes" <?php if ($blood['trans'] == 'Yes') {
+            echo "checked";
+          } ?>/>
           <label style="margin-left: 0.5rem; margin-right: 1rem">Yes</label>
-          <input type="radio" name="trans" value="No" <?php if($blood['trans']=='No'){echo "checked";}?>/><label style="margin-left: 0.5rem">No</label>
+          <input type="radio" name="trans" value="No" <?php if ($blood['trans'] == 'No') {
+            echo "checked";
+          } ?>/><label style="margin-left: 0.5rem">No</label>
         </div>
         <table class="table table-bordered">
           <thead>
@@ -1314,12 +1347,12 @@ $bloob = explode("&", $blood['bloob']);
                   class="form-control"
                   id="age"
                   placeholder="Name"
-                  name="nur1"    value="<?php  echo $nur[1]; ?>"
+                  name="nur1"    value="<?php echo $nur[1]; ?>"
                 />
               </td>
               <td>
                 <input
-                name="nur2"    value="<?php  echo $nur[2]; ?>"
+                name="nur2"    value="<?php echo $nur[2]; ?>"
                   type="text"
                   class="form-control"
                   id="age"
@@ -1332,7 +1365,7 @@ $bloob = explode("&", $blood['bloob']);
               <th scope="row">Nursing In-Charge</th>
               <td>
                 <input
-                name="nur3"    value="<?php  echo $nur[3]; ?>"
+                name="nur3"    value="<?php echo $nur[3]; ?>"
                   type="text"
                   class="form-control"
                   id="age"
@@ -1341,7 +1374,7 @@ $bloob = explode("&", $blood['bloob']);
               </td>
               <td>
                 <input
-                name="nur4"    value="<?php  echo $nur[4]; ?>"
+                name="nur4"    value="<?php echo $nur[4]; ?>"
                   type="text"
                   class="form-control"
                   id="age"
@@ -1362,6 +1395,75 @@ $bloob = explode("&", $blood['bloob']);
           Any reaction should be immediately informed to RMO & Quality dept.
         </h6>
         
+        <h4 class="text-center mt-3">Tranfusion Reaction Form </h4>
+        <div class="row">
+        <div class="col-4">Blood Group
+          <input type="text" name="1" id="" value="<?php echo $s_de[1];?>" class="form-control">
+        </div>
+        <div class="col-4">BLood Bank No.
+        <input type="text" name="2" id="" value="<?php echo $s_de[2];?>" class="form-control">
+        </div>
+        <div class="col-4">Blood Bag No.
+        <input type="text" name="3" id="" value="<?php echo $s_de[3];?>" class="form-control">
+        </div>
+        <div class="col-4">Date
+        <input type="date" name="4" id=""  value="<?php echo $s_de[4];?>"class="form-control">
+        </div>
+        
+        <div class="col-8">Type of Blood /Component
+        <input type="text" name="5" id=""  value="<?php echo $s_de[5];?>"class="form-control">
+        </div>
+        <div class="div-6">Time Issue
+        <input type="text" name="6" id="" value="<?php echo $s_de[6];?>" class="form-control">
+        </div>
+        <div class="col-3">Time of Starting Transfusion
+        <input type="time" name="7" id="" value="<?php echo $s_de[7];?>" class="form-control">
+        </div>
+        <div class="col-3">Time of completion
+        <input type="time" name="8" id="" value="<?php echo $s_de[8];?>" class="form-control">
+        </div>
+        <div class="col-6">Nature of transfusion reaction
+        <input type="text" name="9" id="" value="<?php echo $s_de[9];?>"class="form-control">
+        </div>
+        <div class="col-4">Sign and Symptoms to BTR 
+        <input type="text" name="10" id="" value="<?php echo $s_de[10];?>" class="form-control">
+        </div>
+        <div class="col-4">Fever
+        <input type="text" name="11" id="" value="<?php echo $s_de[11];?>" class="form-control">
+        </div>
+        <div class="col-4">Pain
+        <input type="text" name="12" id="" value="<?php echo $s_de[12];?>" class="form-control">
+        </div>
+        <div class="col-3">Allergic Symptoms
+        <input type="text" name="13 " id="" value="<?php echo $s_de[13];?>" class="form-control">
+        </div>
+        <div class="col-1" style="text-decoration:underline;">Vitals :</div>
+        <div class="col-2">Temp
+        <input type="text" name="14" id="" value="<?php echo $s_de[14];?>" class="form-control"></div>
+        <div class="col-2">Pulse
+        <input type="text" name="15" id="" value="<?php echo $s_de[15];?>" class="form-control"></div>
+        <div class="col-2">BP
+        <input type="text" name="16" id="" value="<?php echo $s_de[16];?>" class="form-control"></div>
+        <div class="col-2">Respiration
+        <input type="text" name="17" id="" value="<?php echo $s_de[17];?>" class="form-control"></div>
+        <div class="col-12">Samples
+        <input type="text" name="18" id="" value="<?php echo $s_de[18];?>" class="form-control"></div>
+        <div class="col-4">Collection Personal Name
+        <input type="text" name="19" id="" value="<?php echo $s_de[19];?>" class="form-control"></div>
+        <div class="col-3">Date
+        <input type="date" name="20" id="" value="<?php echo $s_de[20];?>" class="form-control"></div>
+        <div class="col-2">Time
+        <input type="time" name="21" id="" value="<?php echo $s_de[21];?>" class="form-control"></div>
+        <div class="col-3">Signature
+        <input type="text" name="22" id=""  value="<?php echo $s_de[22];?>"class="form-control">
+        </div>
+        
+
+
+
+
+
+        </div>
       </div>
       <button type="submit" class="btn btn-primary ml-auto" name="submit" value="submit" id="submit"  >Submit</button>
     </form>

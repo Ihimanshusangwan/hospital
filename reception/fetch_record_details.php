@@ -1,8 +1,14 @@
 <?php
 include("../admin/connect.php");
+
 $mobileNumber = $_POST['mobile'];
-$stmt = $conn->prepare("SELECT * FROM patient_records inner join patient_info on  patient_records.id = patient_info.patient_id WHERE patient_records.mobile = ?");
-$stmt->bind_param("s", $mobileNumber);
+$patientId = $_POST['id'];  // Retrieve patient ID from the POST request
+
+$stmt = $conn->prepare("SELECT patient_records.*,patient_info.*,p_insure.uhid FROM patient_records 
+                        INNER JOIN patient_info ON patient_records.id = patient_info.patient_id 
+                        INNER JOIN p_insure ON patient_records.id = p_insure.id 
+                        WHERE patient_records.id = ?");
+$stmt->bind_param("i",$patientId);
 $stmt->execute();
 $result = $stmt->get_result();
 $recordDetails = $result->fetch_assoc();

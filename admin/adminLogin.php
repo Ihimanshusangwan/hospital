@@ -6,7 +6,7 @@ if (isset($_REQUEST['logout'])) {
     header("location:../index.html");
 }
 //prevent access of admin page without login
-if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
+if (!isset($_SESSION['username'])) {
     header("location:login.php");
 }
 ?>
@@ -33,46 +33,73 @@ if (!isset($_SESSION['username']) && !isset($_COOKIE['username'])) {
             </ul>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
                  <a class="navbar-brand">
-                    <a href="staffRegistrationForm.php" class="text-white mb-2">Register Staff
+                    <a href="staffRegistrationForm.php" class="btn btn-primary mx-1">Register Staff
                     </a>
                 </a>
                 <a class="navbar-brand">
-                    <a href="change_label.php" class="text-white mb-2">Change Label
+                    <a href="change_label.php" class="btn btn-primary mx-1">Change Label
                     </a>
                 </a>
                 <a class="navbar-brand">
-                    <a href="change_rate.php" class="text-white mb-2">Change Rate Charges
+                    <a href="change_rate.php" class="btn btn-primary mx-1">Change Rate Charges
                     </a>
                 </a>
                 <a class="navbar-brand">
-                    <a href="configure_print.php" class="text-white mb-2">configure print page
+                    <a href="configure_print.php" class="btn btn-primary mx-1">Configure Print Page
+                    </a>
+                </a>
+                <a class="navbar-brand">
+                    <a href="pregnancyCalc.php" class="btn btn-primary mx-1">Pregnancy Calculator
                     </a>
                 </a>
 
 
                 <a class="navbar-brand">
-                    <a href="receptionistRegistration.php" class="text-white mb-2">Register Receptionist</a>
+                    <a href="receptionistRegistration.php" class="btn btn-primary mx-1">Register Receptionist</a>
                 </a>
                 <a class="navbar-brand">
-                    <a href="doctorRegistrationForm.php" class="text-white mb-2">Register Doctor</a>
+                    <a href="doctorRegistrationForm.php" class="btn btn-primary mx-1">Register Doctor</a>
                 </a>
                 <a class="navbar-brand">
-                    <a href="addType.php" class="text-white mb-2">Add type</a>
+                    <a href="addType.php" class="btn btn-primary mx-1">Add type</a>
 
                 </a>
+               
                 <a class="navbar-brand">
-                    <a href="editTitle.php" class="text-white mb-2">Edit Titles</a>
+                    <a href="editTitle.php" class="btn btn-primary mx-1">Edit Titles</a>
 
                 </a>
-                <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#myModal">
       
          Set Base Patient Id 
     </button>
+    <a class="navbar-brand">
+
+                </a>  <a class="navbar-brand">
+
+                </a><a class="navbar-brand">
+                    
+
+                </a> <a class="navbar-brand">
+
+                </a>
+                </a> <a class="navbar-brand">
+                    <a href="set_auto_reload.php" class="btn btn-primary mx-1">Auto Refresh</a>
+
+                </a>
+                <a class="navbar-brand">
+                    <a href="opd_sign.php" class="btn btn-primary mx-1">Opd Sign </a>
+
+                </a>
+                <a class="navbar-brand">
+                    <a href="deletedPatient.php" class="btn btn-primary mx-1">Deleted Patients</a>
+
+                </a>
                 <a class="navbar-brand">
                     <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                         Logout
                     </button>
-                    <!-- <a href="#" class="text-white mb-2" style="margin-right: 2rem;">Logout</a> -->
+                    <!-- <a href="#" class="btn btn-primary mx-1" style="margin-right: 2rem;">Logout</a> -->
                 </a>
             </form>
             </div>

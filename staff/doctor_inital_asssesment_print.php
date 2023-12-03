@@ -51,6 +51,20 @@ $result = $data->fetch_assoc();
         flex-direction: column;
     }
 
+    .btr {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .bl {
+        border-left: 1px solid black;
+
+    }
+
+    .bb {
+        border-bottom: 1px solid black;
+    }
+
     @media print {
 
         #button {
@@ -89,35 +103,31 @@ $result = $data->fetch_assoc();
             <?php echo $result['address']; ?>
         </div>
     </div>
-    <div class="row">
-    <div class="col-3">
+    <div class="row mt-2">
+        <div class="col-6">
             <strong class="form-label">MLC Number:</strong>
             <?php echo $result['omlic_number']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-6">
             <strong class="form-label">Reimbursement:</strong>
             <?php echo $result['reimbursement']; ?>
         </div>
-    </div>
 
-    <div class="row mt-3">
+    </div>
+    <div class="row mt-2">
         <div class="col-6">
             <strong class="form-label">Discharge:</strong>
             <?php echo $result['discharge']; ?>
         </div>
-        
-    </div>
-
-
-    <div class="row mt-3">
-        <div class="col-4">
+        <div class="col-6">
             <strong class="form-label">Weight:</strong>
             <?php echo $result['weight']; ?>
         </div>
-        
+
+
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-2 ">
         <div class="col-6">
             <strong>Incharge Doctor</strong>
             <?php echo $result['incharge_doctor']; ?>
@@ -128,7 +138,7 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-2">
         <div class="col-6">
             <strong>Date:</strong>
             <?php echo $result['date']; ?>
@@ -139,7 +149,7 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-2">
         <div class="col-6">
             <strong>Presenting Complaint:</strong>
             <?php echo $result['presenting-complaint']; ?>
@@ -150,7 +160,7 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-2">
         <div class="col-6">
             <strong>History (Past/Present):</strong>
             <?php echo $result['history']; ?>
@@ -161,25 +171,25 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-3">
+    <div class="row m-1">
+        <div class="col-3 bb bl btr">
             <strong>menarche:</strong>
             <?php echo $result['menarche']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>LMP:</strong>
             <?php echo $result['LMP']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>Para:</strong>
             <?php echo $result['Para']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>Gavida:</strong>
             <?php echo $result['Gavdia']; ?>
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-2">
         <div class="col-6">
             <strong>Allergies:</strong>
             <?php echo $result['allergies']; ?>
@@ -190,8 +200,8 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-6">
+    <div class="row mt-2">
+        <div class="col-12">
             <strong>Previous Operations/Accidents:</strong>
             <?php echo $result['operation-accidents']; ?>
         </div>
@@ -201,92 +211,90 @@ $result = $data->fetch_assoc();
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-3">
+    <div class="row mt-2 mx-3">
+        <div class="col-4  bl bb btr">
             <strong>Build:</strong>
             <?php echo $result['build']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-4 bb btr">
             <strong>Pulse:</strong>
             <?php echo $result['pulse']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-4 bb btr">
             <strong>Anemia:</strong>
             <?php echo $result['anemia']; ?>
         </div>
     </div>
 
-    <div class="row mt-3">
-        
-        <div class="col-3">
+    <div class="row mt-2 mx-2">
+        <div class="col-3 bl bb btr">
             <strong>Edema:</strong>
             <?php echo $result['edema']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>BP:</strong>
             <?php echo $result['bp']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>TH:</strong>
             <?php echo $result['th']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>Cyanosis:</strong>
             <?php echo $result['cyanosis']; ?>
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-3">
+    <div class="row mx-2">
+        <div class="col-3 bl bb btr">
             <strong>RR:</strong>
             <?php echo $result['rr']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>Weight:</strong>
             <?php echo $result['weight1']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>JVP:</strong>
             <?php echo $result['jvp']; ?>
         </div>
-        <div class="col-3">
+        <div class="col-3 bb btr">
             <strong>Skin:</strong>
             <?php echo $result['skin']; ?>
         </div>
     </div>
-    <div class="row mt-2">
-    <div class="col-3">
-        <label for="">RS</label>
-        <?php echo $result['rs'] ?>
-    </div>
-    <div class="col-3">
-        <label for="">CVS</label>
-        <?php echo  $result['cvs'] ?>
-    </div>
-    <div class="col-3">
-        <label for="">CNS</label>
-        <?php echo $result['cns']  ?>
-    </div>
-    <div class="col-3">
-        <label for="">PA</label>
-        <?php echo  $result['pa'] ?>
-        
-    </div>
-</div>
+    <div class="row mx-2">
+        <div class="col-3 bl bb btr">
+            <strong for="">RS</strong>
+            <?php echo $result['rs'] ?>
+        </div>
+        <div class="col-3 bb btr">
+            <strong for="">CVS</strong>
+            <?php echo  $result['cvs'] ?>
+        </div>
+        <div class="col-3 bb btr">
+            <strong for="">CNS</strong>
+            <?php echo $result['cns']  ?>
+        </div>
+        <div class="col-3 bb btr">
+            <strong for="">PA</strong>
+            <?php echo  $result['pa'] ?>
 
-    <div class="row mt-3">
-      
-        <div class="col-6">
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
             <strong>Provisional Diagnosis:</strong>
             <?php echo $result['provisional-diagnosis1']; ?>
         </div>
-        <div class="col-6">
+        <div class="col-12">
             <strong>Differential Diagnosis:</strong>
             <?php echo $result['differential-diagnosis1']; ?>
         </div>
     </div>
     <div class="row mt-3">
-    <div class="col-6">
+        <div class="col-6">
             <strong>Name:</strong>
             <?php echo $result['submit_name']; ?>
         </div>

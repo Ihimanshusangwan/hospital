@@ -1,3 +1,4 @@
+
 <?php
 $id = $_GET['id'];
 require("../admin/connect.php");

@@ -1,8 +1,10 @@
 <?php
 require("connect.php");
+
+error_reporting(0);
 if(isset($_POST['submit'])){
     $inp_arr=array();
-    for($i=1;$i<2;$i++){
+    for($i=1;$i<3;$i++){
         $element=$_POST['inp_'.$i];
         array_push($inp_arr,$element);
     }
@@ -24,7 +26,7 @@ $data12=$conn->query($sql12);
 $res12=$data12->fetch_assoc();
 $inp=$res12['inp'];
 $inp_arr=json_decode($inp,true);
-$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
+$inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,3,'option2');
 
 
 ?>
@@ -60,6 +62,21 @@ $inp_arr = is_array($inp_arr) ? $inp_arr: array_fill(0,2, '');
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="inp_1"
                                         value="option2" <?php echo $inp_arr[0]=='option2'?'checked':'';?>>
+                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Consent Form</td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inp_2" id="inlineRadio1"
+                                        value="option1" <?php echo $inp_arr[1]=='option1'?'checked':'';?>>
+                                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inp_2"
+                                        value="option2" <?php echo $inp_arr[1]=='option2'?'checked':'';?>>
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
                             </td>

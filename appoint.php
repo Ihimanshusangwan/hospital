@@ -110,12 +110,15 @@ $title = $data->fetch_assoc();
           $is_old_patient = $_POST['flexRadioDefault'];
           $referred_by = $_POST['rb'];
           $patient_complaints = $_POST['pc'];
+          $tov = $_POST['tov'];
+          
+          $UHID = isset($_POST['uhid']) ? $_POST['uhid'] : '';
 
           // If no errors, insert data into database
           if (empty($nameErr) && empty($addressErr) && empty($talukaErr) && empty($districtErr) && empty($ageErr) && empty($sexErr) && empty($dob_dateErr) && empty($reg_dateErr) && empty($mobileErr) && empty($mailErr) && empty($passErr) && empty($tovErr) && empty($consultantErr) && empty($bpErr) && empty($pulseErr) && empty($weightErr) && empty($tempErr)) {
 
-            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,referred_by,patient_complaints,is_registered,is_eye,is_ortho)
-            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$referred_by','$patient_complaints',0,1,1)";
+            $sql = "INSERT INTO patient_records (is_old_patient,name, address, taluka, district, age, sex,dob_date, reg_date, mobile,consultant,referred_by,patient_complaints,is_registered,is_eye,is_ortho,type_of_visit)
+            VALUES ('$is_old_patient','$name', '$address', '$taluka', '$district', '$age', '$sex', '$dob_date', '$reg_date', '$mobile','$consultant', '$referred_by','$patient_complaints',0,1,1,'$tov')";
 
             if ($conn->query($sql) === TRUE) {
               $inserted_patient_id = $conn->insert_id;
@@ -290,7 +293,66 @@ $title = $data->fetch_assoc();
               $sql42 = "INSERT INTO operation_record(id) VALUES($inserted_patient_id);";
               $conn->query($sql42);
 
+              $sql44 = "INSERT INTO anumati_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql44);
 
+              $sql45 = "INSERT INTO counselling_consent(id) VALUES($inserted_patient_id);";
+              $conn->query($sql45);
+              $sql46= "INSERT INTO opd_bill_pay(patient_id) VALUES('$inserted_patient_id');";
+              $conn->query($sql46);
+              
+              $sql47= "INSERT INTO an_record(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql47);
+              $sql48= "INSERT INTO dis_sum(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql48);
+              $sql49= "INSERT INTO doctor_inpatient(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql49);
+              $sql50= "INSERT INTO in_reg(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql50);
+              $sql51= "INSERT INTO indoor_case(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql51);
+              $sql52= "INSERT INTO injection_consent(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql52);
+              $sql53= "INSERT INTO invest_sheet(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql53);
+              $sql54= "INSERT INTO nutri_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql54);
+
+              $sql55= "INSERT INTO samtipatra1(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql55);
+              $sql56= "INSERT INTO dama_dis(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql56);
+              $sql57= "INSERT INTO im_reval(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql57);
+              $sql58= "INSERT INTO nursing_assessment(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql58);
+           
+              $sql60= "INSERT INTO surgery_safety(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql60);
+              $sql61= "INSERT INTO pt_rel_feedback(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql61);
+              $sql62= "INSERT INTO pre_room_urinary(id) VALUES('$inserted_patient_id');";
+              $conn->query($sql62);
+            
+              $sql29 = "INSERT INTO cc_glass_rx1(id) VALUES($inserted_patient_id);";
+              $conn->query($sql29);
+              if ($is_old_patient == "yes" && $UHID != "") {
+                $uhid = $UHID;
+                $sql = "select patient_records.visit_count from patient_records join p_insure on patient_records.id = p_insure.id where p_insure.uhid = '$uhid' order by p_insure.id desc;";
+                $row = $conn->query($sql)->fetch_assoc();
+                $count = $row['visit_count'];
+                $count += 1;
+                $sql = "UPDATE patient_records
+                SET visit_count = $count
+                WHERE id = $inserted_patient_id;";
+                $conn->query($sql);
+                 //auto generate uhid
+              $sql = "update p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
+              $conn->query($sql);
+              $sql = "update ortho_p_insure set uhid = '$uhid' where id = $inserted_patient_id;";
+              $conn->query($sql);
+
+              } 
 
               $description = '{"0":{"name":"Eye Cleaned","value":"off"},"1":{"name":"Dressing with betadine solution done","value":"off"},"2":{"name":"Peribulbar block/LA with 6ml of 2% lignocaine and adreline injected.","value":"off"},"3":{"name":"Dressing with betadine done","value":"off"},"4":{"name":"Eye Drapping Done","value":"off"},"5":{"name":"Pterygium mass excised","value":"off"},"6":{"name":"Mild cautery applied","value":"off"},"7":{"name":"Corneal surface smoothed with crescent blade","value":"off"},"8":{"name":"Amminiotic Membrane Graft applied over bare surface and sutured with 10-0 vicryl","value":"off"},"9":{"name":"Eye draped removed","value":"off"},"10":{"name":"5% betadine eye drop applied","value":"off"},"11":{"name":"Eye Patched","value":"off"},"12":{"name":"Surgery concluded","value":"off"}}';
 
@@ -333,6 +395,7 @@ $title = $data->fetch_assoc();
               No matching records found.
             </div>
 
+            <input type="hidden" name="uhid">
             <div class="form-group m-2 col-6">
               <label for="name">Name of patient:</label>
               <input name="search_name" id="search_name" value="" class="form-control" placeholder="Name" />
@@ -403,11 +466,13 @@ $title = $data->fetch_assoc();
             </div>
             <div class="form-group m-2 col-6">
               <label for="consultant">Consultant:</label>
-              <select class="form-control" name="consultant" id="consultant" required>
-                <?php
-                $sql = "SELECT name FROM doctors;";
+              <select class="form-control" name="consultant" id="consultant" required onchange="changeType()">
+              <?php
+                $sql = "SELECT name,type_of_visit FROM doctors;";
                 $res = $conn->query($sql);
+                $typeData = array();
                 while ($values = $res->fetch_assoc()) {
+                  $typeData["{$values['name']}"] = $values['type_of_visit'];
                   echo '
                   <option value="' . $values['name'] . '">
                     ' . $values['name'] . '
@@ -417,15 +482,15 @@ $title = $data->fetch_assoc();
                 ?>
               </select>
             </div>
-            <div class="form-group m-2 col-6">
-
-
+            <div class="form-group m-2 col-6  ">
+              <label for="tov">Type of Visit:</label>
+             <input type="text" class="form-control" name="tov" id="tov" readonly>
+            </div>
               <?php
 
               $conn->close();
               ?>
 
-            </div>
             <div class="container mt-4">
 
             </div>
@@ -451,6 +516,15 @@ $title = $data->fetch_assoc();
     </div>
   </div>
   <script>
+    
+    const uhid = document.querySelector('input[name="uhid"]');
+    var changeType = () => {
+      tovInput.value = typeData[consultantInput.value];
+    }
+    var typeData = <?php echo json_encode($typeData); ?>;
+    var consultantInput = document.getElementById('consultant');
+    var tovInput = document.getElementById('tov');
+    changeType();
     function calculateAge() {
       var dob = document.getElementById('dob_date').value;
       var today = new Date();
@@ -499,6 +573,10 @@ $title = $data->fetch_assoc();
               document.getElementById('consultant').value = data.consultant;
               document.getElementById('rb').value = data.referred_by;
               document.getElementById('pc').innerHTML = data.patient_complaints;
+              
+              uhid.value = data.uhid;
+              
+
 
 
               searchSection.style.display = 'none';

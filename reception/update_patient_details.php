@@ -75,16 +75,6 @@ $title = $data->fetch_assoc();
                     $mobile_pwp = isset($_POST['mobile_pwp']) ? $_POST['mobile_pwp'] : '';
                     $referred_by = isset($_POST['rb']) ? $_POST['rb'] : '';
                     $patient_complaints = isset($_POST['pc']) ? $_POST['pc'] : '';
-                    if ($tov == "Eye") {
-                        $is_eye = 1;
-                        $is_ortho = 0;
-                    } else if ($tov == "Ortho") {
-                        $is_eye = 0;
-                        $is_ortho = 1;
-                    } else {
-                        $is_eye = 0;
-                        $is_ortho = 0;
-                    }
 
                     if (empty($nameErr)) {
 
@@ -110,9 +100,8 @@ $title = $data->fetch_assoc();
               sex_pwp = '$sex_pwp',
               mobile_pwp = '$mobile_pwp',
               referred_by = '$referred_by',
-              patient_complaints = '$patient_complaints',
-              is_eye = $is_eye,
-              is_ortho = $is_ortho
+              patient_complaints = '$patient_complaints'
+              
             WHERE id = '$id';";
                         $conn->query($sql);
 
@@ -205,11 +194,14 @@ $title = $data->fetch_assoc();
                         </div>
                         <div class="form-group m-2 col-6  ">
                             <label for="consultant">Consultant:</label>
-                            <select class="form-control" name="consultant" required id="consultant">
+                            <select class="form-control" name="consultant" required id="consultant" onchange="changeType()">
                                 <?php
-                                $sql = "SELECT name FROM doctors;";
+                                $sql = "SELECT name,type_of_visit FROM doctors;";
                                 $result = $conn->query($sql);
+                                $typeData = array();
                                 while ($values = $result->fetch_assoc()) {
+                                    
+                  $typeData["{$values['name']}"] =  $values['type_of_visit']; 
                                     $selected = ($res['consultant']==$values['name'])? "selected":"";
 
                                     echo '
@@ -222,23 +214,9 @@ $title = $data->fetch_assoc();
                             </select>
                         </div>
                         <div class="form-group m-2 col-6  ">
-                            <label for="tov">Type of Visit:</label>
-                            <select class="form-control" name="tov" required id='tov'>
-                                <?php
-                                $sql = "SELECT * FROM type;";
-                                $result = $conn->query($sql);
-                                while ($values = $result->fetch_assoc()) {
-                                    $selected = ($res['type_of_visit']==$values['type'])? "selected":"";
-                                    echo '
-                  <option value="' . $values['type'] . '" '.$selected.'>
-                    ' . $values['type'] . '
-                  </option>
-                  ';
-                                }
-                                $conn->close();
-                                ?>
-                            </select>
-                        </div>
+              <label for="tov">Type of Visit:</label>
+             <input type="text" class="form-control" name="tov" id="tov" readonly>
+            </div>
                         <div class="container mt-4  ">
                             <div class="row">
                                 <h5>Physical Examination:</h5>
@@ -263,6 +241,7 @@ $title = $data->fetch_assoc();
                                 </div>
                             </div>
                         </div>
+                        <section style="display:none;">
                         <h3 class="text-dark text-center ml-2 mt-5  ">Patient Relative Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="name">Name of Relative:</label>
@@ -314,6 +293,7 @@ $title = $data->fetch_assoc();
                             <input type="number" class="form-control" placeholder="mobile" value="<?php echo $res['mobile_pwp'];?>" id="mobile_pwp"
                                 name="mobile_pwp" />
                         </div>
+                        </section>
                         <h3 class="text-dark text-center ml-2 mt-5  ">General Details:</h3>
                         <div class="form-group m-2  col-6  ">
                             <label for="rb">Referred By:</label>
@@ -336,6 +316,13 @@ $title = $data->fetch_assoc();
         </div>
     </div>
     <script>
+          var changeType = ()=>{
+      tovInput.value = typeData[consultantInput.value];
+    }
+    var typeData = <?php echo json_encode($typeData);?>;
+    var consultantInput = document.getElementById('consultant');
+    var tovInput = document.getElementById('tov');
+    changeType();
         function calculateAge() {
             var dob = document.getElementById('dob_date').value;
             var today = new Date();

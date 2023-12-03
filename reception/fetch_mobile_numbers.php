@@ -1,17 +1,27 @@
 <?php
 include("../admin/connect.php");
 $searchValue = $_POST['search'];
-$stmt = $conn->prepare("SELECT mobile FROM patient_records WHERE mobile LIKE ?");
+
+$stmt = $conn->prepare("SELECT name, mobile, MIN(id) 
+FROM patient_records 
+WHERE mobile LIKE ? 
+GROUP BY name, mobile;
+");
 $searchValue = '%' . $searchValue . '%';
 $stmt->bind_param("s", $searchValue);
 $stmt->execute();
 $result = $stmt->get_result();
-$mobileNumbers = array();
+$mobileData = array();
+$id = array();  // Adding an array to store patient IDs
+$name = array();  // Adding an array to store patient IDs
 while ($row = $result->fetch_assoc()) {
-    $mobileNumbers[] = $row['mobile'];
+    $mobileData[] = $row['mobile'];
+    $id[] = $row['MIN(id)'];
+    $name[] = $row['name'];
 }
+$data = array('mobileNumbers' => $mobileData, 'ids' => $id, 'names' => $name);  // Return mobile numbers and IDs
 header('Content-Type: application/json');
-echo json_encode($mobileNumbers);
+echo json_encode($data);
 $stmt->close();
 $conn->close();
 ?>
