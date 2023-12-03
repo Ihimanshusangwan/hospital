@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['msgId'])){
-    require("../admin/connect.php");
+    require("admin/connect.php");
     $msgId = $_POST['msgId'];
 
     $sql = "delete from messages WHERE id = ?";

@@ -27,6 +27,12 @@ $title = $data->fetch_assoc();
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <link rel="stylesheet" href="../messages.css">
+    <link rel="stylesheet" href="../chat.css">
+    <script src="../chat.js"></script>
     <title>Staff</title>
     <style>
         .dl-horizontal dt {
@@ -52,6 +58,9 @@ $title = $data->fetch_assoc();
 </head>
 
 <body>
+    
+   <?php include_once("../messages.php"); ?>
+   <?php include_once("../chat.php"); ?>
     <header>
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
@@ -64,6 +73,7 @@ $title = $data->fetch_assoc();
                     <?php echo $_SESSION['staff_name']; ?>
                 </h3>
             </a>
+            
             <?php
     $sql12 = "SELECT * FROM `config_print` WHERE 1";
     $data12 = $conn->query($sql12);
@@ -78,6 +88,8 @@ $title = $data->fetch_assoc();
 
     ?>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
+            <span class="btn btn-warning " id="showAlert" onclick="showMsgOnBtn()">Messages
+                    </span>
                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#largeModal1">
                     Eye Registers
                 </button>

@@ -38,166 +38,18 @@ $title = $data->fetch_assoc();
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../chat.css">
+    <link rel="stylesheet" href="../messages.css">
+    <script src="../chat.js"></script>
     <title>Reception</title>
-    <style>
-        .dl-horizontal dt {
-            white-space: normal;
-        }
-
-        div.dt-buttons {
-            float: left;
-            margin-bottom: 5px;
-        }
-
-        div.dom_wrapper {
-            position: fixed;
-            top: 0;
-            right: 0;
-        }
-
-        table {
-            font-size: 16px;
-        }
-
-        .inline-heading,
-        .inline-select {
-            display: inline-block;
-            vertical-align: middle;
-            margin-bottom: 0;
-        }
-
-        .select-wrapper select {
-            width: 100%;
-            padding: 6px 12px;
-            font-size: 14px;
-            border-radius: 4px;
-            border: 1px solid #ced4da;
-        }
-
-        .fullscreen-alert {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .alert-content {
-            background-color: #fff;
-            width: 70%;
-            /* Fixed width */
-            height: 70%;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            overflow-y: auto;
-        }
-
-        .card-header {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .table tbody tr.table-light {
-            background-color: green !important;
-        }
-
-        .name-hover:hover {
-            cursor: pointer;
-        }
-    </style>
-
-    <script>
-
-
-
-
-
-
-    </script>
+    
 
 </head>
 
 <body>
-    <div class="fullscreen-alert" id="fullscreenAlert">
-        <div class="alert-content ">
-            <div class="row">
-                <div class="col-10 offset-1">
-                    <h2 class="text-center text-dark mb-4">Messages</h2>
-
-                </div>
-                <div class="col-1">
-
-                    <button class="btn btn-outline-danger btn-sm" id="closeAlert"><i class="fas fa-times"></i></button>
-                </div>
-            </div>
-
-
-            <?php $msg_sql = "
-    SELECT messages.*, doctors.name 
-    FROM messages
-    INNER JOIN doctors ON messages.dr_id = doctors.id
-    WHERE messages.r_id = {$_SESSION['receptionist_id']}
-    ORDER BY messages.id DESC;
-";
-            $msg_res = $conn->query($msg_sql);
-            $newMsg = 0;
-            if ($msg_res->num_rows < 1) {
-                echo "No Message Available";
-            } else {
-                while ($row = $msg_res->fetch_assoc()) {
-                    echo <<<msg
-                <div class="card">
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-9 text-left text-primary">
-                            <h5 style="text-align: left;">{$row['name']}</h5>
-                        </div>
-                        <div class="col-3">
-                            {$row['time']}
-                        </div>
-                        <div class="col-10 text-left">
-                            <h6 class="card-title " style="text-align: left;">{$row['msg_body']}</h6>
-                        </div>
-                        <div class="col-2">
-msg;
-                    if ($row['is_read'] == 0) {
-                        $newMsg = 1;
-                        echo <<<msg
-    <button class="btn btn-outline-success btn-sm" msg-id="{$row['id']}" onclick="markAsRead(this)"><i class="fas fa-check-double"></i></button>
-msg;
-
-                    }
-                    echo <<<msg
-                            <button class="btn btn-outline-danger btn-sm" msg-id="{$row['id']}" onclick="deleteMsg(this)"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-msg;
-                }
-            }
-
-            ?>
-            <script> const newMsg = <?php echo $newMsg; ?>;</script>
-
-
-        </div>
-    </div>
+   <?php include_once("../messages.php"); ?>
+   
+   <?php require("../chat.php"); ?>
 
     <header>
         <nav class="navbar navbar-light bg-primary">
@@ -581,71 +433,7 @@ msg;
         //     }
 
         // }
-        const fullscreenAlert = document.getElementById('fullscreenAlert');
-        const closeAlertButton = document.getElementById('closeAlert');
-        if (newMsg == 1) {
-            fullscreenAlert.style.display = 'flex';
-        }
-        closeAlertButton.addEventListener('click', () => {
-            fullscreenAlert.style.display = 'none';
-        });
-        function showMsgOnBtn() {
-
-            fullscreenAlert.style.display = 'flex';
-        }
-
-        function markAsRead(btn) {
-            const msgId = btn.getAttribute("msg-id");
-
-            const data = new URLSearchParams();
-            data.append('msgId', msgId);
-
-            fetch('markAsRead.php', {
-                method: 'POST',
-                body: data
-            })
-                .then(response => response.text())
-                .then(result => {
-                    console.log(result);
-                    if (result.trim() === "success") {
-
-                        btn.style.display = "none";
-                    } else {
-                        alert("An error occurred");
-                    }
-
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        function deleteMsg(btn) {
-            const msgId = btn.getAttribute("msg-id");
-
-            const data = new URLSearchParams();
-            data.append('msgId', msgId);
-
-            fetch('deleteMsg.php', {
-                method: 'POST',
-                body: data
-            })
-                .then(response => response.text())
-                .then(result => {
-                    console.log(result);
-                    if (result.trim() === "success") {
-
-                        btn.parentElement.parentElement.parentElement.parentElement.style.display = "none";
-                    } else {
-                        alert("An error occurred");
-                    }
-
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-
-        }
+      
         document.querySelectorAll('.activate-form').forEach(function (button) {
             button.addEventListener('click', function () {
                 var pId = this.getAttribute('p_id');

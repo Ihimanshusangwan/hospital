@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set session variables (you can modify this part based on your use case)
         session_start();
         $_SESSION['staff_id'] = 1;  
-        $_SESSION['staff_name'] = "Lab"; 
+        $_SESSION['staff_name'] = "Lab";    
+        $_SESSION['type'] = "lab";   
         header("location: lab_Page.php");
         exit();
     } else {

@@ -3,16 +3,15 @@ function insertText(btn) {
   const textarea = document.getElementById("msgBody");
   textarea.value = text;
 }
-const chatIcon = document.getElementById("chatIcon");
-const chatContainer = document.getElementById("chatContainer");
-const sendBtn = document.getElementById("msgSendBtn");
-
-chatIcon.addEventListener("click", () => {
-  chatContainer.style.display =
-    chatContainer.style.display === "block" ? "none" : "block";
-});
 
 document.addEventListener("DOMContentLoaded", () => {
+  const chatIcon = document.getElementById("chatIcon");
+  const chatContainer = document.getElementById("chatContainer");
+  const sendBtn = document.getElementById("msgSendBtn");
+  chatIcon.addEventListener("click", () => {
+    chatContainer.style.display =
+      chatContainer.style.display === "block" ? "none" : "block";
+  });
   sendBtn.addEventListener("click", () => {
     sendBtn.disabled = true;
     const initialHtml = sendBtn.innerHTML;
@@ -23,18 +22,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkedCheckboxes = [];
     checkboxes.forEach((checkbox) => {
       if (checkbox.checked) {
-        checkedCheckboxes.push(checkbox.getAttribute("rec_id"));
+        checkedCheckboxes.push({
+          rec_id: checkbox.getAttribute("rec_id"),
+          rec_type: checkbox.getAttribute("rec_type"),
+        });
       }
     });
 
     const msgBody = document.getElementById("msgBody").value;
+
     const dataToSend = {
       checkboxes: checkedCheckboxes,
-      dr_id: dr_id,
+      senderId: senderId,
+      SenderName: senderName,
+      SenderType: senderType,
       msgBody: msgBody,
     };
     const jsonData = JSON.stringify(dataToSend);
-    const url = "chat_send.php";
+    const url = "../chat_send.php";
     fetch(url, {
       method: "POST",
       headers: {
@@ -44,15 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => response.text())
       .then((responseText) => {
-        
-        // if(responseText === "success"){
         sendBtn.innerHTML = initialHtml;
         document.getElementById("msgBody").value = "";
-        sendBtn.innerHTML = initialHtml;
-        sendBtn.disabled= false;
-        // }else{
-        //  alert('Error sending message');
-        // }
+        sendBtn.disabled = false;
       })
       .catch((error) => {
         console.error("Error:", error);

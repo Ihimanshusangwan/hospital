@@ -85,7 +85,8 @@ if (isset($_POST['template_btn'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <link rel="stylesheet" href="../dropdown_styles.css">
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="../chat.css">
+    <script src="../chat.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -220,8 +221,8 @@ if (isset($_POST['template_btn'])) {
 </head>
 
 <body style="background-color: #90D0E5;">
-
-    <?php require("chat.php"); ?>
+,
+    <?php require("../chat.php"); ?>
     <div class="container">
         <h1 class="text-center text-danger mt-3">
             <h1>
@@ -393,12 +394,12 @@ if (isset($_POST['template_btn'])) {
 
                     <div id="charge-save-alert">
                         <?php
-                    $opd = "select * from opd_bill where patient_id = $id;";
+                        $opd = "select * from opd_bill where patient_id = $id;";
                         $opd_res = $conn->query($opd);
-                       if($opd_res->num_rows > 0 ){
-                        echo '<div class="alert alert-success" role="alert">Charges Added </div>';
-                    
-                       }
+                        if ($opd_res->num_rows > 0) {
+                            echo '<div class="alert alert-success" role="alert">Charges Added </div>';
+
+                        }
 
 
                         ?>
@@ -447,16 +448,16 @@ data;
                                 $template_id = $row['id'];
                                 $template_name = htmlspecialchars($row['name']);
                                 ?>
-                                                                                <div class="col">
-                                                                                    <form action="" method="post">
-                                                                                        <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
-                                                                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
-                                                                                            <?php echo $template_name; ?>
-                                                                                        </button>
+                                                                                                <div class="col">
+                                                                                                    <form action="" method="post">
+                                                                                                        <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                                                                                                        <button class="btn btn-outline-success m-2 template" type="submit" name="template_btn">
+                                                                                                            <?php echo $template_name; ?>
+                                                                                                        </button>
 
-                                                                                    </form>
-                                                                                </div>
-                                                                                <?php
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                                <?php
                             }
                             echo "</div>";
                         } else {
@@ -592,7 +593,7 @@ data;
         $sql13 = "SELECT * FROM `patient_info` WHERE patient_id=$id";
         $data13 = $conn->query($sql13);
         $res13 = $data13->fetch_assoc();
-        
+
         $sql12 = "SELECT * FROM `config_print` WHERE 1";
         $data12 = $conn->query($sql12);
         $res12 = $data12->fetch_assoc();
@@ -701,14 +702,14 @@ if (isset($_REQUEST['all-view-data'])) {
     $symptoms = filter_var($_REQUEST["symptoms"], FILTER_SANITIZE_STRING);
     $sql = "UPDATE patient_info SET symptoms='$symptoms' WHERE patient_id=$id;";
     if ($conn->query($sql) === TRUE) {
-        
+
     } else {
         echo "<div class='alert alert-danger'>Error Updating Symptoms</div>";
     }
     $instructions = filter_var($_POST["instructions"], FILTER_SANITIZE_STRING);
     $sql = "UPDATE patient_info SET instructions='$instructions' WHERE patient_id=$id; ";
     if ($conn->query($sql) === TRUE) {
-        
+
     } else {
         echo "<div class='alert alert-danger'>Error Updating Instructions</div>";
     }
@@ -719,19 +720,19 @@ if (isset($_REQUEST['all-view-data'])) {
         echo "<div class='alert alert-danger'>Error Updating Diagnosis</div>";
     }
     echo "<div class='alert alert-success'> Updated Successfully</div>";
-}?>
+} ?>
 
 <div class="row">
     <div class="col-md-3 shadow-lg rounded-3 mt-4 mb-4 mx-1">
        <?php
 
-        $sql = "SELECT chief_complaint FROM patient_info WHERE patient_id = $id;";
-        $res = $conn->query($sql)->fetch_assoc();
-        $chiefComplaintValue = $res['chief_complaint'];
-        ?>
+       $sql = "SELECT chief_complaint FROM patient_info WHERE patient_id = $id;";
+       $res = $conn->query($sql)->fetch_assoc();
+       $chiefComplaintValue = $res['chief_complaint'];
+       ?>
         <label class="font-weight-bold" for="" class="text-danger">Chief Complaints :</label>
         <div class="card-body p-2">
-            <form action="" method="POST">
+            <form action="" method="POST" id="form1">
                 <textarea class="form-control mt-3" id="selected-complaints"
                     name="complaints"><?php echo $res['chief_complaint']; ?></textarea>
 
@@ -800,7 +801,7 @@ if (isset($_REQUEST['all-view-data'])) {
 
         <?php
 
-    
+
         $sql = "SELECT history FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         $historyValue = $res['history'];
@@ -823,7 +824,7 @@ if (isset($_REQUEST['all-view-data'])) {
 
         <?php
 
-       
+
         $sql = "SELECT personal_history FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         $historyValue = $res['personal_history'];
@@ -846,7 +847,7 @@ if (isset($_REQUEST['all-view-data'])) {
 
     <div class="col-md-2 shadow-lg rounded-3 m-4">
         <?php
-       
+
         $sql = "SELECT family_history FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         $familyHistoryValue = $res['family_history'];
@@ -868,7 +869,7 @@ if (isset($_REQUEST['all-view-data'])) {
     </div>
     <div class="col-md-2 shadow-lg rounded-3 m-4">
         <?php
-     
+
         $sql = "SELECT procedure_done FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         ?>
@@ -891,7 +892,7 @@ if (isset($_REQUEST['all-view-data'])) {
 
         <?php
 
-       
+
         $sql = "SELECT medical_history FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         $historyValue = $res['medical_history'];
@@ -916,7 +917,7 @@ if (isset($_REQUEST['all-view-data'])) {
         <?php
 
         $i = 1;
-       
+
 
         $sql = "SELECT examination FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
@@ -1237,7 +1238,7 @@ if (isset($_REQUEST['all-view-data'])) {
         </div>
     </div>
     <div class="col-md-3 shadow-lg rounded-3 my-4 mx-1">
-        <?php    
+        <?php
         $sql = "SELECT diagnosis FROM patient_info WHERE patient_id = $id;";
         $res = $conn->query($sql)->fetch_assoc();
         ?>
@@ -1254,43 +1255,11 @@ if (isset($_REQUEST['all-view-data'])) {
         </div>
     </div>
 </div>
-<div>
-    <button type="submit" name='all-view-data' class="btn btn-success m-3">Save</button>
-</div>
 </div>
 </form>
     <!-- medicine save -->
     <?php
-    if (isset($_REQUEST['submit_changes'])) {
-        $is_viewed = false;
-        $i = 1;
-        while (isset($_POST["med_name_$i"])) {
-            if ($_POST["med_name_$i"] !== "") {
-                $med_name = filter_var($_POST["med_name_$i"], FILTER_SANITIZE_STRING);
-                $quantity = $_POST["quantity_$i"];
-                $morning = $_POST["morning_$i"];
-                $afternoon = $_POST["afternoon_$i"];
-                $night = $_POST["night_$i"];
-                $type = $_POST["type_$i"];
-                $eat = (isset($_POST["eat_$i"])) ? $_POST["eat_$i"] : "";
-                $days = $_POST["days_$i"];
-                $sql = "INSERT INTO prescription (patient_id,med_name,quantity,morning,afternoon,night,days,eat,type) VALUES ($id,'$med_name','$quantity','$morning','$afternoon','$night','$days','$eat','$type');";
-                if ($conn->query($sql) === TRUE) {
-                    $i++;
-                } else {
-                    echo "<div class='alert alert-danger'>Error Updating Prescription</div>";
-                }
-                if ($is_viewed == false) {
-                    $sql = "update patient_records set is_viewed = 1 where id =$id;";
-                    $conn->query($sql);
-                    $is_viewed = true;
-                }
-            } else {
-                $i++;
-            }
-        }
-        echo "<div class='alert alert-success'>Prescription Updated Successfully</div>";
-    }
+
     if (isset($_REQUEST['delete'])) {
         $sql = "DELETE FROM prescription WHERE id = {$_POST['pres_id']} ;";
         if ($conn->query($sql) === TRUE) {
@@ -1310,7 +1279,7 @@ if (isset($_REQUEST['all-view-data'])) {
             </div>
         </div>
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="" method="POST" id="form2">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <tr>
@@ -1349,11 +1318,14 @@ if (isset($_REQUEST['all-view-data'])) {
                         </tbody>
                     </table>
                 </div>
-                <button type="submit" class="btn  btn-success " name="submit_changes">Save Changes</button>
+                <!-- <button type="submit" class="btn  btn-success " name="submit_changes">Save Changes</button> -->
                 <button type="button" class="btn btn-info" onclick="addItem1();">Add Medicine</button>
             </form>
         </div>
     </div>
+    <div>
+    <button onclick="saveForms()" class="btn btn-success m-3">Save</button>
+</div>
     <!-- pres back -->
     <?php
     $sql = "select * from pres_back where id = $id;";
@@ -1671,7 +1643,55 @@ if (isset($_REQUEST['all-view-data'])) {
         </div>
     </div>
     <script src="prescription.js"></script>
+    <script src="alert.js"></script>
     <script>
+        function saveForms() {
+            const idFromURL = new URLSearchParams(window.location.search).get('id');
+            const form1Data = new FormData(document.getElementById('form1'));
+            const form2Data = new FormData(document.getElementById('form2'));
+
+            const combinedData = new FormData();
+
+            // Append form data from both forms to a single FormData object
+            for (const pair of form1Data.entries()) {
+                combinedData.append(pair[0], pair[1]);
+            }
+
+            for (const pair of form2Data.entries()) {
+                combinedData.append(pair[0], pair[1]);
+            }
+            combinedData.append('id', idFromURL);
+
+            // Send combined form data to PHP using fetch
+            fetch('viewDataSave.php', {
+                method: 'POST',
+                body: combinedData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // Handle the response from the PHP script
+                // console.log(data);
+                swal({
+    title: "Data Saved Successfully!",
+    text: "Your operation was successful.",
+    icon: "success",
+    button: false, // Set the button to false to hide it
+    timer: 1500 
+}).then(() => {
+    window.location.reload();
+});
+
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
         document.addEventListener("DOMContentLoaded", function () {
             var referButton = document.getElementById("referButton");
             var finalReferButton = document.getElementById("final-referButton");
@@ -1901,8 +1921,6 @@ function saveDrawing(imageData, id) {
 
         }
     </script>
-    <script src="chat.js"></script>
-
     <script>
         function showDay(dateInput) {
             const followUpDay = document.getElementById('follow-up-day');

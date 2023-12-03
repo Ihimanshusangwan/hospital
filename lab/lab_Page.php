@@ -27,6 +27,10 @@ $title = $data->fetch_assoc();
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../chat.css">
+    <link rel="stylesheet" href="../messages.css">
+    <script src="../chat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Lab</title>
     <style>
         .dl-horizontal dt {
@@ -52,6 +56,9 @@ $title = $data->fetch_assoc();
 </head>
 
 <body>
+    
+<?php require("../chat.php"); ?>
+    <?php include_once("../messages.php"); ?>
     <header>
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
@@ -65,6 +72,8 @@ $title = $data->fetch_assoc();
                 </h3>
             </a>
             <form class="form-inline my-2 my-lg-0" action="" method="POST">
+            <span class="btn btn-warning  mx-2  btn" id="showAlert" onclick="showMsgOnBtn()">Messages
+                    </span>
                 <button type="submit" name="logout" class="btn btn-danger mx-2 px-2 py-1">
                     Logout
                 </button>

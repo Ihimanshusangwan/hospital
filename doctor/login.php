@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $doctor_id= $data["id"];
             session_start();
             $_SESSION['doctor_id'] = $doctor_id;   
+            $_SESSION['type'] = "doctor";   
             $_SESSION['doctor_type'] = $data['type_of_visit'];   
             $_SESSION['doctor_name'] = $data['name'];   
                 header("location:doctorPage.php");

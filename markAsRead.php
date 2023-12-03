@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['msgId'])){
-    require("../admin/connect.php");
+    require("admin/connect.php");
     $msgId = $_POST['msgId'];
 
     $sql = "UPDATE messages SET is_read = 1 WHERE id = ?";

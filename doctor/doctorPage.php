@@ -38,7 +38,9 @@ $title = $data->fetch_assoc();
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="../chat.css">
+    <link rel="stylesheet" href="../messages.css">
+    <script src="../chat.js"></script>
     <title>Doctor</title>
     <style>
         .dl-horizontal dt {
@@ -63,7 +65,9 @@ $title = $data->fetch_assoc();
 </head>
 
 <body>
-    <?php require("chat.php"); ?>
+    <?php require("../chat.php"); ?>
+    
+   <?php include_once("../messages.php"); ?>
     <header>
         <nav class="navbar navbar-light bg-primary">
             <a class="navbar-brand" href="#">
@@ -78,6 +82,8 @@ $title = $data->fetch_assoc();
             </a>
             
             <form class="form-inline" action="" method="POST">
+            <span class="btn btn-primary mx-1" id="showAlert" onclick="showMsgOnBtn()">Messages
+                    </span>
                 <a class="btn btn-primary mx-1" href="image_gallery.php">Image Gallery</a>
                 <a class="btn btn-primary mx-1" href="tobe_review.php?id=<?php echo $doc_id; ?>">Review Table</a>
                 <a class="btn btn-primary mx-1" href="template.php">Manage Templates</a>
